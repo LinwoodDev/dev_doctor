@@ -8,13 +8,16 @@ description: >
   This course is only an example which
   shows how this config works
 
+# The current category of the course. You can see the categories in the list
+category: []
+
 # The language of the course. You can see a flag as a badge of the course.
 lang: en
 
 # Controls if the course is shown in the list
 private: true
 
-# The course
+# The course. See the preview to understand all config entries
 parts:
   - name: Part 1
     items:
