@@ -1,9 +1,17 @@
-import { AppProps } from 'next/dist/next-server/lib/router/router'
+import { CssBaseline, ThemeProvider } from '@material-ui/core'
+import router, { AppProps } from 'next/dist/next-server/lib/router/router'
 import Head from 'next/head'
+import React from 'react'
+import 'typeface-roboto'
+import theme from '../src/theme'
+import { appWithTranslation } from '../src/next-i18next'
+import App from 'next/app'
+import { AppContextType } from 'next/dist/next-server/lib/utils'
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <html lang="en">
+    <>
       <Head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -28,10 +36,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           type="image/png"
           sizes="32x32"
         />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#317EFB" />
       </Head>
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
       <Component {...pageProps} />
-    </html>
+  </ThemeProvider>
+    </>
   )
-}
+};
+MyApp.getInitialProps = async (appContext: AppContextType<router>) => ({ ...await App.getInitialProps(appContext) })
+
+export default appWithTranslation(MyApp);

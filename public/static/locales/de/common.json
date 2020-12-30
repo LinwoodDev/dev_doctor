@@ -1,0 +1,8 @@
+{
+    "title":"Dev-Doctor.cf",
+    "subtitle":"Kostenlose, quelloffene, serverfreie Lernplattform",
+    "courses": "KURSE",
+    "discord": "BETRETE UNSEREN DISCORD",
+    "error-with-status": "Auf dem Server ist ein Fehler ({{statusCode}}) aufgetreten",
+    "error-without-status": "Auf dem Server ist ein Fehler aufgetreten"
+}
