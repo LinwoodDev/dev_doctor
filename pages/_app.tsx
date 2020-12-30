@@ -17,13 +17,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
         <link rel="manifest" href="/manifest.json" />
         <link
-          href="/icons/favicon-16x16-dumplab-manifest-25130.png"
+          href="/icons/favicon-16x16-dunplab-manifest-25130.png"
           rel="icon"
           type="image/png"
           sizes="16x16"
         />
         <link
-          href="/icons/favicon-32x32-dumplab-manifest-25130.png"
+          href="/icons/favicon-32x32-dunplab-manifest-25130.png"
           rel="icon"
           type="image/png"
           sizes="32x32"
