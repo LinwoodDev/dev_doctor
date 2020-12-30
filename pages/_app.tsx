@@ -4,12 +4,15 @@ import Head from 'next/head'
 import React from 'react'
 import 'typeface-roboto'
 import theme from '../src/theme'
-import { appWithTranslation } from '../src/next-i18next'
-import App from 'next/app'
-import { AppContextType } from 'next/dist/next-server/lib/utils'
+import {i18nextInit} from '../src/next-i18next'
 
+import '../styles/globals.css';
+import { useRouter } from 'next/router';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
+
+  i18nextInit(router, pageProps.i18nResources);
   return (
     <>
       <Head>
@@ -47,6 +50,5 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     </>
   )
 };
-MyApp.getInitialProps = async (appContext: AppContextType<router>) => ({ ...await App.getInitialProps(appContext) })
 
-export default appWithTranslation(MyApp);
+export default MyApp;
