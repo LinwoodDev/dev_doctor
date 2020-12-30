@@ -19,6 +19,7 @@ parts:
   - name: Part 1
     items:
     - name: Welcome
+      description: Welcome to the course
       type: video
       url: https://youtu.be/ScMzIvxBSi4
     - name: Text
