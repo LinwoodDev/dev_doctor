@@ -22,7 +22,6 @@ jobs:
       - run: yarn run export
         env:
             CI: true
-      - run: touch /out/.nojekyll
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
