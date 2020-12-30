@@ -11,6 +11,11 @@
 	"orientation": "any",
 	"icons": [
 		{
+			"src": "/icons/logo-light.png",
+			"type": "image/png",
+			"sizes": "800x800"
+		},
+		{
 			"src": "/icons/android-icon-192x192-dunplab-manifest-25130.png",
 			"type": "image/png",
 			"sizes": "192x192"
@@ -76,5 +81,5 @@
 			"sizes": "16x16"
 		}
 	],
-	"prefer_related_applications": "false"
+	"prefer_related_applications": false
 }
