@@ -105,3 +105,8 @@ dist
 
 # Editor files/directories
 .vscode
+
+# Production
+build/
+public/sw.js
+public/workbox-*.js
