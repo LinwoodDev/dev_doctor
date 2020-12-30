@@ -26,6 +26,8 @@ parts:
       text: >
         Here you can write something. Markdown is supported!
     - name: Quiz
+      # Optional: Max time in seconds (here: 10 minutes)
+      time: 600
       questions:
       - title: Question 1 title
         description: Question 1 description
