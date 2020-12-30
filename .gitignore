@@ -108,5 +108,5 @@ dist
 
 # Production
 build/
-public/sw.js
-public/workbox-*.js
+**/public/workbox-*.js
+**/public/sw.js
