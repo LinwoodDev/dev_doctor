@@ -13,10 +13,10 @@ const CoursesPage = lazy(() => import('./pages/courses'));
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Router basename='/'>
+      <Router>
         <Switch>
           <Route path="/courses" component={CoursesPage} />
-          <Route path="/" component={IndexPage} />
+          <Route exact path="/" component={IndexPage} />
         </Switch>
       </Router>
     </ThemeProvider>
