@@ -6,10 +6,12 @@ icon: null
 # The name of the course. You can see it in the title or in the list
 name: HTML Basics
 
+# The author. It will appear on the front page and on the courses list
+author: FreshVlay
+
 # The description of the course which can be seen in the list of the courses and the intro page.
 description: >
   Hier lernst du die Basics von HTML
-  By FreshVlay | Powered by ProgrammChest
 # The current category of the course. You can see the categories in the list
 category: []
 

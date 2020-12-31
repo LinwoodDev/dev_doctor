@@ -54,6 +54,7 @@ export default function CoursesPage(): ReactElement {
             newCourses.push({
               name: data['name'],
               description: data['description'],
+              author: data['author'],
               slug: course
             });
             setCourses([...newCourses]);
@@ -85,7 +86,10 @@ export default function CoursesPage(): ReactElement {
                     <Typography gutterBottom variant="h5" component="h2">
                       {course['name']}
                     </Typography>
-                    <Typography>
+                    <Typography color="textSecondary" gutterBottom>
+                      {course['author']}
+                    </Typography>
+                    <Typography variant="body2" component="p">
                       {course['description']}
                     </Typography>
                   </CardContent>

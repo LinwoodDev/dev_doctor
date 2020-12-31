@@ -6,6 +6,9 @@ icon: null
 # The name of the course. You can see it in the title or in the list
 name: Example course
 
+# The author. It will appear on the front page and on the courses list
+author: CodeDoctorDE
+
 # The description of the course which can be seen in the list of the courses and the intro page.
 description: >
   This course is only an example which
