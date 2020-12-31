@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 const IndexPage = () => {
-  const {t, lang} = useTranslation('common');
+  const {t} = useTranslation('common');
   const classes = useStyles();
   return (
     <>

@@ -1,14 +1,12 @@
 import { CssBaseline, ThemeProvider } from '@material-ui/core'
-import router, { AppProps } from 'next/dist/next-server/lib/router/router'
+import { AppProps } from 'next/dist/next-server/lib/router/router'
 import Head from 'next/head'
 import React from 'react'
 import 'typeface-roboto'
 import theme from '../src/theme'
 
-import { useRouter } from 'next/router';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const router = useRouter();
 
   return (
     <>
