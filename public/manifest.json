@@ -13,7 +13,8 @@
 		{
 			"src": "/icons/logo-light.png",
 			"type": "image/png",
-			"sizes": "800x800"
+			"sizes": "800x800",
+			"purpose": "any maskable"
 		},
 		{
 			"src": "/icons/android-icon-192x192-dunplab-manifest-25130.png",
