@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import './App.css';
 import theme from './theme';
 import { ThemeProvider } from '@material-ui/core';
@@ -8,7 +8,7 @@ import { Route,
 import { useTranslation } from 'react-i18next';
 
 function App() {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
     const changeLanguage = (lng : string) => {
       (i18n as any).changeLanguage(lng);
     }
