@@ -2,6 +2,7 @@ import { Button, Container, Grid, makeStyles, Typography } from '@material-ui/co
 import React from 'react'
 import { useTranslation } from "react-i18next";
 import MyAppBar from '../components/appbar';
+import { Link as RouterLink } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +31,8 @@ const IndexPage = () => {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button href="/courses" variant="contained" color="primary">
+                  <Button
+                    component={RouterLink} to="/courses" variant="contained" color="primary">
                     {t('courses')}
                   </Button>
                 </Grid>

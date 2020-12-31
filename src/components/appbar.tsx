@@ -8,6 +8,7 @@ import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import StarsOutlinedIcon from '@material-ui/icons/StarsOutlined';
 import {ReactComponent as LogoDark} from '../logo-dark.svg';
+import { Link as RouterLink } from 'react-router-dom';
 import {
     AppBar,
     IconButton,
@@ -63,11 +64,12 @@ export default function MyAppBar(props : MyAppBarProps) {
         <AppBar position="static">
             <Toolbar>
                 <IconButton
+                    component={RouterLink} 
                     edge="start"
                     className={classes.menuButton}
                     color="inherit"
                     aria-label="menu"
-                    href="/"
+                    to="/"
                 >
                     <SvgIcon component={LogoDark} viewBox="0 0 400 400" />
                 </IconButton>
