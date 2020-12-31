@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import './App.css';
 import theme from './theme';
 import { ThemeProvider } from '@material-ui/core';
-import IndexPage from './pages/index';
-import CoursesPage from './pages/courses';
 import {
   Route,
   BrowserRouter as Router, Switch
 } from 'react-router-dom';
+const IndexPage = lazy(() => import('./pages/index'));
+const CoursesPage = lazy(() => import('./pages/courses'));
+
 
 function App() {
   return (
