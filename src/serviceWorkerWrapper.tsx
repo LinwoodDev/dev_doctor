@@ -13,7 +13,9 @@ const ServiceWorkerWrapper: FC = () => {
     setWaitingWorker(registration.waiting);
   };
   const onSWSuccess = (registration: ServiceWorkerRegistration) => {
-    enqueueSnackbar('Ready for offline use.');
+    enqueueSnackbar('Ready for offline use.', {
+      persist: true,
+    });
   };
 
   useEffect(() => {

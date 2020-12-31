@@ -1,7 +1,8 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import MyAppBar from '../components/appbar';
 import { useTranslation } from 'react-i18next';
-import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, CardMedia, CircularProgress, Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import YAML from 'yaml'
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -37,16 +38,43 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CoursesPage(): ReactElement {
     const classes = useStyles();
-    const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const {t} = useTranslation('courses');
-    return (
+
+  const [courses, setCourses] = useState(null);
+  const getData=()=>{
+    fetch('/assets/courses/config.yml')
+      .then((response) => response.text())
+      .then(function(text) {
+        var yaml = YAML.parse(text);
+        console.log(yaml);
+        
+        (yaml['courses'] as Array<Array<any>>).forEach(course => {
+          const file = course['file'];
+          var newCourses = courses ?? [];
+          fetch(`/assets/courses/${file}.yml`).then((response) => response.text()).then(function(response){
+            var data = YAML.parse(response);
+            newCourses.push({
+              name: data['name'],
+              description: data['description'],
+              new: course['new']
+            });
+            setCourses([...newCourses]);
+          });
+        });
+      });
+  }
+  useEffect(()=>{
+    if(!courses)
+      getData()
+  })
+  return (
         <>
           <MyAppBar title={t('title')} />
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {courses == null ? <CircularProgress /> : courses.map((course) => 
+              <Grid item key={course} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
@@ -55,10 +83,10 @@ export default function CoursesPage(): ReactElement {
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {course['name']}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the content.
+                      {course['description']}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -71,7 +99,7 @@ export default function CoursesPage(): ReactElement {
                   </CardActions>
                 </Card>
               </Grid>
-            ))}
+            )}
           </Grid>
         </Container>
         </>

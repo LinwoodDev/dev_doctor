@@ -10,7 +10,12 @@
         "de":"German"
     },
     "profile":"Profile",
-    "badges":"Badges",
+    "stats":"Statistics",
     "settings":"Settings",
-    "info":"Information"
+    "info":"Information",
+    "ready-for-offline":"Bereit für den Offline Modus",
+    "update-available": {
+        "message":"Update verfügbar!",
+        "refresh":"NEU LADEN"
+    }
 }

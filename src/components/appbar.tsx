@@ -6,9 +6,9 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import TuneOutlinedIcon from '@material-ui/icons/TuneOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import StarsOutlinedIcon from '@material-ui/icons/StarsOutlined';
 import {ReactComponent as LogoDark} from '../logo-dark.svg';
 import { Link as RouterLink } from 'react-router-dom';
+import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined';
 import {
     AppBar,
     IconButton,
@@ -118,9 +118,9 @@ export default function MyAppBar(props : MyAppBarProps) {
                     </MenuItem>
                     <MenuItem>
                         <ListItemIcon>
-                            <StarsOutlinedIcon fontSize="small" />
+                            <AssessmentOutlinedIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText primary={t('badges')} />
+                        <ListItemText primary={t('stats')} />
                     </MenuItem>
                     <MenuItem>
                         <ListItemIcon>
