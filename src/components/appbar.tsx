@@ -52,6 +52,9 @@ export default function MyAppBar() {
   open={Boolean(anchorEl)}
   onClose={handleClose}
 >
+    {['de', 'en'].map(() => (<MenuItem>
+        
+    </MenuItem>))}
   <MenuItem onClick={() => changeLanguage('de')}>Deutsch</MenuItem>
   <MenuItem onClick={() => changeLanguage('en')}>English</MenuItem>
 </Menu>
