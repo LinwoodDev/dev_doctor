@@ -20,7 +20,7 @@ export default function MyAppBar() {
     const { i18n } = useTranslation();
     const [anchorEl, setAnchorEl] = React.useState(null);
   
-    const handleClick = (event) => {
+    const handleClick = (event: { currentTarget: any; }) => {
       setAnchorEl(event.currentTarget);
     };
   
@@ -42,11 +42,8 @@ export default function MyAppBar() {
                 <Typography variant="h6" className={classes.title}>
                     News
                 </Typography>
-                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                <Button aria-controls="language-menu" aria-haspopup="true" onClick={handleClick}>
   LANGUAGE
-</Button>
-<Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-  Open Menu
 </Button>
 <Menu
   id="language-menu"
