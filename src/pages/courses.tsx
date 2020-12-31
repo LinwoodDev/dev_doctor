@@ -46,16 +46,15 @@ export default function CoursesPage(): ReactElement {
       .then((response) => response.text())
       .then(function(text) {
         var yaml = YAML.parse(text);
-        console.log(yaml);
         
+        var newCourses = courses ?? [];
         (yaml['courses'] as Array<Array<any>>).forEach(course => {
-          var newCourses = courses ?? [];
-          fetch(`/assets/courses/${course}.yml`).then((response) => response.text()).then(function(response){
+          fetch(`/assets/courses/${course}/config.yml`).then((response) => response.text()).then(function(response){
             var data = YAML.parse(response);
             newCourses.push({
               name: data['name'],
               description: data['description'],
-              new: course['new']
+              slug: course
             });
             setCourses([...newCourses]);
           });
@@ -75,11 +74,13 @@ export default function CoursesPage(): ReactElement {
             {courses == null ? <CircularProgress /> : courses.map((course) => 
               <Grid item key={course} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
+                  {course['icon'] &&
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image={`/assets/courses/${course['slug']}/${course['icon']}`}
+                      title="Image title"
+                    />
+                  }
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {course['name']}
