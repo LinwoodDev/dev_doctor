@@ -1,6 +1,7 @@
-import { Button, Container, Grid, makeStyles, Typography } from '@material-ui/core'
+import { Button, Container, Grid, Link, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
 import { useTranslation } from "react-i18next";
+import MyAppBar from '../components/appbar';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +18,7 @@ const IndexPage = () => {
   const classes = useStyles();
   return (
     <>
+    <MyAppBar title="Home" />
     <div className={classes.heroContent}>
       <Container maxWidth="sm">
         <Typography align="center" variant="h2" component="h1">
@@ -28,7 +30,7 @@ const IndexPage = () => {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
+                  <Button href="/courses" variant="contained" color="primary">
                     {t('courses')}
                   </Button>
                 </Grid>

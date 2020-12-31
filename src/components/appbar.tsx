@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import MenuIcon from "@material-ui/icons/Menu";
 import { useTranslation } from "react-i18next";
 import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -30,8 +29,10 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
 }));
-
-export default function MyAppBar() {
+interface MyAppBarProps{
+    title: string;
+}
+export default function MyAppBar(props : MyAppBarProps) {
     const { t, i18n } = useTranslation('common');
     const [languageAnchorEl, setLanguageAnchorEl] = React.useState(null);
     const [accountAnchorEl, setAccountAnchorEl] = React.useState(null);
@@ -64,12 +65,13 @@ export default function MyAppBar() {
                     className={classes.menuButton}
                     color="inherit"
                     aria-label="menu"
+                    href="/"
                 >
-                    <MenuIcon />
+                    <img width="32" src="/assets/logo-dark.png" alt="logo" />
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
-                    News
-        </Typography>
+                    {props.title}
+                </Typography>
                 <IconButton
                     aria-controls="language-menu"
                     aria-haspopup="true"
