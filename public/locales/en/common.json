@@ -4,5 +4,13 @@
     "courses": "VIEW COURSES",
     "discord": "JOIN OUR DISCORD",
     "error-with-status": "A {{statusCode}} error occurred on server",
-    "error-without-status": "An error occurred on the server"
+    "error-without-status": "An error occurred on the server",
+    "language":{
+        "en":"English",
+        "de":"German"
+    },
+    "profile":"Profile",
+    "badges":"Badges",
+    "settings":"Settings",
+    "info":"Information"
 }

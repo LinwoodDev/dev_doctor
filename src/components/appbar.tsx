@@ -1,8 +1,23 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import { useTranslation } from 'react-i18next';
-import { AppBar, Button, IconButton, Menu, MenuItem, Toolbar, Typography } from '@material-ui/core';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import MenuIcon from "@material-ui/icons/Menu";
+import { useTranslation } from "react-i18next";
+import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import TuneOutlinedIcon from '@material-ui/icons/TuneOutlined';
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import StarsOutlinedIcon from '@material-ui/icons/StarsOutlined';
+import {
+    AppBar,
+    IconButton,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    Toolbar,
+    Typography,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,48 +32,104 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MyAppBar() {
-    const { i18n } = useTranslation();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-  
-    const handleClick = (event: { currentTarget: any; }) => {
-      setAnchorEl(event.currentTarget);
+    const { t, i18n } = useTranslation('common');
+    const [languageAnchorEl, setLanguageAnchorEl] = React.useState(null);
+    const [accountAnchorEl, setAccountAnchorEl] = React.useState(null);
+
+    const handleLanguageClick = (event: { currentTarget: any }) => {
+        setLanguageAnchorEl(event.currentTarget);
     };
-  
-    const handleClose = () => {
-      setAnchorEl(null);
+
+    const handleLanguageClose = () => {
+        setLanguageAnchorEl(null);
     };
-  
+    const handleAccountClick = (event: { currentTarget: any }) => {
+        setAccountAnchorEl(event.currentTarget);
+    };
     const changeLanguage = (lng: string) => {
-      i18n.changeLanguage(lng);
-      handleClose();
-    }
+        i18n.changeLanguage(lng);
+        handleLanguageClose();
+    };
+
+    const handleAccountClose = () => {
+        setAccountAnchorEl(null);
+    };
+
     const classes = useStyles();
     return (
         <AppBar position="static">
             <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <IconButton
+                    edge="start"
+                    className={classes.menuButton}
+                    color="inherit"
+                    aria-label="menu"
+                >
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
                     News
-                </Typography>
-                <Button aria-controls="language-menu" aria-haspopup="true" onClick={handleClick}>
-  LANGUAGE
-</Button>
-<Menu
-  id="language-menu"
-  anchorEl={anchorEl}
-  keepMounted
-  open={Boolean(anchorEl)}
-  onClose={handleClose}
->
-    {['de', 'en'].map(() => (<MenuItem>
-        
-    </MenuItem>))}
-  <MenuItem onClick={() => changeLanguage('de')}>Deutsch</MenuItem>
-  <MenuItem onClick={() => changeLanguage('en')}>English</MenuItem>
-</Menu>
+        </Typography>
+                <IconButton
+                    aria-controls="language-menu"
+                    aria-haspopup="true"
+                    onClick={handleLanguageClick}
+                >
+                    <LanguageOutlinedIcon />
+                </IconButton>
+                <Menu
+                    id="language-menu"
+                    anchorEl={languageAnchorEl}
+                    keepMounted
+                    open={Boolean(languageAnchorEl)}
+                    onClose={handleLanguageClose}
+                >
+                    {i18n.languages.map((e) => (
+                        <MenuItem key={e} onClick={() => changeLanguage(e)} selected={e === i18n.language}>
+                            {t("language." + e)}
+                        </MenuItem>
+                    ))}
+                </Menu>
+                <IconButton
+                    aria-controls="account-menu"
+                    aria-haspopup="true"
+                    onClick={handleAccountClick}
+                >
+                    <AccountCircleOutlinedIcon />
+                </IconButton>
+                <Menu
+                    id="account-menu"
+                    anchorEl={accountAnchorEl}
+                    keepMounted
+                    open={Boolean(accountAnchorEl)}
+                    onClose={handleAccountClose}
+                >
+                    <MenuItem>
+                        <ListItemIcon>
+                            <TuneOutlinedIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary={t('profile')} />
+                    </MenuItem>
+                    <MenuItem>
+                        <ListItemIcon>
+                            <StarsOutlinedIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary={t('badges')} />
+                    </MenuItem>
+                    <MenuItem>
+                        <ListItemIcon>
+                            <SettingsOutlinedIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary={t('settings')} />
+                    </MenuItem>
+                    <MenuItem>
+                        <ListItemIcon>
+                            <InfoOutlinedIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary={t('info')} />
+                    </MenuItem>
+                </Menu>
             </Toolbar>
         </AppBar>
-    )
+    );
 }

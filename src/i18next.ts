@@ -12,7 +12,7 @@ const i18n = i18next
       // for all available options read the backend's repository readme file
       loadPath: '/locales/{{lng}}/{{ns}}.json'
     },
-    fallbackLng: 'en',
+    fallbackLng: ['en', 'de'],
     debug: true,
 
     interpolation: {

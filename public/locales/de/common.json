@@ -4,5 +4,13 @@
     "courses": "KURSE",
     "discord": "BETRETE UNSEREN DISCORD",
     "error-with-status": "Auf dem Server ist ein Fehler ({{statusCode}}) aufgetreten",
-    "error-without-status": "Auf dem Server ist ein Fehler aufgetreten"
+    "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",
+    "language":{
+        "de":"Deutsch",
+        "en":"Englisch"
+    },
+    "profile":"Profil",
+    "badges":"Badges",
+    "settings":"Einstellungen",
+    "info":"Informationen"
 }
