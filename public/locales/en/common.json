@@ -1,0 +1,8 @@
+{
+    "title":"Dev-Doctor.cf",
+    "subtitle":"Free, opensource, serverless learning platform",
+    "courses": "VIEW COURSES",
+    "discord": "JOIN OUR DISCORD",
+    "error-with-status": "A {{statusCode}} error occurred on server",
+    "error-without-status": "An error occurred on the server"
+}

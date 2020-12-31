@@ -1,0 +1,51 @@
+# Preview this course: https://dev-doctor.cf/
+
+# The name of the course. You can see it in the title or in the list
+name: Example course
+
+# The description of the course which can be seen in the list of the courses and the intro page.
+description: >
+  This course is only an example which
+  shows how this config works
+
+# The current category of the course. You can see the categories in the list
+category: []
+
+# The language of the course. You can see a flag as a badge of the course.
+lang: en
+
+# Controls if the course is shown in the list
+private: true
+
+# The course. See the preview to understand all config entries
+parts:
+  - name: Part 1
+    items:
+    - name: Welcome
+      description: Welcome to the course
+      type: video
+      url: https://youtu.be/ScMzIvxBSi4
+    - name: Text
+      type: text
+      text: >
+        Here you can write something. Markdown is supported!
+    - name: Quiz
+      # Optional: Max time in seconds (here: 10 minutes)
+      time: 600
+      questions:
+      - title: Question 1 title
+        description: Question 1 description
+        answers:
+        - name: A
+          description: A description
+        - name: B
+          description: B description
+        - name: C
+          description: C is correct
+          correct: true
+        - name: D
+          description: Multiple correct answers are also possible
+          correct: true
+
+
+
