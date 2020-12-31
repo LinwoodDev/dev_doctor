@@ -5,12 +5,16 @@ import App from './App';
 import './i18next';
 import reportWebVitals from './reportWebVitals';
 import ServiceWorkerWrapper from './serviceWorkerWrapper';
+import { SnackbarProvider } from 'notistack';
+
 
 ReactDOM.render(
-    <Suspense fallback="loading">
-    <App />,
+  <Suspense fallback="loading">
+    <SnackbarProvider maxSnack={3}>
+      <App />
     <ServiceWorkerWrapper />
-    </Suspense>,
+    </SnackbarProvider>
+  </Suspense>,
   document.getElementById('root')
 );
 

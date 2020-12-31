@@ -1,8 +1,10 @@
 import React, { FC, useEffect } from 'react';
 import { Snackbar, Button } from '@material-ui/core';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import { useSnackbar } from 'notistack';
 
 const ServiceWorkerWrapper: FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [showReload, setShowReload] = React.useState(false);
   const [waitingWorker, setWaitingWorker] = React.useState<ServiceWorker | null>(null);
 
@@ -10,10 +12,13 @@ const ServiceWorkerWrapper: FC = () => {
     setShowReload(true);
     setWaitingWorker(registration.waiting);
   };
+  const onSWSuccess = (registration: ServiceWorkerRegistration) => {
+    enqueueSnackbar('Ready for offline use.');
+  };
 
   useEffect(() => {
-    serviceWorkerRegistration.register({ onUpdate: onSWUpdate });
-  }, []);
+    serviceWorkerRegistration.register({ onUpdate: onSWUpdate, onSuccess: onSWSuccess });
+  });
 
   const reloadPage = () => {
     waitingWorker?.postMessage({ type: 'SKIP_WAITING' });
