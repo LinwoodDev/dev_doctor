@@ -1,0 +1,9 @@
+{
+    "locales": ["en", "de"],
+    "defaultLocale": "en",
+    "pages": {
+      "*": ["common"],
+      "/": ["common"],
+      "/course": ["course"]
+    }
+  }

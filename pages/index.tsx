@@ -1,7 +1,7 @@
 import { Button, Container, Grid, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
-import { WithTranslation } from 'react-i18next';
-import { withTranslation } from '../src/next-i18next';
+import useTranslation from 'next-translate/useTranslation'
+
 
 const useStyles = makeStyles((theme) => ({
   heroButtons: {
@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(8, 0, 6),
   }
 }));
-const IndexPage = ({t}: WithTranslation) => {
+const IndexPage = () => {
+  const {t, lang} = useTranslation('common');
   const classes = useStyles();
   return (
     <>
@@ -43,9 +44,6 @@ const IndexPage = ({t}: WithTranslation) => {
     </>
   );
 };
-IndexPage.getInitialProps = () => ({
-  namespacesRequired: ['common'],
-})
 
-export default withTranslation('common')(IndexPage)
+export default IndexPage
 
