@@ -7,7 +7,6 @@ import {
   Route,
   BrowserRouter as Router, Switch
 } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import MyAppBar from './components/appbar';
 
 function App() {

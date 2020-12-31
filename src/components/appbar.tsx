@@ -1,12 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useTranslation } from 'react-i18next';
+import { AppBar, Button, IconButton, Menu, MenuItem, Toolbar, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,8 +18,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyAppBar() {
     const { i18n } = useTranslation();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+  
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+  
     const changeLanguage = (lng: string) => {
-      (i18n as any).changeLanguage(lng);
+      i18n.changeLanguage(lng);
+      handleClose();
     }
     const classes = useStyles();
     return (
@@ -35,7 +42,22 @@ export default function MyAppBar() {
                 <Typography variant="h6" className={classes.title}>
                     News
                 </Typography>
-                <Button color="inherit">Login</Button>
+                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+  LANGUAGE
+</Button>
+<Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+  Open Menu
+</Button>
+<Menu
+  id="language-menu"
+  anchorEl={anchorEl}
+  keepMounted
+  open={Boolean(anchorEl)}
+  onClose={handleClose}
+>
+  <MenuItem onClick={() => changeLanguage('de')}>Deutsch</MenuItem>
+  <MenuItem onClick={() => changeLanguage('en')}>English</MenuItem>
+</Menu>
             </Toolbar>
         </AppBar>
     )
