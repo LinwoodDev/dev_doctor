@@ -4,7 +4,7 @@ import theme from './theme';
 import { ThemeProvider } from '@material-ui/core';
 import {
   Route,
-  BrowserRouter as Router, Switch
+  HashRouter as Router, Switch
 } from 'react-router-dom';
 const IndexPage = lazy(() => import('./pages/index'));
 const CoursesPage = lazy(() => import('./pages/courses'));
@@ -13,7 +13,7 @@ const CoursesPage = lazy(() => import('./pages/courses'));
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Router>
+      <Router basename='/'>
         <Switch>
           <Route path="/courses" component={CoursesPage} />
           <Route path="/" component={IndexPage} />
