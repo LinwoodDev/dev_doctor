@@ -7,6 +7,7 @@ import TuneOutlinedIcon from '@material-ui/icons/TuneOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import StarsOutlinedIcon from '@material-ui/icons/StarsOutlined';
+import {ReactComponent as LogoDark} from '../logo-dark.svg';
 import {
     AppBar,
     IconButton,
@@ -14,6 +15,7 @@ import {
     ListItemText,
     Menu,
     MenuItem,
+    SvgIcon,
     Toolbar,
     Typography,
 } from "@material-ui/core";
@@ -67,7 +69,7 @@ export default function MyAppBar(props : MyAppBarProps) {
                     aria-label="menu"
                     href="/"
                 >
-                    <img width="32" src="/assets/logo-dark.png" alt="logo" />
+                    <SvgIcon component={LogoDark} viewBox="0 0 400 400" />
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
                     {props.title}
