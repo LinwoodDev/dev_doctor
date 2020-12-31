@@ -1,3 +1,2 @@
 courses:
-- file: example
-  new: true
+- example

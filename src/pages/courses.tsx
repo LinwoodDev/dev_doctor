@@ -49,9 +49,8 @@ export default function CoursesPage(): ReactElement {
         console.log(yaml);
         
         (yaml['courses'] as Array<Array<any>>).forEach(course => {
-          const file = course['file'];
           var newCourses = courses ?? [];
-          fetch(`/assets/courses/${file}.yml`).then((response) => response.text()).then(function(response){
+          fetch(`/assets/courses/${course}.yml`).then((response) => response.text()).then(function(response){
             var data = YAML.parse(response);
             newCourses.push({
               name: data['name'],
