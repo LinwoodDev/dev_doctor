@@ -59,10 +59,19 @@ registerRoute(
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
   
-  ({ url }) => {console.log(url); return url.origin === self.location.origin && !url.pathname.match( '^.*(/assets/courses/)(?!(config.yml)$).*$');},
+  ({ url }) => url.origin === self.location.origin && url.href.match( '^.*(/assets/courses)(/([\\w\\d]+))?(/config.yml).*$'),
   // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
-    cacheName: 'assets'
+    cacheName: 'courses'
+  })
+);
+registerRoute(
+  // Add in any other file extensions or routing criteria as needed.
+  
+  ({ url }) => {console.log(url); return url.origin === self.location.origin && url.pathname.startsWith( '/locales/');},
+  // Customize this strategy as needed, e.g., by changing to CacheFirst.
+  new StaleWhileRevalidate({
+    cacheName: 'localization'
   })
 );
 
