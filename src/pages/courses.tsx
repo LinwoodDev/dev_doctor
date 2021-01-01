@@ -76,6 +76,8 @@ export default function CoursesPage(): ReactElement {
             {courses == null ? <CircularProgress /> : courses.map((course) => 
               <Grid item key={course['slug']} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
+                  <Button onClick={() => navigator.serviceWorker.controller.postMessage({type: 'ADD', course: course['slug']})}>add</Button>
+                  <Button onClick={() => navigator.serviceWorker.controller.postMessage({type: 'REMOVE', course: course['slug']})}>remove</Button>
                   {course['icon'] &&
                     <CardMedia
                       className={classes.cardMedia}

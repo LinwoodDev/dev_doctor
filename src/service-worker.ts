@@ -78,8 +78,18 @@ registerRoute(
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
+  if (event.data) {
+    switch(event.data.type){
+      case 'SKIP_WAITING':
+        self.skipWaiting();
+        break;
+      case 'ADD':
+        caches.open('course').then((cache) => cache.add(`assets/courses/${event.data.course}/icon.png`));
+        break;
+        case 'REMOVE':
+          caches.delete(`^(/assets/courses)(/${event.data.course})(?!/config.yml).*$`);
+          break;
+    }
   }
 });
 
@@ -91,9 +101,3 @@ self.addEventListener('fetch', function(event) {
       })
   );
 });
-export function DownloadCourse(course : string){
-  registerRoute(`assets/courses/${course}/*`);
-}
-export function DeleteCourse(course : string){
-  caches.delete(`assets/courses/${course}/*`);
-}
