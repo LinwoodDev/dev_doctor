@@ -8,6 +8,7 @@
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
 
+import { inspect } from 'util';
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
@@ -57,15 +58,11 @@ registerRoute(
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
-  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'),
+  
+  ({ url }) => {console.log(url); return url.origin === self.location.origin && !url.pathname.match( '^.*(/assets/courses/)(?!(config.yml)$).*$');},
   // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
-    cacheName: 'images',
-    plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50 }),
-    ],
+    cacheName: 'assets'
   })
 );
 
@@ -79,10 +76,15 @@ self.addEventListener('message', (event) => {
 
 // Any other custom service worker logic can go here.
 self.addEventListener('fetch', function(event) {
-  console.log(event.request.url);
   event.respondWith(
       caches.match(event.request).then(function(response) {
           return response || fetch(event.request);
       })
   );
 });
+export function DownloadCourse(course : string){
+  registerRoute(`assets/courses/${course}/*`);
+}
+export function DeleteCourse(course : string){
+  caches.delete(`assets/courses/${course}/*`);
+}

@@ -55,6 +55,7 @@ export default function CoursesPage(): ReactElement {
               name: data['name'],
               description: data['description'],
               author: data['author'],
+              icon: data['icon'],
               slug: course
             });
             setCourses([...newCourses]);
@@ -73,12 +74,12 @@ export default function CoursesPage(): ReactElement {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {courses == null ? <CircularProgress /> : courses.map((course) => 
-              <Grid item key={course} xs={12} sm={6} md={4}>
+              <Grid item key={course['slug']} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   {course['icon'] &&
                     <CardMedia
                       className={classes.cardMedia}
-                      image={`/assets/courses/${course['slug']}/${course['icon']}`}
+                      image={`/assets/courses/${course['slug']}/icon.png`}
                       title="Image title"
                     />
                   }

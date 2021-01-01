@@ -1,7 +1,7 @@
 # Preview this course: https://dev-doctor.cf/
 
 # The icon of the course should be named icon.png and located in this directory
-icon: false
+icon: true
 
 # The name of the course. You can see it in the title or in the list
 name: Example course
