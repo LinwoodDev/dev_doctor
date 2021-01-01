@@ -9,8 +9,10 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import {ReactComponent as LogoDark} from '../logo-dark.svg';
 import { Link as RouterLink } from 'react-router-dom';
 import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined';
+import NotificationsOutlinedIcon from '@material-ui/icons/Notifications';
 import {
     AppBar,
+    Badge,
     IconButton,
     ListItemIcon,
     ListItemText,
@@ -76,6 +78,11 @@ export default function MyAppBar(props : MyAppBarProps) {
                 <Typography variant="h6" className={classes.title}>
                     {props.title}
                 </Typography>
+        <IconButton aria-label="show 11 new notifications" color="inherit">
+          <Badge badgeContent={11} color="secondary">
+            <NotificationsOutlinedIcon />
+          </Badge>
+        </IconButton>
                 <IconButton
                     aria-controls="language-menu"
                     aria-haspopup="true"
