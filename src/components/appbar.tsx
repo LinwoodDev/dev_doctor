@@ -87,7 +87,6 @@ export default function MyAppBar(props : MyAppBarProps) {
                 </Typography>
                 }
                 </div>
-            {props.actions}
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
             <NotificationsOutlinedIcon />

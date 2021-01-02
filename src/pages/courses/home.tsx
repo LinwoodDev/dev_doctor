@@ -1,4 +1,5 @@
 import {
+  AppBar,
   Box,
   Container,
   createStyles,
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       marginTop: theme.spacing(4),
-      marginBottom: theme.spacing(4)
+      marginBottom: theme.spacing(4),
     },
     img: {
       margin: "auto",
@@ -36,13 +37,15 @@ export default function CourseHomePage({ course }: CourseProps): ReactElement {
   const classes = useStyles();
   return (
     <div>
-      <MyAppBar title="Course" subtitle={course.slug} actions={[
-<Tabs value={0}>
-<Tab label="HOME" />
-<Tab label="STATISTICS" />
-<Tab label="COURSE" />
-</Tabs>
-      ]} />
+      <MyAppBar title="Course" subtitle={course.slug} />
+      <AppBar position="sticky" color="inherit">
+        <Tabs value={0} 
+    centered>
+          <Tab label="HOME" />
+          <Tab label="STATISTICS" />
+          <Tab label="COURSE" />
+        </Tabs>
+      </AppBar>
       <Container>
         <Container maxWidth="lg">
           <Paper className={classes.paper}>
