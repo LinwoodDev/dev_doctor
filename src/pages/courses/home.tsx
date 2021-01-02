@@ -15,6 +15,7 @@ import React, { ReactElement } from "react";
 import MyAppBar from "../../components/appbar";
 import { CourseProps } from "./route";
 import MyMarkdown from "../../components/markdown";
+import CourseTabs from "./tabs";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,14 +39,6 @@ export default function CourseHomePage({ course }: CourseProps): ReactElement {
   return (
     <div>
       <MyAppBar title="Course" subtitle={course.slug} />
-      <AppBar position="sticky" color="inherit">
-        <Tabs value={0} 
-    centered>
-          <Tab label="HOME" />
-          <Tab label="STATISTICS" />
-          <Tab label="COURSE" />
-        </Tabs>
-      </AppBar>
       <Container>
         <Container maxWidth="lg">
           <Paper className={classes.paper}>
@@ -69,6 +62,7 @@ export default function CourseHomePage({ course }: CourseProps): ReactElement {
               </Grid>
             </Grid>
           </Paper>
+          <CourseTabs />
           <Paper className={classes.paper}>
             <Box p={1}>
               <MyMarkdown body={course.body} />
