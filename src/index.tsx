@@ -6,10 +6,11 @@ import './i18next';
 import reportWebVitals from './reportWebVitals';
 import ServiceWorkerWrapper from './serviceWorkerWrapper';
 import { SnackbarProvider } from 'notistack';
+import { CircularProgress } from '@material-ui/core';
 
 
 ReactDOM.render(
-  <Suspense fallback="loading">
+  <Suspense fallback={<CircularProgress />}>
     <SnackbarProvider maxSnack={3}>
       <App />
     <ServiceWorkerWrapper />

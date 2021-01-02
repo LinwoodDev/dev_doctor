@@ -8,9 +8,7 @@
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
 
-import { inspect } from 'util';
 import { clientsClaim } from 'workbox-core';
-import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
@@ -86,9 +84,10 @@ self.addEventListener('message', (event) => {
       case 'ADD':
         caches.open('course').then((cache) => cache.add(`assets/courses/${event.data.course}/icon.png`));
         break;
-        case 'REMOVE':
-          caches.delete(`^(/assets/courses)(/${event.data.course})(?!/config.yml).*$`);
-          break;
+      case 'REMOVE':
+        caches.open('course').then((cache) => cache.delete(`assets/courses/${event.data.course}/icon.png`));
+        // caches.delete(`^(/assets/courses)(/${event.data.course})(?!/config.yml).*$`);
+        break;
     }
   }
 });
