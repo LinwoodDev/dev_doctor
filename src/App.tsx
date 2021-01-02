@@ -7,7 +7,7 @@ import {
   HashRouter as Router, Switch
 } from 'react-router-dom';
 const IndexPage = lazy(() => import('./pages/index'));
-const CoursesPage = lazy(() => import('./pages/courses'));
+const CoursesRoute = lazy(() => import('./pages/courses/route'));
 
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Route path="/courses" component={CoursesPage} />
+          <Route path="/courses" component={CoursesRoute} />
           <Route exact path="/" component={IndexPage} />
         </Switch>
       </Router>

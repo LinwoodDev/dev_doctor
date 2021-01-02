@@ -1,9 +1,5 @@
 import React, { ReactElement } from 'react'
-import { CourseProps } from './course';
-
-interface Props {
-    
-}
+import { CourseProps } from './route'
 
 export default function CourseStatsPage({}: CourseProps): ReactElement {
     return (

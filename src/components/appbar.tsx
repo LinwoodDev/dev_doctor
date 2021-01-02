@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 interface MyAppBarProps{
     title: string;
+    subtitle?: string;
 }
 export default function MyAppBar(props : MyAppBarProps) {
     const { t, i18n } = useTranslation('common');
@@ -75,9 +76,16 @@ export default function MyAppBar(props : MyAppBarProps) {
                 >
                     <SvgIcon component={LogoDark} viewBox="0 0 400 400" />
                 </IconButton>
-                <Typography variant="h6" className={classes.title}>
+                <div className={classes.title}>
+                <Typography variant="h6">
                     {props.title}
                 </Typography>
+                {props.subtitle&&
+                <Typography variant="subtitle1" color="textSecondary">
+                    {props.subtitle}
+                </Typography>
+                }
+                </div>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
             <NotificationsOutlinedIcon />

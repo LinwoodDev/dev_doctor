@@ -1,10 +1,10 @@
 import React, { ReactElement, useEffect, useState } from 'react'
-import MyAppBar from '../components/appbar';
+import MyAppBar from '../../components/appbar';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, CardActions, CardContent, CardMedia, CircularProgress, Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import YAML from 'yaml'
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import CourseRoute from './courses/course';
+import Course from '../../models/course';
+import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -42,7 +42,7 @@ export default function CoursesPage(): ReactElement {
     const classes = useStyles();
     const {t} = useTranslation('courses');
 
-  const [courses, setCourses] = useState(null);
+  const [courses, setCourses] = useState<Array<Course>>(null);
   const getData=()=>{
     fetch('/assets/courses/config.yml')
       .then((response) => response.text())
@@ -50,25 +50,16 @@ export default function CoursesPage(): ReactElement {
         var yaml = YAML.parse(text);
         
         var newCourses = [];
-        Promise.all((yaml['courses'] as Array<Array<any>>).map(course => 
-          fetch(`/assets/courses/${course}/config.yml`).then((response) => response.text()).then(async function(response){
-            var data = YAML.parse(response);
-            var installed = await caches.has(`course-${course}`);
-            var courseItem = {
-              name: data['name'],
-              description: data['description'],
-              author: data['author'],
-              icon: data['icon'],
-              installed: installed,
-              slug: course
-            };
-            newCourses.push(courseItem);
-            console.log(courseItem);
-          })
+        Promise.all((yaml['courses'] as Array<string>).map(slug => {
+          var course = new Course({slug: slug});
+          newCourses.push(course);
+          return course.Update();
+        }
         )).then(() => setCourses(newCourses)
         );
       });
   }
+  let { path } = useRouteMatch();
   useEffect(()=>{
     if(!courses)
       getData()
@@ -83,13 +74,8 @@ export default function CoursesPage(): ReactElement {
       setCourses(null);
     caches.delete(`course-${course}`).then(getData);
   }
-  let match = useRouteMatch();
   return (
-        <Switch>
-          <Route path={`${match.path}/:topicId`}>
-            <CourseRoute />
-          </Route>
-          <Route path={match.path}>
+    <>
           <MyAppBar title={t('title')} />
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
@@ -117,7 +103,7 @@ export default function CoursesPage(): ReactElement {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button component={RouterLink} to={`${path}/${course['slug']}`} size="small" color="primary">
                       View
                     </Button>
                     <Button size="small" color="primary">
@@ -129,7 +115,6 @@ export default function CoursesPage(): ReactElement {
                 )}
           </Grid>
         </Container>
-      </Route>
-    </Switch>
+        </>
     )
 }
