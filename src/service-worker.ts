@@ -82,10 +82,10 @@ self.addEventListener('message', (event) => {
         self.skipWaiting();
         break;
       case 'ADD':
-        caches.open('course').then((cache) => cache.add(`assets/courses/${event.data.course}/icon.png`));
+        caches.open(`course-${event.data.course}`).then((cache) => cache.add(`assets/courses/${event.data.course}/icon.png`));
         break;
       case 'REMOVE':
-        caches.open('course').then((cache) => cache.delete(`assets/courses/${event.data.course}/icon.png`));
+        caches.delete(`course-${event.data.course}`);
         // caches.delete(`^(/assets/courses)(/${event.data.course})(?!/config.yml).*$`);
         break;
     }

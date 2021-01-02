@@ -47,37 +47,50 @@ export default function CoursesPage(): ReactElement {
       .then(function(text) {
         var yaml = YAML.parse(text);
         
-        var newCourses = courses ?? [];
-        (yaml['courses'] as Array<Array<any>>).forEach(course => {
-          fetch(`/assets/courses/${course}/config.yml`).then((response) => response.text()).then(function(response){
+        var newCourses = [];
+        Promise.all((yaml['courses'] as Array<Array<any>>).map(course => 
+          fetch(`/assets/courses/${course}/config.yml`).then((response) => response.text()).then(async function(response){
             var data = YAML.parse(response);
-            newCourses.push({
+            var installed = await caches.has(`course-${course}`);
+            var courseItem = {
               name: data['name'],
               description: data['description'],
               author: data['author'],
               icon: data['icon'],
+              installed: installed,
               slug: course
-            });
-            setCourses([...newCourses]);
-          });
-        });
+            };
+            newCourses.push(courseItem);
+            console.log(courseItem);
+          })
+        )).then(() => setCourses(newCourses)
+        );
       });
   }
   useEffect(()=>{
     if(!courses)
       getData()
   })
+  const addCourse = (course : string) => {
+    if(!courses)
+      setCourses(null);
+    caches.open(`course-${course}`).then((cache) => cache.add(`assets/courses/${course}/icon.png`)).then(getData);
+  }
+  const removeCourse = (course : string) => {
+    if(!courses)
+      setCourses(null);
+    caches.delete(`course-${course}`).then(getData);
+  }
   return (
         <>
           <MyAppBar title={t('title')} />
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {courses == null ? <CircularProgress /> : courses.map((course) => 
+            {courses == null ? <CircularProgress /> : courses.map((course) =>
               <Grid item key={course['slug']} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
-                  <Button onClick={() => navigator.serviceWorker.controller.postMessage({type: 'ADD', course: course['slug']})}>add</Button>
-                  <Button onClick={() => navigator.serviceWorker.controller.postMessage({type: 'REMOVE', course: course['slug']})}>remove</Button>
+                  {course['installed'] ? <Button onClick={() => removeCourse(course['slug'])}>remove</Button> :<Button onClick={() => addCourse(course['slug'])}>add</Button>}
                   {course['icon'] &&
                     <CardMedia
                       className={classes.cardMedia}
@@ -106,7 +119,7 @@ export default function CoursesPage(): ReactElement {
                   </CardActions>
                 </Card>
               </Grid>
-            )}
+                )}
           </Grid>
         </Container>
         </>

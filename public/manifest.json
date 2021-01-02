@@ -5,6 +5,7 @@
 	"description": "A free, opensource, serverless learning platform",
 	"background_color": "#ff9800",
 	"theme_color": "#ff9800",
+	"scope": ".",
     "dir": "ltr",
     "start-url":"./",
 	"display": "standalone",
