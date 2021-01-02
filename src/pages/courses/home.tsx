@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
     },
     paper: {
-      margin: theme.spacing(4),
+      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(4)
     },
     img: {
       margin: "auto",
