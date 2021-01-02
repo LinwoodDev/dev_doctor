@@ -49,7 +49,7 @@ export default function CourseHomePage({ course }: CourseProps): ReactElement {
                 )}
               </Grid>
               <Grid item lg={7} md={5} sm={12}>
-                <Box p={2}>
+                <Box p={1}>
                   <Typography variant="h4" color="primary">
                     {course.name}
                   </Typography>
@@ -59,7 +59,7 @@ export default function CourseHomePage({ course }: CourseProps): ReactElement {
             </Grid>
           </Paper>
           <Paper className={classes.paper}>
-            <Box p={2}>
+            <Box p={1}>
               <MyMarkdown body={course.body} />
             </Box>
           </Paper>
