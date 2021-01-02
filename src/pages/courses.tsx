@@ -3,6 +3,8 @@ import MyAppBar from '../components/appbar';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, CardActions, CardContent, CardMedia, CircularProgress, Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import YAML from 'yaml'
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import CourseRoute from './courses/course';
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -81,8 +83,13 @@ export default function CoursesPage(): ReactElement {
       setCourses(null);
     caches.delete(`course-${course}`).then(getData);
   }
+  let match = useRouteMatch();
   return (
-        <>
+        <Switch>
+          <Route path={`${match.path}/:topicId`}>
+            <CourseRoute />
+          </Route>
+          <Route path={match.path}>
           <MyAppBar title={t('title')} />
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
@@ -122,6 +129,7 @@ export default function CoursesPage(): ReactElement {
                 )}
           </Grid>
         </Container>
-        </>
+      </Route>
+    </Switch>
     )
 }
