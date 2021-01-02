@@ -5,6 +5,8 @@ import {
   Grid,
   makeStyles,
   Paper,
+  Tab,
+  Tabs,
   Theme,
   Typography,
 } from "@material-ui/core";
@@ -34,7 +36,13 @@ export default function CourseHomePage({ course }: CourseProps): ReactElement {
   const classes = useStyles();
   return (
     <div>
-      <MyAppBar title="Course" subtitle={course.slug} />
+      <MyAppBar title="Course" subtitle={course.slug} actions={[
+<Tabs value={0}>
+<Tab label="HOME" />
+<Tab label="STATISTICS" />
+<Tab label="COURSE" />
+</Tabs>
+      ]} />
       <Container>
         <Container maxWidth="lg">
           <Paper className={classes.paper}>

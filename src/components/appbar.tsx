@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 interface MyAppBarProps{
     title: string;
     subtitle?: string;
+    actions?: JSX.Element[];
 }
 export default function MyAppBar(props : MyAppBarProps) {
     const { t, i18n } = useTranslation('common');
@@ -86,6 +87,7 @@ export default function MyAppBar(props : MyAppBarProps) {
                 </Typography>
                 }
                 </div>
+            {props.actions}
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
             <NotificationsOutlinedIcon />
