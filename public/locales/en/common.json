@@ -17,5 +17,6 @@
     "update-available": {
         "message":"Update verfügbar!",
         "refresh":"NEU LADEN"
-    }
+    },
+    "coming-soon":"Coming soon..."
 }

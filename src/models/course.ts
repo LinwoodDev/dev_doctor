@@ -9,6 +9,7 @@ export default class Course {
     private _author : string;
     private _installed : boolean;
     private _body : string;
+    private _lang : string;
     
 
     constructor({slug, update = false} : {slug: string, update?: boolean}){
@@ -27,6 +28,7 @@ export default class Course {
     public get description() : string {return this._description;}
     public get icon(): boolean {return this._icon;}
     public get body(): string {return this._body;}
+    public get lang(): string {return this._lang;}
 
     async Update() : Promise<void> {
         var response = await fetch(`/assets/courses/${this.slug}/config.yml`);
@@ -39,5 +41,6 @@ export default class Course {
         this._author = data['author'];
         this._icon = data['icon'];
         this._body = data['body'];
+        this._lang = data['lang'];
     }
 }

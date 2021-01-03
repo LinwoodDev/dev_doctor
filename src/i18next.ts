@@ -15,7 +15,7 @@ const i18n = i18next
     fallbackLng: ['en', 'de'],
     debug: true,
     supportedLngs: ['en', 'de'],
-    ns: ['translation', 'common', 'courses'],
+    ns: ['translation', 'common', 'courses', 'course'],
 
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
