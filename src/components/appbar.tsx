@@ -138,7 +138,7 @@ export default function MyAppBar(props : MyAppBarProps) {
                         </ListItemIcon>
                         <ListItemText primary={t('stats')} />
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem component={RouterLink} to="/settings">
                         <ListItemIcon>
                             <SettingsOutlinedIcon fontSize="small" />
                         </ListItemIcon>

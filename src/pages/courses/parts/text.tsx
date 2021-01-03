@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
+import TextPart from '../../../models/parts/text'
 import { CoursePartProps } from './part'
 
 
-export default function CourseTextPage({}: CoursePartProps): ReactElement {
+export default function CourseTextPage(props: CoursePartProps<TextPart>): ReactElement {
     return (
         <div>
             
