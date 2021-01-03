@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 const IndexPage = lazy(() => import('./pages/index'));
 const CoursesRoute = lazy(() => import('./pages/courses/route'));
+const SettingsPage = lazy(() => import('./pages/settings'));
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Switch>
           <Route path="/courses" component={CoursesRoute} />
           <Route exact path="/" component={IndexPage} />
+          <Route path="/settings" component={SettingsPage} />
         </Switch>
       </Router>
     </ThemeProvider>
