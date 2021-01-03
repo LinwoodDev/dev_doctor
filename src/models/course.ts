@@ -1,4 +1,4 @@
-import CoursePart from "./part";
+import CoursePart from "./parts/part";
 import YAML from 'yaml';
 
 export default class Course {
