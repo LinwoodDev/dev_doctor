@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useStyles } from "./header";
 import { CourseProps } from "./route";
 
-export default function CourseStatsPage({}: CourseProps): ReactElement {
+export default function CourseStatsPage(props: CourseProps): ReactElement {
   const classes = useStyles();
   const { t } = useTranslation(["course", "common"]);
 
