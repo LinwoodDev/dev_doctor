@@ -1,7 +1,6 @@
-import React, { ReactElement } from 'react'
-import { CoursePartProps } from './part';
+import { ReactElement } from 'react'
 
-export default function VideoCoursePage({course, part}: CoursePartProps): ReactElement {
+export default function VideoCoursePage(): ReactElement {
     return (
         <div>
             
