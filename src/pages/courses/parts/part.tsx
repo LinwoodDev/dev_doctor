@@ -1,6 +1,6 @@
-import CoursePart from "../../../models/part";
+import CoursePart from "../../../models/parts/part";
 import { CourseProps } from "../route";
 
-export interface CoursePartProps extends CourseProps {
-    part: CoursePart;
+export interface CoursePartProps<T extends CoursePart> extends CourseProps {
+    part: T;
 }
