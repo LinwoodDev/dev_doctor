@@ -1,13 +1,10 @@
 import {
-  AppBar,
   Box,
   Container,
   createStyles,
   Grid,
   makeStyles,
   Paper,
-  Tab,
-  Tabs,
   Theme,
   Typography,
 } from "@material-ui/core";
