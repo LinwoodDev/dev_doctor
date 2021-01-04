@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import MyAppBar from "../../components/appbar";
 import { useTranslation } from "react-i18next";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {
   Accordion,
   AccordionDetails,
