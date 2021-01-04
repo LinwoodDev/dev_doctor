@@ -71,8 +71,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
   },
+  header: {
+    marginBottom: theme.spacing(6)
+  },
   chip: {
     margin: 2,
+  },
+  accordion: {
+    width: '100%'
   },
   noLabel: {
     marginTop: theme.spacing(3),
@@ -82,23 +88,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(6),
   },
 }));
-
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
-function getStyles(name: string, personName: string[], theme: Theme) {
+function getStyles(server: CoursesServer, servers: CoursesServer[], theme: Theme) {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      servers.indexOf(server) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
@@ -118,11 +111,11 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
   const getData = async () => {
     var map = new Map<string, Course[]>();
     for (const server of servers) {
-      map.set(server.url, await server.fetchCourses());
+      map.set(server.name, await server.fetchCourses());
     }
-    console.log(map);
     setCourses(map);
   };
+  const [expanded, setExpanded] = React.useState<string | false>(false);
   const addCourse = (course: string) => {
     if (!courses) setCourses(null);
     caches
@@ -134,10 +127,10 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
     if (!courses) setCourses(null);
     caches.delete(`course-${course}`).then(getData);
   };
-  const [personName, setPersonName] = React.useState<string[]>([]);
+  const [currentServers, setCurrentServers] = React.useState<CoursesServer[]>(servers);
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setPersonName(event.target.value as string[]);
+  const handleChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
+    setCurrentServers(servers.filter((server) => (event.target.value as string[]).includes(server.name)));
   };
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -149,25 +142,30 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
       },
     },
   };
-  const buildView = (url: string, serverCourses: Course[]) => {
-    console.log(serverCourses);
-    if (servers.length === 1) {
-      return buildCoursesView(serverCourses);
+  const handleExpandChange = (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+    setExpanded(panel);
+  };
+
+  const buildView = (name: string, serverCourses: Course[]) => {
+    if (currentServers.length === 1) {
+      return <React.Fragment key={name}>{buildCoursesView(serverCourses)}</React.Fragment>;
+    } else if(currentServers.length === 0){
+      return null;
     } else {
       return (
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>{url}</Typography>
+        <Accordion key={name} className={classes.accordion} expanded={expanded === name} onChange={handleExpandChange(name)}>
+          <AccordionSummary>
+            <Typography className={classes.heading}>{name}</Typography>
           </AccordionSummary>
-          <AccordionDetails>{buildCoursesView(serverCourses)}</AccordionDetails>
+          <AccordionDetails><div>{buildCoursesView(serverCourses)}</div></AccordionDetails>
         </Accordion>
       );
     }
   };
   const buildCoursesView = (serverCourses: Course[]) => (
-    <>
+    <Grid container spacing={4}>
       {serverCourses.map((course) => (
-        <Grid item key={course["slug"]} xs={12} sm={6} md={4}>
+        <Grid item key={course.server.url + "/" +course["slug"]} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
             {course["installed"] ? (
               <Button onClick={() => removeCourse(course["slug"])}>
@@ -220,24 +218,20 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
           </Card>
         </Grid>
       ))}
-    </>
+    </Grid>
   );
-  if (courses != null){
-    console.log(Array.from(courses.keys()));
-    console.log(courses.keys());
-  } 
   return (
     <>
       <MyAppBar title={t("title")} />
       <Container className={classes.cardGrid} maxWidth="md">
-        <Paper>
+        <Paper className={classes.header}>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-mutiple-chip-label">Chip</InputLabel>
+            <InputLabel id="demo-mutiple-chip-label">{t('servers')}</InputLabel>
             <Select
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"
               multiple
-              value={personName}
+              value={currentServers.map((server) => server.name)}
               onChange={handleChange}
               input={<Input id="select-multiple-chip" />}
               renderValue={(selected) => (
@@ -249,13 +243,13 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
               )}
               MenuProps={MenuProps}
             >
-              {names.map((name) => (
+              {servers.map((server) => (
                 <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
+                  key={server.name}
+                  value={server.name}
+                  style={getStyles(server, currentServers, theme)}
                 >
-                  {name}
+                  {server.name}
                 </MenuItem>
               ))}
             </Select>
@@ -265,7 +259,7 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
           {courses == null ? (
             <CircularProgress />
           ) : (
-            Array.from(courses.keys()).map((key) =>
+            Array.from(courses.keys()).filter((key) => currentServers.map((server) => server.name).includes(key)).map((key) =>
               buildView(key as string, courses.get(key))
             )
           )}

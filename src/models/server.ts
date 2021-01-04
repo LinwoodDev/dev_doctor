@@ -3,6 +3,7 @@ import YAML from "yaml";
 
 export default class CoursesServer {
   public readonly url: string;
+  public readonly name : string;
 
   public constructor(init?: Partial<CoursesServer>) {
     Object.assign(this, init);
@@ -17,18 +18,18 @@ export default class CoursesServer {
     );
   }
   public async getCourse(slug: string) : Promise<Course> {
-    console.log(this)
     var response = await fetch(`${this.url}/${slug}/config.yml`);
     var text = await response.text();
     var data = YAML.parse(text);
     data['installed'] = await caches.has(`course-${slug}`);
     data['slug'] = slug;
+    data['server'] = this;
     return new Course(data);
   }
 
   static get servers() : CoursesServer[] {
     var currentData = localStorage.getItem('servers');
-    var servers = [new CoursesServer({url: '/assets/courses'})];
+    var servers = [new CoursesServer({name: 'Programm Chest', url: '/assets/courses'}),new CoursesServer({name: 'FE', url: '/assets/courses'})];
     if(currentData != null){
       servers = JSON.parse(currentData);
     }
