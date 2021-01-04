@@ -48,7 +48,6 @@ function CourseHeader(props: Props) {
     if (props.scrollToTab) tabRef.current.scrollIntoView();
   });
   const handleCallToRouter = (_event: React.ChangeEvent<{}>, value: any) => {
-    console.log(value);
     props.history.push(value);
   };
   return (

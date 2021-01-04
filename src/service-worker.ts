@@ -66,7 +66,7 @@ registerRoute(
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
   
-  ({ url }) => {console.log(url); return url.origin === self.location.origin && url.pathname.startsWith( '/locales/');},
+  ({ url }) => url.origin === self.location.origin && url.pathname.startsWith( '/locales/'),
   // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
     cacheName: 'localization'
