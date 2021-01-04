@@ -1,10 +1,14 @@
+import Course from '../course';
 export default class CoursePart {
-    public readonly course : string;
+    public readonly course : Course;
     public readonly name : string;
     public readonly slug : string;
+
+    public get server() {
+        return this.course.server;
+    }
     
-    constructor({course, slug} : {course: string, slug: string}){
-        this.course = course;
-        this.slug = slug;
+    public constructor(init?:Partial<CoursePart>) {
+        Object.assign(this, init);
     }
 }
