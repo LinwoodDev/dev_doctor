@@ -1,4 +1,4 @@
-import { CircularProgress, Container } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import CoursesPage from '.';
@@ -8,7 +8,6 @@ import CourseHomePage from './home';
 import CourseStatsPage from './stats';
 import CourseHeader from './header';
 import { useTranslation } from 'react-i18next';
-import CourseMaterialsPage from './materials';
 
 interface ParamTypes {
   courseId : string;
@@ -46,20 +45,17 @@ export function CourseRoute(): ReactElement {
     return course == null ? <CircularProgress /> :
     <>
     <MyAppBar title={t("course")} subtitle={course.slug} />
-    <Container>
-      <Container maxWidth="lg">
-        <CourseHeader course={course} scrollToTab={false} />
+    <div>
         <Switch>
       <Route exact path={path}>
+        <CourseHeader course={course} scrollToTab={false} />
         <CourseHomePage course={course} />
       </Route>
       <Route path={`${path}/stats`}>
+        <CourseHeader course={course} scrollToTab={false} />
         <CourseStatsPage course={course} />
       </Route>
-      <Route path={`${path}/materials`}>
-        <CourseMaterialsPage course={course} />
-      </Route>
-    </Switch></Container></Container>
+    </Switch></div>
     </>;
 }
 

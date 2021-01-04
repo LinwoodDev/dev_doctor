@@ -1,4 +1,4 @@
-import { AppBar, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Container, Tab, Tabs } from "@material-ui/core";
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import LanguageOutlinedIcon from "@material-ui/icons/LanguageOutlined";
@@ -10,9 +10,11 @@ import {
   makeStyles,
   Paper,
   Theme,
+  Button,
+  ButtonGroup,
   Typography,
 } from "@material-ui/core";
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,15 +45,14 @@ function CourseHeader(props: Props) {
   const { t } = useTranslation(["course", "common"]);
   const tabRef = useRef(null);
   useEffect(() => {
-    if(props.scrollToTab)
-      tabRef.current.scrollIntoView()
+    if (props.scrollToTab) tabRef.current.scrollIntoView();
   });
-  const handleCallToRouter = (event: React.ChangeEvent<{}>, value: any) => {
+  const handleCallToRouter = (_event: React.ChangeEvent<{}>, value: any) => {
     console.log(value);
     props.history.push(value);
-  }
+  };
   return (
-    <>
+    <Container>
       <Paper className={classes.paper}>
         <Grid container alignItems="stretch">
           <Grid item lg={5} md={7} sm={12}>
@@ -63,42 +64,56 @@ function CourseHeader(props: Props) {
               />
             )}
           </Grid>
-          <Grid item lg={7} md={5} sm={12}>
-            <Box p={1}>
-              <Typography variant="h4" color="primary">
-                {props.course.name}
-              </Typography>
-              <Typography color="textSecondary" gutterBottom>
-                {props.course["author"]}
-              </Typography>
-              <Grid container direction="row" alignItems="center">
-                <Grid item>
-                  <LanguageOutlinedIcon className={classes.icon} />
+          <Grid item lg={7} md={5} sm={12} container direction="column">
+            <Grid item xs>
+              <Box p={1}>
+                <Typography variant="h4" color="primary">
+                  {props.course.name}
+                </Typography>
+                <Typography color="textSecondary" gutterBottom>
+                  {props.course["author"]}
+                </Typography>
+                <Grid container direction="row" alignItems="center">
+                  <Grid item>
+                    <LanguageOutlinedIcon className={classes.icon} />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1" component="p">
+                      {t("common:language." + props.course["lang"])}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Typography variant="body1" component="p">
-                    {t("common:language." + props.course["lang"])}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Typography>{props.course.description}</Typography>
-            </Box>
+                <Typography>{props.course.description}</Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box textAlign="center" p={2}>
+                <ButtonGroup variant="text" color="primary">
+                  <Button>START</Button>
+                  <Button>SUPPORT</Button>
+                </ButtonGroup>
+              </Box>
+            </Grid>
           </Grid>
         </Grid>
       </Paper>
       <AppBar position="sticky" color="inherit" ref={tabRef}>
         <Tabs
-        onChange={handleCallToRouter}
-        value={props.history.location.pathname} centered>
+          onChange={handleCallToRouter}
+          value={props.history.location.pathname}
+          variant="fullWidth"
+        >
           <Tab label={t("home")} value={`/courses/${props.course.slug}`} />
-          <Tab label={t("statistics")} value={`/courses/${props.course.slug}/stats`} />
-          <Tab label={t("materials")} value={`/courses/${props.course.slug}/materials`} />
+          <Tab
+            label={t("statistics")}
+            value={`/courses/${props.course.slug}/stats`}
+          />
         </Tabs>
       </AppBar>
-    </>
+    </Container>
   );
 }
 CourseHeader.defaultProps = {
-  scrollToTab: true
+  scrollToTab: true,
 };
 export default withRouter(CourseHeader);
