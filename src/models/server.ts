@@ -13,11 +13,12 @@ export default class CoursesServer {
     var text = await response.text();
     var yaml = YAML.parse(text);
     return await Promise.all(
-      (yaml["courses"] as Array<string>).map(this.getCourse)
+      (yaml["courses"] as Array<string>).map((slug) => this.getCourse(slug))
     );
   }
   public async getCourse(slug: string) : Promise<Course> {
-    var response = await fetch(`${this.url}/courses/${slug}/config.yml`);
+    console.log(this)
+    var response = await fetch(`${this.url}/${slug}/config.yml`);
     var text = await response.text();
     var data = YAML.parse(text);
     data['installed'] = await caches.has(`course-${slug}`);
@@ -27,7 +28,7 @@ export default class CoursesServer {
 
   static get servers() : CoursesServer[] {
     var currentData = localStorage.getItem('servers');
-    var servers = [new CoursesServer({url: ''})];
+    var servers = [new CoursesServer({url: '/assets/courses'})];
     if(currentData != null){
       servers = JSON.parse(currentData);
     }

@@ -19,7 +19,7 @@ export default class Course {
 
   public async fetchParts(): Promise<CoursePart[]> {
     var response = await fetch(
-      `${this.server.url}/courses/${this.slug}/config.yml`
+      `${this.server.url}/${this.slug}/config.yml`
     );
     var text = await response.text();
     var yaml = YAML.parse(text);
@@ -28,12 +28,10 @@ export default class Course {
     );
   }
   public async getPart(part : string) : Promise<CoursePart> {
-    var response = await fetch(`${this.server.url}/courses/${this.slug}/${part}/config.yml`);
+    var response = await fetch(`${this.server.url}/${this.slug}/${part}/config.yml`);
     var text = await response.text();
     var data = YAML.parse(text);
     data['course'] = this;
     return new CoursePart(data);
   }
-
-  async Update(): Promise<void> {}
 }
