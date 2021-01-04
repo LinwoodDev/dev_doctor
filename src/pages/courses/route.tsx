@@ -8,17 +8,22 @@ import CourseHomePage from './home';
 import CourseStatsPage from './stats';
 import CourseHeader from './header';
 import { useTranslation } from 'react-i18next';
+import CoursesServer from '../../models/server';
 
 interface ParamTypes {
+  serverId : string;
   courseId : string;
 }
+export interface ServerProps {
+  server : CoursesServer;
+}
 
-export default function CoursesRoute(): ReactElement {
+export default function CoursesRoute({server} : ServerProps): ReactElement {
   let { path } = useRouteMatch();  
   return (
       <Switch>
         <Route exact path={path}>
-            <CoursesPage />
+            <CoursesPage server={server} />
         </Route>
         <Route path={`${path}/:courseId`}>
             <CourseRoute />
@@ -26,8 +31,9 @@ export default function CoursesRoute(): ReactElement {
       </Switch>
   )
 }
+
 export function CourseRoute(): ReactElement {
-    const { courseId } = useParams<ParamTypes>();
+    const { serverId, courseId } = useParams<ParamTypes>();
     const [course, setCourse] = useState<Course>(null);
     const { t } = useTranslation('course');
     
@@ -35,12 +41,7 @@ export function CourseRoute(): ReactElement {
       if(course == null)
       updateCourse();
     });
-    const updateCourse = async () => {
-      var course = new Course({slug: courseId, update: false});
-      await course.Update();
-      console.log(course);
-      setCourse(course);
-    }
+    const updateCourse = async () => setCourse(await CoursesServer.getServer(+serverId).getCourse(courseId));
     let { path } = useRouteMatch();
     return course == null ? <CircularProgress /> :
     <>
