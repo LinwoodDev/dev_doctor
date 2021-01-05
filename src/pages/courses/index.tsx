@@ -147,7 +147,7 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
 
   const buildView = (server: CoursesServer, serverCourses: Course[]) => {
     if (currentServers.length === 1) {
-      return <React.Fragment key={server.url}>{buildCoursesView(serverCourses)}</React.Fragment>;
+      return <React.Fragment key={server.url}>{buildCoursesView(server, serverCourses)}</React.Fragment>;
     } else if(currentServers.length === 0){
       return null;
     } else {
@@ -156,14 +156,14 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
           <AccordionSummary>
             <Typography className={classes.heading}>{server.name}</Typography>
           </AccordionSummary>
-          <AccordionDetails><div>{buildCoursesView(serverCourses)}</div></AccordionDetails>
+          <AccordionDetails><div>{buildCoursesView(server, serverCourses)}</div></AccordionDetails>
         </Accordion>
       );
     }
   };
-  const buildCoursesView = (serverCourses: Course[]) => (
+  const buildCoursesView = (server : CoursesServer, serverCourses: Course[]) => (
     <Grid container spacing={4}>
-      {serverCourses.map((course) => (
+      {serverCourses.map((course : Course) => (
         <Grid item key={course.server.url + "/" +course["slug"]} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
             {course["installed"] ? (
@@ -204,7 +204,7 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
             <CardActions>
               <Button
                 component={RouterLink}
-                to={`${path}/${course["slug"]}`}
+                to={`${path}/${Array.from(courses.keys()).indexOf(server)}/${course["slug"]}`}
                 size="small"
                 color="primary"
               >
