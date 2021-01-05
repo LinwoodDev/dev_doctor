@@ -3,7 +3,9 @@ import YAML from "yaml";
 
 export default class CoursesServer {
   public readonly url: string;
+  public readonly icon: string;
   public readonly name : string;
+  public readonly support : string;
 
   public constructor(init?: Partial<CoursesServer>) {
     Object.assign(this, init);
@@ -29,7 +31,7 @@ export default class CoursesServer {
 
   static get servers() : CoursesServer[] {
     var currentData = localStorage.getItem('servers');
-    var servers = [new CoursesServer({name: 'Programm Chest', url: '/assets/courses'}),new CoursesServer({name: 'FE', url: '/assets/courses'})];
+    var servers = [new CoursesServer({name: 'Dev-Doctor', url: 'https://backend.dev-doctor.cf'})];
     if(currentData != null){
       servers = JSON.parse(currentData);
     }

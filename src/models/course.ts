@@ -7,7 +7,7 @@ export default class Course {
   public readonly slug: string;
   public readonly name: string;
   public readonly description: string;
-  public readonly icon: boolean;
+  public readonly icon: string;
   public readonly author: string;
   public readonly installed: boolean;
   public readonly body: string;

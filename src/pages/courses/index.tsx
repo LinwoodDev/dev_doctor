@@ -23,7 +23,7 @@ import {
   Select,
   Theme,
   Typography,
-  useTheme,
+  useTheme
 } from "@material-ui/core";
 import Course from "../../models/course";
 import { Link as RouterLink, useRouteMatch } from "react-router-dom";
@@ -85,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
-  },
+  }
 }));
 function getStyles(server: CoursesServer, servers: CoursesServer[], theme: Theme) {
   return {
@@ -101,16 +101,16 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
   const { t } = useTranslation(["courses", "common"]);
   const servers: CoursesServer[] =
     server == null ? CoursesServer.servers : [server];
-  const [courses, setCourses] = useState<Map<string, Course[]>>(null);
+  const [courses, setCourses] = useState<Map<CoursesServer, Course[]>>(null);
   const theme = useTheme();
   let { path } = useRouteMatch();
   useEffect(() => {
     if (!courses) getData();
   });
   const getData = async () => {
-    var map = new Map<string, Course[]>();
+    var map = new Map<CoursesServer, Course[]>();
     for (const server of servers) {
-      map.set(server.name, await server.fetchCourses());
+      map.set(server, await server.fetchCourses());
     }
     setCourses(map);
   };
@@ -129,7 +129,7 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
   const [currentServers, setCurrentServers] = React.useState<CoursesServer[]>(servers);
 
   const handleChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
-    setCurrentServers(servers.filter((server) => (event.target.value as string[]).includes(server.name)));
+    setCurrentServers(servers.filter((server) => (event.target.value as string[]).includes(server.url)));
   };
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -145,16 +145,16 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
     setExpanded(panel);
   };
 
-  const buildView = (name: string, serverCourses: Course[]) => {
+  const buildView = (server: CoursesServer, serverCourses: Course[]) => {
     if (currentServers.length === 1) {
-      return <React.Fragment key={name}>{buildCoursesView(serverCourses)}</React.Fragment>;
+      return <React.Fragment key={server.url}>{buildCoursesView(serverCourses)}</React.Fragment>;
     } else if(currentServers.length === 0){
       return null;
     } else {
       return (
-        <Accordion key={name} className={classes.accordion} expanded={expanded === name} onChange={handleExpandChange(name)}>
+        <Accordion key={server.url} className={classes.accordion} expanded={expanded === server.url} onChange={handleExpandChange(server.url)}>
           <AccordionSummary>
-            <Typography className={classes.heading}>{name}</Typography>
+            <Typography className={classes.heading}>{server.name}</Typography>
           </AccordionSummary>
           <AccordionDetails><div>{buildCoursesView(serverCourses)}</div></AccordionDetails>
         </Accordion>
@@ -176,7 +176,7 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
             {course["icon"] && (
               <CardMedia
                 className={classes.cardMedia}
-                image={`/assets/courses/${course["slug"]}/icon.png`}
+                image={`${course.server.url}/${course["slug"]}/icon.${course.icon}`}
                 title="Image title"
               />
             )}
@@ -230,13 +230,13 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"
               multiple
-              value={currentServers.map((server) => server.name)}
+              value={currentServers.map((server) => server.url)}
               onChange={handleChange}
-              input={<Input id="select-multiple-chip" />}
+              input={<Input />}
               renderValue={(selected) => (
                 <div className={classes.chips}>
                   {(selected as string[]).map((value) => (
-                    <Chip key={value} label={value} className={classes.chip} />
+                    <Chip key={value} label={currentServers.filter((server) => server.url.includes(value))[0].name} className={classes.chip} />
                   ))}
                 </div>
               )}
@@ -244,8 +244,8 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
             >
               {servers.map((server) => (
                 <MenuItem
-                  key={server.name}
-                  value={server.name}
+                  key={server.url}
+                  value={server.url}
                   style={getStyles(server, currentServers, theme)}
                 >
                   {server.name}
@@ -258,8 +258,8 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
           {courses == null ? (
             <CircularProgress />
           ) : (
-            Array.from(courses.keys()).filter((key) => currentServers.map((server) => server.name).includes(key)).map((key) =>
-              buildView(key as string, courses.get(key))
+            Array.from(courses.keys()).filter((key) => currentServers.map((server) => server.url).includes(key.url)).map((key) =>
+              buildView(key, courses.get(key))
             )
           )}
         </Grid>

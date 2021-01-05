@@ -58,7 +58,7 @@ function CourseHeader(props: Props) {
             {props.course.icon && (
               <img
                 className={classes.img}
-                src="/assets/courses/example/icon.png"
+                src={`${props.course.server.url}/${props.course.slug}/icon.${props.course.icon}`}
                 alt="icon"
               />
             )}
