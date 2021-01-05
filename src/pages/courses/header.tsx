@@ -14,7 +14,7 @@ import {
   ButtonGroup,
   Typography,
 } from "@material-ui/core";
-import { RouteComponentProps, useParams, withRouter } from "react-router-dom";
+import { RouteComponentProps, useParams, withRouter, Link as RouterLink } from "react-router-dom";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -89,7 +89,7 @@ function CourseHeader(props: Props) {
             <Grid item>
               <Box textAlign="center" p={2}>
                 <ButtonGroup variant="text" color="primary">
-                  <Button>START</Button>
+                  <Button component={RouterLink} to={`/courses/${serverId}/${props.course.slug}/start`} >START</Button>
                   <Button>SUPPORT</Button>
                 </ButtonGroup>
               </Box>
