@@ -1,6 +1,7 @@
-import CoursePart from "./parts/part";
+import CoursePartItem from "./items/item";
 import YAML from "yaml";
 import CoursesServer from "./server";
+import CoursePart from "./part";
 
 export default class Course {
   public readonly server: CoursesServer;

@@ -1,13 +1,10 @@
-import Course from '../course';
+import CoursePartItem from "./items/item";
+
 export default class CoursePart {
-    public readonly course : Course;
     public readonly name : string;
     public readonly slug : string;
+    public readonly items : CoursePartItem[];
 
-    public get server() {
-        return this.course.server;
-    }
-    
     public constructor(init?:Partial<CoursePart>) {
         Object.assign(this, init);
     }
