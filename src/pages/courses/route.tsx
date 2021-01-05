@@ -9,6 +9,7 @@ import CourseStatsPage from './stats';
 import CourseHeader from './header';
 import { useTranslation } from 'react-i18next';
 import CoursesServer from '../../models/server';
+import CoursePartsRoute from './item/route';
 
 export interface CourseParamTypes {
   serverId : string;
@@ -55,6 +56,9 @@ export function CourseRoute(): ReactElement {
       <Route path={`${path}/stats`}>
         <CourseHeader course={course} scrollToTab={false} />
         <CourseStatsPage course={course} />
+      </Route>
+      <Route path={`${path}/start`}>
+        <CoursePartsRoute course={course} />
       </Route>
     </Switch></div>
     </>;
