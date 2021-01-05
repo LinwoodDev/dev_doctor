@@ -2,7 +2,7 @@ import { AppBar, Container, Tab, Tabs } from "@material-ui/core";
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import LanguageOutlinedIcon from "@material-ui/icons/LanguageOutlined";
-import { CourseProps } from "./route";
+import { CourseParamTypes, CourseProps } from "./route";
 import {
   Box,
   createStyles,
@@ -14,7 +14,7 @@ import {
   ButtonGroup,
   Typography,
 } from "@material-ui/core";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, useParams, withRouter } from "react-router-dom";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,6 +42,7 @@ interface Props extends CourseProps, RouteComponentProps {
 
 function CourseHeader(props: Props) {
   const classes = useStyles();
+  const { serverId } = useParams<CourseParamTypes>();
   const { t } = useTranslation(["course", "common"]);
   const tabRef = useRef(null);
   useEffect(() => {
@@ -102,10 +103,10 @@ function CourseHeader(props: Props) {
           value={props.history.location.pathname}
           variant="fullWidth"
         >
-          <Tab label={t("home")} value={`/courses/${props.course.slug}`} />
+          <Tab label={t("home")} value={`/courses/${serverId}/${props.course.slug}`} />
           <Tab
             label={t("statistics")}
-            value={`/courses/${props.course.slug}/stats`}
+            value={`/courses/${serverId}/${props.course.slug}/stats`}
           />
         </Tabs>
       </AppBar>

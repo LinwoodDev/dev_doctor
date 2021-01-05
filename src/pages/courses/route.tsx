@@ -10,7 +10,7 @@ import CourseHeader from './header';
 import { useTranslation } from 'react-i18next';
 import CoursesServer from '../../models/server';
 
-interface ParamTypes {
+export interface CourseParamTypes {
   serverId : string;
   courseId : string;
 }
@@ -25,7 +25,7 @@ export default function CoursesRoute({server} : ServerProps): ReactElement {
         <Route exact path={path}>
             <CoursesPage server={server} />
         </Route>
-        <Route path={`${path}/:courseId`}>
+        <Route path={`${path}/:serverId/:courseId`}>
             <CourseRoute />
         </Route>
       </Switch>
@@ -33,7 +33,7 @@ export default function CoursesRoute({server} : ServerProps): ReactElement {
 }
 
 export function CourseRoute(): ReactElement {
-    const { serverId, courseId } = useParams<ParamTypes>();
+    const { serverId, courseId } = useParams<CourseParamTypes>();
     const [course, setCourse] = useState<Course>(null);
     const { t } = useTranslation('course');
     
