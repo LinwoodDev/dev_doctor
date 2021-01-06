@@ -54,7 +54,6 @@ export function CoursePartRoute({
   const { serverId, courseId, partId } = useParams<CoursePartParamTypes>();
   let { path } = useRouteMatch();
   const part = parts.find((part) => part.slug === partId);
-  console.log(parts);
   return (
     <Switch>
       <Route path={path} exact>
@@ -80,7 +79,6 @@ export function CoursePartItemRoute({
   part,
 }: CoursePartProps): ReactElement {
   const { itemId } = useParams<CoursePartParamTypes>();
-  console.log(part);
   const current = part.items[itemId];
   if (current instanceof TextPartItem) {
     return <CourseTextPage course={course} part={part} item={+itemId} />;

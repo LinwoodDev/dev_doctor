@@ -6,7 +6,7 @@ import { CoursePartItemProps } from './route';
 export default function CourseTextPage(props: CoursePartItemProps): ReactElement {
     return (
         <div>
-            
+            <p>TEST!</p>
         </div>
     )
 }
