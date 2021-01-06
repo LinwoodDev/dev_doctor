@@ -7,6 +7,7 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
+import CoursePartItem from "../../../models/items/item";
 import TextPartItem from "../../../models/items/text";
 import VideoPartItem from "../../../models/items/video";
 import CoursePart from "../../../models/part";
@@ -71,16 +72,16 @@ export interface CoursePartParamTypes extends CourseParamTypes {
 export interface CoursePartProps {
   part: CoursePart;
 }
-export interface CoursePartItemProps {
-  item: number;
+export interface CoursePartItemProps<T extends CoursePartItem> {
+  item: T;
 }
 export function CoursePartItemRoute({ part }: CoursePartProps): ReactElement {
   const { itemId } = useParams<CoursePartParamTypes>();
   const current = part.items[itemId];
   if (current instanceof TextPartItem) {
-    return <CourseTextPage item={+itemId} />;
+    return <CourseTextPage item={current} />;
   } else if (current instanceof VideoPartItem) {
-    return <CourseVideoPage item={+itemId} />;
+    return <CourseVideoPage item={current} />;
   }
   return <p>Error!</p>;
 }
