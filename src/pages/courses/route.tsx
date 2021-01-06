@@ -8,6 +8,8 @@ import CourseStatsPage from './stats';
 import CourseHeader from './header';
 import CoursesServer from '../../models/server';
 import CoursePartsRoute from './item/route';
+import MyAppBar from '../../components/appbar';
+import { useTranslation } from 'react-i18next';
 
 export interface CourseParamTypes {
   serverId : string;
@@ -34,6 +36,7 @@ export default function CoursesRoute({server} : ServerProps): ReactElement {
 export function CourseRoute(): ReactElement {
     const { serverId, courseId } = useParams<CourseParamTypes>();
     const [course, setCourse] = useState<Course>(null);
+    let {t} = useTranslation('course');
     
     useEffect(() => {
       if(course == null)
@@ -41,7 +44,8 @@ export function CourseRoute(): ReactElement {
     });
     const updateCourse = async () => setCourse(await CoursesServer.getServer(+serverId).fetchCourse(courseId));
     let { path } = useRouteMatch();
-    return course == null ? <CircularProgress /> :
+    return course == null ? <CircularProgress /> :<>
+    <MyAppBar title={t("course")} subtitle={course.slug} />
         <Switch>
       <Route exact path={path}>
         <CourseHeader course={course} scrollToTab={false} />
@@ -54,7 +58,7 @@ export function CourseRoute(): ReactElement {
       <Route path={`${path}/start`}>
         <CoursePartsRoute course={course} />
       </Route>
-    </Switch>;
+    </Switch></>;
 }
 
 export interface CourseProps {

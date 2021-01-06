@@ -15,7 +15,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { RouteComponentProps, useParams, withRouter, Link as RouterLink } from "react-router-dom";
-import MyAppBar from "../../components/appbar";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,7 +53,6 @@ function CourseHeader(props: Props) {
   };
   return (
     <>
-    <MyAppBar title={t("course")} subtitle={props.course.slug} />
     <Container>
       <Paper className={classes.paper}>
         <Grid container alignItems="stretch">
