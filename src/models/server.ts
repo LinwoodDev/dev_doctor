@@ -16,10 +16,10 @@ export default class CoursesServer {
     var text = await response.text();
     var yaml = YAML.parse(text);
     return await Promise.all(
-      (yaml["courses"] as Array<string>).map((slug) => this.getCourse(slug))
+      (yaml["courses"] as Array<string>).map((slug) => this.fetchCourse(slug))
     );
   }
-  public async getCourse(slug: string) : Promise<Course> {
+  public async fetchCourse(slug: string) : Promise<Course> {
     var response = await fetch(`${this.url}/${slug}/config.yml`);
     var text = await response.text();
     var data = YAML.parse(text);
