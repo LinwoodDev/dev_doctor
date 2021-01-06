@@ -41,7 +41,6 @@ export function CourseRoute(): ReactElement {
     });
     const updateCourse = async () => setCourse(await CoursesServer.getServer(+serverId).fetchCourse(courseId));
     let { path } = useRouteMatch();
-    console.log(course);
     return course == null ? <CircularProgress /> :
         <Switch>
       <Route exact path={path}>
