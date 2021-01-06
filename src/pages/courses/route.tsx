@@ -2,12 +2,10 @@ import { CircularProgress } from '@material-ui/core';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import CoursesPage from '.';
-import MyAppBar from '../../components/appbar';
 import Course from '../../models/course'
 import CourseHomePage from './home';
 import CourseStatsPage from './stats';
 import CourseHeader from './header';
-import { useTranslation } from 'react-i18next';
 import CoursesServer from '../../models/server';
 import CoursePartsRoute from './item/route';
 
@@ -36,18 +34,15 @@ export default function CoursesRoute({server} : ServerProps): ReactElement {
 export function CourseRoute(): ReactElement {
     const { serverId, courseId } = useParams<CourseParamTypes>();
     const [course, setCourse] = useState<Course>(null);
-    const { t } = useTranslation('course');
     
     useEffect(() => {
       if(course == null)
       updateCourse();
     });
-    const updateCourse = async () => setCourse(await CoursesServer.getServer(+serverId).getCourse(courseId));
+    const updateCourse = async () => setCourse(await CoursesServer.getServer(+serverId).fetchCourse(courseId));
     let { path } = useRouteMatch();
+    console.log(course);
     return course == null ? <CircularProgress /> :
-    <>
-    <MyAppBar title={t("course")} subtitle={course.slug} />
-    <div>
         <Switch>
       <Route exact path={path}>
         <CourseHeader course={course} scrollToTab={false} />
@@ -60,8 +55,7 @@ export function CourseRoute(): ReactElement {
       <Route path={`${path}/start`}>
         <CoursePartsRoute course={course} />
       </Route>
-    </Switch></div>
-    </>;
+    </Switch>;
 }
 
 export interface CourseProps {

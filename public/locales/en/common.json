@@ -1,6 +1,6 @@
 {
     "title":"Dev-Doctor.cf",
-    "subtitle":"A free, opensource, serverless learning platform",
+    "subtitle":"A free, opensource, serverless learning platform. A linwood project",
     "courses": "VIEW COURSES",
     "discord": "JOIN OUR DISCORD",
     "error-with-status": "A {{statusCode}} error occurred on server",

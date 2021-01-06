@@ -1,4 +1,3 @@
-import CoursePartItem from "./items/item";
 import YAML from "yaml";
 import CoursesServer from "./server";
 import CoursePart from "./part";
@@ -25,14 +24,15 @@ export default class Course {
     var text = await response.text();
     var yaml = YAML.parse(text);
     return await Promise.all(
-      (yaml["parts"] as Array<string>).map(this.getPart)
+      (yaml["parts"] as Array<string>).map((part) => this.fetchPart(part))
     );
   }
-  public async getPart(part : string) : Promise<CoursePart> {
+  public async fetchPart(part : string) : Promise<CoursePart> {
     var response = await fetch(`${this.server.url}/${this.slug}/${part}/config.yml`);
     var text = await response.text();
     var data = YAML.parse(text);
     data['course'] = this;
+    data['slug'] = part;
     return new CoursePart(data);
   }
 }

@@ -15,6 +15,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { RouteComponentProps, useParams, withRouter, Link as RouterLink } from "react-router-dom";
+import MyAppBar from "../../components/appbar";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,6 +53,8 @@ function CourseHeader(props: Props) {
     props.history.push(value);
   };
   return (
+    <>
+    <MyAppBar title={t("course")} subtitle={props.course.slug} />
     <Container>
       <Paper className={classes.paper}>
         <Grid container alignItems="stretch">
@@ -89,8 +92,10 @@ function CourseHeader(props: Props) {
             <Grid item>
               <Box textAlign="center" p={2}>
                 <ButtonGroup variant="text" color="primary">
-                  <Button component={RouterLink} to={`/courses/${serverId}/${props.course.slug}/start`} >START</Button>
-                  <Button>SUPPORT</Button>
+                  <Button component={RouterLink} to={`/courses/${serverId}/${props.course.slug}/start`}>START</Button>
+                  {props.course.server.support &&
+                    <Button component={RouterLink} to={props.course.server.support}>SUPPORT</Button>
+                  }
                 </ButtonGroup>
               </Box>
             </Grid>
@@ -111,6 +116,7 @@ function CourseHeader(props: Props) {
         </Tabs>
       </AppBar>
     </Container>
+    </>
   );
 }
 CourseHeader.defaultProps = {
