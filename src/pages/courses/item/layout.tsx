@@ -65,7 +65,8 @@ export function CoursePartItemLayout({ item, children, history }: Props) {
     setParts(await item.part.course.fetchParts());
   };
   useEffect(() => {
-    getData();
+    if(parts == null)
+      getData();
   });
 
   const classes = useStyles();
@@ -141,6 +142,7 @@ export function CoursePartItemLayout({ item, children, history }: Props) {
             value={history.location.pathname}
             variant="scrollable"
           >
+            {console.log(item)}
             {item.part.items
               .filter((current) => current != null)
               .map((current, index) => (

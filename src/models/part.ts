@@ -2,6 +2,7 @@ import CoursePartItem from "./items/item";
 import Course from "./course";
 import TextPartItem from "./items/text";
 import VideoPartItem from "./items/video";
+import QuizPartItem from "./items/quiz";
 
 export default class CoursePart {
   public readonly name: string;
@@ -18,12 +19,13 @@ export default class CoursePart {
     Object.assign(this, init);
     this.items = (this["items"] as Array<any>).map((item) => {
       item["part"] = this;
-      console.log(item);
       switch ((item["type"] as string)?.toLowerCase()) {
         case "text":
           return new TextPartItem(item);
         case "video":
           return new VideoPartItem(item);
+        case "quiz":
+          return new QuizPartItem(item);
       }
       return null;
     });
