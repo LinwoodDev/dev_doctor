@@ -53,13 +53,11 @@ export function CoursePartRoute({
 }: CoursePartRouteProps): ReactElement {
   const { serverId, courseId, partId } = useParams<CoursePartParamTypes>();
   let { path } = useRouteMatch();
-  const part = parts[partId];
-  console.log(course);
+  const part = parts.find((part) => part.slug === partId);
   console.log(parts);
   return (
     <Switch>
       <Route path={path} exact>
-          {console.log("REDIRECT")}
         <Redirect to={`/courses/${serverId}/${courseId}/start/${partId}/0/`} />
       </Route>
       <Route path={`${path}/:itemId`}>
@@ -82,10 +80,12 @@ export function CoursePartItemRoute({
   part,
 }: CoursePartProps): ReactElement {
   const { itemId } = useParams<CoursePartParamTypes>();
+  console.log(part);
   const current = part.items[itemId];
   if (current instanceof TextPartItem) {
     return <CourseTextPage course={course} part={part} item={+itemId} />;
   } else if (current instanceof VideoPartItem) {
     return <CourseVideoPage course={course} part={part} item={+itemId} />;
   }
+  return <p>Error!</p>;
 }
