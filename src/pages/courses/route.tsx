@@ -1,4 +1,4 @@
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, makeStyles } from '@material-ui/core';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import CoursesPage from '.';
@@ -32,11 +32,17 @@ export default function CoursesRoute({server} : ServerProps): ReactElement {
       </Switch>
   )
 }
+const useStyles = makeStyles(() => ({
+    root: {
+      display: 'flex'
+    },
+}))
 
 export function CourseRoute(): ReactElement {
     const { serverId, courseId } = useParams<CourseParamTypes>();
     const [course, setCourse] = useState<Course>(null);
     let {t} = useTranslation('course');
+    const classes = useStyles();
     
     useEffect(() => {
       if(course == null)
@@ -44,7 +50,7 @@ export function CourseRoute(): ReactElement {
     });
     const updateCourse = async () => setCourse(await CoursesServer.getServer(+serverId).fetchCourse(courseId));
     let { path } = useRouteMatch();
-    return course == null ? <CircularProgress /> :<>
+    return course == null ? <CircularProgress /> :<div className={classes.root}>
     <MyAppBar title={t("course")} subtitle={course.slug} />
         <Switch>
       <Route exact path={path}>
@@ -58,7 +64,7 @@ export function CourseRoute(): ReactElement {
       <Route path={`${path}/start`}>
         <CoursePartsRoute course={course} />
       </Route>
-    </Switch></>;
+    </Switch></div>;
 }
 
 export interface CourseProps {

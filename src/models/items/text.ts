@@ -7,5 +7,4 @@ export default class TextPartItem extends CoursePartItem {
         super(init);
         Object.assign(this, init);
     }
-    
 }

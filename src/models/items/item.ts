@@ -1,6 +1,6 @@
 import CoursePart from '../part';
 
-export default class CoursePartItem {
+export default abstract class CoursePartItem {
     public readonly part : CoursePart;
     public readonly name : string;
     public readonly description : string;

@@ -11,5 +11,4 @@ export default class VideoPartItem extends CoursePartItem {
         super(init);
         Object.assign(this, init);
     }
-    
 }

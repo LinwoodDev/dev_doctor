@@ -12,6 +12,7 @@ import TextPartItem from "../../../models/items/text";
 import VideoPartItem from "../../../models/items/video";
 import CoursePart from "../../../models/part";
 import { CourseParamTypes, CourseProps } from "../route";
+import CoursePartItemLayout from "./layout";
 import CourseTextPage from "./text";
 import CourseVideoPage from "./video";
 
@@ -78,10 +79,17 @@ export interface CoursePartItemProps<T extends CoursePartItem> {
 export function CoursePartItemRoute({ part }: CoursePartProps): ReactElement {
   const { itemId } = useParams<CoursePartParamTypes>();
   const current = part.items[itemId];
-  if (current instanceof TextPartItem) {
-    return <CourseTextPage item={current} />;
-  } else if (current instanceof VideoPartItem) {
-    return <CourseVideoPage item={current} />;
+  const buildPage = () => {
+      if (current instanceof TextPartItem) {
+        return <CourseTextPage item={current} />;
+      } else if (current instanceof VideoPartItem) {
+        return <CourseVideoPage item={current} />;
+      }
+      return <p>Error!</p>;
   }
-  return <p>Error!</p>;
+  return (
+    <CoursePartItemLayout item={current}>
+      {buildPage()}
+    </CoursePartItemLayout>
+  );
 }
