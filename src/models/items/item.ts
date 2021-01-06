@@ -1,9 +1,9 @@
-import Course from '../course';
 import CoursePart from '../part';
 
 export default class CoursePartItem {
     public readonly part : CoursePart;
     public readonly name : string;
+    public readonly description : string;
     public readonly slug : string;
 
     public get server() {

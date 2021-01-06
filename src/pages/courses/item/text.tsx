@@ -1,9 +1,9 @@
 import { ReactElement } from 'react'
-import TextPart from '../../../models/items/text'
+import TextPartItem from '../../../models/items/text';
 import { CoursePartItemProps } from './route';
 
 
-export default function CourseTextPage(props: CoursePartItemProps): ReactElement {
+export default function CourseTextPage(props: CoursePartItemProps<TextPartItem>): ReactElement {
     return (
         <div>
             <p>TEST!</p>

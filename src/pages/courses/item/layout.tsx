@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { CoursePartItemProps } from './route';
+import CoursePartItem from '../../../models/items/item';
 
 const drawerWidth = 240;
 
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function CoursePartItemLayout({item} : CoursePartItemProps) {
+export default function CoursePartItemLayout({item} : CoursePartItemProps<CoursePartItem>) {
   const classes = useStyles();
 
   return (
