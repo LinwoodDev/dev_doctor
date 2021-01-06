@@ -35,17 +35,6 @@ export default class Course {
     var data = YAML.parse(text);
     data["course"] = this;
     data["slug"] = part;
-    var items = (data["items"] as Array<any>).map((item) => {
-      console.log(item);
-      switch ((item["type"] as string)?.toLowerCase()) {
-        case "text":
-          return new TextPartItem(item);
-        case "video":
-          return new VideoPartItem(item);
-      }
-      return null;
-    });
-    data['items'] = items;
     return new CoursePart(data);
   }
 }

@@ -60,7 +60,7 @@ export function CoursePartRoute({
         <Redirect to={`/courses/${serverId}/${courseId}/start/${partId}/0/`} />
       </Route>
       <Route path={`${path}/:itemId`}>
-        <CoursePartItemRoute course={course} part={part} />
+        <CoursePartItemRoute part={part} />
       </Route>
     </Switch>
   );
@@ -68,22 +68,19 @@ export function CoursePartRoute({
 export interface CoursePartParamTypes extends CourseParamTypes {
   itemId: string;
 }
-export interface CoursePartProps extends CourseProps {
+export interface CoursePartProps {
   part: CoursePart;
 }
-export interface CoursePartItemProps extends CoursePartProps {
+export interface CoursePartItemProps {
   item: number;
 }
-export function CoursePartItemRoute({
-  course,
-  part,
-}: CoursePartProps): ReactElement {
+export function CoursePartItemRoute({ part }: CoursePartProps): ReactElement {
   const { itemId } = useParams<CoursePartParamTypes>();
   const current = part.items[itemId];
   if (current instanceof TextPartItem) {
-    return <CourseTextPage course={course} part={part} item={+itemId} />;
+    return <CourseTextPage item={+itemId} />;
   } else if (current instanceof VideoPartItem) {
-    return <CourseVideoPage course={course} part={part} item={+itemId} />;
+    return <CourseVideoPage item={+itemId} />;
   }
   return <p>Error!</p>;
 }
