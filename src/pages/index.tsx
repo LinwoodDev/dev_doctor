@@ -3,6 +3,7 @@ import {
   Container,
   Grid,
   makeStyles,
+  Toolbar,
   Typography,
 } from "@material-ui/core";
 import React from "react";
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    padding: theme.spacing(12, 0, 6),
   },
 }));
 const IndexPage = () => {
@@ -25,6 +26,7 @@ const IndexPage = () => {
   return (
     <>
       <MyAppBar title="Home" />
+      <Toolbar />
       <div className={classes.heroContent}>
         <Container maxWidth="sm">
           <Typography align="center" variant="h2" component="h1">

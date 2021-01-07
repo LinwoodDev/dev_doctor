@@ -1,11 +1,8 @@
 import CoursePartItem from "./item";
-enum VideoType {
-    youtube,
-    url
-}
+type VideoSource = 'youtube'|'url';
 export default class VideoPartItem extends CoursePartItem {
-    public readonly body : string;
-    public readonly type : VideoType;
+    public readonly url : string;
+    public readonly source : VideoSource;
 
     public constructor(init?:Partial<VideoPartItem>) {
         super(init);

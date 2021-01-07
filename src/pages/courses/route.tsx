@@ -1,4 +1,4 @@
-import { CircularProgress, makeStyles } from '@material-ui/core';
+import { CircularProgress, makeStyles, Toolbar } from '@material-ui/core';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import CoursesPage from '.';
@@ -34,7 +34,6 @@ export default function CoursesRoute({server} : ServerProps): ReactElement {
 }
 const useStyles = makeStyles(() => ({
     root: {
-      display: 'flex'
     },
 }))
 
@@ -52,6 +51,7 @@ export function CourseRoute(): ReactElement {
     let { path } = useRouteMatch();
     return course == null ? <CircularProgress /> :<div className={classes.root}>
     <MyAppBar title={t("course")} subtitle={course.slug} />
+    <Toolbar />
         <Switch>
       <Route exact path={path}>
         <CourseHeader course={course} scrollToTab={false} />

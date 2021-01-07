@@ -1,18 +1,30 @@
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import React, { PropsWithChildren } from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import { CoursePartItemProps, CoursePartParamTypes } from "./route";
+import { CoursePartParamTypes, CoursePartProps } from './route';
 import CoursePartItem from "../../../models/items/item";
-import { Hidden, Paper, Tab, Tabs, CircularProgress } from "@material-ui/core";
+import {
+  Hidden,
+  Paper,
+  Tab,
+  Tabs,
+  CircularProgress,
+  AppBar,
+  Box,
+  Typography,
+} from "@material-ui/core";
 import theme from "../../../theme";
-import { RouteComponentProps, useParams, withRouter } from "react-router-dom";
+import {
+  RouteComponentProps,
+  useParams,
+  useRouteMatch,
+  withRouter,
+} from "react-router-dom";
 import CoursePartItemIcon from "../../../components/icon";
 import CoursePart from "../../../models/part";
+import { CourseParamTypes } from "../route";
 
 const drawerWidth = 240;
 
@@ -35,23 +47,37 @@ const useStyles = makeStyles((theme: Theme) =>
     drawerContainer: {
       overflow: "auto",
     },
+    indicator: {
+      left: "0px",
+    },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
-    },
-    tabPaper: {
       width: "100%",
+      backgroundColor: theme.palette.background.paper,
+      overflow: "auto",
     },
   })
 );
 interface Props
-  extends PropsWithChildren<CoursePartItemProps<CoursePartItem>>,
-    RouteComponentProps {}
+  extends PropsWithChildren<CoursePartProps>,
+    RouteComponentProps {
+  parts: CoursePart[];
+}
 
-export function CoursePartItemLayout({ item, children, history }: Props) {
+export function CoursePartItemLayout({
+  part,
+  parts,
+  children,
+  history,
+}: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  let match = useRouteMatch<CoursePartParamTypes>({
+    path: `/courses/:serverId/:courseId/start/:partId/:itemId`,
+  });
+
+  let item: CoursePartItem = part.items[match?.params?.itemId];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -59,15 +85,13 @@ export function CoursePartItemLayout({ item, children, history }: Props) {
   const handleCallToRouter = (_event: React.ChangeEvent<{}>, value: any) => {
     history.push(value);
   };
-  const { serverId } = useParams<CoursePartParamTypes>();
-  const [parts, setParts] = useState<CoursePart[]>(null);
-  const getData = async () => {
-    setParts(await item.part.course.fetchParts());
+  const handlePartCallToRouter = (
+    _event: React.ChangeEvent<{}>,
+    value: any
+  ) => {
+    history.push(`/courses/${serverId}/${part.course.slug}/start/${value}`);
   };
-  useEffect(() => {
-    if(parts == null)
-      getData();
-  });
+  const { serverId } = useParams<CourseParamTypes>();
 
   const classes = useStyles();
   const drawer = (
@@ -77,13 +101,19 @@ export function CoursePartItemLayout({ item, children, history }: Props) {
         {parts == null ? (
           <CircularProgress />
         ) : (
-          <List>
+          <Tabs
+            classes={{
+              indicator: classes.indicator,
+            }}
+            orientation="vertical"
+            variant="scrollable"
+            onChange={handlePartCallToRouter}
+            value={part.slug}
+          >
             {parts.map((part) => (
-              <ListItem button key={part.slug}>
-                <ListItemText primary={part.name} secondary={part.description} />
-              </ListItem>
+              <Tab label={part.name} key={part.slug} value={part.slug} />
             ))}
-          </List>
+          </Tabs>
         )}
         {/* <Divider />
         <List>
@@ -135,15 +165,16 @@ export function CoursePartItemLayout({ item, children, history }: Props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Paper className={classes.tabPaper}>
+        <AppBar position="sticky" color="default">
           <Tabs
             onChange={handleCallToRouter}
             value={history.location.pathname}
             variant="scrollable"
+            scrollButtons="auto"
+            indicatorColor="primary"
+            textColor="primary"
           >
-            {console.log(item)}
-            {item.part.items
+            {part.items
               .filter((current) => current != null)
               .map((current, index) => (
                 <Tab
@@ -154,8 +185,20 @@ export function CoursePartItemLayout({ item, children, history }: Props) {
                 />
               ))}
           </Tabs>
+        </AppBar>
+        <Paper>
+          <Box p={4}>
+            {item != null && (
+              <>
+                <Typography variant="h3" component="h2">
+                  {item.name}
+                </Typography>
+                {children}
+                <Typography component="p">{item.description}</Typography>
+              </>
+            )}
+          </Box>
         </Paper>
-        {children}
       </main>
     </div>
   );
