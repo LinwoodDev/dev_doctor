@@ -15,6 +15,8 @@ import { CourseParamTypes, CourseProps } from "../route";
 import CoursePartItemLayout from "./layout";
 import CourseTextPage from "./text";
 import CourseVideoPage from "./video";
+import QuizPartItem from '../../../models/items/quiz';
+import CourseQuizPage from "./quiz";
 
 export default function CoursePartsRoute({
   course,
@@ -84,6 +86,8 @@ export function CoursePartItemRoute({ part }: CoursePartProps): ReactElement {
         return <CourseTextPage item={current} />;
       } else if (current instanceof VideoPartItem) {
         return <CourseVideoPage item={current} />;
+      } else if (current instanceof QuizPartItem) {
+        return <CourseQuizPage item={current} />;
       }
       return <p>Error!</p>;
   }

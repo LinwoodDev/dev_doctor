@@ -3,7 +3,7 @@ import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import { CoursePartParamTypes, CoursePartProps } from './route';
+import { CoursePartParamTypes, CoursePartProps } from "./route";
 import CoursePartItem from "../../../models/items/item";
 import {
   Hidden,
@@ -14,6 +14,7 @@ import {
   AppBar,
   Box,
   Typography,
+  Grid,
 } from "@material-ui/core";
 import theme from "../../../theme";
 import {
@@ -186,16 +187,24 @@ export function CoursePartItemLayout({
               ))}
           </Tabs>
         </AppBar>
-        <Paper>
+        <Paper elevation={3}>
           <Box p={4}>
             {item != null && (
-              <>
-                <Typography variant="h3" component="h2">
-                  {item.name}
-                </Typography>
-                {children}
-                <Typography component="p">{item.description}</Typography>
-              </>
+              <Paper elevation={3}>
+              <Grid container spacing={4} alignItems="stretch">
+                <Grid item lg={8} md={7} sm={12}>
+                  <Box p={2}>
+                  {children}
+                  </Box>
+                </Grid>
+                <Grid item lg={4} md={5} sm={12} container direction="column">
+                    <Typography variant="h3" component="h2">
+                      {item.name}
+                    </Typography>
+                    <Typography component="p">{item.description}</Typography>
+                </Grid>
+              </Grid>
+              </Paper>
             )}
           </Box>
         </Paper>
