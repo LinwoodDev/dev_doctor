@@ -7,6 +7,7 @@ import {
   AccordionSummary,
   Button,
   Card,
+  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
@@ -166,13 +167,17 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
       {serverCourses.map((course : Course) => (
         <Grid item key={course.server.url + "/" +course["slug"]} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
-            {course["installed"] ? (
+            {/* {course["installed"] ? (
               <Button onClick={() => removeCourse(course["slug"])}>
                 remove
               </Button>
             ) : (
               <Button onClick={() => addCourse(course["slug"])}>add</Button>
-            )}
+            )} */}
+            
+      <CardActionArea
+                component={RouterLink}
+                to={`${path}/${Array.from(courses.keys()).indexOf(server)}/${course["slug"]}`}>
             {course["icon"] && (
               <CardMedia
                 className={classes.cardMedia}
@@ -201,19 +206,7 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
                 {course["description"]}
               </Typography>
             </CardContent>
-            <CardActions>
-              <Button
-                component={RouterLink}
-                to={`${path}/${Array.from(courses.keys()).indexOf(server)}/${course["slug"]}`}
-                size="small"
-                color="primary"
-              >
-                View
-              </Button>
-              <Button size="small" color="primary">
-                Edit
-              </Button>
-            </CardActions>
+            </CardActionArea>
           </Card>
         </Grid>
       ))}
