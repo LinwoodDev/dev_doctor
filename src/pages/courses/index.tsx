@@ -109,6 +109,7 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
   });
   const getData = async () => {
     var map = new Map<CoursesServer, Course[]>();
+    console.log(servers);
     for (const server of servers) {
       map.set(server, await server.fetchCourses());
     }
