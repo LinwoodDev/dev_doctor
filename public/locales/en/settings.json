@@ -1,3 +1,7 @@
 {
-    "settings":"Settings"
+    "settings":"Settings",
+    "add-server":{
+        "title":"Do you want to add the server {{name}}?",
+        "body": "The server {{name}} with the url {{url}} will displayed on the courses page."
+    }
 }

@@ -33,7 +33,7 @@ export default class CoursesServer {
     var currentData = localStorage.getItem('servers');
     var servers = [new CoursesServer({name: 'Dev-Doctor', url: 'https://backend.dev-doctor.cf'})];
     if(currentData != null){
-      servers = JSON.parse(currentData);
+      servers = JSON.parse(currentData).map((server) => new CoursesServer(server));
     }
     return servers;
   }
