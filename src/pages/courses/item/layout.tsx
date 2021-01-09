@@ -1,9 +1,9 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import { CoursePartParamTypes, CoursePartProps } from "./route";
+import { CoursePartItemRoute, CoursePartParamTypes } from "./route";
 import CoursePartItem from "../../../models/items/item";
 import {
   Hidden,
@@ -18,14 +18,16 @@ import {
 } from "@material-ui/core";
 import theme from "../../../theme";
 import {
+  Redirect,
+  Route,
   RouteComponentProps,
+  Switch,
   useParams,
   useRouteMatch,
   withRouter,
 } from "react-router-dom";
 import CoursePartItemIcon from "../../../components/icon";
 import CoursePart from "../../../models/part";
-import { CourseParamTypes } from "../route";
 
 const drawerWidth = 240;
 
@@ -62,21 +64,21 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 interface Props
-  extends PropsWithChildren<CoursePartProps>,
-    RouteComponentProps {
+  extends RouteComponentProps {
   parts: CoursePart[];
 }
 
 export function CoursePartItemLayout({
-  part,
   parts,
-  children,
   history,
 }: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   let match = useRouteMatch<CoursePartParamTypes>({
     path: `/courses/:serverId/:courseId/start/:partId/:itemId`,
   });
+  const { serverId, courseId, partId } = useParams<CoursePartParamTypes>();
+  let { path } = useRouteMatch();
+  const part = parts.find((part) => part.slug === partId);
 
   let item: CoursePartItem = part.items[match?.params?.itemId];
 
@@ -92,7 +94,6 @@ export function CoursePartItemLayout({
   ) => {
     history.push(`/courses/${serverId}/${part.course.slug}/start/${value}`);
   };
-  const { serverId } = useParams<CourseParamTypes>();
 
   const classes = useStyles();
   const drawer = (
@@ -202,7 +203,13 @@ export function CoursePartItemLayout({
                 </Grid>
                 <Grid item lg={8} md={7} sm={12}>
                   <Box p={2}>
-                    {children}
+                    
+    <Switch>
+      <Route path={`${path}/:itemId`}>
+        <CoursePartItemRoute part={part} />
+      </Route>
+      <Route path={path} exact render={({location}) => (<Redirect to={{pathname: `/courses/${serverId}/${courseId}/start/${partId}/0`, state: {from: location}}} />)} />
+    </Switch>
                   </Box>
                 </Grid>
               </Grid>

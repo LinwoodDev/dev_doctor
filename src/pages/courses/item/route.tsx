@@ -54,18 +54,8 @@ export interface CoursePartRouteProps extends CourseProps {
 export function CoursePartRoute({
   parts
 }: CoursePartRouteProps): ReactElement {
-  const { serverId, courseId, partId } = useParams<CoursePartParamTypes>();
-  let { path } = useRouteMatch();
-  const part = parts.find((part) => part.slug === partId);
   return (
-    <CoursePartItemLayout part={part} parts={parts} >
-    <Switch>
-      <Route path={`${path}/:itemId`}>
-        <CoursePartItemRoute part={part} />
-      </Route>
-      <Route path={path} exact render={({location}) => (<Redirect to={{pathname: `/courses/${serverId}/${courseId}/start/${partId}/0`, state: {from: location}}} />)} />
-    </Switch>
-    </CoursePartItemLayout>
+    <CoursePartItemLayout parts={parts} />
   );
 }
 export interface CoursePartParamTypes extends CourseParamTypes {
