@@ -5,10 +5,8 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Button,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
   Chip,
@@ -117,17 +115,17 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
     setCourses(map);
   };
   const [expanded, setExpanded] = React.useState<string | false>(false);
-  const addCourse = (course: string) => {
-    if (!courses) setCourses(null);
-    caches
-      .open(`course-${course}`)
-      .then((cache) => cache.add(`assets/courses/${course}/icon.png`))
-      .then(getData);
-  };
-  const removeCourse = (course: string) => {
-    if (!courses) setCourses(null);
-    caches.delete(`course-${course}`).then(getData);
-  };
+  // const addCourse = (course: string) => {
+  //   if (!courses) setCourses(null);
+  //   caches
+  //     .open(`course-${course}`)
+  //     .then((cache) => cache.add(`assets/courses/${course}/icon.png`))
+  //     .then(getData);
+  // };
+  // const removeCourse = (course: string) => {
+  //   if (!courses) setCourses(null);
+  //   caches.delete(`course-${course}`).then(getData);
+  // };
   const [currentServers, setCurrentServers] = React.useState<CoursesServer[]>(servers);
 
   const handleChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
