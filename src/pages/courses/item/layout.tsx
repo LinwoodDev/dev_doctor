@@ -192,16 +192,16 @@ export function CoursePartItemLayout({
             {item != null && (
               <Paper elevation={3}>
               <Grid container spacing={4} alignItems="stretch">
-                <Grid item lg={8} md={7} sm={12}>
-                  <Box p={2}>
-                    {children}
-                  </Box>
-                </Grid>
                 <Grid item lg={4} md={5} sm={12} container direction="column">
                     <Typography variant="h3" component="h2">
                       {item.name}
                     </Typography>
                     <Typography component="p">{item.description}</Typography>
+                </Grid>
+                <Grid item lg={8} md={7} sm={12}>
+                  <Box p={2}>
+                    {children}
+                  </Box>
                 </Grid>
               </Grid>
               </Paper>
