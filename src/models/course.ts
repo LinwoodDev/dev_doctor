@@ -1,46 +1,38 @@
-import CoursePart from "./parts/part";
-import YAML from 'yaml';
+import YAML from "yaml";
+import CoursesServer from "./server";
+import CoursePart from "./part";
 
 export default class Course {
-    public readonly slug : string;
-    private _name : string;
-    private _description : string;
-    private _icon : boolean;
-    private _author : string;
-    private _installed : boolean;
-    private _body : string;
-    private _lang : string;
-    
+  public readonly server: CoursesServer;
+  public readonly slug: string;
+  public readonly name: string;
+  public readonly description: string;
+  public readonly icon: string;
+  public readonly author: string;
+  public readonly installed: boolean;
+  public readonly body: string;
+  public readonly lang: string;
 
-    constructor({slug, update = false} : {slug: string, update?: boolean}){
-        this.slug = slug;
-        if(update)
-            this.Update();
-    }
+  public constructor(init?: Partial<Course>) {
+    Object.assign(this, init);
+  }
 
-    public get parts() : Array<CoursePart> {
-        return [];
-    }
-
-    public get name() : string {return this._name;}
-    public get author() : string {return this._author;}
-    public get installed() : boolean {return this._installed;}
-    public get description() : string {return this._description;}
-    public get icon(): boolean {return this._icon;}
-    public get body(): string {return this._body;}
-    public get lang(): string {return this._lang;}
-
-    async Update() : Promise<void> {
-        var response = await fetch(`/assets/courses/${this.slug}/config.yml`);
-        var text = await response.text();
-        this._installed = await caches.has(`course-${this.slug}`);
-        var data = YAML.parse(text);
-        console.log(data);
-        this._name = data['name'];
-        this._description = data['description'];
-        this._author = data['author'];
-        this._icon = data['icon'];
-        this._body = data['body'];
-        this._lang = data['lang'];
-    }
+  public async fetchParts(): Promise<CoursePart[]> {
+    var response = await fetch(`${this.server.url}/${this.slug}/config.yml`);
+    var text = await response.text();
+    var yaml = YAML.parse(text);
+    return await Promise.all(
+      (yaml["parts"] as Array<string>).map((part) => this.fetchPart(part))
+    );
+  }
+  public async fetchPart(part: string): Promise<CoursePart> {
+    var response = await fetch(
+      `${this.server.url}/${this.slug}/${part}/config.yml`
+    );
+    var text = await response.text();
+    var data = YAML.parse(text);
+    data["course"] = this;
+    data["slug"] = part;
+    return new CoursePart(data);
+  }
 }

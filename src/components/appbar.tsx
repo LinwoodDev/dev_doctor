@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1,
+    }
 }));
 interface MyAppBarProps{
     title: string;
@@ -65,7 +68,7 @@ export default function MyAppBar(props : MyAppBarProps) {
 
     const classes = useStyles();
     return (
-        <AppBar position="static">
+        <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
                 <IconButton
                     component={RouterLink} 
