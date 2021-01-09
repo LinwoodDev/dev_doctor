@@ -194,7 +194,7 @@ export function CoursePartItemLayout({
               <Grid container spacing={4} alignItems="stretch">
                 <Grid item lg={8} md={7} sm={12}>
                   <Box p={2}>
-                  {children}
+                    {children}
                   </Box>
                 </Grid>
                 <Grid item lg={4} md={5} sm={12} container direction="column">

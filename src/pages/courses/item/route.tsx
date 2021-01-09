@@ -57,7 +57,6 @@ export function CoursePartRoute({
   const { serverId, courseId, partId } = useParams<CoursePartParamTypes>();
   let { path } = useRouteMatch();
   const part = parts.find((part) => part.slug === partId);
-  console.log(`/courses/${serverId}/${courseId}/start/${partId}/0`);
   return (
     <CoursePartItemLayout part={part} parts={parts} >
     <Switch>
