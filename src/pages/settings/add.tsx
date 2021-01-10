@@ -31,10 +31,10 @@ export function AddServerPage(props: Props): ReactElement {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title"><Trans t={t} i18nKey="add-server.title" values={{name: server.name, url: server.url}} /></DialogTitle>
+          <DialogTitle id="alert-dialog-title"><Trans t={t} i18nKey="server.add.title" values={{name: server.name, url: server.url}} /></DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-            <Trans t={t} i18nKey="add-server.body" values={{name: server.name, url: server.url}} />
+            <Trans t={t} i18nKey="server.add.body" values={{name: server.name, url: server.url}} />
             </DialogContentText>
           </DialogContent>
           <DialogActions>

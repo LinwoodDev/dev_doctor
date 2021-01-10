@@ -4,7 +4,7 @@ interface Props {
     
 }
 
-export default function SettingsHomePage({}: Props): ReactElement {
+export default function AppearanceSettingsPage({}: Props): ReactElement {
     return (
         <div>
             
