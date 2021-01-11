@@ -1,13 +1,14 @@
+import { TextField } from '@material-ui/core';
 import React, { ReactElement } from 'react'
-import { useTranslation } from "react-i18next";
-import MyAppBar from '../../components/appbar';
+import { useTranslation } from 'react-i18next';
+import { SettingsProps } from './route'
 
-export default function SettingsPage(): ReactElement {
-    const {t} = useTranslation("settings")
+
+export default function SettingsHomePage({user}: SettingsProps): ReactElement {
+    const {t} = useTranslation('settings');
     return (
         <>
-            <MyAppBar title={t("settings")} />
-            
+            <TextField label={t('home.username')} defaultValue={user.name} onChange={(event) => user.name = event.target.value} />
         </>
     )
 }

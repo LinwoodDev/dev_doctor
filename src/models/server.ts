@@ -1,5 +1,6 @@
 import Course from "./course";
 import YAML from "yaml";
+import User from "./user";
 
 export default class CoursesServer {
   public readonly url: string;
@@ -30,15 +31,10 @@ export default class CoursesServer {
   }
 
   static get servers() : CoursesServer[] {
-    var currentData = localStorage.getItem('servers');
-    var servers = [new CoursesServer({name: 'Dev-Doctor', url: 'https://backend.dev-doctor.cf'})];
-    if(currentData != null){
-      servers = JSON.parse(currentData).map((server) => new CoursesServer(server));
-    }
-    return servers;
+    return User.load().servers;
   }
   static set servers(value: CoursesServer[]) {
-    localStorage.setItem('servers', JSON.stringify(value));
+    User.load().servers = value;
   }
   static getServer(id : number) : CoursesServer {
     return this.servers[id];

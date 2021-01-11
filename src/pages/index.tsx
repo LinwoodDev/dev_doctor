@@ -7,9 +7,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import MyAppBar from "../components/appbar";
 import { Link as RouterLink } from "react-router-dom";
+import User from "../models/user";
 
 const useStyles = makeStyles((theme) => ({
   heroButtons: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const IndexPage = () => {
   const { t } = useTranslation("common");
   const classes = useStyles();
+  const user = User.load();
   return (
     <>
       <MyAppBar title="Home" />
@@ -35,6 +37,11 @@ const IndexPage = () => {
           <Typography align="center" variant="h5" color="textSecondary">
             {t("subtitle")}
           </Typography>
+          {user.name?.trim() && (
+            <Typography align="center">
+              <Trans t={t} i18nKey="welcome" values={{ name: user.name }} />
+            </Typography>
+          )}
           <div className={classes.heroButtons}>
             <Grid container spacing={2} justify="center">
               <Grid item>

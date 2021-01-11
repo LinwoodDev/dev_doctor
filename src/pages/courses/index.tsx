@@ -5,9 +5,8 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Button,
   Card,
-  CardActions,
+  CardActionArea,
   CardContent,
   CardMedia,
   Chip,
@@ -45,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
+  },
+  item: {
+    margin: theme.spacing(2)
   },
   card: {
     height: "100%",
@@ -116,17 +118,17 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
     setCourses(map);
   };
   const [expanded, setExpanded] = React.useState<string | false>(false);
-  const addCourse = (course: string) => {
-    if (!courses) setCourses(null);
-    caches
-      .open(`course-${course}`)
-      .then((cache) => cache.add(`assets/courses/${course}/icon.png`))
-      .then(getData);
-  };
-  const removeCourse = (course: string) => {
-    if (!courses) setCourses(null);
-    caches.delete(`course-${course}`).then(getData);
-  };
+  // const addCourse = (course: string) => {
+  //   if (!courses) setCourses(null);
+  //   caches
+  //     .open(`course-${course}`)
+  //     .then((cache) => cache.add(`assets/courses/${course}/icon.png`))
+  //     .then(getData);
+  // };
+  // const removeCourse = (course: string) => {
+  //   if (!courses) setCourses(null);
+  //   caches.delete(`course-${course}`).then(getData);
+  // };
   const [currentServers, setCurrentServers] = React.useState<CoursesServer[]>(servers);
 
   const handleChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -163,17 +165,21 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
     }
   };
   const buildCoursesView = (server : CoursesServer, serverCourses: Course[]) => (
-    <Grid container spacing={4}>
+    <Grid container>
       {serverCourses.map((course : Course) => (
-        <Grid item key={course.server.url + "/" +course["slug"]} xs={12} sm={6} md={4}>
+        <Grid item className={classes.item} key={course.server.url + "/" +course["slug"]} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
-            {course["installed"] ? (
+            {/* {course["installed"] ? (
               <Button onClick={() => removeCourse(course["slug"])}>
                 remove
               </Button>
             ) : (
               <Button onClick={() => addCourse(course["slug"])}>add</Button>
-            )}
+            )} */}
+            
+      <CardActionArea
+                component={RouterLink}
+                to={`${path}/${Array.from(courses.keys()).indexOf(server)}/${course["slug"]}`}>
             {course["icon"] && (
               <CardMedia
                 className={classes.cardMedia}
@@ -202,19 +208,7 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
                 {course["description"]}
               </Typography>
             </CardContent>
-            <CardActions>
-              <Button
-                component={RouterLink}
-                to={`${path}/${Array.from(courses.keys()).indexOf(server)}/${course["slug"]}`}
-                size="small"
-                color="primary"
-              >
-                View
-              </Button>
-              <Button size="small" color="primary">
-                Edit
-              </Button>
-            </CardActions>
+            </CardActionArea>
           </Card>
         </Grid>
       ))}

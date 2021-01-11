@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 const IndexPage = lazy(() => import('./pages/index'));
 const CoursesRoute = lazy(() => import('./pages/courses/route'));
-const SettingsPage = lazy(() => import('./pages/settings/home'));
+const SettingsPage = lazy(() => import('./pages/settings/route'));
 const AddServerPage = lazy(() => import('./pages/settings/add'));
 
 

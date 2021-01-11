@@ -1,7 +1,22 @@
 {
-    "settings":"Einstellungen",
-    "add-server":{
-        "title":"Möchten Sie den Server {{name}} hinzufügen?",
-        "body": "Der Server {{name}} mit der URL {{url}} wird auf der Kursseite angezeigt."
+    "settings": "Einstellungen",
+    "home": {
+        "title": "Start",
+        "username": "Benutzername"
+    },
+    "appearance": {
+        "title": "Personalisierung"
+    },
+    "downloads": {
+        "title": "Downloads"
+    },
+    "servers": {
+        "title": "Server",
+        "add": {
+            "title": "Möchten Sie den Server {{name}} hinzufügen?",
+            "body": "Der Server {{name}} mit der URL {{url}} wird auf der Kursseite angezeigt.",
+            "agree": "Akzeptieren",
+            "disagree": "Nicht akzeptieren"
+        }
     }
 }

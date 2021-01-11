@@ -1,7 +1,22 @@
 {
     "settings":"Settings",
-    "add-server":{
-        "title":"Do you want to add the server {{name}}?",
-        "body": "The server {{name}} with the url {{url}} will displayed on the courses page."
+    "home": {
+        "title":"Home",
+        "username":"Username"
+    },
+    "appearance": {
+        "title": "Appearance"
+    },
+    "downloads": {
+        "title": "Downloads"
+    },
+    "servers": {
+        "title": "Servers",
+        "add":{
+            "title":"Do you want to add the server {{name}}?",
+            "body": "The server {{name}} with the url {{url}} will displayed on the courses page.",
+            "agree":"Agree",
+            "disagree":"Disagree"
+        }
     }
 }

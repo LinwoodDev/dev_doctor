@@ -15,6 +15,7 @@ import {
   Box,
   Typography,
   Grid,
+  IconButton,
 } from "@material-ui/core";
 import theme from "../../../theme";
 import {
@@ -28,20 +29,25 @@ import {
 } from "react-router-dom";
 import CoursePartItemIcon from "../../../components/icon";
 import CoursePart from "../../../models/part";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex",
-      height: "100%",
-      width: "100%",
+      display: "flex"
     },
     drawer: {
       [theme.breakpoints.up("sm")]: {
         width: drawerWidth,
         flexShrink: 0,
+      },
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up("sm")]: {
+        display: "none",
       },
     },
     drawerPaper: {
@@ -63,15 +69,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-interface Props
-  extends RouteComponentProps {
+interface Props extends RouteComponentProps {
   parts: CoursePart[];
 }
 
-export function CoursePartItemLayout({
-  parts,
-  history,
-}: Props) {
+export function CoursePartItemLayout({ parts, history }: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   let match = useRouteMatch<CoursePartParamTypes>({
     path: `/courses/:serverId/:courseId/start/:partId/:itemId`,
@@ -189,30 +191,51 @@ export function CoursePartItemLayout({
           </Tabs>
         </AppBar>
         <Paper elevation={3}>
+          <Box p={2}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
           <Box p={4}>
             {item != null && (
               <Paper elevation={3}>
-              <Grid container spacing={4} alignItems="stretch">
-                <Grid item lg={4} md={5} sm={12} container direction="column">
-                  <Box p={2}>
-                    <Typography variant="h3" component="h2">
-                      {item.name}
-                    </Typography>
-                    <Typography component="p">{item.description}</Typography>
-                  </Box>
+                <Grid container spacing={4} alignItems="stretch">
+                  <Grid item lg={4} md={5} sm={12} container direction="column">
+                    <Box p={2}>
+                      <Typography variant="h3" component="h2">
+                        {item.name}
+                      </Typography>
+                      <Typography component="p">{item.description}</Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item lg={8} md={7} sm={12}>
+                    <Box p={2}>
+                      <Switch>
+                        <Route path={`${path}/:itemId`}>
+                          <CoursePartItemRoute part={part} />
+                        </Route>
+                        <Route
+                          path={path}
+                          exact
+                          render={({ location }) => (
+                            <Redirect
+                              to={{
+                                pathname: `/courses/${serverId}/${courseId}/start/${partId}/0`,
+                                state: { from: location },
+                              }}
+                            />
+                          )}
+                        />
+                      </Switch>
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid item lg={8} md={7} sm={12}>
-                  <Box p={2}>
-                    
-    <Switch>
-      <Route path={`${path}/:itemId`}>
-        <CoursePartItemRoute part={part} />
-      </Route>
-      <Route path={path} exact render={({location}) => (<Redirect to={{pathname: `/courses/${serverId}/${courseId}/start/${partId}/0`, state: {from: location}}} />)} />
-    </Switch>
-                  </Box>
-                </Grid>
-              </Grid>
               </Paper>
             )}
           </Box>

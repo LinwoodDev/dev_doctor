@@ -9,6 +9,7 @@
         "de":"Deutsch",
         "en":"Englisch"
     },
+    "welcome":"Willkommen zurück, {{name}}!",
     "profile":"Profil",
     "stats":"Statistiken",
     "settings":"Einstellungen",

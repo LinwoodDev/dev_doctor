@@ -17,7 +17,7 @@ export function AddServerPage(props: Props): ReactElement {
     const handleClose = () => {
         props.history.push('/');
     };
-    if(CoursesServer.servers.find((server) => server.url === query.get('url')))
+    if(CoursesServer.servers.find((server) => server.url === query.get('url')) || !query.get('url')?.trim())
         handleClose();
     const { t } = useTranslation('settings');
     var servers = CoursesServer.servers;
@@ -31,21 +31,21 @@ export function AddServerPage(props: Props): ReactElement {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title"><Trans t={t} i18nKey="add-server.title" values={{name: server.name, url: server.url}} /></DialogTitle>
+          <DialogTitle id="alert-dialog-title"><Trans t={t} i18nKey="servers.add.title" values={{name: server.name, url: server.url}} /></DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-            <Trans t={t} i18nKey="add-server.body" values={{name: server.name, url: server.url}} />
+            <Trans t={t} i18nKey="servers.add.body" values={{name: server.name, url: server.url}} />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
-              Disagree
+              {t('servers.add.disagree')}
             </Button>
             <Button onClick={() => {
                 CoursesServer.servers = servers;
                 handleClose();
             }} color="primary" autoFocus>
-              Agree
+            {t('servers.add.agree')}
             </Button>
           </DialogActions>
         </Dialog>
