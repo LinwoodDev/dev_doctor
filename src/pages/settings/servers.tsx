@@ -6,9 +6,7 @@ import {
   RowModel,
   RowsProp,
   SelectionChangeParams,
-  ValueGetterParams,
 } from "@material-ui/data-grid";
-import CoursesServer from "../../models/server";
 import { Button } from "@material-ui/core";
 
 export default function ServersSettingsPage({
