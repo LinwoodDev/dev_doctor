@@ -9,10 +9,8 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { ReactComponent as LogoDark } from "../logo-dark.svg";
 import { Link as RouterLink } from "react-router-dom";
 import AssessmentOutlinedIcon from "@material-ui/icons/AssessmentOutlined";
-import NotificationsOutlinedIcon from "@material-ui/icons/Notifications";
 import {
   AppBar,
-  Badge,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -81,7 +79,7 @@ export default function MyAppBar(props: MyAppBarProps) {
           <SvgIcon component={LogoDark} viewBox="0 0 400 400" />
         </IconButton>
         <div className={classes.title}>
-          <Typography variant="h6">{props.title}</Typography>
+          <Typography variant="h6">{process.env.REACT_APP_VERSION} {props.title}</Typography>
           {props.subtitle && (
             <Typography variant="subtitle1" color="textSecondary">
               {props.subtitle}

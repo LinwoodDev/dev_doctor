@@ -11,7 +11,6 @@ import { Trans, useTranslation } from "react-i18next";
 import MyAppBar from "../components/appbar";
 import { Link as RouterLink } from "react-router-dom";
 import User from "../models/user";
-import { userInfo } from "os";
 
 const useStyles = makeStyles((theme) => ({
   heroButtons: {
