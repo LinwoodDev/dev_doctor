@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
   },
+  item: {
+    margin: theme.spacing(2)
+  },
   card: {
     height: "100%",
     display: "flex",
@@ -162,9 +165,9 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
     }
   };
   const buildCoursesView = (server : CoursesServer, serverCourses: Course[]) => (
-    <Grid container spacing={4}>
+    <Grid container>
       {serverCourses.map((course : Course) => (
-        <Grid item key={course.server.url + "/" +course["slug"]} xs={12} sm={6} md={4}>
+        <Grid item className={classes.item} key={course.server.url + "/" +course["slug"]} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
             {/* {course["installed"] ? (
               <Button onClick={() => removeCourse(course["slug"])}>
