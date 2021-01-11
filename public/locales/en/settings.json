@@ -1,7 +1,8 @@
 {
     "settings":"Settings",
     "home": {
-        "title":"Home"
+        "title":"Home",
+        "username":"Username"
     },
     "appearance": {
         "title": "Appearance"

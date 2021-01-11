@@ -1,7 +1,8 @@
 {
     "settings":"Einstellungen",
     "home": {
-        "title":"Start"
+        "title":"Start",
+        "username":"Benutzername"
     },
     "appearance": {
         "title": "Personalisierung"

@@ -1,10 +1,8 @@
 import React, { ReactElement } from 'react'
+import { SettingsProps } from './route'
 
-interface Props {
-    
-}
 
-export default function AppearanceSettingsPage({}: Props): ReactElement {
+export default function AppearanceSettingsPage(user: SettingsProps): ReactElement {
     return (
         <div>
             

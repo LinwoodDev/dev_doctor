@@ -1,8 +1,11 @@
 import {
+  AppBar,
   Box,
+  Button,
   createStyles,
   Divider,
   Drawer,
+  Grid,
   Hidden,
   IconButton,
   List,
@@ -12,19 +15,27 @@ import {
   makeStyles,
   Paper,
   Theme,
+  Toolbar,
+  Typography,
   useTheme,
 } from "@material-ui/core";
 import React, { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 import MyAppBar from "../../components/appbar";
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Route, RouteComponentProps, Switch, useRouteMatch } from "react-router-dom";
+import {
+  Route,
+  RouteComponentProps,
+  Switch,
+  useRouteMatch,
+} from "react-router-dom";
 import AppearanceSettingsPage from "./appearance";
 import SettingsHomePage from "./home";
-import GetAppOutlinedIcon from '@material-ui/icons/GetAppOutlined';
-import TuneOutlinedIcon from '@material-ui/icons/TuneOutlined';
-import ListOutlinedIcon from '@material-ui/icons/ListOutlined';
+import GetAppOutlinedIcon from "@material-ui/icons/GetAppOutlined";
+import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
+import ListOutlinedIcon from "@material-ui/icons/ListOutlined";
+import User from "../../models/user";
 
 const drawerWidth = 240;
 
@@ -59,11 +70,30 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
+      width: "100%",
+      overflow: "auto",
+    },
+    titleBar: {
+      display: "inline",
     },
   })
 );
+enum SettingsPage {
+  HOME = "",
+  APPEARANCE = "appearance",
+  DOWNLOADS = "downloads",
+  SERVERS = "servers",
+}
+interface SettingsParamTypes {
+  page: SettingsPage;
+}
 
-export default function SettingsPageRoute(props: RouteComponentProps): ReactElement {
+export interface SettingsProps {
+  user: User;
+}
+export default function SettingsPageRoute(
+  props: RouteComponentProps
+): ReactElement {
   const { t } = useTranslation("settings");
   const classes = useStyles();
   const theme = useTheme();
@@ -72,47 +102,57 @@ export default function SettingsPageRoute(props: RouteComponentProps): ReactElem
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const pushSettings = (page : string) => {
+  const pushSettings = (page: SettingsPage) => {
     props.history.push(`/settings/${page}`);
-  }
+  };
+  let match = useRouteMatch<SettingsParamTypes>({
+    path: `/settings/:page?`,
+  });
+  const { page } = match.params;
+  const createSettingsPageIcon = (page: SettingsPage) => {
+    switch (page) {
+      case SettingsPage.HOME:
+        return <HomeOutlinedIcon />;
+      case SettingsPage.APPEARANCE:
+        return <TuneOutlinedIcon />;
+      case SettingsPage.DOWNLOADS:
+        return <GetAppOutlinedIcon />;
+      case SettingsPage.SERVERS:
+        return <ListOutlinedIcon />;
+    }
+  };
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    user.save();
+  };
   const drawer = (
     <div>
       <div className={classes.toolbar} />
       <Divider />
       <List>
-          <ListItem button onClick={() => pushSettings('')}>
+        {Object.keys(SettingsPage).map((current: string) => (
+          <ListItem
+            key={current}
+            button
+            selected={SettingsPage[current] === (page ?? "")}
+            onClick={() => pushSettings(SettingsPage[current])}
+          >
             <ListItemIcon>
-              <HomeOutlinedIcon />
+              {createSettingsPageIcon(SettingsPage[current])}
             </ListItemIcon>
-            <ListItemText primary={t('home.title')} />
+            <ListItemText primary={t(`${current.toLowerCase()}.title`)} />
           </ListItem>
-          <ListItem button onClick={() => pushSettings('')}>
-            <ListItemIcon>
-              <TuneOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary={t('appearance.title')} />
-          </ListItem>
-          <ListItem button onClick={() => pushSettings('appearance')}>
-            <ListItemIcon>
-              <GetAppOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary={t('downloads.title')} />
-          </ListItem>
-          <ListItem button onClick={() => pushSettings('downloads')}>
-            <ListItemIcon>
-              <ListOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary={t('servers.title')} />
-          </ListItem>
+        ))}
       </List>
     </div>
   );
   let { path } = useRouteMatch();
+  const user = User.load();
 
   return (
-    <>
-      <MyAppBar title={t("settings")} />x
-      <nav className={classes.drawer} aria-label="mailbox folders">
+    <div className={classes.root}>
+      <MyAppBar title={t("settings")} />
+      <nav className={classes.drawer}>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
@@ -144,8 +184,8 @@ export default function SettingsPageRoute(props: RouteComponentProps): ReactElem
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Paper>
-          <Box p={2}>
+        <AppBar position="sticky" color="default">
+          <Toolbar>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -155,16 +195,40 @@ export default function SettingsPageRoute(props: RouteComponentProps): ReactElem
             >
               <MenuIcon />
             </IconButton>
+            <Typography>
+              {t(
+                Object.keys(SettingsPage)
+                  .filter((x) => SettingsPage[x] === (page ?? ""))[0]
+                  ?.toLowerCase() + ".title"
+              )}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div className={classes.toolbar} />
+        <Paper>
+          <Box p={2}>
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Switch>
+                    <Route exact path={path}>
+                      <SettingsHomePage user={user} />
+                    </Route>
+                    <Route path={`${path}/appearance`}>
+                      <AppearanceSettingsPage user={user} />
+                    </Route>
+                  </Switch>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button type="submit" variant="outlined" color="primary">
+                    {t("update")}
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
           </Box>
         </Paper>
-        <Switch>
-          <Route exact path={path} component={SettingsHomePage} />
-          <Route
-            path={`${path}/appearance`}
-            component={AppearanceSettingsPage}
-          />
-        </Switch>
       </main>
-    </>
+    </div>
   );
 }
