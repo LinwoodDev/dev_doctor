@@ -8,7 +8,12 @@ export default class User {
         var currentData = this['servers'] as any;
         this.servers = [new CoursesServer({name: 'Dev-Doctor', url: 'https://backend.dev-doctor.cf'})];
         if(currentData != null){
-            this.servers = JSON.parse(currentData).map((server : Partial<CoursesServer>) => new CoursesServer(server));
+            try{
+            var json = JSON.parse(currentData);
+            this.servers = json.map((server : Partial<CoursesServer>) => new CoursesServer(server));
+            }catch(ignored){
+
+            }
         }
     }
 

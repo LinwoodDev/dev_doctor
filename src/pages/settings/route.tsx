@@ -36,6 +36,7 @@ import GetAppOutlinedIcon from "@material-ui/icons/GetAppOutlined";
 import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
 import ListOutlinedIcon from "@material-ui/icons/ListOutlined";
 import User from "../../models/user";
+import ServersSettingsPage from './servers';
 
 const drawerWidth = 240;
 
@@ -216,6 +217,9 @@ export default function SettingsPageRoute(
                     </Route>
                     <Route path={`${path}/appearance`}>
                       <AppearanceSettingsPage user={user} />
+                    </Route>
+                    <Route path={`${path}/servers`}>
+                      <ServersSettingsPage user={user} />
                     </Route>
                   </Switch>
                 </Grid>
