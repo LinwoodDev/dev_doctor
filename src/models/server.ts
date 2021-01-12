@@ -34,7 +34,9 @@ export default class CoursesServer {
     return User.load().servers;
   }
   static set servers(value: CoursesServer[]) {
-    User.load().servers = value;
+    var user = User.load();
+    user.servers = value;
+    user.save();
   }
   static getServer(id : number) : CoursesServer {
     return this.servers[id];
