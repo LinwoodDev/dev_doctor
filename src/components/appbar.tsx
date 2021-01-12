@@ -9,6 +9,7 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { ReactComponent as LogoDark } from "../logo-dark.svg";
 import { Link as RouterLink } from "react-router-dom";
 import AssessmentOutlinedIcon from "@material-ui/icons/AssessmentOutlined";
+import GavelOutlinedIcon from '@material-ui/icons/GavelOutlined';
 import {
   AppBar,
   IconButton,
@@ -152,6 +153,12 @@ export default function MyAppBar(props: MyAppBarProps) {
               <InfoOutlinedIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary={t("info")} />
+          </MenuItem>
+          <MenuItem href="https://codedoctor.tk/impress">
+            <ListItemIcon>
+              <GavelOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary={t("impress")} />
           </MenuItem>
         </Menu>
       </Toolbar>
