@@ -13,6 +13,7 @@ import GavelOutlinedIcon from '@material-ui/icons/GavelOutlined';
 import {
   AppBar,
   IconButton,
+  Link,
   ListItemIcon,
   ListItemText,
   Menu,
@@ -154,7 +155,7 @@ export default function MyAppBar(props: MyAppBarProps) {
             </ListItemIcon>
             <ListItemText primary={t("info")} />
           </MenuItem>
-          <MenuItem href="https://codedoctor.tk/impress">
+          <MenuItem component={Link} href="https://codedoctor.tk/impress" target="_blank" color="inherit">
             <ListItemIcon>
               <GavelOutlinedIcon fontSize="small" />
             </ListItemIcon>

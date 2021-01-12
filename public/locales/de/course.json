@@ -2,5 +2,14 @@
     "course":"Kurs",
     "home":"START",
     "statistics":"STATISTIKEN",
-    "materials":"MATERIALIEN"
+    "materials":"MATERIALIEN",
+    "question":{
+        "choose":"Wähle weise!",
+        "select":"Bitte wähle eine Antwort aus!",
+        "correct":"Richtig!",
+        "wrong":"Falsche Antwort!",
+        "check":"ABSCHICKEN"
+    },
+    "start":"START",
+    "support":"SUPPORT"
 }

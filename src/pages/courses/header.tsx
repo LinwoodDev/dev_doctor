@@ -90,9 +90,9 @@ function CourseHeader(props: Props) {
             <Grid item>
               <Box textAlign="center" p={2}>
                 <ButtonGroup variant="text" color="primary">
-                  <Button component={RouterLink} to={`/courses/${serverId}/${props.course.slug}/start`}>START</Button>
+                  <Button component={RouterLink} to={`/courses/${serverId}/${props.course.slug}/start`}>{t('home.start')}</Button>
                   {props.course.server.support &&
-                    <Button component={RouterLink} to={props.course.server.support}>SUPPORT</Button>
+                    <Button component={RouterLink} to={props.course.server.support}>{t('home.support')}</Button>
                   }
                 </ButtonGroup>
               </Box>

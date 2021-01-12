@@ -13,6 +13,7 @@ import React, { ReactElement, useState } from "react";
 import QuizPartItem from "../../../models/items/quiz";
 import { CoursePartItemProps } from "./route";
 import { QuizQuestion } from "../../../models/items/quiz";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -27,6 +28,7 @@ export default function CourseQuizPage(
   props: CoursePartItemProps<QuizPartItem>
 ): ReactElement {
   const classes = useStyles();
+  const {t} = useTranslation('course');
   const [evaluate, setEvaluate] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -50,7 +52,7 @@ export default function CourseQuizPage(
         color="primary"
         className={classes.button}
       >
-        Check Answer
+        {t('question.check')}
       </Button>
     </form>
   );
@@ -68,9 +70,10 @@ export function QuizQuestionForm({
   evaluate,
 }: Props): ReactElement {
   const classes = useStyles();
+  const {t} = useTranslation('course');
   const [value, setValue] = React.useState("");
   const [error, setError] = React.useState(false);
-  const [helperText, setHelperText] = React.useState("Choose wisely");
+  const [helperText, setHelperText] = React.useState<string>(t('question.choose'));
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
@@ -82,14 +85,14 @@ export function QuizQuestionForm({
     var newHelperText: string;
     var newError: boolean;
     if (!question.answers[+value]) {
-      newHelperText = "Please select an option.";
+      newHelperText = t('question.select');
       newError = true;
       return;
     } else if (question.answers[+value].correct) {
-      newHelperText = "You got it!";
+      newHelperText = t('question.correct');
       newError = false;
     } else {
-      newHelperText = "Sorry, wrong answer!";
+      newHelperText = t('question.wrong');
       newError = true;
     }
     question.answers[+value].answered = true;

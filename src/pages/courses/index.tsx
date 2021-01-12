@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
+  action: {
+    height: '100%'
+  },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
@@ -177,7 +180,7 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
               <Button onClick={() => addCourse(course["slug"])}>add</Button>
             )} */}
             
-      <CardActionArea
+      <CardActionArea className={classes.action}
                 component={RouterLink}
                 to={`${path}/${Array.from(courses.keys()).indexOf(server)}/${course["slug"]}`}>
             {course["icon"] && (
