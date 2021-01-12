@@ -2,5 +2,14 @@
     "course":"Course",
     "home":"HOME",
     "statistics":"STATISTICS",
-    "materials":"MATERIALS"
+    "materials":"MATERIALS",
+    "question":{
+        "choose":"Choose whisley!",
+        "select":"Please select an option!",
+        "correct":"Correct!",
+        "wrong":"Sorry, wrong answer!",
+        "check":"CHECK ANSWER"
+    },
+    "start":"START",
+    "support":"SUPPORT"
 }
