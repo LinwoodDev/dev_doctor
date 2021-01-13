@@ -1,10 +1,5 @@
 import React from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Toolbar from "@material-ui/core/Toolbar";
-import { CoursePartItemRoute, CoursePartParamTypes } from "./route";
-import CoursePartItem from "../../../models/items/item";
 import {
   Hidden,
   Paper,
@@ -17,7 +12,6 @@ import {
   Grid,
   IconButton,
 } from "@material-ui/core";
-import theme from "../../../theme";
 import {
   Redirect,
   Route,
@@ -27,16 +21,18 @@ import {
   useRouteMatch,
   withRouter,
 } from "react-router-dom";
+import MenuIcon from "@material-ui/icons/Menu";
+import theme from "../../../theme";
+import CoursePartItem from "../../../models/items/item";
 import CoursePartItemIcon from "../../../components/icon";
 import CoursePart from "../../../models/part";
-import MenuIcon from "@material-ui/icons/Menu";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex"
+      display: "flex",
     },
     drawer: {
       [theme.breakpoints.up("sm")]: {

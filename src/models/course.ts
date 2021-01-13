@@ -22,10 +22,10 @@ export default class Course {
     var text = await response.text();
     var yaml = YAML.parse(text);
     return await Promise.all(
-      (yaml["parts"] as Array<string>).map((part) => this.fetchPart(part))
+      (yaml["parts"] as Array<string>).map((part, index) => this.fetchPart(part, index))
     );
   }
-  public async fetchPart(part: string): Promise<CoursePart> {
+  public async fetchPart(part: string, index : number): Promise<CoursePart> {
     var response = await fetch(
       `${this.server.url}/${this.slug}/${part}/config.yml`
     );
@@ -33,6 +33,7 @@ export default class Course {
     var data = YAML.parse(text);
     data["course"] = this;
     data["slug"] = part;
+    data["index"] = index;
     return new CoursePart(data);
   }
 }

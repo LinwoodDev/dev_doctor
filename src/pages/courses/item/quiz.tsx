@@ -10,70 +10,31 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { ReactElement, useState } from "react";
-import QuizPartItem from "../../../models/items/quiz";
-import { CoursePartItemProps } from "./route";
-import { QuizQuestion } from "../../../models/items/quiz";
 import { useTranslation } from "react-i18next";
+import QuizPartItem, { QuizQuestion } from "../../../models/items/quiz";
+import CoursePartItemProps from "./props";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(3),
-    display: 'block'
+    display: "block",
   },
   button: {
     margin: theme.spacing(1, 1, 0, 0),
   },
 }));
-export default function CourseQuizPage(
-  props: CoursePartItemProps<QuizPartItem>
-): ReactElement {
-  const classes = useStyles();
-  const {t} = useTranslation('course');
-  const [evaluate, setEvaluate] = useState(false);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setEvaluate(true);
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      {props.item.questions.map((question, index) => (
-        <QuizQuestionForm
-          index={index}
-          question={question}
-          evaluate={evaluate}
-          key={index}
-        />
-      ))}
-      <Button
-        type="submit"
-        variant="outlined"
-        color="primary"
-        className={classes.button}
-      >
-        {t('question.check')}
-      </Button>
-    </form>
-  );
-}
-
-interface Props {
-  evaluate: boolean;
-  question: QuizQuestion;
-  index: number;
-}
 
 export function QuizQuestionForm({
   question,
-  index,
   evaluate,
 }: Props): ReactElement {
   const classes = useStyles();
-  const {t} = useTranslation('course');
+  const { t } = useTranslation("course");
   const [value, setValue] = React.useState("");
   const [error, setError] = React.useState(false);
-  const [helperText, setHelperText] = React.useState<string>(t('question.choose'));
+  const [helperText, setHelperText] = React.useState<string>(
+    t("question.choose")
+  );
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
@@ -81,24 +42,25 @@ export function QuizQuestionForm({
     setError(false);
     question.answers[+value].answered = false;
   };
-  function evaluateForm() {
-    var newHelperText: string;
-    var newError: boolean;
+  const evaluateForm = () => {
+    let newHelperText: string;
+    let newError: boolean;
     if (!question.answers[+value]) {
-      newHelperText = t('question.select');
+      newHelperText = t("question.select");
       newError = true;
       return;
-    } else if (question.answers[+value].correct) {
-      newHelperText = t('question.correct');
+    }
+    if (question.answers[+value].correct) {
+      newHelperText = t("question.correct");
       newError = false;
     } else {
-      newHelperText = t('question.wrong');
+      newHelperText = t("question.wrong");
       newError = true;
     }
     question.answers[+value].answered = true;
     setHelperText(newHelperText);
     setError(newError);
-  }
+  };
   if (
     evaluate &&
     (!question.answers[+value] ||
@@ -107,10 +69,7 @@ export function QuizQuestionForm({
     evaluateForm();
 
   return (
-    <FormControl
-      error={error}
-      className={classes.formControl}
-    >
+    <FormControl error={error} className={classes.formControl}>
       <FormLabel component="legend">{question.title}</FormLabel>
       <RadioGroup
         aria-label="quiz"
@@ -120,7 +79,7 @@ export function QuizQuestionForm({
       >
         {question.answers.map((answer, answerIndex) => (
           <FormControlLabel
-            key={`${index}-${answerIndex}`}
+            key={`${question.id}-${answer.id}`}
             value={String(answerIndex)}
             control={<Radio />}
             label={answer.name}
@@ -131,4 +90,42 @@ export function QuizQuestionForm({
       {evaluate && <Typography component="p">{question.evaluation}</Typography>}
     </FormControl>
   );
+}
+
+export default function CourseQuizPage({
+  item,
+}: CoursePartItemProps<QuizPartItem>): ReactElement {
+  const classes = useStyles();
+  const { t } = useTranslation("course");
+  const [evaluate, setEvaluate] = useState(false);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setEvaluate(true);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {item.questions.map((question) => (
+        <QuizQuestionForm
+          question={question}
+          evaluate={evaluate}
+          key={question.id}
+        />
+      ))}
+      <Button
+        type="submit"
+        variant="outlined"
+        color="primary"
+        className={classes.button}
+      >
+        {t("question.check")}
+      </Button>
+    </form>
+  );
+}
+
+interface Props {
+  evaluate: boolean;
+  question: QuizQuestion;
 }

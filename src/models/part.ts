@@ -3,6 +3,7 @@ import Course from "./course";
 import TextPartItem from "./items/text";
 import VideoPartItem from "./items/video";
 import QuizPartItem from "./items/quiz";
+import UniqueObject from './unique';
 
 export default class CoursePart {
   public readonly name: string;
@@ -17,8 +18,9 @@ export default class CoursePart {
 
   public constructor(init?: Partial<CoursePart>) {
     Object.assign(this, init);
-    this.items = (this["items"] as Array<any>).map((item) => {
+    this.items = (this["items"] as Array<any>).map((item, index) => {
       item["part"] = this;
+      item["index"] = index;
       switch ((item["type"] as string)?.toLowerCase()) {
         case "text":
           return new TextPartItem(item);

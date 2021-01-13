@@ -1,16 +1,13 @@
-import React, { lazy } from 'react';
-import './App.css';
-import theme from './theme';
-import { ThemeProvider } from '@material-ui/core';
-import {
-  Route,
-  HashRouter as Router, Switch
-} from 'react-router-dom';
-const IndexPage = lazy(() => import('./pages/index'));
-const CoursesRoute = lazy(() => import('./pages/courses/route'));
-const SettingsPage = lazy(() => import('./pages/settings/route'));
-const AddServerPage = lazy(() => import('./pages/settings/add'));
+import React, { lazy } from "react";
+import "./App.css";
+import { ThemeProvider } from "@material-ui/core";
+import { Route, HashRouter as Router, Switch } from "react-router-dom";
+import theme from "./theme";
 
+const IndexPage = lazy(() => import("./pages/index"));
+const CoursesRoute = lazy(() => import("./pages/courses/route"));
+const SettingsPage = lazy(() => import("./pages/settings/route"));
+const AddServerPage = lazy(() => import("./pages/settings/add"));
 
 function App() {
   return (
