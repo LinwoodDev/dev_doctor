@@ -7,29 +7,28 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
-import CoursePartItem from "../../../models/items/item";
 import TextPartItem from "../../../models/items/text";
 import VideoPartItem from "../../../models/items/video";
 import CoursePart from "../../../models/part";
-import { CourseParamTypes, CourseProps } from "../route";
 import CoursePartItemLayout from "./layout";
 import CourseTextPage from "./text";
 import CourseVideoPage from "./video";
-import QuizPartItem from '../../../models/items/quiz';
+import QuizPartItem from "../../../models/items/quiz";
 import CourseQuizPage from "./quiz";
+import { CourseParamTypes, CourseProps } from "../header";
 
 export default function CoursePartsRoute({
   course,
 }: CourseProps): ReactElement {
-  let { path } = useRouteMatch();
+  const { path } = useRouteMatch();
   const { serverId, courseId } = useParams<CourseParamTypes>();
   const [parts, setParts] = React.useState<CoursePart[]>(null);
-  useEffect(() => {
-    if (parts == null) getData();
-  });
   const getData = async () => {
     setParts(await course.fetchParts());
   };
+  useEffect(() => {
+    if (parts == null) getData();
+  });
   return parts == null ? (
     <CircularProgress />
   ) : (
@@ -45,18 +44,11 @@ export default function CoursePartsRoute({
     </Switch>
   );
 }
-export interface CoursePartParamTypes extends CourseParamTypes {
-  partId: string;
-}
 export interface CoursePartRouteProps extends CourseProps {
   parts: CoursePart[];
 }
-export function CoursePartRoute({
-  parts
-}: CoursePartRouteProps): ReactElement {
-  return (
-    <CoursePartItemLayout parts={parts} />
-  );
+export function CoursePartRoute({ parts }: CoursePartRouteProps): ReactElement {
+  return <CoursePartItemLayout parts={parts} />;
 }
 export interface CoursePartParamTypes extends CourseParamTypes {
   itemId: string;
@@ -64,21 +56,20 @@ export interface CoursePartParamTypes extends CourseParamTypes {
 export interface CoursePartProps {
   part: CoursePart;
 }
-export interface CoursePartItemProps<T extends CoursePartItem> {
-  item: T;
-}
 export function CoursePartItemRoute({ part }: CoursePartProps): ReactElement {
   const { itemId } = useParams<CoursePartParamTypes>();
   const current = part.items[itemId];
   const buildPage = () => {
-      if (current instanceof TextPartItem) {
-        return <CourseTextPage item={current} />;
-      } else if (current instanceof VideoPartItem) {
-        return <CourseVideoPage item={current} />;
-      } else if (current instanceof QuizPartItem) {
-        return <CourseQuizPage item={current} />;
-      }
-      return <p>Error!</p>;
-  }
+    if (current instanceof TextPartItem) {
+      return <CourseTextPage item={current} />;
+    }
+    if (current instanceof VideoPartItem) {
+      return <CourseVideoPage item={current} />;
+    }
+    if (current instanceof QuizPartItem) {
+      return <CourseQuizPage item={current} />;
+    }
+    return <p>Error!</p>;
+  };
   return buildPage();
 }
