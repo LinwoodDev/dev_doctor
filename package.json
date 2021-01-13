@@ -27,7 +27,6 @@
     "workbox-cacheable-response": "^6.0.2",
     "workbox-core": "^6.0.2",
     "workbox-expiration": "^6.0.2",
-    "workbox-google-analytics": "^6.0.2",
     "workbox-navigation-preload": "^6.0.2",
     "workbox-precaching": "^6.0.2",
     "workbox-range-requests": "^6.0.2",
@@ -70,6 +69,14 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.15",
     "@types/react-router-dom": "^5.1.7",
-    "@types/react-router-redux": "^5.0.18"
+    "@types/react-router-redux": "^5.0.18",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
   }
 }
