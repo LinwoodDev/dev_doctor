@@ -8,8 +8,8 @@ export default function CourseTextPage({
   item,
 }: CoursePartItemProps<TextPartItem>): ReactElement {
   return (
-    <div>
+    <Typography component="p">
       <MyMarkdown body={item.text} />
-    </div>
+    </Typography>
   );
 }

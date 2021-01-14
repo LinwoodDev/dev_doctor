@@ -116,7 +116,7 @@ export default function CoursePartItemLayout({
             orientation="vertical"
             variant="scrollable"
             onChange={handlePartCallToRouter}
-            value={part.slug && false}
+            value={part.slug}
           >
             {parts.map((current) => (
               <Tab
