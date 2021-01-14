@@ -117,15 +117,17 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
   const user = User.load();
   const { path } = useRouteMatch();
   const getData = async () => {
-    setServers(server == null ? await user.fetchServers() : [server]);
+    const data = await user.fetchServers();
+    setServers(server == null ? data : [server]);
     const map = new Map<CoursesServer, Course[]>();
     console.log(servers);
     await Promise.all(
-      servers.map(async (current) => {
+      data.map(async (current) => {
         map.set(current, await current.fetchCourses());
       })
     );
     setCourses(map);
+    setCurrentServers(data);
   };
   useEffect(() => {
     if (!courses) getData();
@@ -260,7 +262,9 @@ export default function CoursesPage({ server }: ServerProps): ReactElement {
       </Accordion>
     );
   };
-  return (
+  return currentServers == null ? (
+    <CircularProgress />
+  ) : (
     <>
       <MyAppBar title={t("title")} />
       <Container className={classes.cardGrid} maxWidth="md">
