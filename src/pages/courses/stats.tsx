@@ -1,7 +1,8 @@
 import { Paper, Box, Typography, Container } from "@material-ui/core";
 import React, { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
-import { CourseProps, useStyles } from "./header";
+import { useStyles } from "./header";
+import { CourseProps } from "./route";
 
 export default function CourseStatsPage(props: CourseProps): ReactElement {
   const classes = useStyles();

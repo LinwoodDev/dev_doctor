@@ -1,11 +1,10 @@
 import CoursePart from '../part';
-import UniqueObject from '../unique';
 
-export default abstract class CoursePartItem implements UniqueObject {
+export default abstract class CoursePartItem {
     public readonly part : CoursePart;
     public readonly name : string;
     public readonly description : string;
-    public readonly index : number;
+    public readonly slug : string;
 
     public get server() {
         return this.part.server;
