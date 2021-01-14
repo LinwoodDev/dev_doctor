@@ -6,7 +6,7 @@ import {
   RowsProp,
   SelectionChangeParams,
 } from "@material-ui/data-grid";
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import { SettingsProps } from "./route";
 
 export default function ServersSettingsPage({
@@ -29,7 +29,7 @@ export default function ServersSettingsPage({
     setItems(rows);
   };
   useEffect(() => {
-    getData();
+    if (items == null) getData();
   });
   const [deletedRows, setDeletedRows] = useState([]);
   const handleRowSelection = (param: SelectionChangeParams) => {
@@ -47,8 +47,9 @@ export default function ServersSettingsPage({
       items.map((item) => item.id).includes(index)
     );
   };
-  console.log(user.urls);
-  return (
+  return items == null ? (
+    <CircularProgress />
+  ) : (
     <>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid

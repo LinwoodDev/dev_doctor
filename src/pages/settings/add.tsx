@@ -70,6 +70,7 @@ export function AddServerPage(props: Props): ReactElement {
           <Button
             onClick={() => {
               user.urls = urls;
+              user.save();
               handleClose();
             }}
             color="primary"
