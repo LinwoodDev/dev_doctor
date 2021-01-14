@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { lazy, ReactElement } from "react";
 import "./App.css";
 import { ThemeProvider } from "@material-ui/core";
 import { Route, HashRouter as Router, Switch } from "react-router-dom";
@@ -9,7 +9,7 @@ const CoursesRoute = lazy(() => import("./pages/courses/route"));
 const SettingsPage = lazy(() => import("./pages/settings/route"));
 const AddServerPage = lazy(() => import("./pages/settings/add"));
 
-function App() {
+function App(): ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <Router>
