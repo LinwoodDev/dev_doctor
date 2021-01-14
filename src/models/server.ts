@@ -1,6 +1,7 @@
 import YAML from "yaml";
 import Course from "./course";
 import User from "./user";
+import UniqueObject from "./unique";
 
 export default class CoursesServer {
   public readonly url: string;

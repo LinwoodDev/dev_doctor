@@ -1,3 +1,4 @@
+import { Typography } from "@material-ui/core";
 import React, { ReactElement } from "react";
 import MyMarkdown from "../../../components/markdown";
 import TextPartItem from "../../../models/items/text";

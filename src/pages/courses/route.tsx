@@ -43,7 +43,7 @@ export function CourseRoute(): ReactElement {
         </Route>
         <Route path={`${path}/stats`}>
           <CourseHeader course={course} scrollToTab={false} />
-          <CourseStatsPage />
+          <CourseStatsPage course={course} />
         </Route>
         <Route path={`${path}/start`}>
           <CoursePartsRoute course={course} />

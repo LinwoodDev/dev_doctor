@@ -23,11 +23,11 @@ export default class User {
     return new CoursesServer(data);
   }
 
-  public save(): void {
+  public save() {
     localStorage.setItem("user", JSON.stringify(this));
   }
 
-  static load(): User {
+  static load() {
     return new User(JSON.parse(localStorage.getItem("user")));
   }
 }
