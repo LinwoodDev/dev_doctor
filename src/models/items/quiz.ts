@@ -37,7 +37,7 @@ export class QuizQuestion implements UniqueObject {
     });
   }
 
-  public calculatePoints() {
+  public calculatePoints(): number {
     let points = 0;
     this.answers.forEach((answer) => {
       points += answer.answered && answer.correct ? answer.points : 0;

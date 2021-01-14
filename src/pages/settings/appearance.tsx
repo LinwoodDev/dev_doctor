@@ -1,8 +1,5 @@
 import React, { ReactElement } from "react";
-import { SettingsProps } from "./route";
 
-export default function AppearanceSettingsPage(
-  user: SettingsProps
-): ReactElement {
+export default function AppearanceSettingsPage(): ReactElement {
   return <div />;
 }

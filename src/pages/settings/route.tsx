@@ -218,7 +218,7 @@ export default function SettingsPageRoute(
                       <SettingsHomePage user={user} />
                     </Route>
                     <Route path={`${path}/appearance`}>
-                      <AppearanceSettingsPage user={user} />
+                      <AppearanceSettingsPage />
                     </Route>
                     <Route path={`${path}/servers`}>
                       <ServersSettingsPage user={user} />

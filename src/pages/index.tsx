@@ -6,7 +6,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { ReactElement } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router-dom";
 import MyAppBar from "../components/appbar";
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(12, 0, 6),
   },
 }));
-const IndexPage = () => {
+const IndexPage = (): ReactElement => {
   const { t } = useTranslation("common");
   const classes = useStyles();
   const user = User.load();
