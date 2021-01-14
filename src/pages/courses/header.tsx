@@ -110,11 +110,11 @@ function CourseHeader({ course, scrollToTab, history }: Props) {
                       component={RouterLink}
                       to={`/courses/${serverId}/${course.slug}/start`}
                     >
-                      {t("home.start")}
+                      {t("start")}
                     </Button>
                     {course.server.support && (
                       <Button component={RouterLink} to={course.server.support}>
-                        {t("home.support")}
+                        {t("support")}
                       </Button>
                     )}
                   </ButtonGroup>
