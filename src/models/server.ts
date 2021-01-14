@@ -7,7 +7,6 @@ export default class CoursesServer {
   public readonly icon: string;
   public readonly name : string;
   public readonly support : string;
-  public readonly user: User;
 
   public constructor(init?: Partial<CoursesServer>) {
     Object.assign(this, init);
@@ -29,5 +28,17 @@ export default class CoursesServer {
     data['slug'] = slug;
     data['server'] = this;
     return new Course(data);
+  }
+
+  static get servers() : CoursesServer[] {
+    return User.load().servers;
+  }
+  static set servers(value: CoursesServer[]) {
+    var user = User.load();
+    user.servers = value;
+    user.save();
+  }
+  static getServer(id : number) : CoursesServer {
+    return this.servers[id];
   }
 }
