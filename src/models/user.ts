@@ -1,10 +1,10 @@
-import YAML from "yaml";
-import CoursesServer from "./server";
+import YAML from 'yaml';
+import CoursesServer from './server';
 
 export default class User {
-  public name = "";
+  public name: string = '';
 
-  public urls: string[] = ["https://backend.dev-doctor.cf"];
+  public urls: string[] = ['https://backend.dev-doctor.cf'];
 
   public constructor(init: Partial<User>) {
     Object.assign(this, init);
@@ -24,10 +24,10 @@ export default class User {
   }
 
   public save() {
-    localStorage.setItem("user", JSON.stringify(this));
+    localStorage.setItem('user', JSON.stringify(this));
   }
 
   static load() {
-    return new User(JSON.parse(localStorage.getItem("user")));
+    return new User(JSON.parse(localStorage.getItem('user')));
   }
 }

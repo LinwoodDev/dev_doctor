@@ -1,13 +1,11 @@
 import CoursePartItem from "./item";
-
-type VideoSource = "youtube" | "url";
+type VideoSource = 'youtube'|'url';
 export default class VideoPartItem extends CoursePartItem {
-  public readonly url: string;
+    public readonly url : string;
+    public readonly source : VideoSource;
 
-  public readonly source: VideoSource;
-
-  public constructor(init?: Partial<VideoPartItem>) {
-    super(init);
-    Object.assign(this, init);
-  }
+    public constructor(init?:Partial<VideoPartItem>) {
+        super(init);
+        Object.assign(this, init);
+    }
 }

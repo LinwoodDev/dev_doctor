@@ -6,7 +6,7 @@ import { SettingsProps } from "./route";
 export default function DownloadsSettingsPage(
   props: SettingsProps
 ): ReactElement {
-  const { t } = useTranslation(["settings", "common"]);
+    const {t} = useTranslation(['settings', 'common']);
   return (
     <div>
       <Typography>{t("common:coming-soon")}</Typography>

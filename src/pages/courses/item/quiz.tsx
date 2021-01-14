@@ -24,7 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function QuizQuestionForm({ question, evaluate }: Props): ReactElement {
+export function QuizQuestionForm({
+  question,
+  evaluate,
+}: Props): ReactElement {
   const classes = useStyles();
   const { t } = useTranslation("course");
   const [value, setValue] = React.useState("");
@@ -76,7 +79,7 @@ export function QuizQuestionForm({ question, evaluate }: Props): ReactElement {
       >
         {question.answers.map((answer, answerIndex) => (
           <FormControlLabel
-            key={`${question.index}-${answer.index}`}
+            key={`${question.id}-${answer.id}`}
             value={String(answerIndex)}
             control={<Radio />}
             label={answer.name}
@@ -107,7 +110,7 @@ export default function CourseQuizPage({
         <QuizQuestionForm
           question={question}
           evaluate={evaluate}
-          key={question.index}
+          key={question.id}
         />
       ))}
       <Button

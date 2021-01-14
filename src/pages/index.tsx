@@ -8,8 +8,8 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { Link as RouterLink } from "react-router-dom";
 import MyAppBar from "../components/appbar";
+import { Link as RouterLink } from "react-router-dom";
 import User from "../models/user";
 
 const useStyles = makeStyles((theme) => ({

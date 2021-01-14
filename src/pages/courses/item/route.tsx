@@ -10,19 +10,12 @@ import {
 import TextPartItem from "../../../models/items/text";
 import VideoPartItem from "../../../models/items/video";
 import CoursePart from "../../../models/part";
+import CoursePartItemLayout from "./layout";
 import CourseTextPage from "./text";
 import CourseVideoPage from "./video";
 import QuizPartItem from "../../../models/items/quiz";
 import CourseQuizPage from "./quiz";
 import { CourseParamTypes, CourseProps } from "../header";
-import { CoursePartItemLayoutRouter } from "./layout";
-
-export interface CoursePartRouteProps extends CourseProps {
-  parts: CoursePart[];
-}
-export function CoursePartRoute({ parts }: CoursePartRouteProps): ReactElement {
-  return <CoursePartItemLayoutRouter parts={parts} />;
-}
 
 export default function CoursePartsRoute({
   course,
@@ -51,17 +44,20 @@ export default function CoursePartsRoute({
     </Switch>
   );
 }
-export interface CoursePartParamTypes extends CourseParamTypes {
-  partId: string;
+export interface CoursePartRouteProps extends CourseProps {
+  parts: CoursePart[];
 }
-export interface CoursePartItemParamTypes extends CoursePartParamTypes {
+export function CoursePartRoute({ parts }: CoursePartRouteProps): ReactElement {
+  return <CoursePartItemLayout parts={parts} />;
+}
+export interface CoursePartParamTypes extends CourseParamTypes {
   itemId: string;
 }
 export interface CoursePartProps {
   part: CoursePart;
 }
 export function CoursePartItemRoute({ part }: CoursePartProps): ReactElement {
-  const { itemId } = useParams<CoursePartItemParamTypes>();
+  const { itemId } = useParams<CoursePartParamTypes>();
   const current = part.items[itemId];
   const buildPage = () => {
     if (current instanceof TextPartItem) {

@@ -1,5 +1,5 @@
 import CoursePartItem from "./item";
-import UniqueObject from "../unique";
+import UniqueObject from '../unique';
 
 export default class QuizPartItem extends CoursePartItem {
   public readonly questions: QuizQuestion[];
@@ -8,9 +8,9 @@ export default class QuizPartItem extends CoursePartItem {
 
   public constructor(init?: Partial<QuizPartItem>) {
     super(init);
-    this.questions = init.questions.map((question: any, index) => {
-      question.quiz = this;
-      question.index = index;
+    this.questions = init['questions'].map((question : any, index) => {
+      question['quiz'] = this;
+      question['index'] = index;
       return new QuizQuestion(question);
     });
   }
@@ -26,7 +26,7 @@ export class QuizQuestion implements UniqueObject {
 
   public readonly answers: QuizAnswer[];
 
-  public readonly index: number;
+  public readonly index : number;
 
   public constructor(init?: Partial<QuizQuestion>) {
     Object.assign(this, init);
@@ -39,14 +39,15 @@ export class QuizQuestion implements UniqueObject {
 
   public calculatePoints() {
     let points = 0;
-    this.answers.forEach((answer) => {
-      points += answer.answered && answer.correct ? answer.points : 0;
-    });
+    this.answers.forEach(
+      (answer) =>
+        (points += answer.answered && answer.correct ? answer.points : 0)
+    );
     return points;
   }
 }
 export class QuizAnswer implements UniqueObject {
-  public readonly index: number;
+  public readonly index : number;
 
   public readonly correct: boolean;
 

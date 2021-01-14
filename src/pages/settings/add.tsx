@@ -7,6 +7,7 @@ import {
   DialogTitle,
   CircularProgress,
 } from "@material-ui/core";
+import { getDateOperators } from "@material-ui/data-grid";
 import React, { ReactElement, useEffect } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { RouteComponentProps, useLocation, withRouter } from "react-router-dom";
@@ -14,35 +15,35 @@ import IndexPage from "..";
 import CoursesServer from "../../models/server";
 import User from "../../models/user";
 
-type Props = RouteComponentProps;
+interface Props extends RouteComponentProps {}
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 export function AddServerPage(props: Props): ReactElement {
-  const query = useQuery();
+  let query = useQuery();
   const user = User.load();
-  const { urls } = user;
-  const url = query.get("url");
+  const urls = user.urls;
+  const url = query.get('url');
   const handleClose = () => {
     props.history.push("/");
   };
-  if (urls.find((current) => current === url) || !url?.trim()) handleClose();
+  if (
+    urls.find((current) => current === url) ||
+    !url?.trim()
+  )
+    handleClose();
+  useEffect(() => {getData();});
   const [server, setServer] = React.useState<CoursesServer>(null);
   const getData = async () => {
     setServer(await user.fetchServer(url));
   };
-  useEffect(() => {
-    getData();
-  });
   urls.push(url);
   const { t } = useTranslation("settings");
-  return server == null ? (
-    <CircularProgress />
-  ) : (
+  return server == null ? <CircularProgress /> : (
     <div>
       <Dialog
-        open
+        open={true}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
