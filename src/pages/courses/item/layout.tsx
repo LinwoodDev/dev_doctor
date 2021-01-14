@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import {
   Hidden,
@@ -11,6 +11,9 @@ import {
   Typography,
   Grid,
   IconButton,
+  Toolbar,
+  CssBaseline,
+  Drawer,
 } from "@material-ui/core";
 import {
   Redirect,
@@ -22,27 +25,32 @@ import {
   withRouter,
 } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
-import theme from "../../../theme";
 import CoursePartItem from "../../../models/items/item";
 import CoursePartItemIcon from "../../../components/icon";
 import CoursePart from "../../../models/part";
+import {
+  CoursePartItemParamTypes,
+  CoursePartItemRoute,
+  CoursePartParamTypes,
+} from "./route";
+import theme from "../../../theme";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((current: Theme) =>
   createStyles({
     root: {
       display: "flex",
     },
     drawer: {
-      [theme.breakpoints.up("sm")]: {
+      [current.breakpoints.up("sm")]: {
         width: drawerWidth,
         flexShrink: 0,
       },
     },
     menuButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up("sm")]: {
+      marginRight: current.spacing(2),
+      [current.breakpoints.up("sm")]: {
         display: "none",
       },
     },
@@ -56,11 +64,11 @@ const useStyles = makeStyles((theme: Theme) =>
       left: "0px",
     },
     // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
+    toolbar: current.mixins.toolbar,
     content: {
       flexGrow: 1,
       width: "100%",
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: current.palette.background.paper,
       overflow: "auto",
     },
   })
@@ -69,27 +77,27 @@ interface Props extends RouteComponentProps {
   parts: CoursePart[];
 }
 
-export function CoursePartItemLayout({ parts, history }: Props) {
+export default function CoursePartItemLayout({
+  parts,
+  history,
+}: Props): ReactElement {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  let match = useRouteMatch<CoursePartParamTypes>({
+  const match = useRouteMatch<CoursePartItemParamTypes>({
     path: `/courses/:serverId/:courseId/start/:partId/:itemId`,
   });
   const { serverId, courseId, partId } = useParams<CoursePartParamTypes>();
-  let { path } = useRouteMatch();
-  const part = parts.find((part) => part.slug === partId);
+  const { path } = useRouteMatch();
+  const part = parts.find((current) => current.slug === partId);
 
-  let item: CoursePartItem = part.items[match?.params?.itemId];
+  const item: CoursePartItem = part.items[match?.params?.itemId];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const handleCallToRouter = (_event: React.ChangeEvent<{}>, value: any) => {
+  const handleCallToRouter = (_event: React.ChangeEvent, value: any) => {
     history.push(value);
   };
-  const handlePartCallToRouter = (
-    _event: React.ChangeEvent<{}>,
-    value: any
-  ) => {
+  const handlePartCallToRouter = (_event: React.ChangeEvent, value: any) => {
     history.push(`/courses/${serverId}/${part.course.slug}/start/${value}`);
   };
 
@@ -110,8 +118,12 @@ export function CoursePartItemLayout({ parts, history }: Props) {
             onChange={handlePartCallToRouter}
             value={part.slug}
           >
-            {parts.map((part) => (
-              <Tab label={part.name} key={part.slug} value={part.slug} />
+            {parts.map((current) => (
+              <Tab
+                label={current.name}
+                key={current.slug}
+                value={current.slug}
+              />
             ))}
           </Tabs>
         )}
@@ -240,4 +252,4 @@ export function CoursePartItemLayout({ parts, history }: Props) {
     </div>
   );
 }
-export default withRouter(CoursePartItemLayout);
+export const CoursePartItemLayoutRouter = withRouter(CoursePartItemLayout);
