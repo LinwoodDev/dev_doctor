@@ -7,7 +7,7 @@
   "theme_color": "#ff9800",
   "scope": ".",
   "dir": "ltr",
-  "start-url": "/",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "any",
   "icons": [
