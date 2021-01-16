@@ -2,7 +2,7 @@
 
 > A free, opensource, serverless learning platform
 
-## Try it!
+## Try it
 
 See [here](https://dev-doctor.cf) to open the website.
 For the preview website see [here](https://preview.dev-doctor.cf).
