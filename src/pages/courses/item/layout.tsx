@@ -16,7 +16,6 @@ import {
   Drawer,
 } from "@material-ui/core";
 import {
-  Redirect,
   Route,
   RouteComponentProps,
   Switch,
@@ -63,6 +62,9 @@ const useStyles = makeStyles((current: Theme) =>
     indicator: {
       left: "0px",
     },
+    noOverflow: {
+      maxWidth: "100%",
+    },
     // necessary for content to be below app bar
     toolbar: current.mixins.toolbar,
     content: {
@@ -94,14 +96,19 @@ export default function CoursePartItemLayout({
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const handleCallToRouter = (_event: React.ChangeEvent, value: any) => {
-    history.push(value);
+  const handleItemCallToRouter = (_event: React.ChangeEvent, value: any) => {
+    history.push(
+      `/courses/${serverId}/${part.course.slug}/start/${part.slug}/${value}`
+    );
   };
   const handlePartCallToRouter = (_event: React.ChangeEvent, value: any) => {
     history.push(`/courses/${serverId}/${part.course.slug}/start/${value}`);
   };
 
   const classes = useStyles();
+  console.log(part.slug);
+  console.log(parts?.map((current) => current.slug));
+  if (!item) history.push(`/courses/${serverId}/${courseId}/start/${partId}/0`);
   const drawer = (
     <>
       <Toolbar />
@@ -116,7 +123,7 @@ export default function CoursePartItemLayout({
             orientation="vertical"
             variant="scrollable"
             onChange={handlePartCallToRouter}
-            value={part.slug && false}
+            value={part.slug || false}
           >
             {parts.map((current) => (
               <Tab
@@ -179,8 +186,8 @@ export default function CoursePartItemLayout({
       <main className={classes.content}>
         <AppBar position="sticky" color="default">
           <Tabs
-            onChange={handleCallToRouter}
-            value={history.location.pathname}
+            onChange={handleItemCallToRouter}
+            value={item ? item.index : false}
             variant="scrollable"
             scrollButtons="auto"
             indicatorColor="primary"
@@ -188,12 +195,12 @@ export default function CoursePartItemLayout({
           >
             {part.items
               .filter((current) => current != null)
-              .map((current, index) => (
+              .map((current) => (
                 <Tab
                   key={current.name}
                   label={current.name}
                   icon={<CoursePartItemIcon item={current} />}
-                  value={`/courses/${serverId}/${current.part.course.slug}/start/${current.part.slug}/${index}`}
+                  value={current.index}
                 />
               ))}
           </Tabs>
@@ -214,32 +221,24 @@ export default function CoursePartItemLayout({
             {item != null && (
               <Paper elevation={3}>
                 <Grid container spacing={4} alignItems="stretch">
-                  <Grid item lg={4} md={5} sm={12} container direction="column">
-                    <Box p={2}>
-                      <Typography variant="h3" component="h2">
+                  <Grid item lg={4} md={6} sm={12} container direction="column">
+                    <Box p={2} className={classes.noOverflow}>
+                      <Typography
+                        variant="h4"
+                        component="h2"
+                        className={classes.noOverflow}
+                      >
                         {item.name}
                       </Typography>
                       <Typography component="p">{item.description}</Typography>
                     </Box>
                   </Grid>
-                  <Grid item lg={8} md={7} sm={12}>
+                  <Grid item lg={8} md={6} sm={12}>
                     <Box p={2}>
                       <Switch>
                         <Route path={`${path}/:itemId`}>
                           <CoursePartItemRoute part={part} />
                         </Route>
-                        <Route
-                          path={path}
-                          exact
-                          render={({ location }) => (
-                            <Redirect
-                              to={{
-                                pathname: `/courses/${serverId}/${courseId}/start/${partId}/0`,
-                                state: { from: location },
-                              }}
-                            />
-                          )}
-                        />
                       </Switch>
                     </Box>
                   </Grid>
