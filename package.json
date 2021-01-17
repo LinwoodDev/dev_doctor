@@ -11,7 +11,7 @@
     "@testing-library/user-event": "^12.6.0",
     "i18next": "^19.8.4",
     "i18next-browser-languagedetector": "^6.0.1",
-    "i18next-http-backend": "^1.0.21",
+    "i18next-http-backend": "^1.0.22",
     "notistack": "^1.0.3",
     "path-to-regexp": "^6.2.0",
     "react": "^17.0.1",
