@@ -73,6 +73,9 @@ const useStyles = makeStyles((current: Theme) =>
       backgroundColor: current.palette.background.paper,
       overflow: "auto",
     },
+    item: {
+      width: "100%",
+    },
   })
 );
 interface Props extends RouteComponentProps {
@@ -233,7 +236,7 @@ export default function CoursePartItemLayout({
                       <Typography component="p">{item.description}</Typography>
                     </Box>
                   </Grid>
-                  <Grid item lg={8} md={6} sm={12}>
+                  <Grid item lg={8} md={6} sm={12} className={classes.item}>
                     <Box p={2}>
                       <Switch>
                         <Route path={`${path}/:itemId`}>
