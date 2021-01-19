@@ -1,11 +1,11 @@
 {
-    "name": "dev_doctor",
-    "short_name": "dev_doctor",
+    "name": "Dev-Doctor",
+    "short_name": "Dev-Doctor",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#ffca28",
+    "theme_color": "#ffca28",
+    "description": "A free, opensource, serverless learning platform. A linwood project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "shortcuts": [
