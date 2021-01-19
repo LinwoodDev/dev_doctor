@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      title: 'Dev Doctor',
+      title: 'Dev-Doctor',
       supportedLocales: S.delegate.supportedLocales,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
