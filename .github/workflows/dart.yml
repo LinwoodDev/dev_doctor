@@ -14,8 +14,10 @@ jobs:
       image:  google/dart:latest
 
     steps:
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'beta' # or: 'stable' or 'dev'
       - uses: actions/checkout@v2
-
       - name: Print Dart SDK version
         run: |
           dart --version
