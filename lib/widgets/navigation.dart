@@ -19,15 +19,19 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
       type: BottomNavigationBarType.fixed,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
+          activeIcon: Icon(Icons.home),
           icon: Icon(Icons.home_outlined),
           label: 'Home',
         ),
-        BottomNavigationBarItem(icon: Icon(Icons.school_outlined), label: 'Courses'),
         BottomNavigationBarItem(
+            activeIcon: Icon(Icons.school), icon: Icon(Icons.school_outlined), label: 'Courses'),
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.create),
           icon: Icon(Icons.create_outlined),
           label: 'Editor',
         ),
         BottomNavigationBarItem(
+          activeIcon: Icon(Icons.settings),
           icon: Icon(Icons.settings_outlined),
           label: 'Settings',
         )
