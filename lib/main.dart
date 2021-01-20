@@ -1,10 +1,13 @@
 import 'package:dev_doctor/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'generated/l10n.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
   runApp(MyApp());
 }
 
