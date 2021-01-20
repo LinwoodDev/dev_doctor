@@ -6,13 +6,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # Note that this workflow uses the latest stable version of the Dart SDK.
-    # Docker images for other release channels - like dev and beta - are also
-    # available. See https://hub.docker.com/r/google/dart/ for the available
-    # images.
-    container:
-      image:  google/dart:latest
-
     steps:
       - uses: subosito/flutter-action@v1
         with:
