@@ -12,8 +12,9 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 5.0,
       title: Text(title),
-      actions: [IconButton(icon: Icon(Icons.settings_outlined), onPressed: () {})],
+      //actions: [IconButton(icon: Icon(Icons.settings_outlined), onPressed: () {})],
       automaticallyImplyLeading: true,
     );
   }

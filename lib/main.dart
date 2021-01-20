@@ -8,6 +8,7 @@ import 'generated/l10n.dart';
 
 void main() async {
   await Hive.initFlutter();
+  await Hive.openBox('settings');
   runApp(MyApp());
 }
 
