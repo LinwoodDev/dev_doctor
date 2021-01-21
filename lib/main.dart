@@ -1,10 +1,14 @@
+import 'package:dev_doctor/pages/courses.dart';
+import 'package:dev_doctor/pages/editor.dart';
 import 'package:dev_doctor/pages/home.dart';
+import 'package:dev_doctor/pages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'generated/l10n.dart';
+import 'widgets/appbar.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -45,9 +49,52 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
             iconTheme: IconThemeData(color: Colors.black87),
             textTheme: Theme.of(context).textTheme.merge(Typography.material2018().black).apply()), */
-        primarySwatch: Colors.amber,
+        primarySwatch: Colors.red,
       ),
-      home: HomePage(),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+  List<Widget> _widgetOptions = <Widget>[HomePage(), CoursesPage(), EditorPage(), SettingsPage()];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                activeIcon: Icon(Icons.home), icon: Icon(Icons.home_outlined), label: 'Home'),
+            BottomNavigationBarItem(
+                activeIcon: Icon(Icons.school),
+                icon: Icon(Icons.school_outlined),
+                label: 'Courses'),
+            BottomNavigationBarItem(
+                activeIcon: Icon(Icons.create), icon: Icon(Icons.create_outlined), label: 'Editor'),
+            BottomNavigationBarItem(
+                activeIcon: Icon(Icons.settings),
+                icon: Icon(Icons.settings_outlined),
+                label: 'Settings')
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped),
     );
   }
 }
