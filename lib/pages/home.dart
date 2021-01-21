@@ -2,7 +2,6 @@ import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  final GlobalKey _coursesKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     var _sections = [

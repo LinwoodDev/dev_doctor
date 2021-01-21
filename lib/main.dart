@@ -8,7 +8,6 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'generated/l10n.dart';
-import 'widgets/appbar.dart';
 
 void main() async {
   await Hive.initFlutter();
