@@ -11,7 +11,9 @@ import 'generated/l10n.dart';
 
 void main() async {
   await Hive.initFlutter();
-  await Hive.openBox('settings');
+  var settingsBox = await Hive.openBox('settings');
+  if (!settingsBox.containsKey('servers'))
+    settingsBox.put('servers', ['https://backend.dev-doctor.cf']);
   runApp(MyApp());
 }
 
