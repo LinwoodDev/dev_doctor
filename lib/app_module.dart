@@ -16,7 +16,7 @@ class AppModule extends MainModule {
   // Provide all the routes for your module
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => MyHomePage(), children: [
+    ChildRoute('/', child: (_, args) => MyHomePage(args: args), children: [
       ...HomeRoutes.values.map((e) =>
           ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.noTransition)),
     ]),
