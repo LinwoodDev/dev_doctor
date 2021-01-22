@@ -32,6 +32,6 @@ class _AddServerPageState extends State<AddServerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MyHomePage(index: 0);
+    return MyHomePage();
   }
 }
