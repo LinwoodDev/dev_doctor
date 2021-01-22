@@ -1,8 +1,4 @@
 import 'package:dev_doctor/app_module.dart';
-import 'package:dev_doctor/courses/home.dart';
-import 'package:dev_doctor/editor/home.dart';
-import 'package:dev_doctor/home.dart';
-import 'package:dev_doctor/settings/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
