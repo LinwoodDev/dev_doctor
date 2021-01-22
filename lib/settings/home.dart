@@ -1,4 +1,4 @@
-import 'package:dev_doctor/pages/settings/servers.dart';
+import 'package:dev_doctor/settings/servers.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/text_divider.dart';
 import 'package:flutter/material.dart';

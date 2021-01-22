@@ -1,8 +1,8 @@
 import 'package:dev_doctor/app_module.dart';
-import 'package:dev_doctor/pages/courses.dart';
-import 'package:dev_doctor/pages/editor.dart';
-import 'package:dev_doctor/pages/home.dart';
-import 'package:dev_doctor/pages/settings.dart';
+import 'package:dev_doctor/courses/home.dart';
+import 'package:dev_doctor/editor/home.dart';
+import 'package:dev_doctor/home.dart';
+import 'package:dev_doctor/settings/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -59,7 +59,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex;
-  List<Widget> _widgetOptions = <Widget>[HomePage(), CoursesPage(), EditorPage(), SettingsPage()];
 
   @override
   void initState() {
@@ -68,14 +67,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onItemTapped(int index) {
-    Modular.to.pushNamed(HomeRoutesExtension.fromIndex(index).route, forRoot: true);
+    Modular.to.navigate(HomeRoutesExtension.fromIndex(index).route, replaceAll: true);
+    setState(() => _selectedIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: RouterOutlet(),
       ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.shifting,
