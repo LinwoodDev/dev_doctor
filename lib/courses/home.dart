@@ -1,3 +1,4 @@
+import 'package:dev_doctor/course/home.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
@@ -36,6 +37,8 @@ class _CoursesPageState extends State<CoursesPage> {
                     return ListTile(
                       title: Text(current.name),
                       subtitle: Text(current.description),
+                      onTap: () => Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) => CoursePage())),
                       leading: current.icon?.isEmpty ?? true
                           ? null
                           : UniversalImage(type: current.icon, url: current.url + "/icon"),
