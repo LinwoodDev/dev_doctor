@@ -66,37 +66,33 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
   _showDialog() {
     var url = '';
     showDialog(
-      context: context,
-      builder: (context) => SystemPadding(
-        child: AlertDialog(
-          contentPadding: const EdgeInsets.all(16.0),
-          content: Row(
-            children: <Widget>[
-              Expanded(
-                child: TextField(
-                  autofocus: true,
-                  onChanged: (value) => url = value,
-                  decoration: InputDecoration(
-                      labelText: 'URL', hintText: 'eg. https://backend.dev-doctor.cf'),
+        context: context,
+        builder: (context) => AlertDialog(
+                contentPadding: const EdgeInsets.all(16.0),
+                content: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        autofocus: true,
+                        onChanged: (value) => url = value,
+                        decoration: InputDecoration(
+                            labelText: 'URL', hintText: 'eg. https://backend.dev-doctor.cf'),
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-          actions: <Widget>[
-            FlatButton(
-                child: const Text('CANCEL'),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            FlatButton(
-                child: const Text('CREATE'),
-                onPressed: () async {
-                  Navigator.pop(context);
-                  _createServer(url);
-                })
-          ],
-        ),
-      ),
-    );
+                actions: <Widget>[
+                  FlatButton(
+                      child: const Text('CANCEL'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  FlatButton(
+                      child: const Text('CREATE'),
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        _createServer(url);
+                      })
+                ]));
   }
 }
