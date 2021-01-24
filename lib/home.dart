@@ -1,5 +1,6 @@
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -18,11 +19,11 @@ class HomePage extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.all(5),
                   child: RaisedButton.icon(
+                      onPressed: () => launch("https://discord.linwood.tk"),
                       icon: Icon(Icons.supervisor_account_outlined,
                           color: Theme.of(context).primaryIconTheme.color),
                       label: Text("JOIN OUR DISCORD",
                           style: Theme.of(context).primaryTextTheme.button),
-                      onPressed: () {},
                       color: Theme.of(context).primaryColor)),
             ]))
       ]),

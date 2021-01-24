@@ -2,6 +2,7 @@ import 'package:dev_doctor/settings/servers.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/text_divider.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -26,9 +27,18 @@ class _SettingsPageState extends State<SettingsPage> {
               onTap: () => Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => ServersSettingsPage()))),
           TextDivider(text: 'INFORMATION'),
-          ListTile(leading: Icon(Icons.text_snippet_outlined), title: Text("Licenses")),
-          ListTile(leading: Icon(Icons.construction_outlined), title: Text("Impress")),
-          ListTile(leading: Icon(Icons.code_outlined), title: Text("Sources"))
+          ListTile(
+              leading: Icon(Icons.text_snippet_outlined),
+              title: Text("Licenses"),
+              onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor/blob/main/LICENSE")),
+          ListTile(
+              leading: Icon(Icons.construction_outlined),
+              title: Text("Impress"),
+              onTap: () => launch("https://codedoctor.tk/impress")),
+          ListTile(
+              leading: Icon(Icons.code_outlined),
+              title: Text("Sources"),
+              onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor")),
         ])))));
   }
 }

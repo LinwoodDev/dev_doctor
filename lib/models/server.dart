@@ -31,9 +31,11 @@ class CoursesServer {
   Future<Course> fetchCourse(int index) async {
     var course = courses[index];
     var response = await http.get("$url/$course/config.yml");
-    var data = loadYaml(response.body);
+    var data = Map<String, dynamic>.from(loadYaml(response.body));
+
+    data['parts'] = List<String>.from(data['parts']);
     data['server'] = this;
-    data['slug'] = courses;
+    data['slug'] = course;
     return Course.fromJson(data);
   }
 }

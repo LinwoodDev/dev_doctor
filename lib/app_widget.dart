@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onItemTapped(int index) {
-    Modular.to.navigate(HomeRoutesExtension.fromIndex(index).route, replaceAll: true);
+    Modular.to.pushReplacementNamed(HomeRoutesExtension.fromIndex(index).route);
     setState(() => _selectedIndex = index);
   }
 

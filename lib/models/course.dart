@@ -39,6 +39,8 @@ class Course {
         installed = json['installed'],
         lang = json['lang'],
         parts = json['parts'];
+
+  get url => server.url + "/" + slug;
   Future<List<Part>> fetchParts() async =>
       Future.wait(parts.asMap().map((index, value) => MapEntry(index, fetchPart(index))).values);
 

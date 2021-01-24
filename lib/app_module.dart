@@ -17,7 +17,8 @@ class AppModule extends MainModule {
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => MyHomePage(), children: [
-      ...HomeRoutes.values.map((e) => ChildRoute(e.route, child: (_, __) => e.widget)),
+      ...HomeRoutes.values.map((e) =>
+          ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
     ]),
     ChildRoute('/add', child: (_, args) => AddServerPage(params: args.queryParams)),
   ];

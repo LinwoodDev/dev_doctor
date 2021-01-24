@@ -1,5 +1,5 @@
+import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
-import 'package:dev_doctor/widgets/system_padding.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -23,11 +23,31 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
       body: Container(
           child: ValueListenableBuilder(
               valueListenable: _serversBox.listenable(),
-              builder: (context, Box<String> box, _) => ListView.builder(
-                    itemCount: box.length,
-                    itemBuilder: (context, index) => ListTile(
-                        title: Text(box.getAt(index)), onLongPress: () => _showDeleteDialog(index)),
-                  ))),
+              builder: (context, Box<String> box, _) => FutureBuilder(
+                  future: Future.wait(_serversBox.values.map((e) => CoursesServer.fetch(e))),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Center(child: CircularProgressIndicator());
+                      default:
+                        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                        var data = snapshot.data as List<CoursesServer>;
+                        return ListView.builder(
+                            itemCount: box.length,
+                            itemBuilder: (context, index) {
+                              var current = data[index];
+                              return Dismissible(
+                                  // Show a red background as the item is swiped away.
+                                  background: Container(color: Colors.red),
+                                  key: Key(current.url),
+                                  onDismissed: (direction) => _deleteServer(index),
+                                  child: ListTile(
+                                      title: Text(current.name),
+                                      subtitle: Text(current.url),
+                                      onLongPress: () => _showDeleteDialog(index)));
+                            });
+                    }
+                  }))),
       floatingActionButton: FloatingActionButton.extended(
         label: Text("Add server"),
         icon: Icon(Icons.add_outlined),
