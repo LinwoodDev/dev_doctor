@@ -46,19 +46,16 @@ class AppWidget extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  final ModularArguments args;
-
-  const MyHomePage({Key key, this.args}) : super(key: key);
+  const MyHomePage({Key key}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
-    print(widget.args.uri.path);
     super.initState();
   }
 

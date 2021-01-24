@@ -16,11 +16,10 @@ class AppModule extends MainModule {
   // Provide all the routes for your module
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => MyHomePage(args: args), children: [
-      ...HomeRoutes.values.map((e) =>
-          ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.noTransition)),
+    ChildRoute('/', child: (_, args) => MyHomePage(), children: [
+      ...HomeRoutes.values.map((e) => ChildRoute(e.route, child: (_, __) => e.widget)),
     ]),
-    ChildRoute('/add/:url', child: (_, args) => AddServerPage(url: args.params['url'])),
+    ChildRoute('/add', child: (_, args) => AddServerPage(params: args.queryParams)),
   ];
 
   // Provide the root widget associated with your module

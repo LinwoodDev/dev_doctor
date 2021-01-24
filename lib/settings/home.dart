@@ -14,8 +14,9 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
         appBar: MyAppBar(title: "Settings"),
         body: Container(
-            child: SingleChildScrollView(
-                child: Column(mainAxisSize: MainAxisSize.max, children: [
+            child: Scrollbar(
+                child: SingleChildScrollView(
+                    child: Column(mainAxisSize: MainAxisSize.max, children: [
           ListTile(leading: Icon(Icons.build_outlined), title: Text("General")),
           ListTile(leading: Icon(Icons.tune_outlined), title: Text("Appearance")),
           ListTile(leading: Icon(Icons.download_outlined), title: Text("Downloads")),
@@ -28,6 +29,6 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(leading: Icon(Icons.text_snippet_outlined), title: Text("Licenses")),
           ListTile(leading: Icon(Icons.construction_outlined), title: Text("Impress")),
           ListTile(leading: Icon(Icons.code_outlined), title: Text("Sources"))
-        ]))));
+        ])))));
   }
 }

@@ -7,8 +7,8 @@ import 'app_module.dart';
 
 void main() async {
   await Hive.initFlutter();
-  var settingsBox = await Hive.openBox('settings');
-  if (!settingsBox.containsKey('servers'))
-    settingsBox.put('servers', ['https://backend.dev-doctor.cf']);
+  await Hive.openBox('settings');
+  var _serversBox = await Hive.openBox<String>('servers');
+  if (_serversBox.isEmpty) await _serversBox.add('https://backend.dev-doctor.cf');
   runApp(ModularApp(module: AppModule()));
 }

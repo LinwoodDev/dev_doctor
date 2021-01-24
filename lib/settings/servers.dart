@@ -2,6 +2,7 @@ import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/system_padding.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ServersSettingsPage extends StatefulWidget {
   @override
@@ -9,11 +10,9 @@ class ServersSettingsPage extends StatefulWidget {
 }
 
 class _ServersSettingsPageState extends State<ServersSettingsPage> {
-  final _settingsBox = Hive.box('settings');
-  List<dynamic> _servers;
+  final _serversBox = Hive.box<String>('servers');
   @override
   void initState() {
-    _servers = _settingsBox.get('servers', defaultValue: []);
     super.initState();
   }
 
@@ -22,11 +21,13 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
     return Scaffold(
       appBar: MyAppBar(title: "Server Settings"),
       body: Container(
-          child: ListView.builder(
-        itemCount: _servers.length,
-        itemBuilder: (context, index) =>
-            ListTile(title: Text(_servers[index]), onLongPress: () => _showDeleteDialog(index)),
-      )),
+          child: ValueListenableBuilder(
+              valueListenable: _serversBox.listenable(),
+              builder: (context, Box<String> box, _) => ListView.builder(
+                    itemCount: box.length,
+                    itemBuilder: (context, index) => ListTile(
+                        title: Text(box.getAt(index)), onLongPress: () => _showDeleteDialog(index)),
+                  ))),
       floatingActionButton: FloatingActionButton.extended(
         label: Text("Add server"),
         icon: Icon(Icons.add_outlined),
@@ -55,17 +56,11 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
   }
 
   _deleteServer(int index) async {
-    List<dynamic> current = _servers;
-    current.removeAt(index);
-    await _settingsBox.put('servers', current);
-    setState(() => _servers = current);
+    await _serversBox.deleteAt(index);
   }
 
   _createServer(String url) async {
-    var current = _servers;
-    current.add(url);
-    await _settingsBox.put('servers', current);
-    setState(() => _servers = current);
+    await _serversBox.add(url);
   }
 
   _showDialog() {

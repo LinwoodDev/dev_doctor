@@ -18,8 +18,10 @@ class CoursesServer {
 
   static Future<CoursesServer> fetch(String url) async {
     var response = await http.get("$url/config.yml");
-    var data = loadYaml(response.body);
+    var data = Map<String, dynamic>.from(loadYaml(response.body));
+
     data['url'] = url;
+    data['courses'] = List<String>.from(data['courses']);
     return CoursesServer.fromJson(data);
   }
 

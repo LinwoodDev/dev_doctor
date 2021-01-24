@@ -38,16 +38,18 @@ class HomePage extends StatelessWidget {
       ])
     ];
     return Scaffold(
-      appBar: MyAppBar(title: 'Dev-Doctor'),
-      body: ListView.separated(
-        separatorBuilder: (context, index) => Padding(
-          padding: EdgeInsets.only(top: 100),
-        ),
-        itemCount: _sections.length,
-        padding: EdgeInsets.only(top: 100),
-        itemBuilder: (context, index) => Material(
-            elevation: 2, child: Container(padding: EdgeInsets.all(10), child: _sections[index])),
-      ),
-    );
+        appBar: MyAppBar(title: 'Dev-Doctor'),
+        body: Scrollbar(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => Padding(
+              padding: EdgeInsets.only(top: 100),
+            ),
+            itemCount: _sections.length,
+            padding: EdgeInsets.only(top: 100),
+            itemBuilder: (context, index) => Material(
+                elevation: 2,
+                child: Container(padding: EdgeInsets.all(10), child: _sections[index])),
+          ),
+        ));
   }
 }
