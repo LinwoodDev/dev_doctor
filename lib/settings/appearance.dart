@@ -1,14 +1,16 @@
 import 'package:dev_doctor/widgets/appbar.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AppearanceSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _appearanceBox = Hive.box('appearance');
     return Scaffold(
-        appBar: MyAppBar(title: "Appearance Settings"),
+        appBar: MyAppBar(title: "settings.appearance.title".tr()),
         body: Container(
             child: ValueListenableBuilder(
                 valueListenable: _appearanceBox.listenable(),
@@ -16,8 +18,10 @@ class AppearanceSettingsPage extends StatelessWidget {
                   var theme = ThemeMode.values[_appearanceBox.get('theme', defaultValue: 0)];
                   return ListView(children: [
                     ListTile(
-                        title: Text("Theme"),
-                        subtitle: Text(theme.toString()),
+                        title: Text("settings.appearance.theme.title").tr(),
+                        subtitle:
+                            Text('settings.appearance.theme.' + EnumToString.convertToString(theme))
+                                .tr(),
                         onTap: () => showDialog<void>(
                             context: context,
                             builder: (BuildContext context) {
@@ -43,7 +47,10 @@ class AppearanceSettingsPage extends StatelessWidget {
                                         return RadioListTile<ThemeMode>(
                                           value: ThemeMode.values[index],
                                           groupValue: selectedRadio,
-                                          title: Text(ThemeMode.values[index].toString()),
+                                          title: Text('settings.appearance.theme.' +
+                                                  EnumToString.convertToString(
+                                                      ThemeMode.values[index]))
+                                              .tr(),
                                           onChanged: (value) {
                                             setState(() => selectedRadio = value);
                                           },

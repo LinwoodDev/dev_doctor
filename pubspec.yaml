@@ -23,9 +23,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-  intl: ^0.17.0-nullsafety.2
+  easy_localization: ^2.3.3+1
+  easy_localization_loader:
+    git:
+      url: https://github.com/aissat/easy_localization_loader.git
+      ref: develop
   enum_to_string: ^1.0.14
   http: ^0.12.2
   hive: ^1.4.4+1
@@ -48,7 +50,7 @@ flutter_icons:
 dev_dependencies:
   hive_generator: ^0.8.2
   build_runner: ^1.11.0
-  flutter_launcher_icons: "^0.8.1"
+  flutter_launcher_icons: 0.8.1
   flutter_test:
     sdk: flutter
   integration_test:
@@ -58,7 +60,6 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
 flutter:
-  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -154,8 +155,8 @@ flutter:
           style: italic
           weight: 900
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -180,5 +181,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-flutter_intl:
-  enabled: true

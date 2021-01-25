@@ -3,6 +3,7 @@ import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ServersSettingsPage extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: "Servers Settings"),
+      appBar: MyAppBar(title: "settings.servers.title".tr()),
       body: Container(
           child: ValueListenableBuilder(
               valueListenable: _serversBox.listenable(),
@@ -42,37 +43,16 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                                   key: Key(current.url),
                                   onDismissed: (direction) => _deleteServer(index),
                                   child: ListTile(
-                                      title: Text(current.name),
-                                      subtitle: Text(current.url),
-                                      onLongPress: () => _showDeleteDialog(index)));
+                                      title: Text(current.name), subtitle: Text(current.url)));
                             });
                     }
                   }))),
       floatingActionButton: FloatingActionButton.extended(
-        label: Text("Add server"),
+        label: Text("settings.servers.add.fab").tr(),
         icon: Icon(Icons.add_outlined),
         onPressed: () => _showDialog(),
       ),
     );
-  }
-
-  _showDeleteDialog(int index) async {
-    await showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("Delete server"),
-              content: Text("Do you really want to delete the server ${index + 1}?"),
-              actions: [
-                FlatButton(child: Text("CANCEL"), onPressed: () => Navigator.of(context).pop()),
-                FlatButton(
-                  child: Text("DELETE"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    _deleteServer(index);
-                  },
-                )
-              ],
-            ));
   }
 
   _deleteServer(int index) async {
@@ -96,19 +76,20 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                         autofocus: true,
                         onChanged: (value) => url = value,
                         decoration: InputDecoration(
-                            labelText: 'URL', hintText: 'eg. https://backend.dev-doctor.cf'),
+                            labelText: 'settings.servers.add.url'.tr(),
+                            hintText: 'settings.servers.add.hint'.tr()),
                       ),
                     )
                   ],
                 ),
                 actions: <Widget>[
                   FlatButton(
-                      child: const Text('CANCEL'),
+                      child: Text('settings.servers.add.cancel'.tr().toUpperCase()),
                       onPressed: () {
                         Navigator.pop(context);
                       }),
                   FlatButton(
-                      child: const Text('CREATE'),
+                      child: Text('settings.servers.add.create'.tr().toUpperCase()),
                       onPressed: () async {
                         Navigator.pop(context);
                         _createServer(url);

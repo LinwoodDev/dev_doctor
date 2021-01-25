@@ -1,6 +1,8 @@
+import 'package:dev_doctor/settings/servers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'app_widget.dart';
 import 'models/server.dart';
@@ -14,35 +16,41 @@ class AddServerPage extends StatefulWidget {
 }
 
 class _AddServerPageState extends State<AddServerPage> {
+  final Box<String> _serversBox = Hive.box<String>('servers');
   @override
   void initState() {
     super.initState();
-    print(widget.params);
     Future.delayed(Duration.zero, () => _showDialog());
   }
 
   _showDialog() async {
     var url = widget.params['url'];
-    var server = await CoursesServer.fetch(url);
-    var shouldAdd = await showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-                actions: [
-                  FlatButton(child: Text("NO"), onPressed: () => Navigator.of(context).pop(false)),
-                  FlatButton(child: Text("YES"), onPressed: () => Navigator.of(context).pop(true))
-                ],
-                title: Text("Do you want to add the server ${server.name}?"),
-                content: Text(
-                    "The server ${server.name} with the url ${server.url} will displayed on the courses page.")));
-    if (shouldAdd) {
-      await Hive.box<String>('servers').add(url);
-      print("ADDED!");
+    if (_serversBox.containsKey(url)) {
+      var server = await CoursesServer.fetch(url);
+      var shouldAdd = await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+                  actions: [
+                    FlatButton(
+                        child: Text("settings.servers.add.disagree").tr(),
+                        onPressed: () => Navigator.of(context).pop(false)),
+                    FlatButton(
+                        child: Text("settings.servers.add.agree").tr(),
+                        onPressed: () => Navigator.of(context).pop(true))
+                  ],
+                  title: Text("settings.servers.add.title")
+                      .tr(namedArgs: {"name": server.name, "url": server.url}),
+                  content: Text("settings.servers.add.body")
+                      .tr(namedArgs: {"name": server.name, "url": server.url})));
+      if (shouldAdd) {
+        await _serversBox.add(url);
+      }
     }
     Modular.to.navigate('/');
   }
 
   @override
   Widget build(BuildContext context) {
-    return MyHomePage();
+    return ServersSettingsPage();
   }
 }

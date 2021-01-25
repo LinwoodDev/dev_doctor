@@ -1,6 +1,7 @@
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -8,11 +9,10 @@ class HomePage extends StatelessWidget {
     var _sections = [
       Column(children: [
         Text(
-          "Dev-Doctor",
+          "title".tr(),
           style: Theme.of(context).textTheme.headline2,
         ),
-        Text("A free, opensource, serverless learning platform. A linwood project",
-            style: Theme.of(context).textTheme.subtitle1),
+        Text("subtitle", style: Theme.of(context).textTheme.subtitle1).tr(),
         Padding(
             padding: EdgeInsets.all(20),
             child: Wrap(alignment: WrapAlignment.center, children: [
@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
                       onPressed: () => launch("https://discord.linwood.tk"),
                       icon: Icon(Icons.supervisor_account_outlined,
                           color: Theme.of(context).primaryIconTheme.color),
-                      label: Text("JOIN OUR DISCORD",
+                      label: Text("discord".tr().toUpperCase(),
                           style: Theme.of(context).primaryTextTheme.button),
                       color: Theme.of(context).primaryColor)),
             ]))
@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
       ])
     ];
     return Scaffold(
-        appBar: MyAppBar(title: 'Dev-Doctor'),
+        appBar: MyAppBar(title: 'title'.tr()),
         body: Scrollbar(
           child: ListView.separated(
             separatorBuilder: (context, index) => Padding(

@@ -5,6 +5,7 @@ import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CoursesPage extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _CoursesPageState extends State<CoursesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(title: 'Courses', actions: [
+        appBar: MyAppBar(title: 'courses.title'.tr(), actions: [
           IconButton(icon: Icon(Icons.search_outlined), onPressed: () {}),
           IconButton(icon: Icon(Icons.filter_list_outlined), onPressed: () {})
         ]),
@@ -29,7 +30,6 @@ class _CoursesPageState extends State<CoursesPage> {
               default:
                 if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                 var data = snapshot.data as List<Course>;
-                print(data);
                 return ListView.builder(
                   itemCount: data.length,
                   itemBuilder: (context, index) {
