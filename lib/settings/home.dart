@@ -1,8 +1,6 @@
-import 'package:dev_doctor/settings/servers.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/text_divider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
