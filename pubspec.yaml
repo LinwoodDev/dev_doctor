@@ -70,6 +70,89 @@ flutter:
         - asset: fonts/Roboto-Regular.ttf
         - asset: fonts/Roboto-Italic.ttf
           style: italic
+
+        - asset: fonts/Roboto-Thin.ttf
+          weight: 100
+        - asset: fonts/Roboto-ThinItalic.ttf
+          style: italic
+          weight: 100
+
+        - asset: fonts/Roboto-Light.ttf
+          weight: 300
+        - asset: fonts/Roboto-LightItalic.ttf
+          style: italic
+          weight: 300
+
+        - asset: fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: fonts/Roboto-MediumItalic.ttf
+          style: italic
+          weight: 500
+
+        - asset: fonts/Roboto-Bold.ttf
+          weight: 700
+        - asset: fonts/Roboto-BoldItalic.ttf
+          style: italic
+          weight: 700
+
+        - asset: fonts/Roboto-Black.ttf
+          weight: 900
+        - asset: fonts/Roboto-BlackItalic.ttf
+          style: italic
+          weight: 900
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Regular.ttf
+        - asset: fonts/Montserrat-Italic.ttf
+          style: italic
+
+        - asset: fonts/Montserrat-Thin.ttf
+          weight: 100
+        - asset: fonts/Montserrat-ThinItalic.ttf
+          style: italic
+          weight: 100
+          
+        - asset: fonts/Montserrat-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/Montserrat-ExtraLightItalic.ttf
+          style: italic
+          weight: 200
+
+        - asset: fonts/Montserrat-Light.ttf
+          weight: 300
+        - asset: fonts/Montserrat-LightItalic.ttf
+          style: italic
+          weight: 300
+
+        - asset: fonts/Montserrat-Medium.ttf
+          weight: 500
+        - asset: fonts/Montserrat-MediumItalic.ttf
+          style: italic
+          weight: 500
+
+        - asset: fonts/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Montserrat-SemiBoldItalic.ttf
+          style: italic
+          weight: 600
+
+        - asset: fonts/Montserrat-Bold.ttf
+          weight: 700
+        - asset: fonts/Montserrat-BoldItalic.ttf
+          style: italic
+          weight: 700
+
+        - asset: fonts/Montserrat-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/Montserrat-ExtraBoldItalic.ttf
+          style: italic
+          weight: 800
+
+        - asset: fonts/Montserrat-Black.ttf
+          weight: 900
+        - asset: fonts/Montserrat-BlackItalic.ttf
+          style: italic
+          weight: 900
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

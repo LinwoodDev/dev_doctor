@@ -60,7 +60,7 @@ extension HomeRoutesExtension on HomeRoutes {
     return null;
   }
 
-  static HomeRoutes fromIndex(int index) {
-    return HomeRoutes.values.firstWhere((element) => element.index == index);
+  static HomeRoutes fromRoute(String route) {
+    return HomeRoutes.values.firstWhere((element) => element.route == route);
   }
 }

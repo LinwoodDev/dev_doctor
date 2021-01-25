@@ -41,6 +41,7 @@ class AppWidget extends StatelessWidget {
           primarySwatch: theme.mdcPrimarySwatch,
           primaryColor: theme.mdcThemePrimary,
           accentColor: theme.mdcThemeSecondary,
+          fontFamily: "Montserrat",
           // This makes the visual density adapt to the platform that you run
           // the app on. For desktop platforms, the controls will be smaller and
           // closer together (more dense) than on mobile platforms.
@@ -61,11 +62,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    _selectedIndex = HomeRoutesExtension.fromRoute(Modular.to.path).index;
     super.initState();
   }
 
   void _onItemTapped(int index) {
-    Modular.to.pushReplacementNamed(HomeRoutesExtension.fromIndex(index).route);
+    Modular.to.pushReplacementNamed(HomeRoutes.values[index].route);
     setState(() => _selectedIndex = index);
   }
 
