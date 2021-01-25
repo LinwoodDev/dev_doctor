@@ -19,7 +19,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: "Server Settings"),
+      appBar: MyAppBar(title: "Servers Settings"),
       body: Container(
           child: ValueListenableBuilder(
               valueListenable: _serversBox.listenable(),

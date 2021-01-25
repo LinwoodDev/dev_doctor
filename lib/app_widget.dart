@@ -2,6 +2,8 @@ import 'package:dev_doctor/app_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'theme.dart' as theme;
 
 import 'generated/l10n.dart';
@@ -10,44 +12,56 @@ class AppWidget extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: [
-        S.delegate,
-        // ... app-specific localization delegate[s] here
-        // TODO: uncomment the line below after codegen
-        // AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      title: 'Dev-Doctor',
-      supportedLocales: S.delegate.supportedLocales,
-      themeMode: ThemeMode.light,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          /* appBarTheme: AppBarTheme(
+    return ValueListenableBuilder(
+        valueListenable: Hive.box('appearance').listenable(),
+        builder: (context, box, widget) => MaterialApp(
+              localizationsDelegates: [
+                S.delegate,
+                // ... app-specific localization delegate[s] here
+                // TODO: uncomment the line below after codegen
+                // AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              title: 'Dev-Doctor',
+              supportedLocales: S.delegate.supportedLocales,
+              themeMode: ThemeMode.values[box.get('theme', defaultValue: 0)],
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                  // This is the theme of your application.
+                  //
+                  // Try running your application with "flutter run". You'll see the
+                  // application has a blue toolbar. Then, without quitting the app, try
+                  // changing the primarySwatch below to Colors.green and then invoke
+                  // "hot reload" (press "r" in the console where you ran "flutter run",
+                  // or simply save your changes to "hot reload" in a Flutter IDE).
+                  // Notice that the counter didn't reset back to zero; the application
+                  // is not restarted.
+                  /* appBarTheme: AppBarTheme(
             color: Colors.white,
             iconTheme: IconThemeData(color: Colors.black87),
             textTheme: Theme.of(context).textTheme.merge(Typography.material2018().black).apply()), */
-          primarySwatch: theme.mdcPrimarySwatch,
-          primaryColor: theme.mdcThemePrimary,
-          accentColor: theme.mdcThemeSecondary,
-          fontFamily: "Montserrat",
-          // This makes the visual density adapt to the platform that you run
-          // the app on. For desktop platforms, the controls will be smaller and
-          // closer together (more dense) than on mobile platforms.
-          visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: MyHomePage(),
-    ).modular();
+                  primarySwatch: theme.mdcPrimarySwatch,
+                  primaryColor: theme.mdcThemePrimary,
+                  accentColor: theme.mdcThemeSecondary,
+                  fontFamily: "Montserrat",
+                  // This makes the visual density adapt to the platform that you run
+                  // the app on. For desktop platforms, the controls will be smaller and
+                  // closer together (more dense) than on mobile platforms.
+                  visualDensity: VisualDensity.adaptivePlatformDensity),
+              darkTheme: ThemeData(
+                  brightness: Brightness.dark,
+                  primarySwatch: theme.mdcPrimarySwatch,
+                  primaryColor: theme.mdcThemePrimary,
+                  accentColor: theme.mdcThemeSecondary,
+                  fontFamily: "Montserrat",
+                  // This makes the visual density adapt to the platform that you run
+                  // the app on. For desktop platforms, the controls will be smaller and
+                  // closer together (more dense) than on mobile platforms.
+                  visualDensity: VisualDensity.adaptivePlatformDensity),
+              home: MyHomePage(),
+            ).modular());
   }
 }
 
@@ -101,6 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: Icon(Icons.settings_outlined),
                 label: 'Settings')
           ],
+          unselectedItemColor: Theme.of(context).unselectedWidgetColor,
+          selectedItemColor: Theme.of(context).selectedRowColor,
           currentIndex: _selectedIndex,
           onTap: _onItemTapped),
     );

@@ -1,4 +1,5 @@
 import 'package:dev_doctor/settings/home.dart';
+import 'package:dev_doctor/settings/module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -20,6 +21,7 @@ class AppModule extends MainModule {
       ...HomeRoutes.values.map((e) =>
           ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
     ]),
+    ModuleRoute('/settings', module: SettingsModule()),
     ChildRoute('/add', child: (_, args) => AddServerPage(params: args.queryParams)),
   ];
 
