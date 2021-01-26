@@ -27,16 +27,13 @@
     "discord": "Betrete unseren Discord",
     "error-with-status": "Auf dem Server ist ein Fehler ({statusCode}) aufgetreten",
     "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",
-    "locale": {
-        "de": "Deutsch",
-        "en": "Englisch"
-    },
     "news": "Nachrichten",
     "home": "Start",
     "welcome": "Willkommen zurück, {name}!",
     "profile": "Profil",
     "stats": "Statistiken",
     "settings": {
+        "information":"INFORMATIONEN",
         "title": "Einstellungen",
         "home": {
             "title": "Start",
@@ -49,6 +46,13 @@
                 "dark": "Dunkel",
                 "light": "Hell",
                 "system": "System"
+            },
+            "locale": {
+                "title": "Sprache",
+                "restart": "Diese Einstellung benötigt ein Neustart der App",
+                "default": "Standard",
+                "de": "Deutsch",
+                "en": "Englisch"
             }
         },
         "downloads": {
@@ -59,10 +63,10 @@
             "title": "Server",
             "add": {
                 "fab": "Server hinzufügen",
-                "cancel":"Abbrechen",
+                "cancel": "Abbrechen",
                 "create": "Erstellen",
-                "url":"URL",
-                "hint":"zB. https://backend.dev-doctor.cf",
+                "url": "URL",
+                "hint": "zB. https://backend.dev-doctor.cf",
                 "title": "Möchten Sie den Server {name} hinzufügen?",
                 "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt.",
                 "agree": "Akzeptieren",

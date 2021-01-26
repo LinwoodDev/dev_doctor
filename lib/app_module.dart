@@ -1,3 +1,4 @@
+import 'package:dev_doctor/course/module.dart';
 import 'package:dev_doctor/settings/home.dart';
 import 'package:dev_doctor/settings/module.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class AppModule extends MainModule {
           ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
     ]),
     ModuleRoute('/settings', module: SettingsModule()),
+    ModuleRoute('/courses/:serverId/:courseId', module: CourseModule()),
     ChildRoute('/add', child: (_, args) => AddServerPage(params: args.queryParams)),
   ];
 

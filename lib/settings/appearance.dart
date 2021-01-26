@@ -16,11 +16,11 @@ class AppearanceSettingsPage extends StatelessWidget {
                 valueListenable: _appearanceBox.listenable(),
                 builder: (context, Box<dynamic> box, _) {
                   var theme = ThemeMode.values[_appearanceBox.get('theme', defaultValue: 0)];
-                  var locale = _appearanceBox.get('locale', defaultValue: 'default');
+                  var locale = context.locale?.toLanguageTag() ?? 'default';
                   return ListView(children: [
                     ListTile(
                         title: Text('settings.appearance.locale.title').tr(),
-                        subtitle: Text('settings.appearance.locale.$locale'),
+                        subtitle: Text('settings.appearance.locale.$locale').tr(),
                         onTap: () => showDialog(
                             context: context,
                             builder: (context) {
@@ -34,9 +34,13 @@ class AppearanceSettingsPage extends StatelessWidget {
                                     FlatButton(
                                         child: Text('SAVE'),
                                         onPressed: () async {
-                                          context.locale =
-                                              Locale.fromSubtags(scriptCode: selectedLocale);
-                                          _appearanceBox.put('locale', selectedLocale);
+                                          if (selectedLocale == 'default') {
+                                            context.deleteSaveLocale();
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                content: Text('settings.appearance.locale.restart')
+                                                    .tr()));
+                                          } else
+                                            context.locale = Locale(selectedLocale);
                                           Navigator.pop(context);
                                         })
                                   ],
@@ -49,17 +53,17 @@ class AppearanceSettingsPage extends StatelessWidget {
                                           RadioListTile<String>(
                                             value: "default",
                                             groupValue: selectedLocale,
-                                            title: Text('settings.appearance.locale.default'),
+                                            title: Text('settings.appearance.locale.default').tr(),
                                             onChanged: (value) {
                                               setState(() => selectedLocale = value);
                                             },
                                           ),
                                           ...List<Widget>.generate(locales.length, (int index) {
                                             return RadioListTile<String>(
-                                              value: locales[index]?.scriptCode,
+                                              value: locales[index].toLanguageTag(),
                                               groupValue: selectedLocale,
                                               title: Text('settings.appearance.locale.' +
-                                                      locales[index]?.scriptCode)
+                                                      locales[index].toLanguageTag())
                                                   .tr(),
                                               onChanged: (value) {
                                                 setState(() => selectedLocale = value);

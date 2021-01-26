@@ -1,72 +1,76 @@
 {
-    "title":"Dev-Doctor.cf",
-    "subtitle":"A free, opensource, serverless learning platform. A linwood project",
+    "title": "Dev-Doctor.cf",
+    "subtitle": "A free, opensource, serverless learning platform. A linwood project",
     "course": {
-        "course":"Course",
-        "home":"HOME",
-        "statistics":"STATISTICS",
-        "materials":"MATERIALS",
-        "question":{
-            "choose":"Choose whisley!",
-            "select":"Please select an option!",
-            "correct":"Correct!",
-            "wrong":"Sorry, wrong answer!",
-            "check":"CHECK ANSWER"
+        "course": "Course",
+        "home": "HOME",
+        "statistics": "STATISTICS",
+        "materials": "MATERIALS",
+        "question": {
+            "choose": "Choose whisley!",
+            "select": "Please select an option!",
+            "correct": "Correct!",
+            "wrong": "Sorry, wrong answer!",
+            "check": "CHECK ANSWER"
         },
-        "start":"START",
-        "support":"SUPPORT"
+        "start": "START",
+        "support": "SUPPORT"
     },
     "courses": {
         "view": "View courses",
-        "title":"Courses",
-        "servers":"Server"
+        "title": "Courses",
+        "servers": "Server"
     },
-    "editor":{
-        "title":"Editor"
+    "editor": {
+        "title": "Editor"
     },
     "discord": "Join our discord",
     "error-with-status": "A {statusCode} error occurred on server",
     "error-without-status": "An error occurred on the server",
-    "locale":{
-        "en":"English",
-        "de":"German"
-    },
-    "news":"News",
-    "home":"Home",
-    "welcome":"Welcome back, {name}!",
-    "profile":"Profile",
-    "stats":"Statistics",
-    "settings":{
-        "title":"Settings",
+    "news": "News",
+    "home": "Home",
+    "welcome": "Welcome back, {name}!",
+    "profile": "Profile",
+    "stats": "Statistics",
+    "settings": {
+        "information":"INFORMATION",
+        "title": "Settings",
         "home": {
-            "title":"Home",
-            "username":"Username"
+            "title": "Home",
+            "username": "Username"
         },
         "appearance": {
             "title": "Appearance",
-            "theme":{
-                "title":"Theme",
-                "dark":"Dark",
-                "light":"Light",
-                "system":"System"
+            "theme": {
+                "title": "Theme",
+                "dark": "Dark",
+                "light": "Light",
+                "system": "System"
+            },
+            "locale": {
+                "title": "Locale",
+                "default": "Default",
+                "restart": "This setting needs a restart!",
+                "en": "English",
+                "de": "German"
             }
         },
         "downloads": {
             "title": "Downloads"
         },
-        "update":"UPDATE",
+        "update": "UPDATE",
         "servers": {
             "title": "Servers",
-            "add":{
+            "add": {
                 "fab": "Add server",
-                "cancel":"Cancel",
+                "cancel": "Cancel",
                 "create": "Create",
-                "url":"URL",
-                "hint":"eg. https://backend.dev-doctor.cf",
-                "title":"Do you want to add the server {name}?",
+                "url": "URL",
+                "hint": "eg. https://backend.dev-doctor.cf",
+                "title": "Do you want to add the server {name}?",
                 "body": "The server {name} with the url {url} will displayed on the courses page.",
-                "agree":"Agree",
-                "disagree":"Disagree"
+                "agree": "Agree",
+                "disagree": "Disagree"
             }
         },
         "about": "About",
@@ -74,10 +78,10 @@
         "code": "Code",
         "license": "License"
     },
-    "ready-for-offline":"Ready for offline!",
+    "ready-for-offline": "Ready for offline!",
     "update-available": {
-        "message":"Update available!",
-        "refresh":"Reload"
+        "message": "Update available!",
+        "refresh": "Reload"
     },
-    "coming-soon":"Coming soon..."
+    "coming-soon": "Coming soon..."
 }
