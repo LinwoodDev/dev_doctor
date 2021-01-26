@@ -24,10 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
   easy_localization: ^2.3.3+1
-  easy_localization_loader:
-    git:
-      url: https://github.com/aissat/easy_localization_loader.git
-      ref: develop
   enum_to_string: ^1.0.14
   http: ^0.12.2
   hive: ^1.4.4+1

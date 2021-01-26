@@ -12,7 +12,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return EasyLocalization(
         supportedLocales: [Locale('en'), Locale('de')],
-        path: 'translations',
+        path: 'translations/',
         fallbackLocale: Locale('en'),
         child: ValueListenableBuilder(
             valueListenable: Hive.box('appearance').listenable(),

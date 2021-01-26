@@ -4,7 +4,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'app_widget.dart';
 import 'models/server.dart';
 
 class AddServerPage extends StatefulWidget {

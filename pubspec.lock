@@ -169,13 +169,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
-  csv:
-    dependency: transitive
-    description:
-      name: csv
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.1.0"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -211,15 +204,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.3+1"
-  easy_localization_loader:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: develop
-      resolved-ref: "77ccb7b5918b64996cfc573f235d178e5a38f18b"
-      url: "https://github.com/aissat/easy_localization_loader.git"
-    source: git
-    version: "0.0.3"
   enum_to_string:
     dependency: "direct main"
     description:
