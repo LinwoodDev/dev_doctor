@@ -1,5 +1,4 @@
 import 'package:dev_doctor/course/home.dart';
-import 'package:dev_doctor/settings/servers.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class CourseModule extends ChildModule {
