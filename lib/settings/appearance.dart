@@ -10,29 +10,83 @@ class AppearanceSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _appearanceBox = Hive.box('appearance');
     return Scaffold(
-        appBar: MyAppBar(title: "settings.appearance.title".tr()),
+        appBar: MyAppBar(title: 'settings.appearance.title'.tr()),
         body: Container(
             child: ValueListenableBuilder(
                 valueListenable: _appearanceBox.listenable(),
                 builder: (context, Box<dynamic> box, _) {
                   var theme = ThemeMode.values[_appearanceBox.get('theme', defaultValue: 0)];
+                  var locale = _appearanceBox.get('locale', defaultValue: 'default');
                   return ListView(children: [
                     ListTile(
-                        title: Text("settings.appearance.theme.title").tr(),
+                        title: Text('settings.appearance.locale.title').tr(),
+                        subtitle: Text('settings.appearance.locale.$locale'),
+                        onTap: () => showDialog(
+                            context: context,
+                            builder: (context) {
+                              String selectedLocale = locale;
+                              var locales = context.supportedLocales;
+                              return AlertDialog(
+                                  actions: [
+                                    FlatButton(
+                                        child: Text('CANCEL'),
+                                        onPressed: () => Navigator.of(context).pop()),
+                                    FlatButton(
+                                        child: Text('SAVE'),
+                                        onPressed: () async {
+                                          context.locale =
+                                              Locale.fromSubtags(scriptCode: selectedLocale);
+                                          _appearanceBox.put('locale', selectedLocale);
+                                          Navigator.pop(context);
+                                        })
+                                  ],
+                                  content: StatefulBuilder(
+                                    builder: (BuildContext context, StateSetter setState) {
+                                      print(locales);
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          RadioListTile<String>(
+                                            value: "default",
+                                            groupValue: selectedLocale,
+                                            title: Text('settings.appearance.locale.default'),
+                                            onChanged: (value) {
+                                              setState(() => selectedLocale = value);
+                                            },
+                                          ),
+                                          ...List<Widget>.generate(locales.length, (int index) {
+                                            return RadioListTile<String>(
+                                              value: locales[index]?.scriptCode,
+                                              groupValue: selectedLocale,
+                                              title: Text('settings.appearance.locale.' +
+                                                      locales[index]?.scriptCode)
+                                                  .tr(),
+                                              onChanged: (value) {
+                                                setState(() => selectedLocale = value);
+                                              },
+                                            );
+                                          })
+                                        ],
+                                      );
+                                    },
+                                  ));
+                            })),
+                    ListTile(
+                        title: Text('settings.appearance.theme.title').tr(),
                         subtitle:
                             Text('settings.appearance.theme.' + EnumToString.convertToString(theme))
                                 .tr(),
-                        onTap: () => showDialog<void>(
+                        onTap: () => showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               ThemeMode selectedRadio = theme;
                               return AlertDialog(
                                 actions: [
                                   FlatButton(
-                                      child: Text("CANCEL"),
+                                      child: Text('CANCEL'),
                                       onPressed: () => Navigator.of(context).pop()),
                                   FlatButton(
-                                      child: Text("SAVE"),
+                                      child: Text('SAVE'),
                                       onPressed: () async {
                                         _appearanceBox.put('theme', selectedRadio.index);
                                         Navigator.pop(context);

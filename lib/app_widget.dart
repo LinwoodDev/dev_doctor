@@ -10,6 +10,8 @@ class AppWidget extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var locale = Hive.box('appearance').get('locale', defaultValue: 'default');
+    if (locale != 'default') context.locale = Locale.fromSubtags(scriptCode: locale);
     return EasyLocalization(
         supportedLocales: [Locale('en'), Locale('de')],
         path: 'translations/',
