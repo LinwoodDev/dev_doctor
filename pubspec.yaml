@@ -46,7 +46,7 @@ flutter_icons:
 dev_dependencies:
   hive_generator: ^0.8.2
   build_runner: ^1.11.0
-  flutter_launcher_icons: 0.8.1
+  flutter_launcher_icons: ^0.8.1
   flutter_test:
     sdk: flutter
   integration_test:
