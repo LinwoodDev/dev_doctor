@@ -15,11 +15,13 @@ class Course {
   final bool installed;
   final String body;
   final String lang;
+  final int index;
   final List<String> parts;
 
   Course(
       {this.slug,
       this.name,
+      this.index,
       this.description,
       this.icon,
       this.author,
@@ -36,11 +38,13 @@ class Course {
         icon = json['icon'],
         author = json['author'],
         body = json['body'],
+        index = json['index'],
         installed = json['installed'],
         lang = json['lang'],
         parts = json['parts'];
 
   get url => server.url + "/" + slug;
+
   Future<List<Part>> fetchParts() async =>
       Future.wait(parts.asMap().map((index, value) => MapEntry(index, fetchPart(index))).values);
 

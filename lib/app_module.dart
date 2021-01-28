@@ -1,4 +1,3 @@
-import 'package:dev_doctor/course/module.dart';
 import 'package:dev_doctor/settings/home.dart';
 import 'package:dev_doctor/settings/module.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'add.dart';
 import 'app_widget.dart';
 import 'courses/home.dart';
+import 'courses/module.dart';
 import 'editor/home.dart';
 import 'home.dart';
 
@@ -23,7 +23,7 @@ class AppModule extends MainModule {
           ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
     ]),
     ModuleRoute('/settings', module: SettingsModule()),
-    ModuleRoute('/courses/:serverId/:courseId', module: CourseModule()),
+    ModuleRoute('/courses', module: CourseModule()),
     ChildRoute('/add', child: (_, args) => AddServerPage(params: args.queryParams)),
   ];
 

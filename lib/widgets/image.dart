@@ -11,7 +11,7 @@ class UniversalImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var imageURL = "$url.$type";
-    switch (type.toLowerCase()) {
+    switch (type?.toLowerCase()) {
       case 'svg':
         return SvgPicture.network(imageURL, height: height, width: width);
       case 'png':

@@ -8,19 +8,22 @@ import 'course.dart';
 class CoursesServer {
   final String name;
   final String url;
+  final int index;
   final List<String> courses;
 
-  CoursesServer({this.name, this.url, this.courses});
+  CoursesServer({this.index, this.name, this.url, this.courses});
   CoursesServer.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         url = json['url'],
+        index = json['index'],
         courses = json['courses'];
 
-  static Future<CoursesServer> fetch(String url) async {
+  static Future<CoursesServer> fetch(String url, {int index}) async {
     var response = await http.get("$url/config.yml");
     var data = Map<String, dynamic>.from(loadYaml(response.body));
 
     data['url'] = url;
+    data['index'] = index;
     data['courses'] = List<String>.from(data['courses']);
     return CoursesServer.fromJson(data);
   }
@@ -35,6 +38,7 @@ class CoursesServer {
 
     data['parts'] = List<String>.from(data['parts']);
     data['server'] = this;
+    data['index'] = index;
     data['slug'] = course;
     return Course.fromJson(data);
   }
