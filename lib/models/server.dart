@@ -1,4 +1,6 @@
+import 'package:dev_doctor/yaml.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:yaml/yaml.dart';
 
@@ -18,7 +20,8 @@ class CoursesServer {
         index = json['index'],
         courses = json['courses'];
 
-  static Future<CoursesServer> fetch(String url, {int index}) async {
+  static Future<CoursesServer> fetch({String url, int index}) async {
+    if (url == null) url = Hive.box<String>('servers').getAt(index);
     var response = await http.get("$url/config.yml");
     var data = Map<String, dynamic>.from(loadYaml(response.body));
 
@@ -34,12 +37,12 @@ class CoursesServer {
   Future<Course> fetchCourse(int index) async {
     var course = courses[index];
     var response = await http.get("$url/$course/config.yml");
-    var data = Map<String, dynamic>.from(loadYaml(response.body));
+    var data = yamlMapToJson(loadYaml(response.body));
 
-    data['parts'] = List<String>.from(data['parts']);
     data['server'] = this;
     data['index'] = index;
     data['slug'] = course;
+    data['parts'] = List<String>.from(data['parts']);
     return Course.fromJson(data);
   }
 }

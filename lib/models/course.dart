@@ -1,7 +1,11 @@
+import 'package:dev_doctor/models/items/quiz.dart';
+import 'package:dev_doctor/models/items/video.dart';
 import 'package:dev_doctor/models/server.dart';
+import 'package:dev_doctor/yaml.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:yaml/yaml.dart';
+import 'item.dart';
 import 'part.dart';
 
 @immutable
@@ -50,8 +54,9 @@ class Course {
 
   Future<Part> fetchPart(int index) async {
     var part = parts[index];
-    var response = await http.post("${server.url}/$slug/$part/config.yml");
-    var data = loadYaml(response.body);
+    var response = await http.get("${server.url}/$slug/$part/config.yml");
+    var data = Map<String, dynamic>.from(loadYaml(response.body));
+    data['items'] = yamlListToJson(data['items']).toList();
     data['course'] = this;
     data['slug'] = part;
     return Part.fromJson(data);

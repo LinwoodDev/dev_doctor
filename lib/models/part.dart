@@ -19,7 +19,7 @@ class Part {
         description = json['description'],
         name = json['name'],
         slug = json['slug'],
-        items = (json['items'] as List<Map<String, dynamic>>).map<PartItem>((item) {
+        items = (json['items'] as List<dynamic>).map<PartItem>((item) {
           switch (item['type']) {
             case 'text':
               return TextPartItem.fromJson(item);
@@ -30,7 +30,7 @@ class Part {
             default:
               return null;
           }
-        });
+        }).toList();
 
   CoursesServer get server => course.server;
 }

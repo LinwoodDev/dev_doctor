@@ -25,7 +25,7 @@ class _AddServerPageState extends State<AddServerPage> {
   _showDialog() async {
     var url = widget.params['url'];
     if (_serversBox.containsKey(url)) {
-      var server = await CoursesServer.fetch(url);
+      var server = await CoursesServer.fetch(url: url);
       var shouldAdd = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(

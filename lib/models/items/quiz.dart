@@ -12,8 +12,9 @@ class QuizPartItem extends PartItem {
   QuizPartItem.fromJson(Map<String, dynamic> json)
       : text = json['text'],
         time = json['time'],
-        questions = (json['questions'] as List<Map<String, dynamic>>)
-            .map((question) => QuizQuestion.fromJson(question)),
+        questions = (json['questions'] as List<dynamic>)
+            .map((question) => QuizQuestion.fromJson(question))
+            .toList(),
         super.fromJson(json);
 }
 
@@ -27,8 +28,9 @@ class QuizQuestion {
   QuizQuestion.fromJson(Map<String, dynamic> json)
       : title = json['title'],
         description = json['description'],
-        answers = (json['answers'] as List<Map<String, dynamic>>)
-            .map((answer) => QuizAnswer.fromJson(answer));
+        answers = (json['answers'] as List<dynamic>)
+            .map((answer) => QuizAnswer.fromJson(answer))
+            .toList();
 }
 
 @immutable

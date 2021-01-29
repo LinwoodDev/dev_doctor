@@ -2,11 +2,11 @@ import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:hive/hive.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CoursePage extends StatefulWidget {
@@ -20,13 +20,10 @@ class CoursePage extends StatefulWidget {
 }
 
 class _CoursePageState extends State<CoursePage> {
-  Box<String> _serversBox = Hive.box<String>('servers');
   Future<Course> _buildFuture() async {
     print(widget.model);
     if (widget.model != null) return widget.model;
-    print("TEST");
-    CoursesServer server =
-        await CoursesServer.fetch(_serversBox.getAt(widget.serverId), index: widget.serverId);
+    CoursesServer server = await CoursesServer.fetch(index: widget.serverId);
     return server.fetchCourse(widget.courseId);
   }
 
@@ -53,7 +50,8 @@ class _CoursePageState extends State<CoursePage> {
                               IconButton(
                                 icon: Icon(Icons.play_circle_outline_outlined),
                                 tooltip: "course.start".tr(),
-                                onPressed: () {},
+                                onPressed: () => Modular.to.pushNamed(
+                                    '/courses/${widget.serverId}/${widget.courseId}/start'),
                               )
                             ],
                             flexibleSpace: FlexibleSpaceBar(

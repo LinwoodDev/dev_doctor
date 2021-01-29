@@ -25,7 +25,11 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
           child: ValueListenableBuilder(
               valueListenable: _serversBox.listenable(),
               builder: (context, Box<String> box, _) => FutureBuilder(
-                  future: Future.wait(_serversBox.values.map((e) => CoursesServer.fetch(e))),
+                  future: Future.wait(_serversBox.values
+                      .toList()
+                      .asMap()
+                      .map((index, e) => MapEntry(index, CoursesServer.fetch(url: e, index: index)))
+                      .values),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
