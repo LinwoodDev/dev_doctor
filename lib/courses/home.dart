@@ -7,8 +7,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'course.dart';
-
 class CoursesPage extends StatefulWidget {
   @override
   _CoursesPageState createState() => _CoursesPageState();
