@@ -59,29 +59,30 @@ class _PartItemPageState extends State<PartItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<PartItem>(
-        future: _buildFuture(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
-            default:
-              if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-              var item = snapshot.data;
-              if (item == null) return CircularProgressIndicator();
-              return Scaffold(
-                  appBar: AppBar(title: Text(part.name)),
-                  body: ListView(children: [
-                    Card(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                        child: Padding(
-                            padding: const EdgeInsets.all(64.0),
-                            child: Column(children: [
-                              Text(item.name, style: Theme.of(context).textTheme.headline5),
-                              Text(item.description)
-                            ])))
-                  ]));
-          }
-        });
+    return Container(
+        child: FutureBuilder<PartItem>(
+            future: _buildFuture(),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Center(child: CircularProgressIndicator());
+                default:
+                  if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                  var item = snapshot.data;
+                  if (item == null) return Center(child: CircularProgressIndicator());
+                  return Scaffold(
+                      appBar: AppBar(title: Text(part.name)),
+                      body: ListView(children: [
+                        Card(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            child: Padding(
+                                padding: const EdgeInsets.all(64.0),
+                                child: Column(children: [
+                                  Text(item.name, style: Theme.of(context).textTheme.headline5),
+                                  Text(item.description)
+                                ])))
+                      ]));
+              }
+            }));
   }
 }
