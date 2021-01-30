@@ -46,7 +46,6 @@ class AppearanceSettingsPage extends StatelessWidget {
                                   ],
                                   content: StatefulBuilder(
                                     builder: (BuildContext context, StateSetter setState) {
-                                      print(locales);
                                       return Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [

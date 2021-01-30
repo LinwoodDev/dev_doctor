@@ -1,8 +1,13 @@
 import 'package:dev_doctor/models/item.dart';
+import 'package:dev_doctor/models/items/video.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import 'package:dev_doctor/courses/part/video.dart'
+    if (dart.library.html) 'package:dev_doctor/courses/part/video_web.dart'
+    if (dart.library.io) 'package:dev_doctor/courses/part/video_mobile.dart';
 
 class PartItemPage extends StatefulWidget {
   final PartItem model;
@@ -71,8 +76,10 @@ class _PartItemPageState extends State<PartItemPage> {
                   var item = snapshot.data;
                   if (item == null) return Center(child: CircularProgressIndicator());
                   return Scaffold(
+                      resizeToAvoidBottomPadding: false,
                       appBar: AppBar(title: Text(part.name)),
-                      body: ListView(children: [
+                      body: Scrollbar(
+                          child: ListView(children: [
                         Card(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                             child: Padding(
@@ -80,8 +87,16 @@ class _PartItemPageState extends State<PartItemPage> {
                                 child: Column(children: [
                                   Text(item.name, style: Theme.of(context).textTheme.headline5),
                                   Text(item.description)
-                                ])))
-                      ]));
+                                ]))),
+                        Card(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            child: Padding(
+                                padding: const EdgeInsets.all(64.0),
+                                child: Builder(builder: (context) {
+                                  if (item is VideoPartItem) return VideoPartItemPage(item: item);
+                                  return Container(child: Text("Not supported!"));
+                                })))
+                      ])));
               }
             }));
   }
