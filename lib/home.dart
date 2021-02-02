@@ -1,5 +1,7 @@
 import 'package:dev_doctor/widgets/appbar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -25,6 +27,12 @@ class HomePage extends StatelessWidget {
                       label: Text("discord".tr().toUpperCase(),
                           style: Theme.of(context).primaryTextTheme.button),
                       color: Theme.of(context).primaryColor)),
+              if (kIsWeb)
+                Padding(
+                    padding: EdgeInsets.all(5),
+                    child: InkWell(
+                        onTap: () => launch("https://vercel.com"),
+                        child: SvgPicture.asset("icons/powered-by-vercel.svg", height: 50))),
             ]))
       ]),
       Column(children: [
