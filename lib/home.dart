@@ -32,7 +32,8 @@ class HomePage extends StatelessWidget {
                     padding: EdgeInsets.all(5),
                     child: InkWell(
                         onTap: () => launch("https://vercel.com"),
-                        child: SvgPicture.asset("icons/powered-by-vercel.svg", height: 50))),
+                        child: SvgPicture.asset("images/powered-by-vercel.svg",
+                            semanticsLabel: 'Powered by Vercel'))),
             ]))
       ]),
       Column(children: [

@@ -46,7 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text("settings.about").tr(),
               onTap: () => showAboutDialog(
                   context: context,
-                  applicationIcon: Image.asset("icons/logo-light.png", height: 50))),
+                  applicationIcon: Image.asset("images/logo-light.png", height: 50))),
         ])))));
   }
 }

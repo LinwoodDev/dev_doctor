@@ -45,7 +45,7 @@ dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "icons/logo-light-background.png"
+  image_path: "images/logo-light-background.png"
 dev_dependencies:
   hive_generator: ^0.8.2
   build_runner: ^1.11.0
@@ -155,7 +155,7 @@ flutter:
           weight: 900
   # To add assets to your application, add an assets section, like this:
   assets:
-    - icons/
+    - images/
     - translations/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
