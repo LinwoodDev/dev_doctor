@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         Text("subtitle", style: Theme.of(context).textTheme.subtitle1).tr(),
         Padding(
             padding: EdgeInsets.all(20),
-            child: Wrap(alignment: WrapAlignment.center, children: [
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                   padding: EdgeInsets.all(5),
                   child: RaisedButton.icon(
