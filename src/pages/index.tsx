@@ -66,7 +66,7 @@ const IndexPage = (): ReactElement => {
                 </Button>
               </Grid>
               <Grid item>
-                <IconButton href="https://vercel.com">
+                <IconButton href="https://vercel.com?utm_source=Linwood&utm_campaign=oss">
                   <Vercel />
                 </IconButton>
               </Grid>
