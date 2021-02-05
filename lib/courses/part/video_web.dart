@@ -46,6 +46,10 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Center(child: AspectRatio(aspectRatio: 16 / 9, child: _iframeWidget)));
+    return Container(
+        child: AspectRatio(
+      child: _iframeWidget,
+      aspectRatio: 16 / 9,
+    ));
   }
 }

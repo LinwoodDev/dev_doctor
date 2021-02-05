@@ -6,15 +6,15 @@ import 'items/quiz.dart';
 import 'items/text.dart';
 import 'items/video.dart';
 
-class Part {
+class CoursePart {
   final Course course;
   final String name;
   final String description;
   final String slug;
   final List<PartItem> items;
 
-  Part({this.name, this.description, this.slug, this.items, this.course});
-  Part.fromJson(Map<String, dynamic> json)
+  CoursePart({this.name, this.description, this.slug, this.items, this.course});
+  CoursePart.fromJson(Map<String, dynamic> json)
       : course = json['course'],
         description = json['description'],
         name = json['name'],

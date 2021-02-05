@@ -1,4 +1,8 @@
+import 'package:dev_doctor/courses/part/quiz.dart';
+import 'package:dev_doctor/courses/part/text.dart';
 import 'package:dev_doctor/models/item.dart';
+import 'package:dev_doctor/models/items/quiz.dart';
+import 'package:dev_doctor/models/items/text.dart';
 import 'package:dev_doctor/models/items/video.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/models/server.dart';
@@ -11,20 +15,16 @@ import 'package:dev_doctor/courses/part/video.dart'
 
 class PartItemPage extends StatefulWidget {
   final PartItem model;
-  final int serverId;
-  final int courseId;
-  final int partId;
   final int itemId;
 
-  const PartItemPage({Key key, this.model, this.serverId, this.courseId, this.partId, this.itemId})
-      : super(key: key);
+  const PartItemPage({Key key, this.model, this.itemId}) : super(key: key);
 
   @override
   _PartItemPageState createState() => _PartItemPageState();
 }
 
 class _PartItemPageState extends State<PartItemPage> {
-  Part part;
+  CoursePart part;
   Future<PartItem> _buildFuture() async {
     PartItem item = widget.model;
     if (shouldRedirect()) {
@@ -78,25 +78,41 @@ class _PartItemPageState extends State<PartItemPage> {
                   return Scaffold(
                       resizeToAvoidBottomInset: false,
                       appBar: AppBar(title: Text(part.name)),
-                      body: Scrollbar(
-                          child: ListView(children: [
-                        Card(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                            child: Padding(
-                                padding: const EdgeInsets.all(64.0),
-                                child: Column(children: [
-                                  Text(item.name, style: Theme.of(context).textTheme.headline5),
-                                  Text(item.description)
-                                ]))),
-                        Card(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                            child: Padding(
-                                padding: const EdgeInsets.all(64.0),
-                                child: Builder(builder: (context) {
-                                  if (item is VideoPartItem) return VideoPartItemPage(item: item);
-                                  return Container(child: Text("Not supported!"));
-                                })))
-                      ])));
+                      body: Scrollbar(child: LayoutBuilder(builder: (context, constraints) {
+                        var itemCard = Expanded(
+                            flex: 3,
+                            child: Card(
+                                shape:
+                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                child: Container(
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(64.0),
+                                        child: Builder(builder: (context) {
+                                          if (item is VideoPartItem)
+                                            return VideoPartItemPage(item: item);
+                                          if (item is TextPartItem)
+                                            return TextPartItemPage(item: item);
+                                          if (item is QuizPartItem)
+                                            return QuizPartItemPage(item: item);
+                                          return Text("Not supported!");
+                                        })))));
+                        var detailsCard = Expanded(
+                            child: Card(
+                                shape:
+                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(64.0),
+                                    child: Column(children: [
+                                      Text(item.name, style: Theme.of(context).textTheme.headline5),
+                                      Text(item.description ?? '')
+                                    ]))));
+                        if (MediaQuery.of(context).size.width > 1000)
+                          return Row(children: [detailsCard, itemCard]);
+                        else
+                          return Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [detailsCard, itemCard]);
+                      })));
               }
             }));
   }

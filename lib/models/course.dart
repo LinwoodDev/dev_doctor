@@ -46,16 +46,16 @@ class Course {
 
   get url => server.url + "/" + slug;
 
-  Future<List<Part>> fetchParts() async =>
+  Future<List<CoursePart>> fetchParts() async =>
       Future.wait(parts.asMap().map((index, value) => MapEntry(index, fetchPart(index))).values);
 
-  Future<Part> fetchPart(int index) async {
+  Future<CoursePart> fetchPart(int index) async {
     var part = parts[index];
     var response = await http.get("${server.url}/$slug/$part/config.yml");
     var data = Map<String, dynamic>.from(loadYaml(response.body));
     data['items'] = yamlListToJson(data['items']).toList();
     data['course'] = this;
     data['slug'] = part;
-    return Part.fromJson(data);
+    return CoursePart.fromJson(data);
   }
 }

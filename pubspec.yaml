@@ -27,6 +27,7 @@ dependencies:
   enum_to_string: ^1.0.14
   http: ^0.12.2
   hive: ^1.4.4+1
+  rxdart: ^0.26.0-nullsafety.1
   hive_flutter: ^0.3.1
   flutter_modular: ^3.0.0-nullsafety.40
   url_launcher: ^5.7.10
