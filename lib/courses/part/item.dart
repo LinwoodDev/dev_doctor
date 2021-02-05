@@ -1,3 +1,4 @@
+import 'package:dev_doctor/courses/bloc.dart';
 import 'package:dev_doctor/courses/part/quiz.dart';
 import 'package:dev_doctor/courses/part/text.dart';
 import 'package:dev_doctor/models/item.dart';
@@ -5,7 +6,6 @@ import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/items/text.dart';
 import 'package:dev_doctor/models/items/video.dart';
 import 'package:dev_doctor/models/part.dart';
-import 'package:dev_doctor/models/server.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -31,10 +31,8 @@ class _PartItemPageState extends State<PartItemPage> {
       return null;
     }
     if (item == null) {
-      var server = await CoursesServer.fetch(index: widget.serverId);
-      var course = await server.fetchCourse(widget.courseId);
-      part = await course.fetchPart(widget.partId);
-      return part.items[widget.itemId];
+      var bloc = await Modular.get<CoursePartBloc>();
+      return (await bloc.part$.done).items[widget.itemId];
     }
     return item;
   }
@@ -45,22 +43,25 @@ class _PartItemPageState extends State<PartItemPage> {
   }
 
   void redirect() async {
-    if (shouldRedirect())
-      await Modular.to.pushReplacementNamed('/courses/' +
-          (widget.serverId?.toString() ?? '0') +
+    var params = Modular.args.params;
+    if (shouldRedirect()) {
+      await Modular.to.navigate('/courses/' +
+          (params['serverId']?.toString() ?? '0') +
           "/" +
-          (widget.courseId?.toString() ?? '0') +
+          (params['serverId']?.toString() ?? '0') +
           "/start/" +
-          (widget.partId?.toString() ?? '0') +
+          (params['serverId']?.toString() ?? '0') +
           "/" +
           (widget.itemId?.toString() ?? '0'));
+      print("TEST");
+    }
   }
 
   bool shouldRedirect() =>
-      widget.serverId == null ||
-      widget.courseId == null ||
-      widget.partId == null ||
-      widget.itemId == null;
+      Modular.args.params['serverId'] == null ||
+      Modular.args.params['courseId'] == null ||
+      Modular.args.params['partId'] == null ||
+      Modular.args.params['itemId'] == null;
 
   @override
   Widget build(BuildContext context) {

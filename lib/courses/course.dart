@@ -49,7 +49,7 @@ class _CoursePageState extends State<CoursePage> {
                               IconButton(
                                 icon: Icon(Icons.play_circle_outline_outlined),
                                 tooltip: "course.start".tr(),
-                                onPressed: () => Modular.to.pushNamed(
+                                onPressed: () => Modular.to.navigate(
                                     '/courses/${widget.serverId}/${widget.courseId}/start'),
                               )
                             ],

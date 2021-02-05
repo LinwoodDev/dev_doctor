@@ -15,10 +15,7 @@ class CourseModule extends ChildModule {
                 model: args.data,
                 serverId: int.parse(args.params['serverId']),
                 courseId: int.parse(args.params['courseId']))),
-        ChildRoute('/:serverId/:courseId/start',
-            child: (_, args) => PartItemPage(
-                serverId: int.parse(args.params['serverId']),
-                courseId: int.parse(args.params['courseId']))),
+        ChildRoute('/:serverId/:courseId/start', child: (_, args) => PartItemPage()),
         ChildRoute('/:serverId/:courseId/start/:partId',
             child: (_, args) => PartItemLayout(),
             children: [
