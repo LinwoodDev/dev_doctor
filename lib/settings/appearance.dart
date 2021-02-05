@@ -28,10 +28,10 @@ class AppearanceSettingsPage extends StatelessWidget {
                               var locales = context.supportedLocales;
                               return AlertDialog(
                                   actions: [
-                                    FlatButton(
+                                    TextButton(
                                         child: Text('CANCEL'),
                                         onPressed: () => Navigator.of(context).pop()),
-                                    FlatButton(
+                                    TextButton(
                                         child: Text('SAVE'),
                                         onPressed: () async {
                                           if (selectedLocale == 'default') {
@@ -85,10 +85,10 @@ class AppearanceSettingsPage extends StatelessWidget {
                               ThemeMode selectedRadio = theme;
                               return AlertDialog(
                                 actions: [
-                                  FlatButton(
+                                  TextButton(
                                       child: Text('CANCEL'),
                                       onPressed: () => Navigator.of(context).pop()),
-                                  FlatButton(
+                                  TextButton(
                                       child: Text('SAVE'),
                                       onPressed: () async {
                                         _appearanceBox.put('theme', selectedRadio.index);

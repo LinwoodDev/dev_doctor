@@ -20,18 +20,18 @@ class HomePage extends StatelessWidget {
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                   padding: EdgeInsets.all(5),
-                  child: RaisedButton.icon(
+                  child: ElevatedButton.icon(
                       onPressed: () => launch("https://discord.linwood.tk"),
                       icon: Icon(Icons.supervisor_account_outlined,
                           color: Theme.of(context).primaryIconTheme.color),
                       label: Text("discord".tr().toUpperCase(),
-                          style: Theme.of(context).primaryTextTheme.button),
-                      color: Theme.of(context).primaryColor)),
+                          style: Theme.of(context).primaryTextTheme.button))),
               if (kIsWeb)
                 Padding(
                     padding: EdgeInsets.all(5),
                     child: InkWell(
-                        onTap: () => launch("https://vercel.com?utm_source=Linwood&utm_campaign=oss"),
+                        onTap: () =>
+                            launch("https://vercel.com?utm_source=Linwood&utm_campaign=oss"),
                         child: SvgPicture.asset("images/powered-by-vercel.svg",
                             semanticsLabel: 'Powered by Vercel'))),
             ]))

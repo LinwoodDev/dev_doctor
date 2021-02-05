@@ -76,7 +76,7 @@ class _PartItemPageState extends State<PartItemPage> {
                   var item = snapshot.data;
                   if (item == null) return Center(child: CircularProgressIndicator());
                   return Scaffold(
-                      resizeToAvoidBottomPadding: false,
+                      resizeToAvoidBottomInset: false,
                       appBar: AppBar(title: Text(part.name)),
                       body: Scrollbar(
                           child: ListView(children: [

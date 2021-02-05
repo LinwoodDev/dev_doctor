@@ -87,12 +87,12 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                   ],
                 ),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                       child: Text('settings.servers.add.cancel'.tr().toUpperCase()),
                       onPressed: () {
                         Navigator.pop(context);
                       }),
-                  FlatButton(
+                  TextButton(
                       child: Text('settings.servers.add.create'.tr().toUpperCase()),
                       onPressed: () async {
                         Navigator.pop(context);
