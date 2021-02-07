@@ -44,6 +44,6 @@ class QuizAnswer {
   QuizAnswer.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         description = json['description'],
-        correct = json['correct'],
+        correct = json['correct'] ?? false,
         points = json['points'];
 }

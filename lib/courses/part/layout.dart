@@ -25,7 +25,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
     serverId = int.parse(params['serverId']);
     courseId = int.parse(params['courseId']);
     partId = int.parse(params['partId']);
-    itemId = int.parse(params['itemId'] ?? 0);
+    itemId = int.parse(params['itemId'] ?? '0');
     bloc?.fetch(serverId: serverId, courseId: courseId, partId: partId);
   }
 

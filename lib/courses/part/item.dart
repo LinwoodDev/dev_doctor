@@ -12,6 +12,7 @@ import 'package:dev_doctor/courses/part/video.dart'
     if (dart.library.html) 'package:dev_doctor/courses/part/video_web.dart'
     if (dart.library.io) 'package:dev_doctor/courses/part/video_mobile.dart';
 
+import 'bloc.dart';
 import 'module.dart';
 
 class PartItemPage extends StatefulWidget {
@@ -31,8 +32,6 @@ class _PartItemPageState extends State<PartItemPage> {
     bloc = CoursePartModule.to.get<CoursePartBloc>();
     super.initState();
   }
-
-  bool shouldRedirect() => widget.itemId == null;
 
   @override
   Widget build(BuildContext context) {

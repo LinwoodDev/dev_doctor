@@ -12,41 +12,64 @@ class QuizPartItemPage extends StatefulWidget {
 }
 
 class _QuizPartItemPageState extends State<QuizPartItemPage> {
-  Map<int, int> answers = {};
+  final _formKey = GlobalKey<FormState>();
+  void validate() {
+    var validate = _formKey.currentState.validate();
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("course.question.validation.title").tr(),
+              content: Text("course.question.validation." + (validate ? "correct" : "wrong")).tr(),
+              actions: [
+                TextButton.icon(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: Icon(Icons.close_outlined),
+                    label: Text("course.question.validation.close").tr())
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Form(
+            key: _formKey,
             child: Scrollbar(
                 child: ListView(children: [
-      ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: widget.item.questions.length,
-          itemBuilder: (context, questionIndex) {
-            var question = widget.item.questions[questionIndex];
-            return Column(children: [
-              Text(question.title),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: question.answers.length,
-                itemBuilder: (context, index) {
-                  var answer = question.answers[index];
-                  return RadioListTile(
-                      groupValue: answers[questionIndex] ?? null,
-                      title: Text(answer.name ?? ''),
-                      subtitle: Text(answer.description ?? ''),
-                      value: index,
-                      onChanged: (int value) => setState(() => answers[questionIndex] = value));
-                },
-              )
-            ]);
-          }),
-      ElevatedButton.icon(
-          onPressed: () => print("TEST"),
-          icon: Icon(Icons.check_outlined),
-          label: Text("course.question.check").tr())
-    ]))));
+              Column(
+                  children: List.generate(widget.item.questions.length, (questionIndex) {
+                var question = widget.item.questions[questionIndex];
+                return Column(children: [
+                  Text(question.title),
+                  FormField<int>(
+                      validator: (value) {
+                        if (value == null) return "course.question.choose".tr();
+                        if (!question.answers[value].correct) return "course.question.wrong".tr();
+                        return null;
+                      },
+                      builder: (field) => Column(children: [
+                            ...List.generate(question.answers.length, (index) {
+                              var answer = question.answers[index];
+                              return RadioListTile(
+                                  groupValue: field.value,
+                                  title: Text(answer.name ?? ''),
+                                  subtitle: Text(answer.description ?? ''),
+                                  value: index,
+                                  onChanged: (int value) => field.didChange(value));
+                            }),
+                            field.hasError
+                                ? Text(
+                                    field.errorText,
+                                    style: TextStyle(color: Colors.red),
+                                  )
+                                : Container()
+                          ]))
+                ]);
+              })),
+              ElevatedButton.icon(
+                  onPressed: validate,
+                  icon: Icon(Icons.check_outlined),
+                  label: Text("course.question.check").tr())
+            ]))));
   }
 }
