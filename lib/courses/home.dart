@@ -38,7 +38,7 @@ class _CoursesPageState extends State<CoursesPage> {
                       title: Text(current.name),
                       subtitle: Text(current.description),
                       onTap: () => Modular.to.pushNamed(
-                          "/courses/${current.server.index}/${current.index}",
+                          "/courses/details?serverId=${current.server.index}&courseId=${current.index}",
                           arguments: current),
                       leading: current.icon?.isEmpty ?? true
                           ? null

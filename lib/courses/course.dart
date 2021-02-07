@@ -22,6 +22,7 @@ class CoursePage extends StatefulWidget {
 class _CoursePageState extends State<CoursePage> {
   Future<Course> _buildFuture() async {
     if (widget.model != null) return widget.model;
+    print(Modular.args.queryParams);
     CoursesServer server = await CoursesServer.fetch(index: widget.serverId);
     return server.fetchCourse(widget.courseId);
   }
@@ -50,7 +51,7 @@ class _CoursePageState extends State<CoursePage> {
                                 icon: Icon(Icons.play_circle_outline_outlined),
                                 tooltip: "course.start".tr(),
                                 onPressed: () => Modular.to.navigate(
-                                    '/courses/${widget.serverId}/${widget.courseId}/start'),
+                                    '/courses/start/see?serverId=${widget.serverId}&courseId=${widget.courseId}'),
                               )
                             ],
                             flexibleSpace: FlexibleSpaceBar(
