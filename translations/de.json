@@ -25,7 +25,8 @@
     "courses": {
         "title": "Kurse",
         "view": "Kurse ansehen",
-        "servers": "Server"
+        "servers": "Server",
+        "empty": "Keine Kurse verfügbar. Füge einen neuen Server über die Einstellungen hinzu!"
     },
     "editor": {
         "title": "Editor"
