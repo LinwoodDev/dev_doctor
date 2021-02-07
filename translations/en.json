@@ -41,6 +41,7 @@
     "settings": {
         "information":"INFORMATION",
         "title": "Settings",
+        "privacypolicy":"Privacy Policy",
         "home": {
             "title": "Home",
             "username": "Username"

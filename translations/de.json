@@ -41,6 +41,7 @@
     "settings": {
         "information":"INFORMATIONEN",
         "title": "Einstellungen",
+        "privacypolicy":"Datenschutzerklärung",
         "home": {
             "title": "Start",
             "username": "Benutzername"

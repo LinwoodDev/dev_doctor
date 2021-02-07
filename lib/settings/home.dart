@@ -42,11 +42,15 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text("settings.code").tr(),
               onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor")),
           ListTile(
+              leading: Icon(Icons.privacy_tip_outlined),
+              title: Text("settings.privacypolicy").tr(),
+              onTap: () => launch("https://linwood.tk/docs/dev-doctor/privacypolicy")),
+          ListTile(
               leading: Icon(Icons.info_outline),
               title: Text("settings.about").tr(),
               onTap: () => showAboutDialog(
                   context: context,
-                  applicationIcon: Image.asset("images/logo-light.png", height: 50))),
+                  applicationIcon: Image.asset("images/logo-colored.png", height: 50))),
         ])))));
   }
 }
