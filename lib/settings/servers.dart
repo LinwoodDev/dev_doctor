@@ -47,7 +47,8 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                                   key: Key(current.url),
                                   onDismissed: (direction) => _deleteServer(index),
                                   child: ListTile(
-                                      title: Text(current.name), subtitle: Text(current.url)));
+                                      title: Text(current.name ?? ''),
+                                      subtitle: Text(current.url)));
                             });
                     }
                   }))),

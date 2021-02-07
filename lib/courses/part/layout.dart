@@ -44,6 +44,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                   appBar: AppBar(
                     title: Text(snapshot.data.name),
                     bottom: TabBar(
+                        isScrollable: true,
                         onTap: (index) => Modular.to.pushReplacementNamed(
                             "/courses/start/item?serverId=$serverId&courseId=$courseId&partId=$partId&itemId=$index"),
                         tabs: List.generate(data.items.length, (index) {
