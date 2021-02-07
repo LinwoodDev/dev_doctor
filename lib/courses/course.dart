@@ -22,7 +22,6 @@ class CoursePage extends StatefulWidget {
 class _CoursePageState extends State<CoursePage> {
   Future<Course> _buildFuture() async {
     if (widget.model != null) return widget.model;
-    print(Modular.args.queryParams);
     CoursesServer server = await CoursesServer.fetch(index: widget.serverId);
     return server.fetchCourse(widget.courseId);
   }

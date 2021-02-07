@@ -9,13 +9,10 @@ class CourseModule extends ChildModule {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (_, args) => CoursesPage()),
-        ChildRoute('/details', child: (_, args) {
-          print(args.queryParams);
-          return CoursePage(
+        ChildRoute('/details', child: (_, args) => CoursePage(
               model: args.data,
               serverId: int.parse(args.queryParams['serverId']),
-              courseId: int.parse(args.queryParams['courseId']));
-        }),
+              courseId: int.parse(args.queryParams['courseId']))),
         ModuleRoute('/start', module: CoursePartModule()),
       ];
 }
