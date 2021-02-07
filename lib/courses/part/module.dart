@@ -1,4 +1,3 @@
-import 'package:dev_doctor/courses/course.dart';
 import 'package:dev_doctor/courses/part/item.dart';
 import 'package:dev_doctor/courses/part/layout.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -10,7 +9,7 @@ class CoursePartModule extends ChildModule {
   // TODO: Test
   @override
   List<ModularRoute> get routes => [
-        ChildRoute('/see', child: (_, args) => PartItemLayout(), children: [
+        ChildRoute('/item', child: (_, args) => PartItemLayout(), children: [
           ChildRoute('',
               child: (_, args) =>
                   PartItemPage(itemId: int.parse(args?.queryParams['itemId'] ?? '0')))

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'bloc.dart';
-import '../module.dart';
 import 'module.dart';
 
 class PartItemLayout extends StatefulWidget {
@@ -16,7 +15,7 @@ class PartItemLayout extends StatefulWidget {
 
 class _PartItemLayoutState extends State<PartItemLayout> {
   CoursePartBloc bloc;
-  int serverId, courseId, partId;
+  int serverId, courseId, partId, itemId;
 
   @override
   void initState() {
@@ -26,6 +25,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
     serverId = int.parse(params['serverId']);
     courseId = int.parse(params['courseId']);
     partId = int.parse(params['partId']);
+    itemId = int.parse(params['itemId'] ?? 0);
     bloc?.fetch(serverId: serverId, courseId: courseId, partId: partId);
   }
 
@@ -39,12 +39,13 @@ class _PartItemLayoutState extends State<PartItemLayout> {
           var data = snapshot.data;
           return DefaultTabController(
               length: data.items.length,
+              initialIndex: itemId,
               child: Scaffold(
                   appBar: AppBar(
                     title: Text(snapshot.data.name),
                     bottom: TabBar(
                         onTap: (index) => Modular.to.pushReplacementNamed(
-                            "/courses/start/see?serverId=$serverId&courseId=$courseId&partId=$partId&itemId=$index"),
+                            "/courses/start/item?serverId=$serverId&courseId=$courseId&partId=$partId&itemId=$index"),
                         tabs: List.generate(data.items.length, (index) {
                           var item = data.items[index];
                           if (item is TextPartItem)

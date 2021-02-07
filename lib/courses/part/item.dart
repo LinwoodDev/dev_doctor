@@ -7,13 +7,11 @@ import 'package:dev_doctor/models/items/text.dart';
 import 'package:dev_doctor/models/items/video.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:dev_doctor/courses/part/video.dart'
     if (dart.library.html) 'package:dev_doctor/courses/part/video_web.dart'
     if (dart.library.io) 'package:dev_doctor/courses/part/video_mobile.dart';
 
-import '../module.dart';
 import 'module.dart';
 
 class PartItemPage extends StatefulWidget {

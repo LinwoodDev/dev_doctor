@@ -1,10 +1,7 @@
 import 'package:dev_doctor/courses/course.dart';
-import 'package:dev_doctor/courses/part/item.dart';
-import 'package:dev_doctor/courses/part/layout.dart';
 import 'package:dev_doctor/courses/part/module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'part/bloc.dart';
 import 'home.dart';
 
 class CourseModule extends ChildModule {
