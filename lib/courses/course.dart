@@ -50,7 +50,7 @@ class _CoursePageState extends State<CoursePage> {
                                 icon: Icon(Icons.play_circle_outline_outlined),
                                 tooltip: "course.start".tr(),
                                 onPressed: () => Modular.to.navigate(
-                                    '/courses/${widget.serverId}/${widget.courseId}/start'),
+                                    '/courses/start/item?serverId=${widget.serverId}&courseId=${widget.courseId}&partId=0'),
                               )
                             ],
                             flexibleSpace: FlexibleSpaceBar(

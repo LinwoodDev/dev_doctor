@@ -11,7 +11,13 @@
             "select": "Bitte wähle eine Antwort aus!",
             "correct": "Richtig!",
             "wrong": "Falsche Antwort!",
-            "check": "Abschicken"
+            "check": "Abschicken",
+            "validation":{
+                "title":"Auswertung",
+                "correct":"Alles richtig!",
+                "wrong":"Es gibt Fehler!",
+                "close":"Schließen"
+            }
         },
         "start": "Start",
         "support": "Support"
@@ -19,7 +25,8 @@
     "courses": {
         "title": "Kurse",
         "view": "Kurse ansehen",
-        "servers": "Server"
+        "servers": "Server",
+        "empty": "Keine Kurse verfügbar. Füge einen neuen Server über die Einstellungen hinzu!"
     },
     "editor": {
         "title": "Editor"
@@ -35,6 +42,7 @@
     "settings": {
         "information":"INFORMATIONEN",
         "title": "Einstellungen",
+        "privacypolicy":"Datenschutzerklärung",
         "home": {
             "title": "Start",
             "username": "Benutzername"

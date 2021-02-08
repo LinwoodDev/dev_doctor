@@ -18,8 +18,8 @@ class _CoursesPageState extends State<CoursesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(title: 'courses.title'.tr(), actions: [
-          IconButton(icon: Icon(Icons.search_outlined), onPressed: () {}),
-          IconButton(icon: Icon(Icons.filter_list_outlined), onPressed: () {})
+          //IconButton(icon: Icon(Icons.search_outlined), onPressed: () {}),
+          //IconButton(icon: Icon(Icons.filter_list_outlined), onPressed: () {})
         ]),
         body: FutureBuilder<List<Course>>(
           future: _buildFuture(),
@@ -30,6 +30,7 @@ class _CoursesPageState extends State<CoursesPage> {
               default:
                 if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                 var data = snapshot.data;
+                if (data.isEmpty) return Center(child: Text('courses.empty').tr());
                 return ListView.builder(
                   itemCount: data.length,
                   itemBuilder: (context, index) {
@@ -38,7 +39,7 @@ class _CoursesPageState extends State<CoursesPage> {
                       title: Text(current.name),
                       subtitle: Text(current.description),
                       onTap: () => Modular.to.pushNamed(
-                          "/courses/${current.server.index}/${current.index}",
+                          "/courses/details?serverId=${current.server.index}&courseId=${current.index}",
                           arguments: current),
                       leading: current.icon?.isEmpty ?? true
                           ? null

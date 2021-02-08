@@ -9,7 +9,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('settings');
   await Hive.openBox('appearance');
-  var _serversBox = await Hive.openBox<String>('servers');
-  if (_serversBox.isEmpty) await _serversBox.add('https://backend.dev-doctor.cf');
+  /*var _serversBox = */ await Hive.openBox<String>('servers');
+  // if (_serversBox.isEmpty) await _serversBox.add('https://backend.dev-doctor.cf');
   runApp(ModularApp(module: AppModule()));
 }
