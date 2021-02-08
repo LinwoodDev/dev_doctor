@@ -2,6 +2,7 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
   makeStyles,
   Toolbar,
   Typography,
@@ -11,6 +12,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router-dom";
 import MyAppBar from "../components/appbar";
 import User from "../models/user";
+import { ReactComponent as Vercel } from "../powered-by-vercel.svg";
 
 const useStyles = makeStyles((theme) => ({
   heroButtons: {
@@ -62,6 +64,11 @@ const IndexPage = (): ReactElement => {
                 >
                   {t("discord")}
                 </Button>
+              </Grid>
+              <Grid item>
+                <IconButton href="https://vercel.com?utm_source=Linwood&utm_campaign=oss">
+                  <Vercel />
+                </IconButton>
               </Grid>
             </Grid>
           </div>
