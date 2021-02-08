@@ -28,9 +28,13 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
       'www.youtube-nocookie.com',
       'embed/${widget.item.url}',
     ).toString();
-    ;
-    _iframeElement.allowFullscreen = true;
+    //_iframeElement.allowFullscreen = true;
     _iframeElement.style.border = 'none';
+    _iframeElement.style.position = 'absolute';
+    _iframeElement.style.top = '0';
+    _iframeElement.style.width = '100%';
+    _iframeElement.style.height = '100%';
+    _iframeElement.style.pointerEvents = 'none';
 
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(

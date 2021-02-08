@@ -9,13 +9,6 @@
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "shortcuts": [
-        {
-          "name": "Open App Settings",
-          "short_name": "Settings",
-          "description": "Change appearance, servers, ...",
-          "url": "/#/settings?utm_source=homescreen",
-          "icons": [{ "src": "/shortcuts/settings.png", "sizes": "192x192" }]
-        }
     ],
     "icons": [
         {
