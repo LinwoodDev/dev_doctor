@@ -36,6 +36,7 @@
     "error-without-status": "An error occurred on the server",
     "news": "News",
     "home": "Home",
+    "docs":"Documentation",
     "welcome": "Welcome back, {name}!",
     "profile": "Profile",
     "stats": "Statistics",
