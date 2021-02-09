@@ -4,8 +4,9 @@
     "course": {
         "course": "Course",
         "home": "HOME",
-        "statistics": "STATISTICS",
-        "materials": "MATERIALS",
+        "statistics": "Statistics",
+        "back":"Zurück",
+        "materials": "Materials",
         "question": {
             "choose": "Choose whisley!",
             "select": "Please select an option!",
@@ -15,8 +16,7 @@
             "validation":{
                 "title":"Validation",
                 "correct":"You got everything right!",
-                "wrong":"You made mistakes!",
-                "close":"Close"
+                "wrong":"You made mistakes!"
             }
         },
         "start": "START",
@@ -63,6 +63,9 @@
                 "de": "German"
             }
         },
+        "general": {
+            "title":"Generell"
+        },
         "downloads": {
             "title": "Downloads"
         },
@@ -86,6 +89,7 @@
         "code": "Code",
         "license": "License"
     },
+    "close":"Close",
     "ready-for-offline": "Ready for offline!",
     "update-available": {
         "message": "Update available!",

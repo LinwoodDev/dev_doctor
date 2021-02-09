@@ -7,11 +7,13 @@ class CoursePartBloc extends Disposable {
   BehaviorSubject<CoursePart> coursePart = BehaviorSubject<CoursePart>();
   CoursePartBloc() {}
   Future<dynamic> fetch({int serverId, int courseId, int partId}) {
-    coursePart = BehaviorSubject<CoursePart>();
+    reset();
     return CoursesServer.fetch(index: serverId).then((value) => value
         .fetchCourse(courseId)
         .then((value) => value.fetchPart(partId).then((value) => coursePart.add(value))));
   }
+
+  void reset() => coursePart = BehaviorSubject<CoursePart>();
 
   @override
   void dispose() {

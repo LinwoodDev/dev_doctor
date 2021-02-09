@@ -10,6 +10,21 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  void _showComingSoon() {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("coming-soon").tr(),
+              actions: [
+                TextButton.icon(
+                  icon: Icon(Icons.close_outlined),
+                  label: Text("close").tr(),
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,12 +33,18 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Scrollbar(
                 child: SingleChildScrollView(
                     child: Column(mainAxisSize: MainAxisSize.max, children: [
-          ListTile(leading: Icon(Icons.build_outlined), title: Text("General")),
+          ListTile(
+              leading: Icon(Icons.build_outlined),
+              title: Text("settings.general.title").tr(),
+              onTap: _showComingSoon),
           ListTile(
               leading: Icon(Icons.tune_outlined),
               title: Text("settings.appearance.title").tr(),
               onTap: () => Navigator.pushNamed(context, "/settings/appearance")),
-          ListTile(leading: Icon(Icons.download_outlined), title: Text("Downloads")),
+          ListTile(
+              leading: Icon(Icons.download_outlined),
+              title: Text("settings.downloads.title").tr(),
+              onTap: _showComingSoon),
           ListTile(
               leading: Icon(Icons.list_outlined),
               title: Text("settings.servers.title").tr(),

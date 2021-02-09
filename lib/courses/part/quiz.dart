@@ -24,7 +24,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                 TextButton.icon(
                     onPressed: () => Navigator.of(context).pop(),
                     icon: Icon(Icons.close_outlined),
-                    label: Text("course.question.validation.close").tr())
+                    label: Text("close").tr())
               ],
             ));
   }
@@ -34,8 +34,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     return Container(
         child: Form(
             key: _formKey,
-            child: Scrollbar(
-                child: ListView(children: [
+            child: Column(children: [
               Column(
                   children: List.generate(widget.item.questions.length, (questionIndex) {
                 var question = widget.item.questions[questionIndex];
@@ -70,6 +69,6 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                   onPressed: validate,
                   icon: Icon(Icons.check_outlined),
                   label: Text("course.question.check").tr())
-            ]))));
+            ])));
   }
 }

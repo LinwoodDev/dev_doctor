@@ -44,36 +44,40 @@ class _PartItemPageState extends State<PartItemPage> {
               var part = snapshot.data;
               var item = part.items[widget.itemId];
               if (item == null) return Center(child: CircularProgressIndicator());
-              return Scrollbar(child: LayoutBuilder(builder: (context, constraints) {
-                var itemCard = Expanded(
-                    flex: 3,
-                    child: Card(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                        child: Container(
+              return LayoutBuilder(builder: (context, constraints) {
+                var itemCard = Scrollbar(
+                    child: SingleChildScrollView(
+                        child: Card(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            child: Container(
+                                child: Padding(
+                                    padding: const EdgeInsets.all(64.0),
+                                    child: Builder(builder: (context) {
+                                      if (item is VideoPartItem)
+                                        return VideoPartItemPage(item: item);
+                                      if (item is TextPartItem) return TextPartItemPage(item: item);
+                                      if (item is QuizPartItem) return QuizPartItemPage(item: item);
+                                      return Text("Not supported!");
+                                    }))))));
+                var detailsCard = Scrollbar(
+                    child: SingleChildScrollView(
+                        child: Card(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                             child: Padding(
                                 padding: const EdgeInsets.all(64.0),
-                                child: Builder(builder: (context) {
-                                  if (item is VideoPartItem) return VideoPartItemPage(item: item);
-                                  if (item is TextPartItem) return TextPartItemPage(item: item);
-                                  if (item is QuizPartItem) return QuizPartItemPage(item: item);
-                                  return Text("Not supported!");
-                                })))));
-                var detailsCard = Expanded(
-                    child: Card(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                        child: Padding(
-                            padding: const EdgeInsets.all(64.0),
-                            child: Column(children: [
-                              Text(item.name, style: Theme.of(context).textTheme.headline5),
-                              Text(item.description ?? '')
-                            ]))));
+                                child: Column(children: [
+                                  Text(item.name, style: Theme.of(context).textTheme.headline5),
+                                  Text(item.description ?? '')
+                                ])))));
                 if (MediaQuery.of(context).size.width > 1000)
-                  return Row(children: [detailsCard, itemCard]);
+                  return Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [Expanded(child: detailsCard), Expanded(flex: 3, child: itemCard)]);
                 else
                   return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [detailsCard, itemCard]);
-              }));
+              });
             }));
   }
 }

@@ -1,3 +1,4 @@
+import 'package:dev_doctor/courses/drawer.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/items/text.dart';
 import 'package:dev_doctor/models/items/video.dart';
@@ -20,6 +21,10 @@ class _PartItemLayoutState extends State<PartItemLayout> {
   @override
   void initState() {
     super.initState();
+    _buildBloc();
+  }
+
+  void _buildBloc() {
     var params = Modular.args.queryParams;
     bloc = CoursePartModule.to.get<CoursePartBloc>();
     serverId = int.parse(params['serverId']);
@@ -35,12 +40,21 @@ class _PartItemLayoutState extends State<PartItemLayout> {
         stream: bloc.coursePart,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
-            return Center(child: CircularProgressIndicator());
+            return Scaffold(body: RouterOutlet());
           var data = snapshot.data;
           return DefaultTabController(
               length: data.items.length,
               initialIndex: itemId,
               child: Scaffold(
+                  drawer: CourseDrawer(
+                    course: data.course,
+                    onChange: (int index) {
+                      Modular.to.navigate(
+                          "/courses/start/item?serverId=$serverId&courseId=$courseId&partId=$index");
+                      setState(() => bloc.reset());
+                      bloc?.fetch(serverId: serverId, courseId: courseId, partId: index);
+                    },
+                  ),
                   appBar: AppBar(
                     title: Text(snapshot.data.name),
                     bottom: TabBar(
