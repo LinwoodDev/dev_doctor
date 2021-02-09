@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dev_doctor">
+    package="com.github.linwoodcloud.dev_doctor">
    <application
-        android:label="dev_doctor"
+        android:label="Dev-Doctor"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

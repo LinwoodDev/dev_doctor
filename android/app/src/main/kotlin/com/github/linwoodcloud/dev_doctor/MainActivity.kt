@@ -1,4 +1,4 @@
-package com.example.dev_doctor
+package com.github.linwoodcloud.dev_doctor
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:http/http.dart' as http;
+import 'package:xml/xml.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -20,12 +25,20 @@ class HomePage extends StatelessWidget {
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                   padding: EdgeInsets.all(5),
-                  child: ElevatedButton.icon(
-                      onPressed: () => launch("https://discord.linwood.tk"),
-                      icon: Icon(Icons.supervisor_account_outlined,
-                          color: Theme.of(context).primaryIconTheme.color),
-                      label: Text("discord".tr().toUpperCase(),
-                          style: Theme.of(context).primaryTextTheme.button))),
+                  child: Wrap(alignment: WrapAlignment.center, children: [
+                    ElevatedButton.icon(
+                        onPressed: () => launch("https://linwood.tk/docs/dev-doctor/overview"),
+                        icon: Icon(Icons.description_outlined,
+                            color: Theme.of(context).primaryIconTheme.color),
+                        label: Text("docs".tr().toUpperCase(),
+                            style: Theme.of(context).primaryTextTheme.button)),
+                    OutlinedButton.icon(
+                        onPressed: () => launch("https://discord.linwood.tk"),
+                        icon: Icon(Icons.supervisor_account_outlined,
+                            color: Theme.of(context).primaryIconTheme.color),
+                        label: Text("discord".tr().toUpperCase(),
+                            style: Theme.of(context).primaryTextTheme.button))
+                  ])),
               if (kIsWeb)
                 Padding(
                     padding: EdgeInsets.all(5),
@@ -43,8 +56,36 @@ class HomePage extends StatelessWidget {
         ),
         Padding(
             padding: EdgeInsets.all(20),
+            child: ElevatedButton.icon(
+              onPressed: () => launch("https://linwood.tk/blog"),
+              icon: Icon(Icons.open_in_new_outlined),
+              label: Text("Open in browser"),
+            )),
+        Padding(
+            padding: EdgeInsets.all(20),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [])),
-        Text("Coming soon...")
+        FutureBuilder<http.Response>(
+            future: http.get('https://linwood.tk/blog/atom.xml'),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
+                return Center(child: CircularProgressIndicator());
+              if (snapshot.hasError) return Text("Error ${snapshot.error}");
+              var document = XmlDocument.parse(utf8.decode(snapshot.data.bodyBytes));
+              var feed = document.getElement("feed");
+              var items = feed.findElements("entry").toList();
+              print(items);
+              return Column(
+                children: List.generate(min(items.length, 10), (index) {
+                  var entry = items[index];
+                  return ListTile(
+                    title: Text(entry.getElement("title").innerText),
+                    subtitle: Text(entry.getElement("summary").innerText),
+                    onTap: () => launch(entry.getElement("link").getAttribute("href")),
+                    isThreeLine: true,
+                  );
+                }),
+              );
+            })
       ])
     ];
     return Scaffold(

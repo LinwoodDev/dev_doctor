@@ -11,13 +11,19 @@ class VideoPartItemPage extends StatefulWidget {
 }
 
 class _VideoPartItemPageState extends State<VideoPartItemPage> {
+  InAppWebViewController webView;
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Center(
-      child: InAppWebView(
-        initialUrl: Uri.https('www.youtube-nocookie.com', 'embed/${widget.item.url}').toString(),
-      ),
-    ));
+        child: SafeArea(
+            child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: InAppWebView(
+                  onWebViewCreated: (InAppWebViewController controller) {
+                    webView = controller;
+                  },
+                  initialUrl:
+                      Uri.https('www.youtube-nocookie.com', 'embed/${widget.item.url}').toString(),
+                ))));
   }
 }

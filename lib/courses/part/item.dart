@@ -74,9 +74,11 @@ class _PartItemPageState extends State<PartItemPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [Expanded(child: detailsCard), Expanded(flex: 3, child: itemCard)]);
                 else
-                  return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [detailsCard, itemCard]);
+                  return Scrollbar(
+                      child: SingleChildScrollView(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [detailsCard, itemCard])));
               });
             }));
   }
