@@ -5,7 +5,7 @@
         "course": "Course",
         "home": "HOME",
         "statistics": "Statistics",
-        "back":"Zurück",
+        "back":"Back",
         "materials": "Materials",
         "question": {
             "choose": "Choose whisley!",
@@ -41,7 +41,7 @@
     "profile": "Profile",
     "stats": "Statistics",
     "settings": {
-        "information":"INFORMATION",
+        "information":"Information",
         "title": "Settings",
         "privacypolicy":"Privacy Policy",
         "home": {
@@ -70,7 +70,7 @@
         "downloads": {
             "title": "Downloads"
         },
-        "update": "UPDATE",
+        "update": "Update",
         "servers": {
             "title": "Servers",
             "add": {
