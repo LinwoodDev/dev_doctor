@@ -47,7 +47,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                                   key: Key(current.url),
                                   onDismissed: (direction) => _deleteServer(index),
                                   child: ListTile(
-                                      title: Text(current.name ?? ''),
+                                      title: Text(current.name ?? 'settings.servers.error'.tr()),
                                       subtitle: Text(current.url)));
                             });
                     }
@@ -65,7 +65,21 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
   }
 
   _createServer(String url) async {
-    await _serversBox.add(url);
+    var server = await CoursesServer.fetch(url: url);
+    if (server.name == null)
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("settings.servers.error").tr(),
+                actions: [
+                  TextButton.icon(
+                      onPressed: () => Navigator.pop(context),
+                      icon: Icon(Icons.close_outlined),
+                      label: Text("close".tr().toUpperCase()).tr())
+                ],
+              ));
+    else
+      await _serversBox.add(url);
   }
 
   _showDialog() {

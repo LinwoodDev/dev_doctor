@@ -83,7 +83,8 @@
                 "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt.",
                 "agree": "Akzeptieren",
                 "disagree": "Nicht akzeptieren"
-            }
+            },
+            "error": "Server nicht erreichbar!"
         },
         "about": "Über",
         "imprint": "Impressum",

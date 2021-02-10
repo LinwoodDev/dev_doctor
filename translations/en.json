@@ -83,7 +83,8 @@
                 "body": "The server {name} with the url {url} will displayed on the courses page.",
                 "agree": "Agree",
                 "disagree": "Disagree"
-            }
+            },
+            "error": "Server nicht erreichbar!"
         },
         "about": "About",
         "imprint": "Imprint",
