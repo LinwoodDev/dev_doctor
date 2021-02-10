@@ -27,10 +27,18 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: apk-build
-        path: output/test/code-coverage.html
+        path: build/app/outputs/flutter-apk/app-release.apk
     - name: 🚀 Deploy
       uses: eine/tip@master
+      if: github.ref == 'refs/heads/main'
       with:
+        tag: release
         token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ GITHUB_REF#refs/heads/ }}
-        files: |
+        files: build/app/outputs/flutter-apk/app-release.apk
+    - name: 🚀 Deploy
+      uses: eine/tip@master
+      if: github.ref == 'refs/heads/develop'
+      with:
+        tag: preview
+        token: ${{ secrets.GITHUB_TOKEN }}
+        files: build/app/outputs/flutter-apk/app-release.apk
