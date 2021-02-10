@@ -10,7 +10,7 @@ import 'courses/module.dart';
 import 'editor/home.dart';
 import 'home.dart';
 
-class AppModule extends MainModule {
+class AppModule extends Module {
   // Provide a list of dependencies to inject into your project
   @override
   final List<Bind> binds = [];

@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import 'appearance.dart';
 
-class SettingsModule extends ChildModule {
+class SettingsModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/servers', child: (_, args) => ServersSettingsPage()),

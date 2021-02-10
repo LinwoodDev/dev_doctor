@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import 'bloc.dart';
 
-class CoursePartModule extends ChildModule {
+class CoursePartModule extends Module {
   static Inject get to => Inject<CoursePartModule>();
   // TODO: Test
   @override
