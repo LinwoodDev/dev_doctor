@@ -30,7 +30,7 @@ class _CoursesPageState extends State<CoursesPage> {
               default:
                 if (snapshot.hasError) {
                   print("Error: ${snapshot.error}");
-                  return Text('settings.servers.error'.tr());
+                  return Center(child: Text('settings.servers.error'.tr()));
                 }
                 var data = snapshot.data;
                 if (data.isEmpty) return Center(child: Text('courses.empty').tr());
