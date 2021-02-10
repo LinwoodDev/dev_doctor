@@ -34,10 +34,8 @@ class HomePage extends StatelessWidget {
                             style: Theme.of(context).primaryTextTheme.button)),
                     OutlinedButton.icon(
                         onPressed: () => launch("https://discord.linwood.tk"),
-                        icon: Icon(Icons.supervisor_account_outlined,
-                            color: Theme.of(context).primaryIconTheme.color),
-                        label: Text("discord".tr().toUpperCase(),
-                            style: Theme.of(context).primaryTextTheme.button))
+                        icon: Icon(Icons.supervisor_account_outlined),
+                        label: Text("discord".tr().toUpperCase()))
                   ])),
               if (kIsWeb)
                 Padding(

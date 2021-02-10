@@ -14,7 +14,7 @@ You don't need to login. Everything is saved on the local device. In the future 
 
 ### Try it
 
-Go [here](https://dev-doctor.cf) and try it. You have nothing to lose!
+Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 
 ## Installation
 
