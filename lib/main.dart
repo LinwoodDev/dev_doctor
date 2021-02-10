@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app_module.dart';
+import 'app_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,5 +13,5 @@ void main() async {
   await Hive.openBox('appearance');
   /*var _serversBox = */ await Hive.openBox<String>('servers');
   // if (_serversBox.isEmpty) await _serversBox.add('https://backend.dev-doctor.cf');
-  runApp(ModularApp(module: AppModule()));
+  runApp(ModularApp(module: AppModule(), child: AppWidget()));
 }

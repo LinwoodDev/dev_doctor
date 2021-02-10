@@ -26,11 +26,6 @@ class AppModule extends Module {
     ModuleRoute('/courses', module: CourseModule()),
     ChildRoute('/add', child: (_, args) => AddServerPage(params: args.queryParams)),
   ];
-
-  // Provide the root widget associated with your module
-  // In this case, it's the widget you created in the first step
-  @override
-  final Widget bootstrap = AppWidget();
 }
 
 enum HomeRoutes { home, courses, editor, settings }
