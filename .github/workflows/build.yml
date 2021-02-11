@@ -41,4 +41,5 @@ jobs:
       with:
         tag: preview
         token: ${{ secrets.GITHUB_TOKEN }}
+        rm: true
         files: build/app/outputs/flutter-apk/app-release.apk
