@@ -28,14 +28,14 @@ jobs:
       with:
         name: apk-build
         path: build/app/outputs/flutter-apk/app-release.apk
-    - name: 🚀 Deploy
+    - name: 🚀 Deploy release
       uses: eine/tip@master
       if: github.ref == 'refs/heads/main'
       with:
         tag: release
         token: ${{ secrets.GITHUB_TOKEN }}
         files: build/app/outputs/flutter-apk/app-release.apk
-    - name: 🚀 Deploy
+    - name: 🚀 Deploy preview
       uses: eine/tip@master
       if: github.ref == 'refs/heads/develop'
       with:
