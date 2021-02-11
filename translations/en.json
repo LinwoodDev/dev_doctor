@@ -19,8 +19,8 @@
                 "wrong":"You made mistakes!"
             }
         },
-        "start": "START",
-        "support": "SUPPORT"
+        "start": "Start",
+        "support": "Support"
     },
     "courses": {
         "view": "View courses",
@@ -65,7 +65,7 @@
             }
         },
         "general": {
-            "title":"Generell"
+            "title":"General"
         },
         "downloads": {
             "title": "Downloads"
