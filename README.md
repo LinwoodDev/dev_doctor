@@ -20,8 +20,12 @@ Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 
 ### Android
 
-* Stable: 
-* Preview **coming soon*
+* [Stable](https://github.com/LinwoodCloud/dev_doctor/releases/download/release/app-release.apk)
+* [Preview](https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/app-release.apk)
+
+#### Stores
+
+* Play Store: *under review*
 
 ### iOS
 
