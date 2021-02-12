@@ -1,0 +1,102 @@
+{
+    "title": "Dev-Doctor.cf",
+    "subtitle": "Kostenlose, quelloffene, serverfreie Lernplattform. Ein Linwood Projekt",
+    "course": {
+        "course": "Kurs",
+        "home": "Start",
+        "statistics": "Statistiken",
+        "back":"Zurück",
+        "materials": "Materialien",
+        "question": {
+            "choose": "Wähle weise!",
+            "select": "Bitte wähle eine Antwort aus!",
+            "correct": "Richtig!",
+            "wrong": "Falsche Antwort!",
+            "check": "Abschicken",
+            "validation":{
+                "title":"Auswertung",
+                "correct":"Alles richtig!",
+                "wrong":"Es gibt Fehler!"
+            }
+        },
+        "start": "Start",
+        "support": "Support"
+    },
+    "courses": {
+        "title": "Kurse",
+        "view": "Kurse ansehen",
+        "servers": "Server",
+        "empty": "Keine Kurse verfügbar. Füge einen neuen Server über die Einstellungen hinzu!"
+    },
+    "editor": {
+        "title": "Editor"
+    },
+    "discord": "Betrete unseren Discord",
+    "error-with-status": "Auf dem Server ist ein Fehler ({statusCode}) aufgetreten",
+    "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",
+    "news": "Nachrichten",
+    "home": "Start",
+    "docs":"Dokumentation",
+    "welcome": "Willkommen zurück, {name}!",
+    "profile": "Profil",
+    "stats": "Statistiken",
+    "settings": {
+        "information":"Informationen",
+        "title": "Einstellungen",
+        "privacypolicy":"Datenschutzerklärung",
+        "home": {
+            "title": "Start",
+            "username": "Benutzername"
+        },
+        "general": {
+            "title":"Generell"
+        },
+        "appearance": {
+            "title": "Personalisierung",
+            "theme": {
+                "title": "Thema",
+                "dark": "Dunkel",
+                "light": "Hell",
+                "system": "System"
+            },
+            "locale": {
+                "title": "Sprache",
+                "restart": "Diese Einstellung benötigt ein Neustart der App",
+                "default": "Standard",
+                "de": "Deutsch",
+                "en": "Englisch"
+            }
+        },
+        "downloads": {
+            "title": "Downloads"
+        },
+        "update": "Anwenden",
+        "servers": {
+            "title": "Server",
+            "add": {
+                "fab": "Server hinzufügen",
+                "cancel": "Abbrechen",
+                "create": "Erstellen",
+                "url": "URL",
+                "hint": "zB. https://backend.dev-doctor.cf",
+                "title": "Möchten Sie den Server {name} hinzufügen?",
+                "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt.",
+                "agree": "Akzeptieren",
+                "disagree": "Nicht akzeptieren"
+            },
+            "error": "Server nicht erreichbar!"
+        },
+        "about": "Über",
+        "imprint": "Impressum",
+        "code": "Code",
+        "license": "Lizenz"
+    },
+    "close":"Schließen",
+    "ready-for-offline": "Bereit für den Offline Modus",
+    "update-available": {
+        "message": "Update verfügbar!",
+        "refresh": "Neuladen"
+    },
+    "coming-soon": "In Planung..."
+
+}

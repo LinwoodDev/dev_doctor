@@ -1,27 +1,40 @@
-# Dev-Doctor.cf
+# dev_doctor
 
-> A free, opensource, serverless learning platform
+> A free, opensource, serverless learning platform. A linwood project.
 
-## Try it
+## Introduction
 
-See [here](https://dev-doctor.cf) to open the website.
-For the preview website see [here](https://preview.dev-doctor.cf).
+### Learn everything
 
-## License
+Everyone can create their own backend. See [here](https://linwood.tk/docs/dev-doctor/own-backend) and everyone can add it to the server list in the settings.
 
-See [LICENSE](LICENSE).
+### Learn everywhere
 
-## Building your own backend
+You don't need to login. Everything is saved on the local device. In the future we add offline support.
 
-Use [this template](https://github.com/ProgrammChest/dev-doctor-courses)
+### Try it
 
-## Quick start
+Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 
-You need yarn
+## Installation
 
-```bash
-yarn
-yarn start
-```
+### Android
 
-Or if you want to build it `yarn build`. The website should be in `build/`
+* [Stable](https://github.com/LinwoodCloud/dev_doctor/releases/download/release/app-release.apk)
+* [Preview](https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/app-release.apk)
+
+#### Stores
+
+* Play Store: *under review*
+
+### iOS
+
+> Currently not available.
+
+* Stable
+* Preview
+
+### Web
+
+* [Stable](https://dev-doctor.cf)
+* [Preview](https://preview.dev-doctor.cf)

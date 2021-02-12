@@ -1,0 +1,101 @@
+{
+    "title": "Dev-Doctor.cf",
+    "subtitle": "A free, opensource, serverless learning platform. A linwood project",
+    "course": {
+        "course": "Course",
+        "home": "HOME",
+        "statistics": "Statistics",
+        "back":"Back",
+        "materials": "Materials",
+        "question": {
+            "choose": "Choose whisley!",
+            "select": "Please select an option!",
+            "correct": "Correct!",
+            "wrong": "Sorry, wrong answer!",
+            "check": "CHECK ANSWER",
+            "validation":{
+                "title":"Validation",
+                "correct":"You got everything right!",
+                "wrong":"You made mistakes!"
+            }
+        },
+        "start": "Start",
+        "support": "Support"
+    },
+    "courses": {
+        "view": "View courses",
+        "title": "Courses",
+        "servers": "Server",
+        "empty": "No courses available. Add servers using the settings!"
+    },
+    "editor": {
+        "title": "Editor"
+    },
+    "discord": "Join our discord",
+    "error-with-status": "A {statusCode} error occurred on server",
+    "error-without-status": "An error occurred on the server",
+    "news": "News",
+    "home": "Home",
+    "docs":"Documentation",
+    "welcome": "Welcome back, {name}!",
+    "profile": "Profile",
+    "stats": "Statistics",
+    "settings": {
+        "information":"Information",
+        "title": "Settings",
+        "privacypolicy":"Privacy Policy",
+        "home": {
+            "title": "Home",
+            "username": "Username"
+        },
+        "appearance": {
+            "title": "Appearance",
+            "theme": {
+                "title": "Theme",
+                "dark": "Dark",
+                "light": "Light",
+                "system": "System"
+            },
+            "locale": {
+                "title": "Locale",
+                "default": "Default",
+                "restart": "This setting needs a restart!",
+                "en": "English",
+                "de": "German"
+            }
+        },
+        "general": {
+            "title":"General"
+        },
+        "downloads": {
+            "title": "Downloads"
+        },
+        "update": "Update",
+        "servers": {
+            "title": "Servers",
+            "add": {
+                "fab": "Add server",
+                "cancel": "Cancel",
+                "create": "Create",
+                "url": "URL",
+                "hint": "eg. https://backend.dev-doctor.cf",
+                "title": "Do you want to add the server {name}?",
+                "body": "The server {name} with the url {url} will displayed on the courses page.",
+                "agree": "Agree",
+                "disagree": "Disagree"
+            },
+            "error": "Server nicht erreichbar!"
+        },
+        "about": "About",
+        "imprint": "Imprint",
+        "code": "Code",
+        "license": "License"
+    },
+    "close":"Close",
+    "ready-for-offline": "Ready for offline!",
+    "update-available": {
+        "message": "Update available!",
+        "refresh": "Reload"
+    },
+    "coming-soon": "Coming soon..."
+}
