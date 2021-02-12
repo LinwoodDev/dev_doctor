@@ -1,3 +1,4 @@
+import 'package:dev_doctor/backends/home.dart';
 import 'package:dev_doctor/settings/home.dart';
 import 'package:dev_doctor/settings/module.dart';
 import 'package:flutter/material.dart';
@@ -28,13 +29,15 @@ class AppModule extends Module {
   ];
 }
 
-enum HomeRoutes { home, courses, editor, settings }
+enum HomeRoutes { home, backends, courses, editor, settings }
 
 extension HomeRoutesExtension on HomeRoutes {
   String get route {
     switch (this) {
       case HomeRoutes.home:
         return '/';
+      case HomeRoutes.backends:
+        return '/backends';
       case HomeRoutes.courses:
         return '/courses';
       case HomeRoutes.editor:
@@ -49,6 +52,8 @@ extension HomeRoutesExtension on HomeRoutes {
     switch (this) {
       case HomeRoutes.home:
         return HomePage();
+      case HomeRoutes.backends:
+        return BackendsPage();
       case HomeRoutes.courses:
         return CoursesPage();
       case HomeRoutes.editor:

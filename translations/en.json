@@ -28,6 +28,9 @@
         "servers": "Server",
         "empty": "No courses available. Add servers using the settings!"
     },
+    "backends":{
+        "title":"Backends"
+    },
     "editor": {
         "title": "Editor"
     },
