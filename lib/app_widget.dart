@@ -101,6 +101,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: 'home'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
+                activeIcon: Icon(Icons.store),
+                icon: Icon(Icons.store_outlined),
+                label: 'backends.title'.tr()),
+            BottomNavigationBarItem(
+                backgroundColor: Theme.of(context).primaryColor,
                 activeIcon: Icon(Icons.school),
                 icon: Icon(Icons.school_outlined),
                 label: 'courses.title'.tr()),

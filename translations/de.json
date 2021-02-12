@@ -28,6 +28,9 @@
         "servers": "Server",
         "empty": "Keine Kurse verfügbar. Füge einen neuen Server über die Einstellungen hinzu!"
     },
+    "backends":{
+        "title":"Backends"
+    },
     "editor": {
         "title": "Editor"
     },
