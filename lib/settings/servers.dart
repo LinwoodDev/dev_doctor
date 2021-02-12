@@ -75,7 +75,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                   TextButton.icon(
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(Icons.close_outlined),
-                      label: Text("close".tr().toUpperCase()).tr())
+                      label: Text("close".tr().toUpperCase()))
                 ],
               ));
     else
