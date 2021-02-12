@@ -1,10 +1,6 @@
-import 'dart:convert';
-
+import 'package:dev_doctor/loader.dart';
 import 'package:dev_doctor/models/server.dart';
-import 'package:dev_doctor/yaml.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'package:yaml/yaml.dart';
 import 'part.dart';
 
 @immutable
@@ -53,9 +49,8 @@ class Course {
 
   Future<CoursePart> fetchPart(int index) async {
     var part = parts[index];
-    var response = await http.get("${server.url}/$slug/$part/config.yml");
-    var data = Map<String, dynamic>.from(loadYaml(utf8.decode(response.bodyBytes)));
-    data['items'] = yamlListToJson(data['items']).toList();
+    var data = await loadFile("${server.url}/$slug/$part/config", type: server.type);
+    //data['items'] = yamlListToJson(data['items']).toList();
     data['course'] = this;
     data['slug'] = part;
     return CoursePart.fromJson(data);

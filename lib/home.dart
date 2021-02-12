@@ -71,7 +71,6 @@ class HomePage extends StatelessWidget {
               var document = XmlDocument.parse(utf8.decode(snapshot.data.bodyBytes));
               var feed = document.getElement("feed");
               var items = feed.findElements("entry").toList();
-              print(items);
               return Column(
                 children: List.generate(min(items.length, 10), (index) {
                   var entry = items[index];
