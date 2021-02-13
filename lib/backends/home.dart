@@ -29,7 +29,7 @@ class _BackendsPageState extends State<BackendsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text("backends.title").tr()),
-        body: FutureBuilder<L(
+        body: FutureBuilder(
             future: _buildFuture(),
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
