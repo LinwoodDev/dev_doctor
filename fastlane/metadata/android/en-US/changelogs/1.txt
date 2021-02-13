@@ -1,0 +1,6 @@
+The app is a complete flutter app now
+
++ Android App
++ New app export
++ Prebuilt builds, see #8
++ New design
