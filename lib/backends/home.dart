@@ -16,27 +16,36 @@ class _BackendsPageState extends State<BackendsPage> {
     _buildFuture();
   }
 
-  Future<void> _buildFuture() async {
+  Future<List<String>> _buildFuture() async {
     var response = await http
-        .get("https://api.github.com/repos/LinwoodCloud/dev_doctor-backends/contents/data/");
-    var data = json.decode(response.body);
-    response = await http.get(
-        "https://api.github.com/repos/LinwoodCloud/dev_doctor-backends/contents/${data[0]['path']}/");
-    print(response.body);
+        .get("https://api.github.com/repos/LinwoodCloud/dev_doctor-backends/contents/metadata/");
+    List<dynamic> data = json.decode(response.body);
+    return Future.wait(data.map((current) => http
+        .get(
+            "https://raw.githubusercontent.com/LinwoodCloud/dev_doctor-backends/main/${current['path']}")
+        .then((value) => utf8.decode(value.bodyBytes))));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text("backends.title").tr()),
-        body: FutureBuilder(
+        body: FutureBuilder<List<String>>(
             future: _buildFuture(),
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
                 return Center(child: CircularProgressIndicator());
               if (snapshot.hasError) return Text("Error: ${snapshot.error}");
-              return ListView(
-                children: [Text("TEeST")],
+              var data = snapshot.data;
+              return ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  var current = json.decode(data[index]);
+                  return ListTile(
+                    title: Text(current['url']),
+                    subtitle: Text(current['source']),
+                  );
+                },
               );
             }));
   }
