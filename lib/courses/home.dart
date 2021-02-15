@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/server.dart';
-import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
