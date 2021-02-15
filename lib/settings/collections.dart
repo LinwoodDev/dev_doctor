@@ -6,6 +6,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'layout.dart';
+
 class CollectionsSettingsPage extends StatefulWidget {
   @override
   _CollectionsSettingsPageState createState() => _CollectionsSettingsPageState();
@@ -22,7 +24,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(title: "settings.collections.title".tr()),
-      body: Container(
+      body: SettingsLayout(
           child: ValueListenableBuilder(
               valueListenable: _box.listenable(),
               builder: (context, Box<String> box, _) => FutureBuilder(

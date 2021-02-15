@@ -1,3 +1,4 @@
+import 'package:dev_doctor/settings/layout.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class AppearanceSettingsPage extends StatelessWidget {
     final _appearanceBox = Hive.box('appearance');
     return Scaffold(
         appBar: MyAppBar(title: 'settings.appearance.title'.tr()),
-        body: Container(
+        body: SettingsLayout(
             child: ValueListenableBuilder(
                 valueListenable: _appearanceBox.listenable(),
                 builder: (context, Box<dynamic> box, _) {
