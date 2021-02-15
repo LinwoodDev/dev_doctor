@@ -12,18 +12,36 @@ class CoursesServer {
   final int index;
   final List<String> courses;
 
+  static Box<String> get _box => Hive.box<String>('servers');
+
   CoursesServer({this.index, this.name, this.url, this.courses, this.type});
   CoursesServer.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         url = json['url'],
-        index = json['index'],
+        index = (json['index'] != -1) ? json['index'] : null,
         type = json['type'],
         courses = json['courses'];
+
+  bool get added => index != null;
+
+  Future<CoursesServer> add() async =>
+      CoursesServer(index: await _box.add(url), courses: courses, name: name, type: type, url: url);
+
+  Future<CoursesServer> remove() async {
+    await _box.delete(index);
+    return CoursesServer(index: null, courses: courses, name: name, type: type, url: url);
+  }
+
+  Future<CoursesServer> toggle() => added ? remove() : add();
 
   static Future<CoursesServer> fetch({String url, int index}) async {
     var data = Map<String, dynamic>();
     try {
-      if (url == null) url = Hive.box<String>('servers').getAt(index);
+      if (index == null) {
+        var current = _box.values.toList().indexOf(url);
+        print(current);
+        if (current != -1) index = _box.keyAt(current);
+      } else if (url == null) url = Hive.box<String>('servers').get(index);
       data = await loadFile("$url/config");
       print(data);
       data['courses'] = List<String>.from(data['courses']);

@@ -1,6 +1,7 @@
 import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hive/hive.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CoursePartBloc extends Disposable {
@@ -8,9 +9,7 @@ class CoursePartBloc extends Disposable {
   CoursePartBloc() {}
   Future<dynamic> fetch({int serverId, int courseId, int partId}) {
     reset();
-    return CoursesServer.fetch(index: serverId).then((value) => value
-        .fetchCourse(courseId)
-        .then((value) => value.fetchPart(partId).then((value) => coursePart.add(value))));
+    return CoursesServer.fetch(index: Hive.box<String>('servers').keyAt(serverId));
   }
 
   void reset() => coursePart = BehaviorSubject<CoursePart>();
