@@ -26,6 +26,7 @@
         "view": "View courses",
         "title": "Courses",
         "servers": "Server",
+        "longer":"Search term must be longer than two letters.",
         "empty": "No courses available. Add servers using the settings!"
     },
     "backends":{

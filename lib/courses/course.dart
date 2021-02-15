@@ -3,7 +3,6 @@ import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:hive/hive.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:easy_localization/easy_localization.dart';
 

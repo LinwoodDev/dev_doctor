@@ -1,5 +1,4 @@
 import 'package:dev_doctor/models/collection.dart';
-import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
