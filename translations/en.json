@@ -5,7 +5,7 @@
         "course": "Course",
         "home": "HOME",
         "statistics": "Statistics",
-        "back":"Back",
+        "back": "Back",
         "materials": "Materials",
         "question": {
             "choose": "Choose whisley!",
@@ -13,10 +13,10 @@
             "correct": "Correct!",
             "wrong": "Sorry, wrong answer!",
             "check": "CHECK ANSWER",
-            "validation":{
-                "title":"Validation",
-                "correct":"You got everything right!",
-                "wrong":"You made mistakes!"
+            "validation": {
+                "title": "Validation",
+                "correct": "You got everything right!",
+                "wrong": "You made mistakes!"
             }
         },
         "start": "Start",
@@ -26,12 +26,13 @@
         "view": "View courses",
         "title": "Courses",
         "servers": "Server",
-        "longer":"Search term must be longer than two letters.",
+        "filter": "Filter",
+        "longer": "Search term must be longer than two letters.",
         "empty": "No courses available. Add servers using the settings!"
     },
-    "backends":{
-        "title":"Backends",
-        "longer":"Search term must be longer than two letters."
+    "backends": {
+        "title": "Backends",
+        "longer": "Search term must be longer than two letters."
     },
     "editor": {
         "title": "Editor"
@@ -41,14 +42,14 @@
     "error-without-status": "An error occurred on the server",
     "news": "News",
     "home": "Home",
-    "docs":"Documentation",
+    "docs": "Documentation",
     "welcome": "Welcome back, {name}!",
     "profile": "Profile",
     "stats": "Statistics",
     "settings": {
-        "information":"Information",
+        "information": "Information",
         "title": "Settings",
-        "privacypolicy":"Privacy Policy",
+        "privacypolicy": "Privacy Policy",
         "home": {
             "title": "Home",
             "username": "Username"
@@ -70,7 +71,7 @@
             }
         },
         "general": {
-            "title":"General"
+            "title": "General"
         },
         "downloads": {
             "title": "Downloads"
@@ -111,7 +112,7 @@
         "code": "Code",
         "license": "License"
     },
-    "close":"Close",
+    "close": "Close",
     "ready-for-offline": "Ready for offline!",
     "update-available": {
         "message": "Update available!",

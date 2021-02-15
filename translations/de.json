@@ -5,7 +5,7 @@
         "course": "Kurs",
         "home": "Start",
         "statistics": "Statistiken",
-        "back":"Zurück",
+        "back": "Zurück",
         "materials": "Materialien",
         "question": {
             "choose": "Wähle weise!",
@@ -13,10 +13,10 @@
             "correct": "Richtig!",
             "wrong": "Falsche Antwort!",
             "check": "Abschicken",
-            "validation":{
-                "title":"Auswertung",
-                "correct":"Alles richtig!",
-                "wrong":"Es gibt Fehler!"
+            "validation": {
+                "title": "Auswertung",
+                "correct": "Alles richtig!",
+                "wrong": "Es gibt Fehler!"
             }
         },
         "start": "Start",
@@ -26,12 +26,13 @@
         "title": "Kurse",
         "view": "Kurse ansehen",
         "servers": "Server",
-        "longer":"Der Suchbegriff muss länger als 2 Zeichen sein.",
+        "filter": "Filter",
+        "longer": "Der Suchbegriff muss länger als 2 Zeichen sein.",
         "empty": "Keine Kurse verfügbar. Füge einen neuen Server über die Einstellungen hinzu!"
     },
-    "backends":{
-        "title":"Backends",
-        "longer":"Der Suchbegriff muss länger als 2 Zeichen sein."
+    "backends": {
+        "title": "Backends",
+        "longer": "Der Suchbegriff muss länger als 2 Zeichen sein."
     },
     "editor": {
         "title": "Editor"
@@ -41,20 +42,20 @@
     "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",
     "news": "Nachrichten",
     "home": "Start",
-    "docs":"Dokumentation",
+    "docs": "Dokumentation",
     "welcome": "Willkommen zurück, {name}!",
     "profile": "Profil",
     "stats": "Statistiken",
     "settings": {
-        "information":"Informationen",
+        "information": "Informationen",
         "title": "Einstellungen",
-        "privacypolicy":"Datenschutzerklärung",
+        "privacypolicy": "Datenschutzerklärung",
         "home": {
             "title": "Start",
             "username": "Benutzername"
         },
         "general": {
-            "title":"Generell"
+            "title": "Generell"
         },
         "appearance": {
             "title": "Personalisierung",
@@ -111,7 +112,7 @@
         "code": "Code",
         "license": "Lizenz"
     },
-    "close":"Schließen",
+    "close": "Schließen",
     "ready-for-offline": "Bereit für den Offline Modus",
     "update-available": {
         "message": "Update verfügbar!",
