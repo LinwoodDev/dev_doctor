@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
@@ -12,59 +14,180 @@ class CoursesPage extends StatefulWidget {
   _CoursesPageState createState() => _CoursesPageState();
 }
 
+class _ItemFetcher {
+  final _itemsPerPage = 5;
+  int _currentPage = 0;
+  List<Course> entries = <Course>[];
+
+  // This async function simulates fetching results from Internet, etc.
+  Future<List<Course>> fetch({String query}) async {
+    if (entries.isEmpty)
+      await Future.wait(Hive.box<String>('servers').values.map((e) async {
+        var server = await CoursesServer.fetch(url: e);
+        entries.addAll(await server.fetchCourses());
+      }));
+    final list = <Course>[];
+    var n = min(_itemsPerPage, entries.length - _currentPage * _itemsPerPage);
+    for (int i = 0; i < n; i++) {
+      var index = _currentPage * _itemsPerPage + i;
+      var entry = entries[index];
+      if ((entry.body != null && entry.body.toUpperCase().contains(query.toUpperCase())) ||
+          entry.name.toUpperCase().contains(query.toUpperCase())) list.add(entry);
+    }
+    print(list.map((e) => e.description));
+    _currentPage++;
+    return list;
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  var _itemFetcher;
+
+  CustomSearchDelegate(this._itemFetcher);
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    if (query.length < 3) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Center(
+            child: Text(
+              "servers.longer".tr(),
+            ),
+          )
+        ],
+      );
+    }
+    _itemFetcher = _ItemFetcher();
+    return CoursesList(fetcher: _itemFetcher, query: query);
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // This method is called everytime the search term changes.
+    // If you want to add search suggestions as the user enters their search term, this is the place to do that.
+    return Column();
+  }
+}
+
 class _CoursesPageState extends State<CoursesPage> {
-  final Box<String> _serversBox = Hive.box<String>('servers');
+  final _itemFetcher = _ItemFetcher();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(title: 'courses.title'.tr(), actions: [
-          //IconButton(icon: Icon(Icons.search_outlined), onPressed: () {}),
-          //IconButton(icon: Icon(Icons.filter_list_outlined), onPressed: () {})
-        ]),
-        body: FutureBuilder<List<Course>>(
-          future: _buildFuture(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(child: CircularProgressIndicator());
-              default:
-                if (snapshot.hasError) {
-                  print("Error: ${snapshot.error}");
-                  return Center(child: Text('settings.servers.error'.tr()));
-                }
-                var data = snapshot.data;
-                if (data.isEmpty) return Center(child: Text('courses.empty').tr());
-                return ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    var current = data[index];
-                    return ListTile(
-                      title: Text(current.name),
-                      subtitle: Text(current.description),
-                      onTap: () => Modular.to.pushNamed(
-                          "/courses/details?serverId=${current.server.index}&courseId=${current.index}",
-                          arguments: current),
-                      leading: current.icon?.isEmpty ?? true
-                          ? null
-                          : UniversalImage(type: current.icon, url: current.url + "/icon"),
-                      isThreeLine: true,
-                    );
-                  },
+        appBar: AppBar(title: Text("courses.title").tr(), actions: [
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: CustomSearchDelegate(_itemFetcher),
                 );
-            }
-          },
-        ));
+              })
+        ]),
+        body: CoursesList(fetcher: _itemFetcher, query: ""));
+  }
+}
+
+class CoursesList extends StatefulWidget {
+  final _ItemFetcher fetcher;
+  final String query;
+
+  const CoursesList({Key key, this.fetcher, this.query}) : super(key: key);
+  @override
+  _CoursesListState createState() => _CoursesListState();
+}
+
+class _CoursesListState extends State<CoursesList> {
+  final _pairList = <Course>[];
+
+  bool _isLoading = true;
+  bool _hasMore = true;
+  @override
+  void initState() {
+    super.initState();
+    _isLoading = true;
+    _hasMore = true;
+    _loadMore();
   }
 
-  Future<List<Course>> _buildFuture() async {
-    var servers = await Future.wait(_serversBox.values
-        .toList()
-        .asMap()
-        .map((index, e) =>
-            MapEntry(index, CoursesServer.fetch(url: e, index: _serversBox.keyAt(index))))
-        .values);
-    List<Course> courses = [];
-    await Future.wait(servers?.map((e) async => courses.addAll(await e?.fetchCourses())));
-    return courses;
+  // Triggers fecth() and then add new items or change _hasMore flag
+  void _loadMore() {
+    _isLoading = true;
+    widget.fetcher.fetch(query: widget.query).then((List<Course> fetchedList) {
+      if (fetchedList.isEmpty) {
+        setState(() {
+          _isLoading = false;
+          _hasMore = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+          _pairList.addAll(fetchedList);
+        });
+      }
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant CoursesList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      // Need to display a loading tile if more items are coming
+      itemCount: _hasMore ? _pairList.length + 1 : _pairList.length,
+      itemBuilder: (BuildContext context, int index) {
+        // Uncomment the following line to see in real time how ListView.builder works
+        // print('ListView.builder is building index $index');
+        if (index >= _pairList.length) {
+          // Don't trigger if one async loading is already under way
+          if (!_isLoading) {
+            _loadMore();
+          }
+          return Center(
+            child: SizedBox(
+              child: CircularProgressIndicator(),
+              height: 24,
+              width: 24,
+            ),
+          );
+        }
+        var course = _pairList[index];
+        return ListTile(
+            title: Text(course.name),
+            subtitle: Text(course.description),
+            onTap: () => Modular.to.pushNamed(
+                "/courses/details?serverId=${course.server.index}&courseId=${course.index}"),
+            leading: course.icon?.isEmpty ?? true
+                ? null
+                : UniversalImage(type: course.icon, url: course.url + "/icon"));
+      },
+    );
   }
 }

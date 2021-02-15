@@ -23,8 +23,7 @@ class CoursePage extends StatefulWidget {
 class _CoursePageState extends State<CoursePage> {
   Future<Course> _buildFuture() async {
     if (widget.model != null) return widget.model;
-    CoursesServer server =
-        await CoursesServer.fetch(index: Hive.box<String>('servers').keyAt(widget.serverId));
+    CoursesServer server = await CoursesServer.fetch(index: widget.serverId);
     return server.fetchCourse(widget.courseId);
   }
 
@@ -63,11 +62,7 @@ class _CoursePageState extends State<CoursePage> {
                                     color: Theme.of(context).primaryColor.withAlpha(200),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  child: Text(course.name,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.0,
-                                      ))),
+                                  child: Text(course.name)),
                               background: Container(
                                   margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
                                   child: UniversalImage(

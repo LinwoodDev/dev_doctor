@@ -23,7 +23,7 @@ class _ItemFetcher {
     final list = <CoursesServer>[];
     var n = min(_itemsPerPage, entries.length - _currentPage * _itemsPerPage);
     for (int i = 0; i < n; i++) {
-      var index = _currentPage * _itemsPerPage;
+      var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
       var server = await entry.fetchServer();
       if ((server.body != null && server.body.toUpperCase().contains(query.toUpperCase())) ||
@@ -32,11 +32,6 @@ class _ItemFetcher {
     _currentPage++;
     return list;
   }
-}
-
-class BackendsPage extends StatefulWidget {
-  @override
-  _BackendsPageState createState() => _BackendsPageState();
 }
 
 class CustomSearchDelegate extends SearchDelegate {
@@ -165,6 +160,11 @@ class _BackendsListState extends State<BackendsList> {
       },
     );
   }
+}
+
+class BackendsPage extends StatefulWidget {
+  @override
+  _BackendsPageState createState() => _BackendsPageState();
 }
 
 class _BackendsPageState extends State<BackendsPage> with TickerProviderStateMixin {
