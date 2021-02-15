@@ -6,6 +6,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'layout.dart';
+
 class ServersSettingsPage extends StatefulWidget {
   @override
   _ServersSettingsPageState createState() => _ServersSettingsPageState();
@@ -22,7 +24,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(title: "settings.servers.title".tr()),
-      body: Container(
+      body: SettingsLayout(
           child: ValueListenableBuilder(
               valueListenable: _serversBox.listenable(),
               builder: (context, Box<String> box, _) => FutureBuilder(
