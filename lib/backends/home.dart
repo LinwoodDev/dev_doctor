@@ -136,7 +136,8 @@ class _BackendsListState extends State<BackendsList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return Scrollbar(
+        child: ListView.builder(
       // Need to display a loading tile if more items are coming
       itemCount: _hasMore ? _pairList.length + 1 : _pairList.length,
       itemBuilder: (BuildContext context, int index) {
@@ -158,7 +159,7 @@ class _BackendsListState extends State<BackendsList> {
         var server = _pairList[index];
         return BackendEntryListTile(server: server);
       },
-    );
+    ));
   }
 }
 

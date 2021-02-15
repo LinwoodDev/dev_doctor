@@ -17,11 +17,21 @@ class _ItemFetcher {
   final _itemsPerPage = 5;
   int _currentPage = 0;
   List<Course> entries = <Course>[];
+  final List<String> servers;
+
+  void reset() {
+    _currentPage = 0;
+  }
+
+  _ItemFetcher({this.servers = const []});
 
   // This async function simulates fetching results from Internet, etc.
   Future<List<Course>> fetch({String query}) async {
     if (entries.isEmpty)
-      await Future.wait(Hive.box<String>('servers').values.map((e) async {
+      await Future.wait(Hive.box<String>('servers')
+          .values
+          .where((element) => servers.contains(element))
+          .map((e) async {
         var server = await CoursesServer.fetch(url: e);
         entries.addAll(await server.fetchCourses());
       }));
@@ -33,7 +43,6 @@ class _ItemFetcher {
       if ((entry.body != null && entry.body.toUpperCase().contains(query.toUpperCase())) ||
           entry.name.toUpperCase().contains(query.toUpperCase())) list.add(entry);
     }
-    print(list.map((e) => e.description));
     _currentPage++;
     return list;
   }
@@ -41,8 +50,9 @@ class _ItemFetcher {
 
 class CustomSearchDelegate extends SearchDelegate {
   var _itemFetcher;
+  final List<String> servers;
 
-  CustomSearchDelegate(this._itemFetcher);
+  CustomSearchDelegate(this._itemFetcher, {this.servers});
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -79,8 +89,7 @@ class CustomSearchDelegate extends SearchDelegate {
         ],
       );
     }
-    _itemFetcher = _ItemFetcher();
-    return CoursesList(fetcher: _itemFetcher, query: query);
+    return CoursesList(fetcher: _itemFetcher, query: query, servers: servers);
   }
 
   @override
@@ -92,19 +101,61 @@ class CustomSearchDelegate extends SearchDelegate {
 }
 
 class _CoursesPageState extends State<CoursesPage> {
-  final _itemFetcher = _ItemFetcher();
+  var _itemFetcher;
+  var _box = Hive.box<String>('servers');
+  final List<String> _filteredServers = <String>[];
+
+  @override
+  void initState() {
+    _filteredServers.addAll(_box.values);
+    _itemFetcher = _ItemFetcher(servers: _filteredServers);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text("courses.title").tr(), actions: [
           IconButton(
-              icon: Icon(Icons.search),
+              icon: Icon(Icons.search_outlined),
               onPressed: () {
                 showSearch(
                   context: context,
                   delegate: CustomSearchDelegate(_itemFetcher),
                 );
+              }),
+          IconButton(
+              icon: Icon(Icons.filter_alt_outlined),
+              tooltip: "course.filter".tr(),
+              onPressed: () async {
+                await showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                        title: Text("courses.filter").tr(),
+                        actions: [
+                          TextButton.icon(
+                              icon: Icon(Icons.close_outlined),
+                              label: Text("close").tr(),
+                              onPressed: () => Navigator.of(context).pop())
+                        ],
+                        content: StatefulBuilder(
+                            builder: (context, setInnerState) => SingleChildScrollView(
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: List.generate(_box.length, (index) {
+                                      var url = _box.getAt(index);
+                                      return CheckboxListTile(
+                                          title: Text(url),
+                                          value: _filteredServers.contains(url),
+                                          onChanged: (newValue) {
+                                            setInnerState(() {
+                                              newValue
+                                                  ? _filteredServers.add(url)
+                                                  : _filteredServers.remove(url);
+                                            });
+                                          });
+                                    }))))));
+                setState(() => _itemFetcher = _ItemFetcher(servers: _filteredServers));
               })
         ]),
         body: CoursesList(fetcher: _itemFetcher, query: ""));
@@ -114,8 +165,9 @@ class _CoursesPageState extends State<CoursesPage> {
 class CoursesList extends StatefulWidget {
   final _ItemFetcher fetcher;
   final String query;
+  final List<String> servers;
 
-  const CoursesList({Key key, this.fetcher, this.query}) : super(key: key);
+  const CoursesList({Key key, this.fetcher, this.query, this.servers}) : super(key: key);
   @override
   _CoursesListState createState() => _CoursesListState();
 }
@@ -128,6 +180,7 @@ class _CoursesListState extends State<CoursesList> {
   @override
   void initState() {
     super.initState();
+    print("INIT STATE!");
     _isLoading = true;
     _hasMore = true;
     _loadMore();
@@ -136,7 +189,9 @@ class _CoursesListState extends State<CoursesList> {
   // Triggers fecth() and then add new items or change _hasMore flag
   void _loadMore() {
     _isLoading = true;
+    print("LOAD MORE!");
     widget.fetcher.fetch(query: widget.query).then((List<Course> fetchedList) {
+      print(fetchedList);
       if (fetchedList.isEmpty) {
         setState(() {
           _isLoading = false;
@@ -148,17 +203,27 @@ class _CoursesListState extends State<CoursesList> {
           _pairList.addAll(fetchedList);
         });
       }
+    }).onError((error, stackTrace) {
+      _isLoading = false;
     });
   }
 
   @override
   void didUpdateWidget(covariant CoursesList oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (!_isLoading && oldWidget.fetcher != widget.fetcher) {
+      print("did update");
+      widget.fetcher.reset();
+      _pairList.clear();
+      _hasMore = true;
+      _loadMore();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return Scrollbar(
+        child: ListView.builder(
       // Need to display a loading tile if more items are coming
       itemCount: _hasMore ? _pairList.length + 1 : _pairList.length,
       itemBuilder: (BuildContext context, int index) {
@@ -187,6 +252,6 @@ class _CoursesListState extends State<CoursesList> {
                 ? null
                 : UniversalImage(type: course.icon, url: course.url + "/icon"));
       },
-    );
+    ));
   }
 }

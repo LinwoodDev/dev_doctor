@@ -28,8 +28,70 @@
 
   <title>Dev-Doctor</title>
   <link rel="manifest" href="manifest.json">
+  <style type="text/css">
+    /* html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    } */
+
+    /* #loader {
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    } */
+
+    .container {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(25, 31, 54);
+      text-align: center;
+      color: white;
+      font-family: sans-serif;
+      white-space: nowrap;
+      overflow: auto;
+    }
+    .box {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      white-space: normal;
+    }
+
+    .container:after {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+
+    .splash {
+      display: inline-block;
+      vertical-align: middle;
+      text-align: left;
+      font-size: 14px;
+      white-space: normal;
+      width: 100%;
+      max-width: 10em;
+    }
+  </style>
 </head>
 <body>
+  <div id="loader" class="container">
+    <div class="box">
+    <img class="splash" src="/chrome/chrome-installprocess-128-128.png" />
+    <h1 style="font-size: 2em">Loading...</h1>
+    <p style="font-size: 1em;">Please wait until the app is loading. If it doesn't load, click <a href=".">here</a> or <a href="https://github.com/LinwoodCloud/dev_doctor/issues">report the bug</a>!</p>
+    </div>
+  </div>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
