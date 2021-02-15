@@ -1,4 +1,5 @@
 import 'package:dev_doctor/backends/home.dart';
+import 'package:dev_doctor/backends/module.dart';
 import 'package:dev_doctor/settings/home.dart';
 import 'package:dev_doctor/settings/module.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class AppModule extends Module {
       ...HomeRoutes.values.map((e) =>
           ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
     ]),
+    ModuleRoute('/backends', module: BackendsModule()),
     ModuleRoute('/settings', module: SettingsModule()),
     ModuleRoute('/courses', module: CourseModule()),
     ChildRoute('/add', child: (_, args) => AddServerPage(params: args.queryParams)),

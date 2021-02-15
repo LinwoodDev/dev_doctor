@@ -87,7 +87,22 @@
                 "agree": "Agree",
                 "disagree": "Disagree"
             },
-            "error": "Server nicht erreichbar!"
+            "error": "Server not available!"
+        },
+        "collections": {
+            "title": "Collections",
+            "add": {
+                "fab": "Add collection",
+                "cancel": "Cancel",
+                "create": "Create",
+                "url": "URL",
+                "hint": "eg. https://collection.dev-doctor.cf",
+                "title": "Do you want to add the collection {name}?",
+                "body": "The colelction {name} with the url {url} will displayed on the collection page.",
+                "agree": "Agree",
+                "disagree": "Disagree"
+            },
+            "error": "Collection server not available!"
         },
         "about": "About",
         "imprint": "Imprint",

@@ -49,6 +49,10 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: Icon(Icons.list_outlined),
               title: Text("settings.servers.title").tr(),
               onTap: () => Navigator.pushNamed(context, "/settings/servers")),
+          ListTile(
+              leading: Icon(Icons.library_books_outlined),
+              title: Text("settings.collections.title").tr(),
+              onTap: () => Navigator.pushNamed(context, "/settings/collections")),
           TextDivider(text: 'settings.information'.tr().toUpperCase()),
           ListTile(
               leading: Icon(Icons.text_snippet_outlined),

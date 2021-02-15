@@ -89,6 +89,21 @@
             },
             "error": "Server nicht erreichbar!"
         },
+        "collections": {
+            "title": "Kollektionen",
+            "add": {
+                "fab": "Kollektion hinzufügen",
+                "cancel": "Abbrechen",
+                "create": "Erstellen",
+                "url": "URL",
+                "hint": "zB. https://collection.dev-doctor.cf",
+                "title": "Möchten Sie den Kollektion {name} hinzufügen?",
+                "body": "Die Kollektion {name} mit der URL {url} wird auf der Kollektionseite angezeigt.",
+                "agree": "Akzeptieren",
+                "disagree": "Nicht akzeptieren"
+            },
+            "error": "Kollektionsserver nicht erreichbar!"
+        },
         "about": "Über",
         "imprint": "Impressum",
         "code": "Code",

@@ -6,12 +6,12 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class ServersSettingsPage extends StatefulWidget {
+class CollectionsSettingsPage extends StatefulWidget {
   @override
-  _ServersSettingsPageState createState() => _ServersSettingsPageState();
+  _CollectionsSettingsPageState createState() => _CollectionsSettingsPageState();
 }
 
-class _ServersSettingsPageState extends State<ServersSettingsPage> {
+class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
   final _serversBox = Hive.box<String>('servers');
   @override
   void initState() {
@@ -21,7 +21,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: "settings.servers.title".tr()),
+      appBar: MyAppBar(title: "settings.collections.title".tr()),
       body: Container(
           child: ValueListenableBuilder(
               valueListenable: _serversBox.listenable(),
