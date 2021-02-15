@@ -3,6 +3,7 @@ import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hive/hive.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:easy_localization/easy_localization.dart';
 
@@ -22,7 +23,8 @@ class CoursePage extends StatefulWidget {
 class _CoursePageState extends State<CoursePage> {
   Future<Course> _buildFuture() async {
     if (widget.model != null) return widget.model;
-    CoursesServer server = await CoursesServer.fetch(index: widget.serverId);
+    CoursesServer server =
+        await CoursesServer.fetch(index: Hive.box<String>('servers').keyAt(widget.serverId));
     return server.fetchCourse(widget.courseId);
   }
 

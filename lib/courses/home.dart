@@ -60,7 +60,8 @@ class _CoursesPageState extends State<CoursesPage> {
     var servers = await Future.wait(_serversBox.values
         .toList()
         .asMap()
-        .map((index, e) => MapEntry(index, CoursesServer.fetch(url: e, index: index)))
+        .map((index, e) =>
+            MapEntry(index, CoursesServer.fetch(url: e, index: _serversBox.keyAt(index))))
         .values);
     List<Course> courses = [];
     await Future.wait(servers?.map((e) async => courses.addAll(await e?.fetchCourses())));
