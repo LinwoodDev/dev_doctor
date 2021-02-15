@@ -33,12 +33,18 @@ class CoursesServer {
   bool get added => index != null;
 
   Future<CoursesServer> add() async => CoursesServer(
-      index: await _box.add(url), courses: courses, name: name, type: type, url: url, icon: icon);
+      index: await _box.add(url),
+      courses: courses,
+      name: name,
+      type: type,
+      url: url,
+      icon: icon,
+      entry: entry);
 
   Future<CoursesServer> remove() async {
     await _box.delete(index);
     return CoursesServer(
-        index: null, courses: courses, name: name, type: type, url: url, icon: icon);
+        index: null, courses: courses, name: name, type: type, url: url, icon: icon, entry: entry);
   }
 
   Future<CoursesServer> toggle() => added ? remove() : add();

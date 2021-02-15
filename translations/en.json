@@ -29,7 +29,8 @@
         "empty": "No courses available. Add servers using the settings!"
     },
     "backends":{
-        "title":"Backends"
+        "title":"Backends",
+        "longer":"Search term must be longer than two letters."
     },
     "editor": {
         "title": "Editor"

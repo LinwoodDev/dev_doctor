@@ -6,6 +6,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
 
+import 'home.dart';
+
 class BackendPage extends StatefulWidget {
   final String user;
   final String entry;
@@ -39,7 +41,6 @@ class _BackendPageState extends State<BackendPage> {
                 default:
                   if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                   var server = snapshot.data;
-                  var body;
                   return NestedScrollView(
                       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                         return <Widget>[
@@ -47,14 +48,7 @@ class _BackendPageState extends State<BackendPage> {
                             expandedHeight: 400.0,
                             floating: false,
                             pinned: true,
-                            // actions: [
-                            //   IconButton(
-                            //     icon: Icon(Icons.play_circle_outline_outlined),
-                            //     tooltip: "course.start".tr(),
-                            //     onPressed: () => Modular.to.navigate(
-                            //         '/courses/start/item?serverId=${widget.serverId}&courseId=${widget.courseId}&partId=0'),
-                            //   )
-                            // ],
+                            actions: [AddBackendButton(server: server)],
                             flexibleSpace: FlexibleSpaceBar(
                               centerTitle: true,
                               title: Container(
