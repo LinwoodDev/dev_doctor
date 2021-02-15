@@ -1,3 +1,4 @@
+import 'package:dev_doctor/models/collection.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
@@ -12,7 +13,7 @@ class CollectionsSettingsPage extends StatefulWidget {
 }
 
 class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
-  final _serversBox = Hive.box<String>('servers');
+  final _box = Hive.box<String>('collections');
   @override
   void initState() {
     super.initState();
@@ -24,12 +25,13 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
       appBar: MyAppBar(title: "settings.collections.title".tr()),
       body: Container(
           child: ValueListenableBuilder(
-              valueListenable: _serversBox.listenable(),
+              valueListenable: _box.listenable(),
               builder: (context, Box<String> box, _) => FutureBuilder(
-                  future: Future.wait(_serversBox.values
+                  future: Future.wait(_box.values
                       .toList()
                       .asMap()
-                      .map((index, e) => MapEntry(index, CoursesServer.fetch(url: e, index: index)))
+                      .map((index, e) =>
+                          MapEntry(index, BackendCollection.fetch(url: e, index: index)))
                       .values),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
@@ -37,7 +39,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                         return Center(child: CircularProgressIndicator());
                       default:
                         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                        var data = snapshot.data as List<CoursesServer>;
+                        var data = snapshot.data as List<BackendCollection>;
                         return ListView.builder(
                             itemCount: box.length,
                             itemBuilder: (context, index) {
@@ -52,13 +54,14 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                                           ? null
                                           : UniversalImage(
                                               type: current.icon, url: current.url + "/icon"),
-                                      title: Text(current.name ?? 'settings.servers.error'.tr()),
+                                      title:
+                                          Text(current.name ?? 'settings.collections.error'.tr()),
                                       subtitle: Text(current.url)));
                             });
                     }
                   }))),
       floatingActionButton: FloatingActionButton.extended(
-        label: Text("settings.servers.add.fab").tr(),
+        label: Text("settings.collections.add.fab").tr(),
         icon: Icon(Icons.add_outlined),
         onPressed: () => _showDialog(),
       ),
@@ -66,16 +69,16 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
   }
 
   _deleteServer(int index) async {
-    await _serversBox.deleteAt(index);
+    await _box.deleteAt(index);
   }
 
-  _createServer(String url) async {
-    var server = await CoursesServer.fetch(url: url);
+  _createCollection(String url) async {
+    var server = await BackendCollection.fetch(url: url);
     if (server.name == null)
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: Text("settings.servers.error").tr(),
+                title: Text("settings.collections.error").tr(),
                 actions: [
                   TextButton.icon(
                       onPressed: () => Navigator.pop(context),
@@ -84,7 +87,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                 ],
               ));
     else
-      await _serversBox.add(url);
+      await _box.add(url);
   }
 
   _showDialog() {
@@ -100,23 +103,23 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                         autofocus: true,
                         onChanged: (value) => url = value,
                         decoration: InputDecoration(
-                            labelText: 'settings.servers.add.url'.tr(),
-                            hintText: 'settings.servers.add.hint'.tr()),
+                            labelText: 'settings.collections.add.url'.tr(),
+                            hintText: 'settings.collections.add.hint'.tr()),
                       ),
                     )
                   ],
                 ),
                 actions: <Widget>[
                   TextButton(
-                      child: Text('settings.servers.add.cancel'.tr().toUpperCase()),
+                      child: Text('settings.collections.add.cancel'.tr().toUpperCase()),
                       onPressed: () {
                         Navigator.pop(context);
                       }),
                   TextButton(
-                      child: Text('settings.servers.add.create'.tr().toUpperCase()),
+                      child: Text('settings.collections.add.create'.tr().toUpperCase()),
                       onPressed: () async {
                         Navigator.pop(context);
-                        _createServer(url);
+                        _createCollection(url);
                       })
                 ]));
   }

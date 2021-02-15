@@ -57,11 +57,7 @@ class _BackendPageState extends State<BackendPage> {
                                     color: Theme.of(context).primaryColor.withAlpha(200),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  child: Text(server.name,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.0,
-                                      ))),
+                                  child: Text(server.name)),
                               background: Container(
                                   margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
                                   child: UniversalImage(
