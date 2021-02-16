@@ -71,6 +71,12 @@
                 "default": "Standard",
                 "de": "Deutsch",
                 "en": "Englisch"
+            },
+            "color":{
+                "title":"Farbe",
+                "classic":"Klassisch",
+                "modern":"Modern",
+                "artistic":"Künstlerisch"
             }
         },
         "downloads": {

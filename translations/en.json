@@ -68,6 +68,12 @@
                 "restart": "This setting needs a restart!",
                 "en": "English",
                 "de": "German"
+            },
+            "color":{
+                "title":"Color",
+                "classic":"Classic",
+                "modern":"Modern",
+                "artistic":"Artistic"
             }
         },
         "general": {
