@@ -24,10 +24,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
     _iframeElement.height = '500';
     _iframeElement.width = '500';
 
-    _iframeElement.src = Uri.https(
-      'www.youtube-nocookie.com',
-      'embed/${widget.item.url}',
-    ).toString();
+    _iframeElement.src = widget.item.src;
     //_iframeElement.allowFullscreen = true;
     _iframeElement.style.border = 'none';
 

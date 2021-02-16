@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:dev_doctor/app_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -23,7 +24,10 @@ class AppWidget extends StatelessWidget {
               var colorTheme = ColorTheme.values[color];
               return MaterialApp(
                 title: 'Dev-Doctor',
-                localizationsDelegates: context.localizationDelegates,
+                localizationsDelegates: [
+                  ...context.localizationDelegates,
+                  LocaleNamesLocalizationsDelegate()
+                ],
                 supportedLocales: context.supportedLocales,
                 locale: context.locale,
                 themeMode: ThemeMode.values[box.get('theme', defaultValue: 0)],

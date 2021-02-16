@@ -22,8 +22,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                   onWebViewCreated: (InAppWebViewController controller) {
                     webView = controller;
                   },
-                  initialUrl:
-                      Uri.https('www.youtube-nocookie.com', 'embed/${widget.item.url}').toString(),
+                  initialUrl: widget.item.src,
                 ))));
   }
 }

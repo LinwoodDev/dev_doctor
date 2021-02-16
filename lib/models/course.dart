@@ -48,7 +48,7 @@ class Course {
         index = json['index'],
         installed = json['installed'],
         lang = json['lang'],
-        parts = json['parts'],
+        parts = List<String>.from(json['parts']),
         private = json['private'];
 
   get url => server.url + "/" + slug;
