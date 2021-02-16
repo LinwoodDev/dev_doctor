@@ -103,6 +103,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                       child: TextField(
                         autofocus: true,
                         onChanged: (value) => url = value,
+                        keyboardType: TextInputType.url,
                         decoration: InputDecoration(
                             labelText: 'settings.collections.add.url'.tr(),
                             hintText: 'settings.collections.add.hint'.tr()),
