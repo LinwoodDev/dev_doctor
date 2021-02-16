@@ -41,58 +41,60 @@ class SettingsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Scrollbar(
-            child: SingleChildScrollView(
-                child: Column(mainAxisSize: MainAxisSize.max, children: [
-      ListTile(
-          selected: activePage == SettingsPages.general,
-          leading: Icon(Icons.build_outlined),
-          title: Text("settings.general.title").tr(),
-          onTap: () => _showComingSoon(context)),
-      ListTile(
-          selected: activePage == SettingsPages.appearance,
-          leading: Icon(Icons.tune_outlined),
-          title: Text("settings.appearance.title").tr(),
-          onTap: () => Modular.to.pushNamed("/settings/appearance")),
-      ListTile(
-          selected: activePage == SettingsPages.downloads,
-          leading: Icon(Icons.download_outlined),
-          title: Text("settings.downloads.title").tr(),
-          onTap: () => _showComingSoon(context)),
-      ListTile(
-          selected: activePage == SettingsPages.servers,
-          leading: Icon(Icons.list_outlined),
-          title: Text("settings.servers.title").tr(),
-          onTap: () => Modular.to.pushNamed("/settings/servers")),
-      ListTile(
-          selected: activePage == SettingsPages.collections,
-          leading: Icon(Icons.library_books_outlined),
-          title: Text("settings.collections.title").tr(),
-          onTap: () => Modular.to.pushNamed("/settings/collections")),
-      TextDivider(text: 'settings.information'.tr().toUpperCase()),
-      ListTile(
-          leading: Icon(Icons.text_snippet_outlined),
-          title: Text("settings.license").tr(),
-          onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor/blob/main/LICENSE")),
-      ListTile(
-          leading: Icon(Icons.construction_outlined),
-          title: Text("settings.imprint").tr(),
-          onTap: () => launch("https://codedoctor.tk/impress")),
-      ListTile(
-          leading: Icon(Icons.code_outlined),
-          title: Text("settings.code").tr(),
-          onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor")),
-      ListTile(
-          leading: Icon(Icons.privacy_tip_outlined),
-          title: Text("settings.privacypolicy").tr(),
-          onTap: () => launch("https://linwood.tk/docs/dev-doctor/privacypolicy")),
-      ListTile(
-          leading: Icon(Icons.info_outline),
-          title: Text("settings.about").tr(),
-          onTap: () => showAboutDialog(
-              context: context,
-              applicationIcon: Image.asset("images/logo-colored.png", height: 50))),
-    ]))));
+    return Hero(
+        tag: "settings",
+        child: Material(
+            child: Scrollbar(
+                child: SingleChildScrollView(
+                    child: Column(mainAxisSize: MainAxisSize.max, children: [
+          ListTile(
+              selected: activePage == SettingsPages.general,
+              leading: Icon(Icons.build_outlined),
+              title: Text("settings.general.title").tr(),
+              onTap: () => _showComingSoon(context)),
+          ListTile(
+              selected: activePage == SettingsPages.appearance,
+              leading: Icon(Icons.tune_outlined),
+              title: Text("settings.appearance.title").tr(),
+              onTap: () => Modular.to.pushNamed("/settings/appearance")),
+          ListTile(
+              selected: activePage == SettingsPages.downloads,
+              leading: Icon(Icons.download_outlined),
+              title: Text("settings.downloads.title").tr(),
+              onTap: () => _showComingSoon(context)),
+          ListTile(
+              selected: activePage == SettingsPages.servers,
+              leading: Icon(Icons.list_outlined),
+              title: Text("settings.servers.title").tr(),
+              onTap: () => Modular.to.pushNamed("/settings/servers")),
+          ListTile(
+              selected: activePage == SettingsPages.collections,
+              leading: Icon(Icons.library_books_outlined),
+              title: Text("settings.collections.title").tr(),
+              onTap: () => Modular.to.pushNamed("/settings/collections")),
+          TextDivider(text: 'settings.information'.tr().toUpperCase()),
+          ListTile(
+              leading: Icon(Icons.text_snippet_outlined),
+              title: Text("settings.license").tr(),
+              onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor/blob/main/LICENSE")),
+          ListTile(
+              leading: Icon(Icons.construction_outlined),
+              title: Text("settings.imprint").tr(),
+              onTap: () => launch("https://codedoctor.tk/impress")),
+          ListTile(
+              leading: Icon(Icons.code_outlined),
+              title: Text("settings.code").tr(),
+              onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor")),
+          ListTile(
+              leading: Icon(Icons.privacy_tip_outlined),
+              title: Text("settings.privacypolicy").tr(),
+              onTap: () => launch("https://linwood.tk/docs/dev-doctor/privacypolicy")),
+          ListTile(
+              leading: Icon(Icons.info_outline),
+              title: Text("settings.about").tr(),
+              onTap: () => showAboutDialog(
+                  context: context,
+                  applicationIcon: Image.asset("images/logo-colored.png", height: 50))),
+        ])))));
   }
 }
