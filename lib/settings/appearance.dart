@@ -6,6 +6,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../app_widget.dart';
+
 class AppearanceSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                 builder: (context, Box<dynamic> box, _) {
                   var theme = ThemeMode.values[_appearanceBox.get('theme', defaultValue: 0)];
                   var locale = context.locale?.toLanguageTag() ?? 'default';
+                  var color = ColorTheme.values[_appearanceBox.get('color', defaultValue: 0)];
                   return ListView(children: [
                     ListTile(
                         title: Text('settings.appearance.locale.title').tr(),
@@ -118,7 +121,51 @@ class AppearanceSettingsPage extends StatelessWidget {
                                   },
                                 ),
                               );
-                            }))
+                            })),
+                    ListTile(
+                      title: Text("settings.apperance.color.title").tr(),
+                      subtitle:
+                          Text("settings.appearance.color." + EnumToString.convertToString(color)),
+                      onTap: () => showDialog(
+                          context: context,
+                          builder: (context) {
+                            ColorTheme selectedRadio = color;
+                            return AlertDialog(
+                              actions: [
+                                TextButton(
+                                    child: Text('CANCEL'),
+                                    onPressed: () => Navigator.of(context).pop()),
+                                TextButton(
+                                    child: Text('SAVE'),
+                                    onPressed: () async {
+                                      _appearanceBox.put('color', selectedRadio.index);
+                                      Navigator.pop(context);
+                                    })
+                              ],
+                              content: StatefulBuilder(
+                                builder: (BuildContext context, StateSetter setState) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children:
+                                        List<Widget>.generate(ThemeMode.values.length, (int index) {
+                                      return RadioListTile<ColorTheme>(
+                                        value: ColorTheme.values[index],
+                                        groupValue: selectedRadio,
+                                        title: Text('settings.appearance.color.' +
+                                                EnumToString.convertToString(
+                                                    ThemeMode.values[index]))
+                                            .tr(),
+                                        onChanged: (value) {
+                                          setState(() => selectedRadio = value);
+                                        },
+                                      );
+                                    }),
+                                  );
+                                },
+                              ),
+                            );
+                          }),
+                    )
                   ]);
                 })));
   }

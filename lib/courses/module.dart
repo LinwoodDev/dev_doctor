@@ -5,7 +5,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'home.dart';
 
 class CourseModule extends Module {
-  // TODO: Test
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (_, args) => CoursesPage()),

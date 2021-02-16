@@ -33,7 +33,7 @@ class _ItemFetcher {
           .where((element) => servers.contains(element))
           .map((e) async {
         var server = await CoursesServer.fetch(url: e);
-        entries.addAll(await server.fetchCourses());
+        entries.addAll((await server.fetchCourses()).where((element) => !element.private));
       }));
     final list = <Course>[];
     var n = min(_itemsPerPage, entries.length - _currentPage * _itemsPerPage);

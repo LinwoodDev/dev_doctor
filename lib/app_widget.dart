@@ -6,6 +6,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'theme.dart' as theme;
 
+enum ColorTheme { classic, modern, fun }
+
 class AppWidget extends StatelessWidget {
   // This widget is the root of your application.
   @override
