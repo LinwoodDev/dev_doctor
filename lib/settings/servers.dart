@@ -1,7 +1,6 @@
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -106,6 +105,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                       child: TextField(
                         autofocus: true,
                         onChanged: (value) => url = value,
+                        keyboardType: TextInputType.url,
                         decoration: InputDecoration(
                             labelText: 'settings.servers.add.url'.tr(),
                             hintText: 'settings.servers.add.hint'.tr()),
