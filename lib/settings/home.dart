@@ -1,6 +1,7 @@
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/text_divider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -17,7 +18,12 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 }
 
+enum SettingsPages { general, appearance, downloads, servers, collections }
+
 class SettingsList extends StatelessWidget {
+  final SettingsPages activePage;
+
+  const SettingsList({Key key, this.activePage}) : super(key: key);
   _showComingSoon(BuildContext context) {
     showDialog(
         context: context,
@@ -39,25 +45,30 @@ class SettingsList extends StatelessWidget {
         child: SingleChildScrollView(
             child: Column(mainAxisSize: MainAxisSize.max, children: [
       ListTile(
+          selected: activePage == SettingsPages.general,
           leading: Icon(Icons.build_outlined),
           title: Text("settings.general.title").tr(),
           onTap: () => _showComingSoon(context)),
       ListTile(
+          selected: activePage == SettingsPages.appearance,
           leading: Icon(Icons.tune_outlined),
           title: Text("settings.appearance.title").tr(),
-          onTap: () => Navigator.pushNamed(context, "/settings/appearance")),
+          onTap: () => Modular.to.pushNamed("/settings/appearance")),
       ListTile(
+          selected: activePage == SettingsPages.downloads,
           leading: Icon(Icons.download_outlined),
           title: Text("settings.downloads.title").tr(),
           onTap: () => _showComingSoon(context)),
       ListTile(
+          selected: activePage == SettingsPages.servers,
           leading: Icon(Icons.list_outlined),
           title: Text("settings.servers.title").tr(),
-          onTap: () => Navigator.pushNamed(context, "/settings/servers")),
+          onTap: () => Modular.to.pushNamed("/settings/servers")),
       ListTile(
+          selected: activePage == SettingsPages.collections,
           leading: Icon(Icons.library_books_outlined),
           title: Text("settings.collections.title").tr(),
-          onTap: () => Navigator.pushNamed(context, "/settings/collections")),
+          onTap: () => Modular.to.pushNamed("/settings/collections")),
       TextDivider(text: 'settings.information'.tr().toUpperCase()),
       ListTile(
           leading: Icon(Icons.text_snippet_outlined),
