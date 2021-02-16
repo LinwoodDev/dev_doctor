@@ -1,0 +1,7 @@
+ Support for json files, see #22
+ Backend collections, see #15
+ Settings on PC or Tablet more Widescreen-Friendly, see #14
+ Customize theme, see #18
+ More video settings, see #29
+ Course language, see #26
+ Course settings, see #28
