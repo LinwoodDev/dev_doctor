@@ -14,7 +14,7 @@ class _SettingsLayoutState extends State<SettingsLayout> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      var mobile = MediaQuery.of(context).size.width < 800;
+      var mobile = MediaQuery.of(context).size.width < 1100;
       return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         if (!mobile) Expanded(child: Container(child: SettingsList())),
         Expanded(flex: 3, child: widget.child)
