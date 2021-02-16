@@ -6,7 +6,6 @@ import 'bloc.dart';
 
 class CoursePartModule extends Module {
   static Inject get to => Inject<CoursePartModule>();
-  // TODO: Test
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/item', child: (_, args) => PartItemLayout(), children: [

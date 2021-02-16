@@ -16,6 +16,7 @@ class Course {
   final String lang;
   final int index;
   final List<String> parts;
+  final bool private;
 
   Course(
       {this.slug,
@@ -28,7 +29,8 @@ class Course {
       this.body,
       this.lang,
       this.parts,
-      this.server});
+      this.server,
+      this.private});
   Course.fromJson(Map<String, dynamic> json)
       : server = json['server'],
         slug = json['slug'],
@@ -40,7 +42,8 @@ class Course {
         index = json['index'],
         installed = json['installed'],
         lang = json['lang'],
-        parts = json['parts'];
+        parts = json['parts'],
+        private = json['private'];
 
   get url => server.url + "/" + slug;
 
