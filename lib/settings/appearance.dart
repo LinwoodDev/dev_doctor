@@ -1,12 +1,11 @@
 import 'package:dev_doctor/settings/layout.dart';
+import 'package:dev_doctor/themes/theme.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
-
-import '../app_widget.dart';
 
 class AppearanceSettingsPage extends StatelessWidget {
   @override
@@ -123,7 +122,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                               );
                             })),
                     ListTile(
-                      title: Text("settings.apperance.color.title").tr(),
+                      title: Text("settings.appearance.color.title").tr(),
                       subtitle:
                           Text("settings.appearance.color." + EnumToString.convertToString(color)),
                       onTap: () => showDialog(
@@ -146,14 +145,14 @@ class AppearanceSettingsPage extends StatelessWidget {
                                 builder: (BuildContext context, StateSetter setState) {
                                   return Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    children:
-                                        List<Widget>.generate(ThemeMode.values.length, (int index) {
+                                    children: List<Widget>.generate(ColorTheme.values.length,
+                                        (int index) {
                                       return RadioListTile<ColorTheme>(
                                         value: ColorTheme.values[index],
                                         groupValue: selectedRadio,
                                         title: Text('settings.appearance.color.' +
                                                 EnumToString.convertToString(
-                                                    ThemeMode.values[index]))
+                                                    ColorTheme.values[index]))
                                             .tr(),
                                         onChanged: (value) {
                                           setState(() => selectedRadio = value);
