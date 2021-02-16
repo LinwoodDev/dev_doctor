@@ -11,6 +11,8 @@ class Course {
   final String description;
   final String icon;
   final String author;
+  final String authorUrl;
+  final String authorAvatar;
   final bool installed;
   final String body;
   final String lang;
@@ -25,6 +27,8 @@ class Course {
       this.description,
       this.icon,
       this.author,
+      this.authorUrl,
+      this.authorAvatar,
       this.installed,
       this.body,
       this.lang,
@@ -38,6 +42,8 @@ class Course {
         description = json['description'],
         icon = json['icon'],
         author = json['author'],
+        authorUrl = json['author_url'],
+        authorAvatar = json['author_avatar'],
         body = json['body'],
         index = json['index'],
         installed = json['installed'],

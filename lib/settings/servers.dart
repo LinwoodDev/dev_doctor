@@ -1,6 +1,7 @@
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -44,18 +45,22 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                             itemCount: box.length,
                             itemBuilder: (context, index) {
                               var current = data[index];
-                              return Dismissible(
-                                  // Show a red background as the item is swiped away.
-                                  background: Container(color: Colors.red),
-                                  key: Key(current.url),
-                                  onDismissed: (direction) => _deleteServer(index),
-                                  child: ListTile(
-                                      leading: current.icon?.isEmpty ?? true
-                                          ? null
-                                          : UniversalImage(
-                                              type: current.icon, url: current.url + "/icon"),
-                                      title: Text(current.name ?? 'settings.servers.error'.tr()),
-                                      subtitle: Text(current.url)));
+                              return Container(
+                                  child: Dismissible(
+                                      // Show a red background as the item is swiped away.
+                                      background: Container(color: Colors.red),
+                                      key: Key(current.url),
+                                      onDismissed: (direction) => _deleteServer(index),
+                                      child: Material(
+                                          child: ListTile(
+                                              leading: current.icon?.isEmpty ?? true
+                                                  ? null
+                                                  : UniversalImage(
+                                                      type: current.icon,
+                                                      url: current.url + "/icon"),
+                                              title: Text(
+                                                  current.name ?? 'settings.servers.error'.tr()),
+                                              subtitle: Text(current.url)))));
                             });
                     }
                   }))),

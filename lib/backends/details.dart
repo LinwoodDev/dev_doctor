@@ -25,7 +25,8 @@ class _BackendPageState extends State<BackendPage> {
   Future<CoursesServer> _buildFuture() async {
     if (widget.model != null) return widget.model;
     var collection = await BackendCollection.fetch(index: widget.collectionId);
-    var entry = await collection.fetchEntry(user: widget.user, entry: widget.entry);
+    var user = await collection.fetchUser(widget.user);
+    var entry = user.buildEntry(widget.entry);
     return await entry.fetchServer();
   }
 

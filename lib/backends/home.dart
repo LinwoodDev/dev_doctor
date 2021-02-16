@@ -18,7 +18,7 @@ class _ItemFetcher {
     if (entries.isEmpty)
       await Future.wait(Hive.box<String>('collections').values.map((e) async {
         var collection = await BackendCollection.fetch(url: e);
-        entries.addAll(await collection.fetchEntries());
+        entries.addAll((await collection.fetchUsers()).expand((e) => e.buildEntries()));
       }));
     final list = <CoursesServer>[];
     var n = min(_itemsPerPage, entries.length - _currentPage * _itemsPerPage);
