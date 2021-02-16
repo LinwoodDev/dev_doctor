@@ -38,36 +38,33 @@ class BackendCollection {
     return BackendCollection.fromJson(data);
   }
 
-  Future<List<String>> fetchUsers() async => List<String>.from(
+  Future<List<String>> fetchUserStrings() async => List<String>.from(
       json.decode((await http.get("$url/metadata/data.json")).body) as List<dynamic>);
+  Future<List<BackendUser>> fetchUsers() =>
+      fetchUserStrings().then((value) => Future.wait(value.map((e) => fetchUser(e)).toList()));
+  Future<BackendUser> fetchUser(String user) async => BackendUser.fromJson(
+      json.decode((await http.get("$url/metadata/$user/data.json")).body)..['collection'] = this);
+}
 
-  Future<List<String>> fetchEntriesString({String user}) async {
-    List<String> entries = <String>[];
-    await Future.wait((user == null ? await fetchUsers() : <String>[user]).map((current) async =>
-        entries.addAll(List<String>.from(
-            json.decode((await http.get("$url/metadata/$current/data.json")).body)))));
-    return entries;
+class BackendUser {
+  final BackendCollection collection;
+  final String name;
+  final Map<String, String> entries;
+
+  BackendUser({this.name, this.entries, this.collection});
+  BackendUser.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        collection = json['collection'],
+        entries = Map<String, String>.from(json['entries']);
+
+  List<BackendEntry> buildEntries() {
+    List<BackendEntry> backendEntries = [];
+    entries.forEach((element, url) => backendEntries.add(buildEntry(element)));
+    return backendEntries;
   }
 
-  Future<List<BackendEntry>> fetchEntries({String user}) async {
-    var users = await fetchUsers();
-    var entries = <BackendEntry>[];
-    await Future.wait(users.map((user) async {
-      var userEntries = await fetchEntriesString(user: user);
-      await Future.wait(
-          userEntries.map((e) async => entries.add(await fetchEntry(user: user, entry: e))));
-    }));
-    return entries;
-  }
-
-  Future<BackendEntry> fetchEntry({String user, String entry}) async {
-    var data =
-        json.decode(utf8.decode((await http.get("$url/metadata/$user/$entry.json")).bodyBytes));
-    data['user'] = user;
-    data['name'] = entry;
-    data['collection'] = this;
-    return BackendEntry.fromJson(data);
-  }
+  BackendEntry buildEntry(String entry) =>
+      BackendEntry(collection: collection, name: entry, url: entries[entry], user: name);
 }
 
 class BackendEntry {

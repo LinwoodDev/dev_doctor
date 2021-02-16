@@ -41,9 +41,10 @@ class SettingsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-        child: SingleChildScrollView(
-            child: Column(mainAxisSize: MainAxisSize.max, children: [
+    return Container(
+        child: Scrollbar(
+            child: SingleChildScrollView(
+                child: Column(mainAxisSize: MainAxisSize.max, children: [
       ListTile(
           selected: activePage == SettingsPages.general,
           leading: Icon(Icons.build_outlined),
@@ -92,6 +93,6 @@ class SettingsList extends StatelessWidget {
           onTap: () => showAboutDialog(
               context: context,
               applicationIcon: Image.asset("images/logo-colored.png", height: 50))),
-    ])));
+    ]))));
   }
 }

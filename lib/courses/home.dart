@@ -126,7 +126,7 @@ class _CoursesPageState extends State<CoursesPage> {
               }),
           IconButton(
               icon: Icon(Icons.filter_alt_outlined),
-              tooltip: "course.filter".tr(),
+              tooltip: "courses.filter".tr(),
               onPressed: () async {
                 await showDialog(
                     context: context,

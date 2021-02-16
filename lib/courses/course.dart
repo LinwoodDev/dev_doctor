@@ -45,6 +45,7 @@ class _CoursePageState extends State<CoursePage> {
                             expandedHeight: 400.0,
                             floating: false,
                             pinned: true,
+                            leading: Text("TEST"),
                             actions: [
                               IconButton(
                                 icon: Icon(Icons.play_circle_outline_outlined),
