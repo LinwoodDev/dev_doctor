@@ -2,6 +2,7 @@ import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:easy_localization/easy_localization.dart';
@@ -45,7 +46,6 @@ class _CoursePageState extends State<CoursePage> {
                             expandedHeight: 400.0,
                             floating: false,
                             pinned: true,
-                            leading: Text("TEST"),
                             actions: [
                               IconButton(
                                 icon: Icon(Icons.play_circle_outline_outlined),
@@ -76,6 +76,46 @@ class _CoursePageState extends State<CoursePage> {
                       },
                       body: ListView(
                         children: <Widget>[
+                          Padding(
+                              padding: EdgeInsets.all(4),
+                              child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16)),
+                                  child: Padding(
+                                      padding: EdgeInsets.all(16),
+                                      child: Column(children: [
+                                        GestureDetector(
+                                            onTap: () {
+                                              if (course.authorUrl != null)
+                                                launch(course.authorUrl);
+                                            },
+                                            child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  if (course.authorAvatar != null)
+                                                    Padding(
+                                                        padding: EdgeInsets.all(8),
+                                                        child: CircleAvatar(
+                                                          child: ClipOval(
+                                                            child:
+                                                                Image.network(course.authorAvatar),
+                                                          ),
+                                                        )),
+                                                  Text(course.author ?? "")
+                                                ])),
+                                        if (course.lang != null)
+                                          Padding(
+                                              padding: EdgeInsets.all(8),
+                                              child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                        padding: EdgeInsets.all(4),
+                                                        child: Icon(Icons.language_outlined)),
+                                                    Text(
+                                                        LocaleNames.of(context).nameOf(course.lang))
+                                                  ]))
+                                      ])))),
                           Padding(
                               padding: EdgeInsets.all(16),
                               child: Card(

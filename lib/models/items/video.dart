@@ -14,4 +14,13 @@ class VideoPartItem extends PartItem {
       : url = json['url'],
         source = EnumToString.fromString(VideoSource.values, json['source']),
         super.fromJson(json);
+  get src {
+    if (source == VideoSource.youtube)
+      return Uri.https(
+        'www.youtube-nocookie.com',
+        'embed/${url}',
+      ).toString();
+    else
+      return url;
+  }
 }

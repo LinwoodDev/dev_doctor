@@ -25,7 +25,7 @@ class CoursesServer {
         url = json['url'],
         index = (json['index'] != -1) ? json['index'] : null,
         type = json['type'],
-        courses = json['courses'],
+        courses = List<String>.from(json['courses']),
         icon = json['icon'],
         entry = json['entry'],
         body = json['body'];
@@ -57,7 +57,6 @@ class CoursesServer {
         if (current != -1) index = _box.keyAt(current);
       } else if (url == null) url = Hive.box<String>('servers').get(index);
       data = await loadFile("$url/config");
-      data['courses'] = List<String>.from(data['courses']);
     } catch (e) {
       print(e);
     }
@@ -77,7 +76,7 @@ class CoursesServer {
     data['server'] = this;
     data['index'] = index;
     data['slug'] = course;
-    data['parts'] = List<String>.from(data['parts']);
+    data['parts'] = data['parts'];
     return Course.fromJson(data);
   }
 }
