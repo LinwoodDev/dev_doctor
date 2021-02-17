@@ -11,6 +11,7 @@ class CoursesServer {
   final String url;
   final String type;
   final String icon;
+  final String supportUrl;
   final int index;
   final BackendEntry entry;
   final List<String> courses;
@@ -19,7 +20,15 @@ class CoursesServer {
   static Box<String> get _box => Hive.box<String>('servers');
 
   CoursesServer(
-      {this.body, this.icon, this.index, this.name, this.url, this.courses, this.type, this.entry});
+      {this.body,
+      this.icon,
+      this.index,
+      this.name,
+      this.url,
+      this.courses,
+      this.type,
+      this.entry,
+      this.supportUrl});
   CoursesServer.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         url = json['url'],
@@ -28,7 +37,8 @@ class CoursesServer {
         courses = List<String>.from(json['courses']),
         icon = json['icon'],
         entry = json['entry'],
-        body = json['body'];
+        body = json['body'],
+        supportUrl = json['support_url'];
 
   bool get added => index != null;
 
@@ -39,12 +49,20 @@ class CoursesServer {
       type: type,
       url: url,
       icon: icon,
-      entry: entry);
+      entry: entry,
+      supportUrl: supportUrl);
 
   Future<CoursesServer> remove() async {
     await _box.delete(index);
     return CoursesServer(
-        index: null, courses: courses, name: name, type: type, url: url, icon: icon, entry: entry);
+        index: null,
+        courses: courses,
+        name: name,
+        type: type,
+        url: url,
+        icon: icon,
+        entry: entry,
+        supportUrl: supportUrl);
   }
 
   Future<CoursesServer> toggle() => added ? remove() : add();
@@ -63,6 +81,7 @@ class CoursesServer {
     data['entry'] = entry;
     data['url'] = url;
     data['index'] = index;
+    print(data);
     return CoursesServer.fromJson(data);
   }
 

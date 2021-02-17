@@ -3,6 +3,7 @@ import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 typedef NavigateCallback = void Function(int part);
 
@@ -27,16 +28,25 @@ class _CourseDrawerState extends State<CourseDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    var supportUrl = widget.course.supportUrl ?? widget.course.server.supportUrl;
     return Drawer(
-        child: Scrollbar(child: ListView(children: [
+        child: Scrollbar(
+            child: ListView(children: [
       ListTile(
         title: Text('course.back').tr(),
+        leading: Icon(Icons.keyboard_backspace_outlined),
         onTap: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         },
       ),
-      VerticalDivider(),
+      if (supportUrl != null)
+        ListTile(
+          title: Text('course.support').tr(),
+          onTap: () => launch(supportUrl),
+          leading: Icon(Icons.help_outline_outlined),
+        ),
+      Divider(),
       FutureBuilder<List<CoursePart>>(
           future: widget.course.fetchParts(),
           builder: (context, snapshot) {
