@@ -25,7 +25,7 @@ Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 
 #### Stores
 
-* Play Store: *under review*
+* Play Store: <https://play.google.com/store/apps/details?id=com.github.linwoodcloud.dev_doctor>
 
 ### iOS
 
