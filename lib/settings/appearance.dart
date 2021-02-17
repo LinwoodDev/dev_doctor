@@ -124,7 +124,8 @@ class AppearanceSettingsPage extends StatelessWidget {
                     ListTile(
                       title: Text("settings.appearance.color.title").tr(),
                       subtitle:
-                          Text("settings.appearance.color." + EnumToString.convertToString(color)),
+                          Text("settings.appearance.color." + EnumToString.convertToString(color))
+                              .tr(),
                       onTap: () => showDialog(
                           context: context,
                           builder: (context) {
