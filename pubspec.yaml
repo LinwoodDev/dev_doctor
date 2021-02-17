@@ -250,18 +250,6 @@ flutter:
         - asset: fonts/RobotoMono-BoldItalic.ttf
           style: italic
           weight: 700
-
-        - asset: fonts/RobotoMono-ExtraBold.ttf
-          weight: 800
-        - asset: fonts/RobotoMono-ExtraBoldItalic.ttf
-          style: italic
-          weight: 800
-
-        - asset: fonts/RobotoMono-Black.ttf
-          weight: 900
-        - asset: fonts/RobotoMono-BlackItalic.ttf
-          style: italic
-          weight: 900
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
