@@ -142,7 +142,6 @@ class _BackendsListState extends State<BackendsList> {
       itemCount: _hasMore ? _pairList.length + 1 : _pairList.length,
       itemBuilder: (BuildContext context, int index) {
         // Uncomment the following line to see in real time how ListView.builder works
-        // print('ListView.builder is building index $index');
         if (index >= _pairList.length) {
           // Don't trigger if one async loading is already under way
           if (!_isLoading) {
@@ -221,7 +220,10 @@ class _BackendEntryListTileState extends State<BackendEntryListTile> {
         },
         leading: _server.icon?.isEmpty ?? true
             ? null
-            : UniversalImage(type: _server.icon, url: _server.url + "/icon"),
+            : Hero(
+                tag:
+                    "backend-icon-${_server.entry.collection.index}-${_server.entry.user}-${_server.entry.name}",
+                child: UniversalImage(type: _server.icon, url: _server.url + "/icon")),
         trailing: AddBackendButton(
             server: _server, onChange: (server) => setState(() => _server = server)));
   }

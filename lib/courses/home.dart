@@ -180,7 +180,6 @@ class _CoursesListState extends State<CoursesList> {
   @override
   void initState() {
     super.initState();
-    print("INIT STATE!");
     _isLoading = true;
     _hasMore = true;
     _loadMore();
@@ -189,9 +188,7 @@ class _CoursesListState extends State<CoursesList> {
   // Triggers fecth() and then add new items or change _hasMore flag
   void _loadMore() {
     _isLoading = true;
-    print("LOAD MORE!");
     widget.fetcher.fetch(query: widget.query).then((List<Course> fetchedList) {
-      print(fetchedList);
       if (fetchedList.isEmpty) {
         setState(() {
           _isLoading = false;
@@ -212,7 +209,6 @@ class _CoursesListState extends State<CoursesList> {
   void didUpdateWidget(covariant CoursesList oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!_isLoading && oldWidget.fetcher != widget.fetcher) {
-      print("did update");
       widget.fetcher.reset();
       _pairList.clear();
       _hasMore = true;
@@ -228,7 +224,6 @@ class _CoursesListState extends State<CoursesList> {
       itemCount: _hasMore ? _pairList.length + 1 : _pairList.length,
       itemBuilder: (BuildContext context, int index) {
         // Uncomment the following line to see in real time how ListView.builder works
-        // print('ListView.builder is building index $index');
         if (index >= _pairList.length) {
           // Don't trigger if one async loading is already under way
           if (!_isLoading) {
@@ -247,10 +242,13 @@ class _CoursesListState extends State<CoursesList> {
             title: Text(course.name),
             subtitle: Text(course.description),
             onTap: () => Modular.to.pushNamed(
-                "/courses/details?serverId=${course.server.index}&courseId=${course.index}"),
+                "/courses/details?serverId=${course.server.index}&courseId=${course.index}",
+                arguments: course),
             leading: course.icon?.isEmpty ?? true
                 ? null
-                : UniversalImage(type: course.icon, url: course.url + "/icon"));
+                : Hero(
+                    tag: "course-icon-${course.server.index}-${course.index}",
+                    child: UniversalImage(type: course.icon, url: course.url + "/icon")));
       },
     ));
   }
