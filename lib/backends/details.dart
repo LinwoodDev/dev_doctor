@@ -80,7 +80,7 @@ class _BackendPageState extends State<BackendPage> {
           )
         ];
       },
-      body: ListView(
+      body: Scrollbar(child: ListView(
         children: <Widget>[
           if (server.body != null)
             Padding(
@@ -90,6 +90,7 @@ class _BackendPageState extends State<BackendPage> {
                     child: Padding(
                         padding: const EdgeInsets.all(64.0),
                         child: MarkdownBody(
+                          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
                           onTapLink: (_, url, __) => launch(url),
                           extensionSet: md.ExtensionSet(
                             md.ExtensionSet.gitHubFlavored.blockSyntaxes,
@@ -97,7 +98,7 @@ class _BackendPageState extends State<BackendPage> {
                           ),
                           data: server.body,
                           selectable: true,
-                        )))),
+                        ))))
         ],
-      ));
+      )));
 }

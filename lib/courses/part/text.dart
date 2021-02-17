@@ -12,6 +12,7 @@ class TextPartItemPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: MarkdownBody(
+      styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
       onTapLink: (_, url, __) => launch(url),
       extensionSet: md.ExtensionSet(
         md.ExtensionSet.gitHubFlavored.blockSyntaxes,

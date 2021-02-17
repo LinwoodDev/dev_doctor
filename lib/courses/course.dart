@@ -83,7 +83,7 @@ class _CoursePageState extends State<CoursePage> {
           )
         ];
       },
-      body: ListView(
+      body: Scrollbar(child: ListView(
         children: <Widget>[
           Padding(
               padding: EdgeInsets.all(4),
@@ -124,6 +124,7 @@ class _CoursePageState extends State<CoursePage> {
                   child: Padding(
                       padding: const EdgeInsets.all(64.0),
                       child: MarkdownBody(
+      styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
                         onTapLink: (_, url, __) => launch(url),
                         extensionSet: md.ExtensionSet(
                           md.ExtensionSet.gitHubFlavored.blockSyntaxes,
@@ -133,5 +134,5 @@ class _CoursePageState extends State<CoursePage> {
                         selectable: true,
                       )))),
         ],
-      ));
+      )));
 }

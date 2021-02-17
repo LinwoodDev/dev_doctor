@@ -41,24 +41,25 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                       default:
                         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                         var data = snapshot.data as List<BackendCollection>;
-                        return ListView.builder(
-                            itemCount: box.length,
-                            itemBuilder: (context, index) {
-                              var current = data[index];
-                              return Dismissible(
-                                  // Show a red background as the item is swiped away.
-                                  background: Container(color: Colors.red),
-                                  key: Key(current.url),
-                                  onDismissed: (direction) => _deleteServer(index),
-                                  child: ListTile(
-                                      leading: current.icon?.isEmpty ?? true
-                                          ? null
-                                          : UniversalImage(
-                                              type: current.icon, url: current.url + "/icon"),
-                                      title:
-                                          Text(current.name ?? 'settings.collections.error'.tr()),
-                                      subtitle: Text(current.url)));
-                            });
+                        return Scrollbar(
+                            child: ListView.builder(
+                                itemCount: box.length,
+                                itemBuilder: (context, index) {
+                                  var current = data[index];
+                                  return Dismissible(
+                                      // Show a red background as the item is swiped away.
+                                      background: Container(color: Colors.red),
+                                      key: Key(current.url),
+                                      onDismissed: (direction) => _deleteServer(index),
+                                      child: ListTile(
+                                          leading: current.icon?.isEmpty ?? true
+                                              ? null
+                                              : UniversalImage(
+                                                  type: current.icon, url: current.url + "/icon"),
+                                          title: Text(
+                                              current.name ?? 'settings.collections.error'.tr()),
+                                          subtitle: Text(current.url)));
+                                }));
                     }
                   }))),
       floatingActionButton: FloatingActionButton.extended(
