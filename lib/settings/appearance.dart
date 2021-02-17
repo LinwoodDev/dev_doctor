@@ -20,7 +20,8 @@ class AppearanceSettingsPage extends StatelessWidget {
                   var theme = ThemeMode.values[_appearanceBox.get('theme', defaultValue: 0)];
                   var locale = context.locale?.toLanguageTag() ?? 'default';
                   var color = ColorTheme.values[_appearanceBox.get('color', defaultValue: 0)];
-                  return ListView(children: [
+                  return Scrollbar(
+                      child: ListView(children: [
                     ListTile(
                         title: Text('settings.appearance.locale.title').tr(),
                         subtitle: Text('settings.appearance.locale.$locale').tr(),
@@ -166,7 +167,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                             );
                           }),
                     )
-                  ]);
+                  ]));
                 })));
   }
 }

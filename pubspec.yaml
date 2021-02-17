@@ -209,6 +209,59 @@ flutter:
         - asset: fonts/Raleway-BlackItalic.ttf
           style: italic
           weight: 900
+    - family: 'Roboto Mono'
+      fonts:
+        - asset: fonts/RobotoMono-Regular.ttf
+        - asset: fonts/RobotoMono-Italic.ttf
+          style: italic
+
+        - asset: fonts/RobotoMono-Thin.ttf
+          weight: 100
+        - asset: fonts/RobotoMono-ThinItalic.ttf
+          style: italic
+          weight: 100
+          
+        - asset: fonts/RobotoMono-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/RobotoMono-ExtraLightItalic.ttf
+          style: italic
+          weight: 200
+
+        - asset: fonts/RobotoMono-Light.ttf
+          weight: 300
+        - asset: fonts/RobotoMono-LightItalic.ttf
+          style: italic
+          weight: 300
+
+        - asset: fonts/RobotoMono-Medium.ttf
+          weight: 500
+        - asset: fonts/RobotoMono-MediumItalic.ttf
+          style: italic
+          weight: 500
+
+        - asset: fonts/RobotoMono-SemiBold.ttf
+          weight: 600
+        - asset: fonts/RobotoMono-SemiBoldItalic.ttf
+          style: italic
+          weight: 600
+
+        - asset: fonts/RobotoMono-Bold.ttf
+          weight: 700
+        - asset: fonts/RobotoMono-BoldItalic.ttf
+          style: italic
+          weight: 700
+
+        - asset: fonts/RobotoMono-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/RobotoMono-ExtraBoldItalic.ttf
+          style: italic
+          weight: 800
+
+        - asset: fonts/RobotoMono-Black.ttf
+          weight: 900
+        - asset: fonts/RobotoMono-BlackItalic.ttf
+          style: italic
+          weight: 900
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/

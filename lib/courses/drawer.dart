@@ -28,7 +28,7 @@ class _CourseDrawerState extends State<CourseDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: ListView(children: [
+        child: Scrollbar(child: ListView(children: [
       ListTile(
         title: Text('course.back').tr(),
         onTap: () {
@@ -60,6 +60,6 @@ class _CourseDrawerState extends State<CourseDrawer> {
               );
             }));
           })
-    ]));
+    ])));
   }
 }
