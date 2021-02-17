@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: () => launch("https://linwood.tk/blog"),
               icon: Icon(Icons.open_in_new_outlined),
-              label: Text("Open in browser"),
+              label: Text("browser".tr().toUpperCase()),
             )),
         Padding(
             padding: EdgeInsets.all(20),

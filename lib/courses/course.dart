@@ -48,12 +48,18 @@ class _CoursePageState extends State<CoursePage> {
 
   Widget _buildView(Course course) => NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        var supportUrl = course.supportUrl ?? course.server.supportUrl;
         return <Widget>[
           SliverAppBar(
             expandedHeight: 400.0,
             floating: false,
             pinned: true,
             actions: [
+              if (supportUrl != null)
+                IconButton(
+                    icon: Icon(Icons.help_outline_outlined),
+                    tooltip: "course.support".tr(),
+                    onPressed: () => launch(supportUrl)),
               IconButton(
                 icon: Icon(Icons.play_circle_outline_outlined),
                 tooltip: "course.start".tr(),
@@ -83,7 +89,8 @@ class _CoursePageState extends State<CoursePage> {
           )
         ];
       },
-      body: Scrollbar(child: ListView(
+      body: Scrollbar(
+          child: ListView(
         children: <Widget>[
           Padding(
               padding: EdgeInsets.all(4),
@@ -124,7 +131,7 @@ class _CoursePageState extends State<CoursePage> {
                   child: Padding(
                       padding: const EdgeInsets.all(64.0),
                       child: MarkdownBody(
-      styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
                         onTapLink: (_, url, __) => launch(url),
                         extensionSet: md.ExtensionSet(
                           md.ExtensionSet.gitHubFlavored.blockSyntaxes,

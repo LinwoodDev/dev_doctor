@@ -37,6 +37,7 @@
     "editor": {
         "title": "Editor"
     },
+    "browser":"Open in brwoser",
     "discord": "Betrete unseren Discord",
     "error-with-status": "Auf dem Server ist ein Fehler ({statusCode}) aufgetreten",
     "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",

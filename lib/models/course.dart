@@ -13,6 +13,7 @@ class Course {
   final String author;
   final String authorUrl;
   final String authorAvatar;
+  final String supportUrl;
   final bool installed;
   final String body;
   final String lang;
@@ -33,6 +34,7 @@ class Course {
       this.body,
       this.lang,
       this.parts,
+      this.supportUrl,
       this.server,
       this.private});
   Course.fromJson(Map<String, dynamic> json)
@@ -49,7 +51,8 @@ class Course {
         installed = json['installed'],
         lang = json['lang'],
         parts = List<String>.from(json['parts']),
-        private = json['private'];
+        private = json['private'],
+        supportUrl = json['support_url'];
 
   get url => server.url + "/" + slug;
 
