@@ -81,7 +81,6 @@ class CoursesServer {
     data['entry'] = entry;
     data['url'] = url;
     data['index'] = index;
-    print(data);
     return CoursesServer.fromJson(data);
   }
 
