@@ -39,11 +39,11 @@ class BackendCollection {
   }
 
   Future<List<String>> fetchUserStrings() async => List<String>.from(
-      json.decode((await http.get("$url/metadata/data.json")).body) as List<dynamic>);
+      json.decode((await http.get(Uri.parse("$url/metadata/data.json"))).body) as List<dynamic>);
   Future<List<BackendUser>> fetchUsers() =>
       fetchUserStrings().then((value) => Future.wait(value.map((e) => fetchUser(e)).toList()));
-  Future<BackendUser> fetchUser(String user) async =>
-      BackendUser.fromJson(json.decode((await http.get("$url/metadata/$user/data.json")).body)
+  Future<BackendUser> fetchUser(String user) async => BackendUser.fromJson(
+      json.decode((await http.get(Uri.parse("$url/metadata/$user/data.json"))).body)
         ..['collection'] = this
         ..['user'] = user);
 }

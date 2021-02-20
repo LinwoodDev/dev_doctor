@@ -23,15 +23,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  easy_localization: ^3.0.0-nullsafety.0
+  easy_localization: ^2.3.3+1
   enum_to_string: ^1.0.14
   http: ^0.13.0
-  hive: ^1.6.0-nullsafety.2
+  hive: ^1.4.4+1
   rxdart: ^0.26.0-nullsafety.1
-  hive_flutter: ^1.0.0-nullsafety.0
+  hive_flutter: ^0.3.1
   flutter_modular: ^3.0.0-nullsafety.45
   url_launcher: ^6.0.0-nullsafety.7
-  flutter_markdown: ^0.6.0
+  flutter_markdown: ^0.5.2
   universal_html: ^1.2.4
   highlight: ^0.6.0
   flutter_svg: ^0.20.0-nullsafety.3
@@ -44,14 +44,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   yaml: ^3.0.0
-dependency_overrides:
-  crypto: ^3.0.0-nullsafety.0
 flutter_icons:
   android: true
   ios: true
   image_path: "images/logo-light-background.png"
 dev_dependencies:
-  hive_generator: ^0.9.0-nullsafety.1
+  hive_generator: ^0.8.2
   build_runner: ^1.11.5
   flutter_test:
     sdk: flutter
