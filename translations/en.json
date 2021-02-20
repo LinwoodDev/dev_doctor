@@ -13,7 +13,7 @@
             "correct": "Correct!",
             "wrong": "Sorry, wrong answer!",
             "check": "CHECK ANSWER",
-            "reset":"Retry",
+            "retry":"Retry",
             "start":"Start quiz",
             "points":"points",
             "time":"seconds remaining",
