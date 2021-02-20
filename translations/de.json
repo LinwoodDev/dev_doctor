@@ -13,6 +13,10 @@
             "correct": "Richtig!",
             "wrong": "Falsche Antwort!",
             "check": "Abschicken",
+            "reset":"Quiz wiederholen",
+            "start":"Quiz starten",
+            "points":"Punkte",
+            "time":"Sekunden übrig",
             "validation": {
                 "title": "Auswertung",
                 "correct": "Alles richtig!",
