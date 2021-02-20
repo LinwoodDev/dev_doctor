@@ -17,11 +17,11 @@ Future<Map<String, dynamic>> loadFile(String path, {String type}) async {
 }
 
 Future<Map<String, dynamic>> loadJsonFile(String path) async {
-  var response = await http.get(path + ".json");
+  var response = await http.get(Uri.parse(path + ".json"));
   return json.decode(utf8.decode(response.bodyBytes));
 }
 
 Future<Map<String, dynamic>> loadYamlFile(String path) async {
-  var response = await http.get(path + ".yml");
+  var response = await http.get(Uri.parse(path + ".yml"));
   return yamlMapToJson(loadYaml(utf8.decode(response.bodyBytes)));
 }

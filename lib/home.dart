@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.all(20),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [])),
         FutureBuilder<http.Response>(
-            future: http.get('https://linwood.tk/blog/atom.xml'),
+            future: http.get(Uri.https('linwood.tk', '/blog/atom.xml')),
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
                 return Center(child: CircularProgressIndicator());

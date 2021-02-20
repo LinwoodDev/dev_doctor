@@ -2,11 +2,6 @@ import 'package:dev_doctor/models/collection.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:markdown/markdown.dart' as md;
-import 'package:url_launcher/url_launcher.dart';
-
-import 'home.dart';
 
 class BackendPage extends StatefulWidget {
   final String user;
