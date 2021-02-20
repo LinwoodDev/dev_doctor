@@ -45,7 +45,7 @@ class BackendCollection {
   Future<BackendUser> fetchUser(String user) async => BackendUser.fromJson(
       json.decode((await http.get(Uri.parse("$url/metadata/$user/data.json"))).body)
         ..['collection'] = this
-        ..['user'] = user);
+        ..['name'] = user);
 }
 
 class BackendUser {
@@ -66,12 +66,12 @@ class BackendUser {
   }
 
   BackendEntry buildEntry(String entry) =>
-      BackendEntry(collection: collection, name: entry, url: entries[entry], user: name);
+      BackendEntry(collection: collection, name: entry, url: entries[entry], user: this);
 }
 
 class BackendEntry {
   final BackendCollection collection;
-  final String user;
+  final BackendUser user;
   final String name;
   final String url;
 

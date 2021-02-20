@@ -3,6 +3,7 @@ import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -80,7 +81,8 @@ class _BackendPageState extends State<BackendPage> {
           )
         ];
       },
-      body: Scrollbar(child: ListView(
+      body: Scrollbar(
+          child: ListView(
         children: <Widget>[
           if (server.body != null)
             Padding(
@@ -89,16 +91,26 @@ class _BackendPageState extends State<BackendPage> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     child: Padding(
                         padding: const EdgeInsets.all(64.0),
-                        child: MarkdownBody(
-                          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-                          onTapLink: (_, url, __) => launch(url),
-                          extensionSet: md.ExtensionSet(
-                            md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                            [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
-                          ),
-                          data: server.body,
-                          selectable: true,
-                        ))))
+                        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                          Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: TextButton.icon(
+                                  onPressed: () => Modular.to.pushNamed(
+                                      "/backends/user?collectionId=${widget.collectionId}&user=${widget.user}",
+                                      arguments: server.entry.user),
+                                  icon: Icon(Icons.account_circle_outlined),
+                                  label: Text(widget.user))),
+                          MarkdownBody(
+                            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                            onTapLink: (_, url, __) => launch(url),
+                            extensionSet: md.ExtensionSet(
+                              md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                              [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
+                            ),
+                            data: server.body,
+                            selectable: true,
+                          )
+                        ]))))
         ],
       )));
 }
