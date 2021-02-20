@@ -214,7 +214,7 @@ class _BackendEntryListTileState extends State<BackendEntryListTile> {
         subtitle: Text(_server.url),
         onTap: () async {
           await Modular.to.pushNamed(
-              "/backends/entry?collectionId=${_server.entry.collection.index}&user=${_server.entry.user}&entry=${_server.entry.name}",
+              "/backends/entry?collectionId=${_server.entry.collection.index}&user=${_server.entry.user.name}&entry=${_server.entry.name}",
               arguments: _server);
           var current = await _server.entry.fetchServer();
           setState(() => _server = current);

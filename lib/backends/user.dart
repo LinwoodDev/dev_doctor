@@ -4,49 +4,42 @@ import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class BackendUserPage extends StatefulWidget {
+class BackendUserPage extends StatelessWidget {
   final String user;
   final int collectionId;
   final BackendUser model;
 
   const BackendUserPage({Key key, this.user, this.collectionId, this.model}) : super(key: key);
 
-  @override
-  _BackendUserPageState createState() => _BackendUserPageState();
-}
-
-class _BackendUserPageState extends State<BackendUserPage> {
   Future<BackendUser> _buildFuture() async {
-    if (widget.model != null) return widget.model;
-    var collection = await BackendCollection.fetch(index: widget.collectionId);
-    var user = await collection.fetchUser(widget.user);
-    return await user;
+    if (model != null) return model;
+    var collection = await BackendCollection.fetch(index: collectionId);
+    var current = await collection.fetchUser(user);
+    return await current;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: widget.model != null
-            ? _buildView(widget.model)
-            : FutureBuilder<BackendUser>(
-                future: _buildFuture(),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return Center(child: CircularProgressIndicator());
-                    default:
-                      if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                      var user = snapshot.data;
-                      return _buildView(user);
-                  }
-                }));
+    return model != null
+        ? _buildView(model)
+        : FutureBuilder<BackendUser>(
+            future: _buildFuture(),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Center(child: CircularProgressIndicator());
+                default:
+                  if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                  var backendUser = snapshot.data;
+                  return _buildView(backendUser);
+              }
+            });
   }
 
-  Widget _buildView(BackendUser user) {
-    var entries = user.entries.keys.toList();
-    print(user.entries.toString());
+  Widget _buildView(BackendUser backendUser) {
+    var entries = backendUser.buildEntries();
     return Scaffold(
-        appBar: AppBar(title: Text(user.name)),
+        appBar: AppBar(title: Text(backendUser.name)),
         body: Scrollbar(
             child: SingleChildScrollView(
                 child: Wrap(
@@ -54,26 +47,28 @@ class _BackendUserPageState extends State<BackendUserPage> {
           return Container(
               width: 160.0,
               child: FutureBuilder<CoursesServer>(
-                  future: user.buildEntry(entries[index]).fetchServer(),
+                  future: entries[index].fetchServer(),
                   builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Center(child: CircularProgressIndicator());
-                      default:
-                        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                        var server = snapshot.data;
-                        print(server);
-                        return InkWell(
-                            onTap: () => Modular.to.pushNamed(
-                                "/backends/entry?collectionId=${widget.collectionId}&user=${widget.user}&entry=${entries[index]}"),
-                            child: Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Column(children: [
-                                  UniversalImage(
-                                      url: server.url + "/icon", type: server.icon, width: 160),
-                                  Text(server.name)
-                                ])));
-                    }
+                    if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
+                      return Center(child: CircularProgressIndicator());
+                    if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                    var server = snapshot.data;
+                    return GestureDetector(
+                        onTap: () {
+                          Modular.to.pushNamed(
+                              "/backends/entry?collectionId=${collectionId}&user=${user}&entry=${entries[index].name}",
+                              arguments: server);
+                        },
+                        child: Padding(
+                            padding: EdgeInsets.all(16),
+                            child: Column(children: [
+                              Hero(
+                                  tag:
+                                      "backend-icon-${server.entry.collection.index}-${server.entry.user.name}-${server.entry.name}",
+                                  child: UniversalImage(
+                                      url: server.url + "/icon", type: server.icon, width: 160)),
+                              Text(server.name)
+                            ])));
                   }));
         })))));
   }

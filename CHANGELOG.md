@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1 (February 20, 2021)
+
+* Fix backend user
+* Fix add url
+
 ## 1.2.0 (February 20, 2021)
 
 * Add heroes
