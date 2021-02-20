@@ -22,12 +22,14 @@ class QuizPartItem extends PartItem {
 class QuizQuestion {
   final String title;
   final String description;
+  final String evaluation;
   final List<QuizAnswer> answers;
 
-  QuizQuestion({this.title, this.description, this.answers});
+  QuizQuestion({this.title, this.description, this.answers, this.evaluation});
   QuizQuestion.fromJson(Map<String, dynamic> json)
       : title = json['title'],
         description = json['description'],
+        evaluation = json['evaluation'],
         answers = (json['answers'] as List<dynamic>)
             .map((answer) => QuizAnswer.fromJson(answer))
             .toList();

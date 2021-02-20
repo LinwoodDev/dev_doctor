@@ -13,6 +13,10 @@
             "correct": "Correct!",
             "wrong": "Sorry, wrong answer!",
             "check": "CHECK ANSWER",
+            "reset":"Retry",
+            "start":"Start quiz",
+            "points":"points",
+            "time":"seconds remaining",
             "validation": {
                 "title": "Validation",
                 "correct": "You got everything right!",
