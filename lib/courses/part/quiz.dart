@@ -67,9 +67,11 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     return Container(
         child: _timer != null || widget.item.time == null
             ? _buildForm()
-            : ElevatedButton(
-                onPressed: () => setState(() => startTimer()),
-                child: Text("course.question.start").tr()));
+            : Center(
+                child: ElevatedButton.icon(
+                    icon: Icon(Icons.check_box_outlined),
+                    onPressed: () => setState(() => startTimer()),
+                    label: Text("course.question.start").tr())));
   }
 
   Widget _buildForm() => Form(
@@ -84,13 +86,16 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 Text("course.question.points", style: Theme.of(context).textTheme.subtitle2).tr(),
-                ElevatedButton(
-                    onPressed: () => setState(() {
-                          _points = null;
-                          _formKey.currentState.reset();
-                          if (widget.item.time != null) startTimer();
-                        }),
-                    child: Text("course.question.retry").tr())
+                Padding(
+                    padding: EdgeInsets.all(4),
+                    child: ElevatedButton.icon(
+                        icon: Icon(Icons.replay_outlined),
+                        onPressed: () => setState(() {
+                              _points = null;
+                              _formKey.currentState.reset();
+                              if (widget.item.time != null) startTimer();
+                            }),
+                        label: Text("course.question.retry").tr()))
               ])),
         if (_start != null)
           Padding(
