@@ -27,7 +27,7 @@ class AppModule extends Module {
     ModuleRoute('/backends', module: BackendsModule()),
     ModuleRoute('/settings', module: SettingsModule()),
     ModuleRoute('/courses', module: CourseModule()),
-    ChildRoute('/add', child: (_, args) => AddServerPage(params: args.queryParams)),
+    ChildRoute('/add', child: (_, args) => AddServerPage(url: args.queryParams['url'])),
   ];
 }
 

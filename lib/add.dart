@@ -7,9 +7,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'models/server.dart';
 
 class AddServerPage extends StatefulWidget {
-  final Map<String, String> params;
+  final String url;
 
-  const AddServerPage({Key key, this.params}) : super(key: key);
+  const AddServerPage({Key key, this.url}) : super(key: key);
   @override
   _AddServerPageState createState() => _AddServerPageState();
 }
@@ -23,8 +23,8 @@ class _AddServerPageState extends State<AddServerPage> {
   }
 
   _showDialog() async {
-    var url = widget.params['url'];
-    if (_serversBox.containsKey(url)) {
+    var url = widget.url;
+    if (!_serversBox.containsKey(url)) {
       var server = await CoursesServer.fetch(url: url);
       var shouldAdd = await showDialog<bool>(
           context: context,
