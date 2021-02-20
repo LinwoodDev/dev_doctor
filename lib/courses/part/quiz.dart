@@ -88,7 +88,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                     onPressed: () => setState(() {
                           _points = null;
                           _formKey.currentState.reset();
-                          startTimer();
+                          if (widget.item.time != null) startTimer();
                         }),
                     child: Text("course.question.retry").tr())
               ])),
