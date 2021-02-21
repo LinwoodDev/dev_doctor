@@ -20,24 +20,24 @@ class BackendUserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return model != null
-        ? _buildView(model)
-        : FutureBuilder<BackendUser>(
-            future: _buildFuture(),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return Center(child: CircularProgressIndicator());
-                default:
+    return Scaffold(
+        body: model != null
+            ? _buildView(model)
+            : FutureBuilder<BackendUser>(
+                future: _buildFuture(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
+                    return Center(child: CircularProgressIndicator());
                   if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                   var backendUser = snapshot.data;
                   return _buildView(backendUser);
-              }
-            });
+                }));
   }
 
   Widget _buildView(BackendUser backendUser) {
     var entries = backendUser.buildEntries();
+    print(entries[0]);
+    print(entries.length);
     return Scaffold(
         appBar: AppBar(title: Text(backendUser.name)),
         body: Scrollbar(
@@ -54,8 +54,8 @@ class BackendUserPage extends StatelessWidget {
                     if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                     var server = snapshot.data;
                     return GestureDetector(
-                        onTap: () {
-                          Modular.to.pushNamed(
+                        onTap: () async {
+                          await Modular.to.pushNamed(
                               "/backends/entry?collectionId=${collectionId}&user=${user}&entry=${entries[index].name}",
                               arguments: server);
                         },
