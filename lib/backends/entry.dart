@@ -23,7 +23,8 @@ class BackendPage extends StatelessWidget {
     var collection = await BackendCollection.fetch(index: collectionId);
     var currentUser = await collection.fetchUser(user);
     var currentEntry = currentUser.buildEntry(entry);
-    return await currentEntry.fetchServer();
+    var server = await currentEntry.fetchServer();
+    return server;
   }
 
   @override
@@ -91,7 +92,7 @@ class BackendPage extends StatelessWidget {
                               Padding(
                                   padding: const EdgeInsets.all(16),
                                   child: TextButton.icon(
-                                      onPressed: () => Modular.to.pushNamed(
+                                      onPressed: () async => await Modular.to.pushNamed(
                                           "/backends/user?collectionId=${collectionId}&user=${user}",
                                           arguments: server.entry.user),
                                       icon: Icon(Icons.account_circle_outlined),
