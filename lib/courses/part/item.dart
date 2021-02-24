@@ -44,14 +44,11 @@ class _PartItemPageState extends State<PartItemPage> {
               var part = snapshot.data;
               var item = part.items[widget.itemId];
               if (item == null) return Center(child: CircularProgressIndicator());
-              var itemWidget;
-              print("REBUILD!");
+              Widget itemWidget = Text("Not supported!");
               if (item is VideoPartItem) itemWidget = VideoPartItemPage(item: item);
               if (item is TextPartItem) itemWidget = TextPartItemPage(item: item);
-              if (item is QuizPartItem)
-                itemWidget = QuizPartItemPage(item: item);
-              else
-                itemWidget = Text("Not supported!");
+              if (item is QuizPartItem) itemWidget = QuizPartItemPage(item: item);
+              final itemBuilder = Builder(builder: (context) => itemWidget);
               return LayoutBuilder(builder: (context, constraints) {
                 var itemCard = Scrollbar(
                     child: SingleChildScrollView(
@@ -59,7 +56,7 @@ class _PartItemPageState extends State<PartItemPage> {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                             child: Container(
                                 child: Padding(
-                                    padding: const EdgeInsets.all(64.0), child: itemWidget)))));
+                                    padding: const EdgeInsets.all(64.0), child: itemBuilder)))));
                 var detailsCard = Scrollbar(
                     child: SingleChildScrollView(
                         child: Card(
