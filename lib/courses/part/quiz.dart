@@ -23,12 +23,6 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    print("initSAtate");
-    super.initState();
-  }
-
   void validate() {
     _timer?.cancel();
     _points = 0;
@@ -118,7 +112,6 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                   Column(
                       children: List.generate(widget.item.questions.length, (questionIndex) {
                     var question = widget.item.questions[questionIndex];
-                    print("REBUILD QUIZ!");
                     return Column(children: [
                       Text(
                         question.title,

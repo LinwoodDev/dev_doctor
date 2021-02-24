@@ -27,6 +27,7 @@ class PartItemPage extends StatefulWidget {
 
 class _PartItemPageState extends State<PartItemPage> {
   CoursePartBloc bloc;
+  GlobalKey _itemKey = GlobalKey();
 
   void initState() {
     bloc = CoursePartModule.to.get<CoursePartBloc>();
@@ -45,9 +46,9 @@ class _PartItemPageState extends State<PartItemPage> {
               var item = part.items[widget.itemId];
               if (item == null) return Center(child: CircularProgressIndicator());
               Widget itemWidget = Text("Not supported!");
-              if (item is VideoPartItem) itemWidget = VideoPartItemPage(item: item);
-              if (item is TextPartItem) itemWidget = TextPartItemPage(item: item);
-              if (item is QuizPartItem) itemWidget = QuizPartItemPage(item: item);
+              if (item is VideoPartItem) itemWidget = VideoPartItemPage(item: item, key: _itemKey);
+              if (item is TextPartItem) itemWidget = TextPartItemPage(item: item, key: _itemKey);
+              if (item is QuizPartItem) itemWidget = QuizPartItemPage(item: item, key: _itemKey);
               final itemBuilder = Builder(builder: (context) => itemWidget);
               return LayoutBuilder(builder: (context, constraints) {
                 var itemCard = Scrollbar(
