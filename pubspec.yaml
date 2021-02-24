@@ -23,8 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  easy_localization: ^2.3.3+1
-  enum_to_string: ^1.0.14
+  easy_localization: ^2.3.3
+  enum_to_string: ^2.0.0-nullsafety.1
   http: ^0.13.0
   hive: ^1.4.4+1
   rxdart: ^0.26.0-nullsafety.1
@@ -32,8 +32,7 @@ dependencies:
   flutter_modular: ^3.0.0-nullsafety.45
   url_launcher: ^6.0.0-nullsafety.7
   flutter_markdown: ^0.5.2
-  universal_html: ^1.2.4
-  highlight: ^0.6.0
+  #universal_html: ^1.2.4
   flutter_svg: ^0.20.0-nullsafety.3
   flutter_inappwebview: ^4.0.0+4
   xml: ^5.0.0-nullsafety.1
