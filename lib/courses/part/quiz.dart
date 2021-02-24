@@ -118,7 +118,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                   Column(
                       children: List.generate(widget.item.questions.length, (questionIndex) {
                     var question = widget.item.questions[questionIndex];
-                    print("REBUILD!");
+                    print("REBUILD QUIZ!");
                     return Column(children: [
                       Text(
                         question.title,
