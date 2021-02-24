@@ -29,9 +29,16 @@ class _PartItemPageState extends State<PartItemPage> {
   CoursePartBloc bloc;
   GlobalKey _itemKey = GlobalKey();
 
+  @override
   void initState() {
     bloc = CoursePartModule.to.get<CoursePartBloc>();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(PartItemPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {});
   }
 
   @override

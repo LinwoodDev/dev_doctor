@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.2 (February 24, 2021)
+
+* Fix responsive rebuild issues
+* Fix question page bug after opening another question
+
 ## 1.2.1 (February 20, 2021)
 
 * Fix backend user
