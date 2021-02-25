@@ -74,7 +74,7 @@ class CoursesServer {
         var current = _box.values.toList().indexOf(url);
         if (current != -1) index = _box.keyAt(current);
       } else if (url == null) url = Hive.box<String>('servers').get(index);
-      data = await loadFile("$url/config");
+      data = await loadFile("$url/config") ?? {};
     } catch (e) {
       print(e);
     }
