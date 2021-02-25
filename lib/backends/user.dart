@@ -1,5 +1,6 @@
 import 'package:dev_doctor/models/collection.dart';
 import 'package:dev_doctor/models/server.dart';
+import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -39,7 +40,7 @@ class BackendUserPage extends StatelessWidget {
     print(entries[0]);
     print(entries.length);
     return Scaffold(
-        appBar: AppBar(title: Text(backendUser.name)),
+        appBar: MyAppBar(title: backendUser.name),
         body: Scrollbar(
             child: SingleChildScrollView(
                 child: Wrap(

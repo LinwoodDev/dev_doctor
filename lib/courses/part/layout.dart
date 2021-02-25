@@ -3,6 +3,7 @@ import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/items/text.dart';
 import 'package:dev_doctor/models/items/video.dart';
 import 'package:dev_doctor/models/part.dart';
+import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -55,8 +56,8 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                       bloc?.fetch(serverId: serverId, courseId: courseId, partId: index);
                     },
                   ),
-                  appBar: AppBar(
-                    title: Text(snapshot.data.name),
+                  appBar: MyAppBar(
+                    title: snapshot.data.name,
                     bottom: TabBar(
                         isScrollable: true,
                         onTap: (index) => Modular.to.pushReplacementNamed(
