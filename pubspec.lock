@@ -288,7 +288,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.20.0-nullsafety.3"
+    version: "0.21.0-nullsafety.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -378,7 +378,7 @@ packages:
       name: io
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4"
+    version: "0.3.5"
   js:
     dependency: transitive
     description:
@@ -553,7 +553,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.26.0-nullsafety.1"
+    version: "0.26.0"
   shared_preferences:
     dependency: transitive
     description:
@@ -712,7 +712,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.0"
+    version: "6.0.1"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -817,7 +817,7 @@ packages:
       name: yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.1.0"
 sdks:
   dart: ">=2.12.0-259.9.beta <3.0.0"
   flutter: ">=1.24.0-7.0"
