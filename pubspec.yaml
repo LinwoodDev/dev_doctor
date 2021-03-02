@@ -34,7 +34,7 @@ dependencies:
   flutter_markdown: ^0.5.2
   #universal_html: ^1.2.4
   flutter_svg: ^0.21.0-nullsafety.0
-  flutter_inappwebview: ^5.0.5
+  flutter_inappwebview: ^5.0.5+3
   xml: ^5.0.0-nullsafety.1
   flutter_localized_locales: ^2.0.1
 
