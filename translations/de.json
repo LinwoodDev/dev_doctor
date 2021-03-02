@@ -55,6 +55,7 @@
         "information": "Informationen",
         "title": "Einstellungen",
         "privacypolicy": "Datenschutzerklärung",
+        "changelog":"Änderungsliste",
         "home": {
             "title": "Start",
             "username": "Benutzername"
