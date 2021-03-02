@@ -37,8 +37,6 @@ class BackendUserPage extends StatelessWidget {
 
   Widget _buildView(BackendUser backendUser) {
     var entries = backendUser.buildEntries();
-    print(entries[0]);
-    print(entries.length);
     return Scaffold(
         appBar: MyAppBar(title: backendUser.name),
         body: Scrollbar(
