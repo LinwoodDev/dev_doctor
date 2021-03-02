@@ -32,6 +32,7 @@ Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 * Play Store: <https://play.google.com/store/apps/details?id=com.github.linwoodcloud.dev_doctor>
 * SkyDroid: <https://to.skydroid.app/com.github.linwoodcloud.dev_doctor.izzyondroid>
 * FDroid: <https://www.f-droid.org/en/packages/com.github.linwoodcloud.dev_doctor/>
+* ApkPure: <https://apkpure.com/dev-doctor/com.github.linwoodcloud.dev_doctor>
 
 ### iOS
 
