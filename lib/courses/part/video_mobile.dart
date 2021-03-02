@@ -22,7 +22,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                   onWebViewCreated: (InAppWebViewController controller) {
                     webView = controller;
                   },
-                  initialUrlRequest: URLRequest(url: Uri.parse("https://flutter.dev/")),
+                  initialUrl: widget.item.src,
                 ))));
   }
 }
