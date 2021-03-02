@@ -20,6 +20,16 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
     super.initState();
   }
 
+  Future<List<CoursesServer>> _buildFuture() async {
+    var urls = _serversBox.values.toList().asMap();
+    var servers = <CoursesServer>[];
+    for (var key in urls.keys) {
+      var value = urls[key];
+      servers.add(await CoursesServer.fetch(url: value, index: key));
+    }
+    return servers;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,19 +37,15 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
       body: SettingsLayout(
           child: ValueListenableBuilder(
               valueListenable: _serversBox.listenable(),
-              builder: (context, Box<String> box, _) => FutureBuilder(
-                  future: Future.wait(_serversBox.values
-                      .toList()
-                      .asMap()
-                      .map((index, e) => MapEntry(index, CoursesServer.fetch(url: e, index: index)))
-                      .values),
+              builder: (context, Box<String> box, _) => FutureBuilder<List<CoursesServer>>(
+                  future: _buildFuture(),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
                         return Center(child: CircularProgressIndicator());
                       default:
                         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                        var data = snapshot.data as List<CoursesServer>;
+                        var data = snapshot.data;
                         return Scrollbar(
                             child: ListView.builder(
                                 itemCount: box.length,

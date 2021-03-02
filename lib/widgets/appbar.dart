@@ -6,7 +6,9 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   final Size preferredSize;
   final List<Widget> actions;
 
-  MyAppBar({this.title, this.actions, Key key})
+  final PreferredSizeWidget bottom;
+
+  MyAppBar({this.title, this.actions, Key key, this.bottom})
       : preferredSize = Size.fromHeight(50.0),
         super(key: key);
 
@@ -15,6 +17,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       elevation: 5.0,
       title: Text(title),
+      bottom: bottom,
       actions: actions,
       //actions: [IconButton(icon: Icon(Icons.settings_outlined), onPressed: () {})],
       automaticallyImplyLeading: true,

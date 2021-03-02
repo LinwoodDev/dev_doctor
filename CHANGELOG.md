@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.3 (Narcg 2, 2021)
+
+* Add a backend on default
+* Fix different app bars
+* Fix servers offline issues
+* Add changelog to settings
+
 ## 1.2.2 (February 24, 2021)
 
 * Fix responsive rebuild issues

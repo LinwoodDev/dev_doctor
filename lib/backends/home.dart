@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:dev_doctor/models/collection.dart';
 import 'package:dev_doctor/models/server.dart';
+import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -173,7 +174,7 @@ class _BackendsPageState extends State<BackendsPage> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("backends.title").tr(), actions: [
+        appBar: MyAppBar(title: "backends.title".tr(), actions: [
           IconButton(
               icon: Icon(Icons.search),
               onPressed: () {

@@ -6,11 +6,11 @@ import 'yaml.dart';
 
 Future<Map<String, dynamic>> loadFile(String path, {String type}) async {
   try {
-    var result = await loadJsonFile(path);
+    var result = await loadJsonFile(path) ?? {};
     if (type == null) result['type'] = 'json';
     return result;
   } catch (e) {
-    var result = await loadYamlFile(path);
+    var result = await loadYamlFile(path) ?? {};
     if (type == null) result['type'] = 'yml';
     return result;
   }
@@ -22,6 +22,12 @@ Future<Map<String, dynamic>> loadJsonFile(String path) async {
 }
 
 Future<Map<String, dynamic>> loadYamlFile(String path) async {
-  var response = await http.get(Uri.parse(path + ".yml"));
-  return yamlMapToJson(loadYaml(utf8.decode(response.bodyBytes)));
+  try {
+    var response = await http.get(Uri.parse(path + ".yml"));
+    return yamlMapToJson(loadYaml(utf8.decode(response.bodyBytes)));
+  } catch (e) {
+    print(e);
+  }
+
+  return null;
 }
