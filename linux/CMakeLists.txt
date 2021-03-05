@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "dev_doctor")
+set(BINARY_NAME "Dev-Doctor")
 set(APPLICATION_ID "com.github.linwoodcloud.dev_doctor")
 
 cmake_policy(SET CMP0063 NEW)

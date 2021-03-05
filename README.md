@@ -1,4 +1,4 @@
-# dev_doctor
+# Dev-Doctor
 
 > A free, opensource, serverless learning platform. A linwood project.
 
