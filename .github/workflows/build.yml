@@ -23,7 +23,7 @@ jobs:
     - name: 🏭 Build
       run: |
         flutter build apk
-    - name: Archive apk
+    - name: Archive
       uses: actions/upload-artifact@v2
       with:
         name: apk-build
@@ -43,7 +43,7 @@ jobs:
     - name: 🏭 Build
       run: |
         flutter build windows
-    - name: Archive apk
+    - name: Archive
       uses: actions/upload-artifact@v2
       with:
         name: windows-build
@@ -70,6 +70,9 @@ jobs:
         files: |
           app-release.apk
           windows-build.zip
+    - name: 📦 Zip artifacts
+      run: |
+        zip -r windows.zip windows-build/**
     - name: 🚀 Deploy preview
       uses: eine/tip@master
       if: github.ref == 'refs/heads/develop'
@@ -79,4 +82,4 @@ jobs:
         rm: true
         files: |
           app-release.apk
-          windows-build.zip
+          windows.zip
