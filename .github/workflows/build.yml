@@ -42,6 +42,7 @@ jobs:
       run: flutter pub get
     - name: 🏭 Build
       run: |
+        flutter clean
         flutter build windows -v --release
         flutter pub run msix:create
     - name: Archive
@@ -67,6 +68,7 @@ jobs:
       run: flutter config --enable-linux-desktop
     - name: 📦 Get dependencies
       run: |
+        flutter clean
         flutter pub get
     - name: 🏭 Build
       run: |
