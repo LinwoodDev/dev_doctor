@@ -43,12 +43,12 @@ jobs:
     - name: 🏭 Build
       run: |
         flutter build windows
-        powershell Compress-Archive build/windows/runner/Release/** windows.zip
     - name: Archive apk
       uses: actions/upload-artifact@v2
       with:
         name: windows-build
-        path: windows.zip
+        path: |
+           build/windows/runner/Release/**
   deploy:
     runs-on: ubuntu-latest
     needs:
