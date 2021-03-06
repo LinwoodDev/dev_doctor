@@ -78,10 +78,6 @@ class SettingsList extends StatelessWidget {
               title: Text("settings.license").tr(),
               onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor/blob/main/LICENSE")),
           ListTile(
-              leading: Icon(Icons.construction_outlined),
-              title: Text("settings.imprint").tr(),
-              onTap: () => launch("https://codedoctor.tk/impress")),
-          ListTile(
               leading: Icon(Icons.code_outlined),
               title: Text("settings.code").tr(),
               onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor")),
@@ -90,6 +86,23 @@ class SettingsList extends StatelessWidget {
               title: Text("settings.changelog").tr(),
               onTap: () =>
                   launch("https://github.com/LinwoodCloud/dev_doctor/blob/main/CHANGELOG.md")),
+          ListTile(
+              leading: Icon(Icons.supervisor_account_outlined),
+              title: Text("discord").tr(),
+              onTap: () => launch("https://discord.linwood.tk")),
+          ListTile(
+              leading: Icon(Icons.description_outlined),
+              title: Text("docs").tr(),
+              onTap: () => launch("https://linwood.tk/docs/dev-doctor/overview")),
+          ListTile(
+              leading: Icon(Icons.history_outlined),
+              title: Text("settings.changelog").tr(),
+              onTap: () =>
+                  launch("https://github.com/LinwoodCloud/dev_doctor/blob/main/CHANGELOG.md")),
+          ListTile(
+              leading: Icon(Icons.construction_outlined),
+              title: Text("settings.imprint").tr(),
+              onTap: () => launch("https://codedoctor.tk/impress")),
           ListTile(
               leading: Icon(Icons.privacy_tip_outlined),
               title: Text("settings.privacypolicy").tr(),
