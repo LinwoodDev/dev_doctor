@@ -30,7 +30,7 @@ dependencies:
   rxdart: ^0.26.0
   hive_flutter: ^1.0.0
   flutter_modular: ^3.0.0-nullsafety.46
-  url_launcher: ^6.0.0-nullsafety.7
+  url_launcher: ^6.0.2
   flutter_markdown: ^0.6.0
   #universal_html: ^1.2.4
   flutter_svg: ^0.21.0-nullsafety.0
