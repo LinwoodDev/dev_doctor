@@ -58,6 +58,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                   ),
                   appBar: MyAppBar(
                     title: snapshot.data.name,
+                    height: 125,
                     bottom: TabBar(
                         isScrollable: true,
                         onTap: (index) => Modular.to.pushReplacementNamed(

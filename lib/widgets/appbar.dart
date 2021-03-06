@@ -8,8 +8,8 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
 
   final PreferredSizeWidget bottom;
 
-  MyAppBar({this.title, this.actions, Key key, this.bottom})
-      : preferredSize = Size.fromHeight(50.0),
+  MyAppBar({this.title, this.actions, Key key, this.bottom, double height})
+      : preferredSize = Size.fromHeight(height ?? 50.0),
         super(key: key);
 
   @override
