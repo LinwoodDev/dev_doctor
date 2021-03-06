@@ -1,4 +1,3 @@
-import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/server.dart';
 
 import 'course.dart';
