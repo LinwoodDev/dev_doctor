@@ -61,6 +61,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: windows-build
+        path: windows-build/
     - name: 🚀 Deploy release
       uses: eine/tip@master
       if: github.ref == 'refs/heads/main'
