@@ -84,8 +84,9 @@ jobs:
   deploy:
     runs-on: ubuntu-20.04
     needs:
-    - apk
-    - windows
+    - build-apk
+    - build-windows
+    - build-linux
     steps:
     - uses: actions/download-artifact@v2
       with:
