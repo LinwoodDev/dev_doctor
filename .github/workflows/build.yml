@@ -1,9 +1,9 @@
-name: Flutter build
+name: Flutter android build
 
 on: push
 
 jobs:
-  build:
+  apk:
     runs-on: ubuntu-latest
     steps:
     - name: ⬆️ Checkout
@@ -28,13 +28,45 @@ jobs:
       with:
         name: apk-build
         path: build/app/outputs/flutter-apk/app-release.apk
+  windows:
+    runs-on: windows-latest
+    steps:
+    - name: ⬆️ Checkout
+      uses: actions/checkout@v1
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'beta' # or: 'stable' or 'dev'
+    - name: ✅ Enable platforms
+      run: flutter config --enable-windows-desktop
+    - name: 📦 Get dependencies
+      run: flutter pub get
+    - name: 🏭 Build
+      run: |
+        flutter build apk
+        powershell Compress-Archive build/windows/runner/Release/** windows.zip
+    - name: Archive apk
+      uses: actions/upload-artifact@v2
+      with:
+        name: windows-build
+        path: windows.zip
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+        name: apk-build
+    - uses: actions/download-artifact@v2
+      with:
+        name: windows-build
     - name: 🚀 Deploy release
       uses: eine/tip@master
       if: github.ref == 'refs/heads/main'
       with:
         tag: release
         token: ${{ secrets.GITHUB_TOKEN }}
-        files: build/app/outputs/flutter-apk/app-release.apk
+        files: |
+          app-release.apk
+          windows.zip
     - name: 🚀 Deploy preview
       uses: eine/tip@master
       if: github.ref == 'refs/heads/develop'
@@ -42,4 +74,6 @@ jobs:
         tag: preview
         token: ${{ secrets.GITHUB_TOKEN }}
         rm: true
-        files: build/app/outputs/flutter-apk/app-release.apk
+        files: |
+          app-release.apk
+          windows.zip
