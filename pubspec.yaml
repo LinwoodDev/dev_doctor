@@ -248,6 +248,95 @@ flutter:
         - asset: fonts/RobotoMono-BoldItalic.ttf
           style: italic
           weight: 700
+    - family: 'Comfortaa'
+      fonts:
+        - asset: fonts/Comfortaa-Regular.ttf
+
+        - asset: fonts/Comfortaa-Light.ttf
+          weight: 300
+
+        - asset: fonts/Comfortaa-Medium.ttf
+          weight: 500
+
+        - asset: fonts/Comfortaa-SemiBold.ttf
+          weight: 600
+
+        - asset: fonts/Comfortaa-Bold.ttf
+          weight: 700
+    - family: 'Josefin Sans'
+      fonts:
+        - asset: fonts/JosefinSans-Regular.ttf
+        - asset: fonts/JosefinSans-Italic.ttf
+          style: italic
+
+        - asset: fonts/JosefinSans-Thin.ttf
+          weight: 100
+        - asset: fonts/JosefinSans-ThinItalic.ttf
+          style: italic
+          weight: 100
+          
+        - asset: fonts/JosefinSans-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/JosefinSans-ExtraLightItalic.ttf
+          style: italic
+          weight: 200
+
+        - asset: fonts/JosefinSans-Light.ttf
+          weight: 300
+        - asset: fonts/JosefinSans-LightItalic.ttf
+          style: italic
+          weight: 300
+
+        - asset: fonts/JosefinSans-Medium.ttf
+          weight: 500
+        - asset: fonts/JosefinSans-MediumItalic.ttf
+          style: italic
+          weight: 500
+
+        - asset: fonts/JosefinSans-SemiBold.ttf
+          weight: 600
+        - asset: fonts/JosefinSans-SemiBoldItalic.ttf
+          style: italic
+          weight: 600
+
+        - asset: fonts/JosefinSans-Bold.ttf
+          weight: 700
+        - asset: fonts/JosefinSans-BoldItalic.ttf
+          style: italic
+          weight: 700
+    - family: 'Oswald'
+      fonts:
+        - asset: fonts/Oswald-Regular.ttf
+          
+        - asset: fonts/Oswald-ExtraLight.ttf
+          weight: 200
+
+        - asset: fonts/Oswald-Light.ttf
+          weight: 300
+
+        - asset: fonts/Oswald-Medium.ttf
+          weight: 500
+
+        - asset: fonts/Oswald-SemiBold.ttf
+          weight: 600
+
+        - asset: fonts/Oswald-Bold.ttf
+          weight: 700
+    - family: 'Shippori Mincho'
+      fonts:
+        - asset: fonts/ShipporiMincho-Regular.ttf
+
+        - asset: fonts/ShipporiMincho-Medium.ttf
+          weight: 500
+
+        - asset: fonts/ShipporiMincho-SemiBold.ttf
+          weight: 600
+
+        - asset: fonts/ShipporiMincho-Bold.ttf
+          weight: 700
+
+        - asset: fonts/ShipporiMincho-ExtraBold.ttf
+          weight: 800
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/

@@ -13,18 +13,18 @@
             "correct": "Richtig!",
             "wrong": "Falsche Antwort!",
             "check": "Abschicken",
-            "retry":"Quiz wiederholen",
-            "start":"Quiz starten",
-            "points":"Punkte",
-            "time":"Sekunden übrig",
+            "retry": "Quiz wiederholen",
+            "start": "Quiz starten",
+            "points": "Punkte",
+            "time": "Sekunden übrig",
             "validation": {
                 "title": "Auswertung",
                 "correct": "Alles richtig!",
                 "wrong": "Es gibt Fehler!"
             }
         },
-        "video":{
-            "open":"Öffne Video"
+        "video": {
+            "open": "Öffne Video"
         },
         "start": "Start",
         "support": "Support"
@@ -44,7 +44,7 @@
     "editor": {
         "title": "Editor"
     },
-    "browser":"Open in brwoser",
+    "browser": "Open in brwoser",
     "discord": "Betrete unseren Discord",
     "error-with-status": "Auf dem Server ist ein Fehler ({statusCode}) aufgetreten",
     "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",
@@ -58,7 +58,7 @@
         "information": "Informationen",
         "title": "Einstellungen",
         "privacypolicy": "Datenschutzerklärung",
-        "changelog":"Änderungsliste",
+        "changelog": "Änderungsliste",
         "home": {
             "title": "Start",
             "username": "Benutzername"
@@ -81,11 +81,15 @@
                 "de": "Deutsch",
                 "en": "Englisch"
             },
-            "color":{
-                "title":"Farbe",
-                "classic":"Klassisch",
-                "modern":"Modern",
-                "artistic":"Künstlerisch"
+            "color": {
+                "title": "Farbe",
+                "classic": "Klassisch",
+                "modern": "Modern",
+                "artistic": "Künstlerisch",
+                "spring": "Frühling",
+                "summer": "Sommer",
+                "autumn": "Herbst",
+                "winter": "Winter"
             }
         },
         "downloads": {

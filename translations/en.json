@@ -82,7 +82,11 @@
                 "title":"Color",
                 "classic":"Classic",
                 "modern":"Modern",
-                "artistic":"Artistic"
+                "artistic":"Artistic",
+                "spring": "Spring",
+                "summer": "Summer",
+                "autumn": "Autumn",
+                "winter": "Winter"
             }
         },
         "general": {
