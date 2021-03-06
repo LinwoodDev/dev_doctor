@@ -22,6 +22,7 @@ jobs:
     #- run: flutter test
     - name: 🏭 Build
       run: |
+        flutter doctor -v
         flutter build apk -v --release
     - name: Archive
       uses: actions/upload-artifact@v2
@@ -43,6 +44,7 @@ jobs:
     - name: 🏭 Build
       run: |
         flutter clean
+        flutter doctor -v
         flutter build windows -v --release
         flutter pub run msix:create
     - name: Archive
@@ -68,10 +70,11 @@ jobs:
       run: flutter config --enable-linux-desktop
     - name: 📦 Get dependencies
       run: |
-        flutter clean
         flutter pub get
     - name: 🏭 Build
       run: |
+        flutter clean
+        flutter doctor -v
         flutter build linux -v --release
     - name: Archive
       uses: actions/upload-artifact@v2
