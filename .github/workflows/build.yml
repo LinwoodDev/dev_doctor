@@ -22,7 +22,7 @@ jobs:
     #- run: flutter test
     - name: 🏭 Build
       run: |
-        flutter build apk
+        flutter build apk --release
     - name: Archive
       uses: actions/upload-artifact@v2
       with:
@@ -42,7 +42,7 @@ jobs:
       run: flutter pub get
     - name: 🏭 Build
       run: |
-        flutter build windows
+        flutter build windows --release
         flutter pub run msix:create
     - name: Archive
       uses: actions/upload-artifact@v2
@@ -50,6 +50,27 @@ jobs:
         name: windows-build
         path: |
            build/windows/runner/Release/**
+  # ubuntu:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: ⬆️ Checkout
+  #     uses: actions/checkout@v1
+  #   - uses: subosito/flutter-action@v1
+  #     with:
+  #       channel: 'beta' # or: 'stable' or 'dev'
+  #   - name: ✅ Enable platforms
+  #     run: flutter config --enable-linux-desktop
+  #   - name: 📦 Get dependencies
+  #     run: flutter pub get
+  #   - name: 🏭 Build
+  #     run: |
+  #       flutter build linux --release
+  #   - name: Archive
+  #     uses: actions/upload-artifact@v2
+  #     with:
+  #       name: windows-build
+  #       path: |
+  #          build/windows/runner/Release/**
   deploy:
     runs-on: ubuntu-latest
     needs:
