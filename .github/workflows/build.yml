@@ -73,7 +73,7 @@ jobs:
           windows-build.zip
     - name: 📦 Zip artifacts
       run: |
-        zip -r windows.zip windows-build/**
+        zip -r -j windows.zip windows-build/*
     - name: 🚀 Deploy preview
       uses: eine/tip@master
       if: github.ref == 'refs/heads/develop'
