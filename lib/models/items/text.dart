@@ -9,4 +9,5 @@ class TextPartItem extends PartItem {
   TextPartItem.fromJson(Map<String, dynamic> json)
       : text = json['text'],
         super.fromJson(json);
+  Map<String, dynamic> toJson() => {"text": text};
 }

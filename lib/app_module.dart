@@ -10,6 +10,7 @@ import 'app_widget.dart';
 import 'courses/home.dart';
 import 'courses/module.dart';
 import 'editor/home.dart';
+import 'editor/module.dart';
 import 'home.dart';
 
 class AppModule extends Module {
@@ -24,6 +25,7 @@ class AppModule extends Module {
       ...HomeRoutes.values.map((e) =>
           ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
     ]),
+    ModuleRoute('/editor', module: EditorModule()),
     ModuleRoute('/backends', module: BackendsModule()),
     ModuleRoute('/settings', module: SettingsModule()),
     ModuleRoute('/courses', module: CourseModule()),

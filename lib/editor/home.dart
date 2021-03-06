@@ -4,6 +4,7 @@ import 'package:dev_doctor/editor/bloc/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -29,6 +30,8 @@ class _EditorPageState extends State<EditorPage> {
                       return ListTile(title: Text(bloc.server.name));
                     }))),
         floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {}, icon: Icon(Icons.add_outlined), label: Text("editor.create").tr()));
+            onPressed: () => Modular.to.pushNamed("/editor/create"),
+            icon: Icon(Icons.add_outlined),
+            label: Text("editor.create.fab").tr()));
   }
 }

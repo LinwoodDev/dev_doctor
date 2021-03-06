@@ -10,4 +10,6 @@ class CourseEditorBloc {
   CourseEditorBloc.fromJson(Map<String, dynamic> json)
       : course = Course.fromJson(json['course']),
         parts = (json['parts'] as List<dynamic>).map((e) => CoursePart.fromJson(e));
+  Map<String, dynamic> toJson() =>
+      {"course": course.toJson(), "parts": parts.map((e) => e.toJson())};
 }

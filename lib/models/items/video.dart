@@ -23,4 +23,6 @@ class VideoPartItem extends PartItem {
     else
       return url;
   }
+
+  Map<String, dynamic> toJson() => {"url": url, "source": EnumToString.convertToString(source)};
 }

@@ -53,6 +53,23 @@ class Course {
         parts = List<String>.from(json['parts']),
         private = json['private'],
         supportUrl = json['support_url'];
+  Map<String, dynamic> toJson() => {
+        "server": server,
+        "slug": slug,
+        "name": name,
+        "description": description,
+        "icon": icon,
+        "author": author,
+        "author_url": authorUrl,
+        "author_avatar": authorAvatar,
+        "body": body,
+        "index": index,
+        "installed": installed,
+        "lang": lang,
+        "parts": parts,
+        "private": private,
+        "support_url": supportUrl
+      };
 
   get url => server.url + "/" + slug;
 

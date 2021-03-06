@@ -16,6 +16,10 @@ class QuizPartItem extends PartItem {
             .map((question) => QuizQuestion.fromJson(question))
             .toList(),
         super.fromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() =>
+      {"text": text, "time": time, "questions": questions.map((e) => e.toJson())};
 }
 
 @immutable
@@ -33,6 +37,12 @@ class QuizQuestion {
         answers = (json['answers'] as List<dynamic>)
             .map((answer) => QuizAnswer.fromJson(answer))
             .toList();
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "description": description,
+        "evaluation": evaluation,
+        "answers": answers.map((e) => e.toJson())
+      };
 }
 
 @immutable
@@ -48,4 +58,6 @@ class QuizAnswer {
         description = json['description'],
         correct = json['correct'] ?? false,
         points = json['points'];
+  Map<String, dynamic> toJson() =>
+      {"correct": correct, "name": name, "description": description, "points": points};
 }

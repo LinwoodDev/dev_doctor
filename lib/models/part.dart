@@ -31,6 +31,12 @@ class CoursePart {
               return null;
           }
         }).toList();
+  Map<String, dynamic> toJson() => {
+        "course": course,
+        "description": description,
+        "slug": slug,
+        "items": items.map((e) => e.toJson())
+      };
 
   CoursesServer get server => course.server;
 }

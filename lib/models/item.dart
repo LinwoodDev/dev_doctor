@@ -11,4 +11,5 @@ abstract class PartItem {
       : name = json['name'],
         description = json['description'],
         index = json['index'];
+  Map<String, dynamic> toJson();
 }

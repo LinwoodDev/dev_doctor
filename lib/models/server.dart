@@ -40,6 +40,18 @@ class CoursesServer {
         body = json['body'],
         supportUrl = json['support_url'];
 
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "url": url,
+        "index": index,
+        "type": type,
+        "courses": courses,
+        "icon": icon,
+        "entry": entry,
+        "body": body,
+        "support_url": supportUrl
+      };
+
   bool get added => index != null;
 
   Future<CoursesServer> add() async => CoursesServer(
