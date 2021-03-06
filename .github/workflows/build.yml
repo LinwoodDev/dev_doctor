@@ -42,7 +42,7 @@ jobs:
       run: flutter pub get
     - name: 🏭 Build
       run: |
-        flutter build apk
+        flutter build windows
         powershell Compress-Archive build/windows/runner/Release/** windows.zip
     - name: Archive apk
       uses: actions/upload-artifact@v2
