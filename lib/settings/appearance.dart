@@ -44,7 +44,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                                                 content: Text('settings.appearance.locale.restart')
                                                     .tr()));
                                           } else
-                                            context.locale = Locale(selectedLocale);
+                                            context.setLocale(Locale(selectedLocale));
                                           Navigator.pop(context);
                                         })
                                   ],

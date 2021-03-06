@@ -22,7 +22,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                   onWebViewCreated: (InAppWebViewController controller) {
                     webView = controller;
                   },
-                  initialUrl: widget.item.src,
+                  initialUrlRequest: URLRequest(url: widget.item.src),
                 ))));
   }
 }

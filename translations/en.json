@@ -23,6 +23,9 @@
                 "wrong": "You made mistakes!"
             }
         },
+        "video":{
+            "open":"Open video"
+        },
         "start": "Start",
         "support": "Support"
     },

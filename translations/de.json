@@ -23,6 +23,9 @@
                 "wrong": "Es gibt Fehler!"
             }
         },
+        "video":{
+            "open":"Öffne Video"
+        },
         "start": "Start",
         "support": "Support"
     },
