@@ -149,7 +149,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                     ElevatedButton.icon(
                         onPressed: () => validate(),
                         icon: Icon(Icons.check_outlined),
-                        label: Text("course.question.check".tr().toUpperCase())
+                        label: Text("course.question.check".tr().toUpperCase()))
                 ]))
             : Center(
                 child: ElevatedButton.icon(
