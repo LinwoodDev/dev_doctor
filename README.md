@@ -33,7 +33,7 @@ Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 * SkyDroid: <https://to.skydroid.app/com.github.linwoodcloud.dev_doctor.izzyondroid>
 * FDroid: <https://www.f-droid.org/en/packages/com.github.linwoodcloud.dev_doctor/>
 
-Community:
+##### Community
 
 * ApkPure: <https://apkpure.com/dev-doctor/com.github.linwoodcloud.dev_doctor>
 
