@@ -8,7 +8,7 @@
 PRODUCT_NAME = Dev-Doctor
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.github.linwoodcloud.devdoctor
+PRODUCT_BUNDLE_IDENTIFIER = tk.linwood.devdoctor
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2021 com.github.linwoodcloud. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2021 tk.linwood. All rights reserved.
