@@ -6,6 +6,30 @@
 [![GitHub License badge](https://img.shields.io/github/license/LinwoodCloud/dev_doctor?style=for-the-badge)](https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE)
 [![Discord badge](https://img.shields.io/discord/735424757142519848?style=for-the-badge)](https://discord.linwood.tk)
 
+## Table of Contents
+
+- [Dev-Doctor](#dev-doctor)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+    - [Learn everything](#learn-everything)
+    - [Learn everywhere](#learn-everywhere)
+    - [Try it](#try-it)
+  - [Installation](#installation)
+    - [Mobile](#mobile)
+      - [Android](#android)
+        - [Stores](#stores)
+          - [Community](#community)
+      - [iOS](#ios)
+    - [Web](#web)
+    - [Desktop](#desktop)
+      - [Windows](#windows)
+      - [Linux](#linux)
+      - [MacOS](#macos)
+  - [Contributung](#contributung)
+    - [Issues](#issues)
+    - [Pull request](#pull-request)
+    - [Community](#community-1)
+
 ## Introduction
 
 ### Learn everything
