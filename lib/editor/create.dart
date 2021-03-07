@@ -17,8 +17,10 @@ class _CreateServerPageState extends State<CreateServerPage> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _noteController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey();
+  Box<String> _box = Hive.box<String>('editor');
   @override
   Widget build(BuildContext context) {
+    var _names = _box.values.map((e) => ServerEditorBloc.fromJson(json.decode(e)).server.name);
     return Scaffold(
         appBar: MyAppBar(title: "editor.create.title".tr()),
         body: Form(
@@ -31,6 +33,7 @@ class _CreateServerPageState extends State<CreateServerPage> {
                           TextFormField(
                               validator: (value) {
                                 if (value.isEmpty) return "editor.create.name.empty".tr();
+                                if (_names.contains(value)) return "editor.create.name.exist".tr();
                                 return null;
                               },
                               decoration: InputDecoration(

@@ -155,6 +155,6 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                 child: ElevatedButton.icon(
                     icon: Icon(Icons.check_box_outlined),
                     onPressed: () => setState(() => startTimer()),
-                    label: Text("course.question.start").tr())));
+                    label: Text("course.question.start".tr().toUpperCase()))));
   }
 }

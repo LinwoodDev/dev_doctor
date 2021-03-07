@@ -1,3 +1,4 @@
+import 'package:dev_doctor/editor/bloc/server.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/image.dart';
@@ -14,8 +15,10 @@ class CoursePage extends StatefulWidget {
   final Course model;
   final int courseId;
   final int serverId;
+  final ServerEditorBloc editorBloc;
 
-  const CoursePage({Key key, this.courseId, this.serverId, this.model}) : super(key: key);
+  const CoursePage({Key key, this.courseId, this.serverId, this.model, this.editorBloc})
+      : super(key: key);
   @override
   _CoursePageState createState() => _CoursePageState();
 }
@@ -32,18 +35,20 @@ class _CoursePageState extends State<CoursePage> {
     return Scaffold(
         body: widget.model != null
             ? _buildView(widget.model)
-            : FutureBuilder<Course>(
-                future: _buildFuture(),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return Center(child: CircularProgressIndicator());
-                    default:
-                      if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                      var course = snapshot.data;
-                      return _buildView(course);
-                  }
-                }));
+            : widget.editorBloc != null
+                ? _buildView(widget.editorBloc.courses[widget.courseId].course)
+                : FutureBuilder<Course>(
+                    future: _buildFuture(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Center(child: CircularProgressIndicator());
+                        default:
+                          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                          var course = snapshot.data;
+                          return _buildView(course);
+                      }
+                    }));
   }
 
   Widget _buildView(Course course) => NestedScrollView(

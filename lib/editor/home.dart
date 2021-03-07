@@ -6,6 +6,7 @@ import 'package:dev_doctor/editor/create.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -34,8 +35,11 @@ class _EditorPageState extends State<EditorPage> {
                           onDismissed: (direction) {
                             _box.deleteAt(index);
                           },
-                          child:
-                              ListTile(title: Text(bloc.server.name), subtitle: Text(bloc.note)));
+                          child: ListTile(
+                              title: Text(bloc.server.name),
+                              subtitle: Text(bloc.note),
+                              onTap: () =>
+                                  Modular.to.pushNamed("/editor/details?serverId=$index")));
                     }))),
         floatingActionButton: OpenContainer(
             transitionType: ContainerTransitionType.fadeThrough,

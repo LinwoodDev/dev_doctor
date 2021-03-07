@@ -190,11 +190,11 @@ class _BackendsPageState extends State<BackendsPage> with TickerProviderStateMix
 
 class BackendEntryListTile extends StatefulWidget {
   final CoursesServer server;
-  final int backendId;
+  final int serverId;
   final String user;
   final String entry;
 
-  const BackendEntryListTile({Key key, this.server, this.backendId, this.user, this.entry})
+  const BackendEntryListTile({Key key, this.server, this.serverId, this.user, this.entry})
       : super(key: key);
   @override
   _BackendEntryListTileState createState() => _BackendEntryListTileState();

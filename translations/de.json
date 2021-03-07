@@ -49,7 +49,8 @@
             "name":{
                 "label":"Name",
                 "hint":"Dev-Doctor",
-                "empty":"Der Name darf nicht leer sein!"
+                "empty":"Der Name darf nicht leer sein!",
+                "exist":"Ein Backend mit dem gleichen Namen existiert bereits!"
             },
             "note": {
                 "label":"Notiz",
