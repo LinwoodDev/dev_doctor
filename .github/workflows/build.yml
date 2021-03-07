@@ -81,30 +81,30 @@ jobs:
           name: linux-build
           path: |
             build/linux/x64/release/bundle/**
-  build-macos:
-    runs-on: macos-latest
-    steps:
-      - name: ⬆️ Checkout
-        uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1
-        with:
-          channel: "dev" # or: 'stable' or 'dev'
-      - name: ✅ Enable platforms
-        run: flutter config --enable-macos-desktop
-      - name: 📦 Get dependencies
-        run: |
-          flutter pub get
-      - name: 🏭 Build
-        run: |
-          flutter clean
-          flutter doctor -v
-          flutter build macos -v
-      - name: Archive
-        uses: actions/upload-artifact@v2
-        with:
-          name: macos-build
-          path: |
-            build/windows/runner/Release/**
+  #build-macos:
+  #  runs-on: macos-latest
+  #  steps:
+  #    - name: ⬆️ Checkout
+  #      uses: actions/checkout@v1
+  #    - uses: subosito/flutter-action@v1
+  #      with:
+  #        channel: "dev" # or: 'stable' or 'dev'
+  #    - name: ✅ Enable platforms
+  #      run: flutter config --enable-macos-desktop
+  #    - name: 📦 Get dependencies
+  #      run: |
+  #        flutter pub get
+  #    - name: 🏭 Build
+  #      run: |
+  #        flutter clean
+  #        flutter doctor -v
+  #        flutter build macos -v
+  #    - name: Archive
+  #      uses: actions/upload-artifact@v2
+  #      with:
+  #        name: macos-build
+  #        path: |
+  #          build/windows/runner/Release/**
   deploy:
     runs-on: ubuntu-18.04
     needs:
