@@ -2,6 +2,10 @@
     "title": "Dev-Doctor.cf",
     "subtitle": "A free, opensource, serverless learning platform. A linwood project",
     "course": {
+        "add":{
+            "name":"Name",
+            "hint":"Sample course"
+        },
         "course": "Course",
         "home": "HOME",
         "statistics": "Statistics",
@@ -115,14 +119,10 @@
             "title": "Servers",
             "add": {
                 "fab": "Add server",
-                "cancel": "Cancel",
-                "create": "Create",
                 "url": "URL",
                 "hint": "eg. https://backend.dev-doctor.cf",
                 "title": "Do you want to add the server {name}?",
-                "body": "The server {name} with the url {url} will displayed on the courses page.",
-                "agree": "Agree",
-                "disagree": "Disagree"
+                "body": "The server {name} with the url {url} will displayed on the courses page."
             },
             "error": "Server not available!"
         },
@@ -130,17 +130,16 @@
             "title": "Collections",
             "add": {
                 "fab": "Add collection",
-                "cancel": "Cancel",
-                "create": "Create",
                 "url": "URL",
                 "hint": "eg. https://collection.dev-doctor.cf",
                 "title": "Do you want to add the collection {name}?",
-                "body": "The colelction {name} with the url {url} will displayed on the collection page.",
-                "agree": "Agree",
-                "disagree": "Disagree"
+                "body": "The colelction {name} with the url {url} will displayed on the collection page."
             },
             "error": "Collection server not available!"
         },
+        "agree": "Agree",
+        "disagree": "Disagree",
+        "save":"Save",
         "about": "About",
         "imprint": "Imprint",
         "code": "Code",

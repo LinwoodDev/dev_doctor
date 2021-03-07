@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dev_doctor/models/server.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hive/hive.dart';
 
 import 'course.dart';
 
@@ -7,15 +10,21 @@ import 'course.dart';
 class ServerEditorBloc {
   final CoursesServer server;
   final String note;
+  final int key;
   final List<CourseEditorBloc> courses;
 
-  ServerEditorBloc(this.server, {this.courses = const [], this.note});
+  ServerEditorBloc(this.server, {this.key, this.courses = const [], this.note});
   ServerEditorBloc.fromJson(Map<String, dynamic> json)
       : server = CoursesServer.fromJson(json['server'] ?? {}),
         note = json['note'],
+        key = json['key'],
         courses = (json['courses'] as List<dynamic> ?? [])
             .map((e) => CourseEditorBloc.fromJson(e))
             .toList();
   Map<String, dynamic> toJson() =>
       {"server": server.toJson(), "note": note, "courses": courses.map((e) => e.toJson()).toList()};
+
+  void save() {
+    Hive.box<String>('editor').put(key, json.encode(toJson()));
+  }
 }

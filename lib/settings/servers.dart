@@ -122,12 +122,12 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                 ),
                 actions: <Widget>[
                   TextButton(
-                      child: Text('settings.servers.add.cancel'.tr().toUpperCase()),
+                      child: Text('cancel'.tr().toUpperCase()),
                       onPressed: () {
                         Navigator.pop(context);
                       }),
                   TextButton(
-                      child: Text('settings.servers.add.create'.tr().toUpperCase()),
+                      child: Text('create'.tr().toUpperCase()),
                       onPressed: () async {
                         Navigator.pop(context);
                         _createServer(url);

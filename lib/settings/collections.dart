@@ -114,12 +114,12 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                 ),
                 actions: <Widget>[
                   TextButton(
-                      child: Text('settings.collections.add.cancel'.tr().toUpperCase()),
+                      child: Text('cancel'.tr().toUpperCase()),
                       onPressed: () {
                         Navigator.pop(context);
                       }),
                   TextButton(
-                      child: Text('settings.collections.add.create'.tr().toUpperCase()),
+                      child: Text('create'.tr().toUpperCase()),
                       onPressed: () async {
                         Navigator.pop(context);
                         _createCollection(url);

@@ -33,10 +33,10 @@ class AppearanceSettingsPage extends StatelessWidget {
                               return AlertDialog(
                                   actions: [
                                     TextButton(
-                                        child: Text('CANCEL'),
+                                        child: Text('cancel'.tr().toUpperCase()),
                                         onPressed: () => Navigator.of(context).pop()),
                                     TextButton(
-                                        child: Text('SAVE'),
+                                        child: Text('SAVE'.tr().toUpperCase()),
                                         onPressed: () async {
                                           if (selectedLocale == 'default') {
                                             context.deleteSaveLocale();
@@ -90,10 +90,10 @@ class AppearanceSettingsPage extends StatelessWidget {
                               return AlertDialog(
                                 actions: [
                                   TextButton(
-                                      child: Text('CANCEL'),
+                                      child: Text('cancel'.tr().toUpperCase()),
                                       onPressed: () => Navigator.of(context).pop()),
                                   TextButton(
-                                      child: Text('SAVE'),
+                                      child: Text('save'.tr().toUpperCase()),
                                       onPressed: () async {
                                         _appearanceBox.put('theme', selectedRadio.index);
                                         Navigator.pop(context);
@@ -134,10 +134,10 @@ class AppearanceSettingsPage extends StatelessWidget {
                             return AlertDialog(
                               actions: [
                                 TextButton(
-                                    child: Text('CANCEL'),
+                                    child: Text('cancel'.tr().toUpperCase()),
                                     onPressed: () => Navigator.of(context).pop()),
                                 TextButton(
-                                    child: Text('SAVE'),
+                                    child: Text('save'.tr().toUpperCase()),
                                     onPressed: () async {
                                       _appearanceBox.put('color', selectedRadio.index);
                                       Navigator.pop(context);
