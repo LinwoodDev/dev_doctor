@@ -34,7 +34,7 @@ class CoursesServer {
         url = json['url'],
         index = (json['index'] != -1) ? json['index'] : null,
         type = json['type'],
-        courses = List<String>.from(json['courses']),
+        courses = List<String>.from(json['courses'] ?? []),
         icon = json['icon'],
         entry = json['entry'],
         body = json['body'],

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:animations/animations.dart';
 import 'package:dev_doctor/editor/bloc/server.dart';
+import 'package:dev_doctor/editor/create.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -27,11 +29,16 @@ class _EditorPageState extends State<EditorPage> {
                     itemBuilder: (context, index) {
                       var item = json.decode(_box.getAt(index));
                       var bloc = ServerEditorBloc.fromJson(item);
-                      return ListTile(title: Text(bloc.server.name));
+                      return ListTile(title: Text(bloc.server.name), subtitle: Text(bloc.note));
                     }))),
-        floatingActionButton: FloatingActionButton.extended(
-            onPressed: () => Modular.to.pushNamed("/editor/create"),
-            icon: Icon(Icons.add_outlined),
-            label: Text("editor.create.fab").tr()));
+        floatingActionButton: OpenContainer(
+            transitionType: ContainerTransitionType.fadeThrough,
+            transitionDuration: Duration(milliseconds: 750),
+            openBuilder: (context, _) => CreateServerPage(),
+            closedShape: CircleBorder(),
+            closedBuilder: (context, openContainer) => FloatingActionButton(
+                onPressed: openContainer,
+                child: Icon(Icons.add_outlined),
+                tooltip: "editor.create.fab".tr())));
   }
 }

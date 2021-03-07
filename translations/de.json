@@ -42,7 +42,21 @@
         "longer": "Der Suchbegriff muss länger als 2 Zeichen sein."
     },
     "editor": {
-        "title": "Editor"
+        "title": "Editor",
+        "create":{
+            "fab":"Erstelle Backend",
+            "title": "Erstelle Backend",
+            "name":{
+                "label":"Nmae",
+                "hint":"Dev-Doctor",
+                "empty":"Der Name darf nicht leer sein!"
+            },
+            "note": {
+                "label":"Notiz",
+                "hint":"Das Beispiel-Backend von dev-doctor"
+            },
+            "submit":"Erstellen"
+        }
     },
     "browser": "Open in brwoser",
     "discord": "Betrete unseren Discord",

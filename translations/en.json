@@ -42,7 +42,21 @@
         "longer": "Search term must be longer than two letters."
     },
     "editor": {
-        "title": "Editor"
+        "title": "Editor",
+        "create":{
+            "fab":"Create backend",
+            "title": "Create backend",
+            "name":{
+                "label":"Nmae",
+                "hint":"Dev-Doctor",
+                "empty":"The name cannot be empty!"
+            },
+            "note": {
+                "label":"Note",
+                "hint":"The sample backend of dev-doctor"
+            },
+            "submit":"Create"
+        }
     },
     "browser":"Open in brwoser",
     "discord": "Join our discord",

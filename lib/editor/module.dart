@@ -7,6 +7,5 @@ class EditorModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (_, args) => EditorPage()),
-        ChildRoute('/create', child: (_, args) => CreateServerPage())
       ];
 }
