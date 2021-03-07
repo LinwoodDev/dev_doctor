@@ -67,9 +67,6 @@ Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 
 > Currently not available.
 
-- Stable
-- Preview
-
 ### Web
 
 - [Stable](https://dev-doctor.cf)
@@ -89,8 +86,7 @@ Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 
 #### MacOS
 
-- [Stable](https://github.com/LinwoodCloud/dev_doctor/releases/download/release/macos.zip)
-- [Preview](https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/macos.zip)
+> Currently not available.
 
 ## Contributung
 
