@@ -41,7 +41,11 @@ Community:
 
 > Currently not available.
 
+* Stable
+* Preview
+
+### Web
+
 * [Stable](https://dev-doctor.cf)
 * [Preview](https://preview.dev-doctor.cf)
 
-## Community
