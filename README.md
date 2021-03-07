@@ -45,10 +45,3 @@ Community:
 * [Preview](https://preview.dev-doctor.cf)
 
 ## Community
-
-### Installation
-
-#### Android
-
-##### Stores
-* ApkPure: <https://apkpure.com/dev-doctor/com.github.linwoodcloud.dev_doctor>
