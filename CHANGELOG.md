@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.3 (Narcg 2, 2021)
+## 1.2.3 (March 2, 2021)
 
 * Add a backend on default
 * Fix different app bars
