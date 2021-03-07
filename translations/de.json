@@ -124,7 +124,7 @@
                 "url": "URL",
                 "hint": "zB. https://backend.dev-doctor.cf",
                 "title": "Möchten Sie den Server {name} hinzufügen?",
-                "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt.",
+                "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt."
             },
             "error": "Server nicht erreichbar!"
         },
@@ -135,7 +135,7 @@
                 "url": "URL",
                 "hint": "zB. https://collection.dev-doctor.cf",
                 "title": "Möchten Sie den Kollektion {name} hinzufügen?",
-                "body": "Die Kollektion {name} mit der URL {url} wird auf der Kollektionseite angezeigt.",
+                "body": "Die Kollektion {name} mit der URL {url} wird auf der Kollektionseite angezeigt."
             },
             "error": "Kollektionsserver nicht erreichbar!"
         },
