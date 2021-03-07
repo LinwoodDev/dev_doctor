@@ -47,7 +47,7 @@
             "fab":"Create backend",
             "title": "Create backend",
             "name":{
-                "label":"Nmae",
+                "label":"Name",
                 "hint":"Dev-Doctor",
                 "empty":"The name cannot be empty!"
             },
