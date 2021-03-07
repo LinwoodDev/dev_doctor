@@ -90,7 +90,7 @@ jobs:
       with:
         channel: 'dev' # or: 'stable' or 'dev'
     - name: ✅ Enable platforms
-      run: flutter config --enable-linux-desktop
+      run: flutter config --enable-macos-desktop
     - name: 📦 Get dependencies
       run: |
         flutter pub get
