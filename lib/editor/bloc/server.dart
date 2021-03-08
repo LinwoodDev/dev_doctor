@@ -21,19 +21,25 @@ class ServerEditorBloc {
         courses = (json['courses'] as List<dynamic> ?? [])
             .map((e) => CourseEditorBloc.fromJson(e))
             .toList();
+  factory ServerEditorBloc.fromKey(int key) =>
+      ServerEditorBloc.fromJson(json.decode(Hive.box<String>('editor').get(key))..['key'] = key);
   Map<String, dynamic> toJson() =>
       {"server": server.toJson(), "note": note, "courses": courses.map((e) => e.toJson()).toList()};
 
-  void save() {
-    Hive.box<String>('editor').put(key, json.encode(toJson()));
+  Future<ServerEditorBloc> save() async {
+    var box = Hive.box<String>('editor');
+    var data = json.encode(toJson());
+    if (key != null)
+      box.put(key, data);
+    else
+      return ServerEditorBloc(server, key: await box.add(data), courses: courses, note: note);
+    return this;
   }
 
-  ServerEditorBloc copyWith(
-          {CoursesServer server, String note, int key, List<CourseEditorBloc> courses}) =>
+  ServerEditorBloc copyWith({CoursesServer server, String note, List<CourseEditorBloc> courses}) =>
       ServerEditorBloc(server ?? this.server,
           key: key, courses: courses ?? this.courses, note: note ?? this.note);
 
-  CourseEditorBloc getCourse(String name) {
-    return courses.firstWhere((element) => element.course.name == name);
-  }
+  CourseEditorBloc getCourse(String name) =>
+      courses.firstWhere((element) => element.course.name == name);
 }

@@ -50,7 +50,7 @@ class Course {
         index = json['index'],
         installed = json['installed'],
         lang = json['lang'],
-        parts = List<String>.from(json['parts']),
+        parts = List<String>.from(json['parts'] ?? []),
         private = json['private'],
         supportUrl = json['support_url'];
   Map<String, dynamic> toJson() => {

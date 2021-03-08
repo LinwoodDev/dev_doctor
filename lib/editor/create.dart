@@ -49,12 +49,11 @@ class _CreateServerPageState extends State<CreateServerPage> {
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.check_outlined),
             tooltip: "editor.create.submit".tr(),
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState.validate()) {
-                Hive.box<String>('editor').add(json.encode(ServerEditorBloc(
-                        CoursesServer(name: _nameController.text),
+                await ServerEditorBloc(CoursesServer(name: _nameController.text),
                         note: _noteController.text)
-                    .toJson()));
+                    .save();
                 Navigator.of(context).pop();
               }
             }));

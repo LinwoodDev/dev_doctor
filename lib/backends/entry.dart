@@ -37,14 +37,16 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
   TextEditingController _noteController;
   GlobalKey<FormState> _formKey = GlobalKey();
   Box<String> _box = Hive.box<String>('editor');
+  ServerEditorBloc _editorBloc;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
-    _nameController = TextEditingController(text: widget.editorBloc.server.name);
-    _noteController = TextEditingController(text: widget.editorBloc.note);
+    _editorBloc = widget.editorBloc;
+    _nameController = TextEditingController(text: _editorBloc.server.name);
+    _noteController = TextEditingController(text: _editorBloc.note);
   }
 
   @override
@@ -71,8 +73,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
   Widget build(BuildContext context) {
     return widget.model != null
         ? _buildView(widget.model)
-        : widget.editorBloc != null
-            ? _buildView(widget.editorBloc.server)
+        : _editorBloc != null
+            ? _buildView(_editorBloc.server)
             : FutureBuilder<CoursesServer>(
                 future: _buildFuture(),
                 builder: (context, snapshot) {
@@ -93,11 +95,11 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
-                      expandedHeight: widget.editorBloc != null ? null : 400.0,
+                      expandedHeight: _editorBloc != null ? null : 400.0,
                       floating: false,
                       pinned: true,
-                      actions: [if (widget.editorBloc == null) AddBackendButton(server: server)],
-                      bottom: widget.editorBloc != null
+                      actions: [if (_editorBloc == null) AddBackendButton(server: server)],
+                      bottom: _editorBloc != null
                           ? TabBar(
                               controller: _tabController,
                               tabs: [Tab(text: "General"), Tab(text: "Courses")],
@@ -106,16 +108,16 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                             )
                           : null,
                       title: Text(server.name),
-                      flexibleSpace: widget.editorBloc != null
+                      flexibleSpace: _editorBloc != null
                           ? null
                           : FlexibleSpaceBar(
                               background: Container(
                                   margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
                                   child: Hero(
-                                      tag: widget.editorBloc != null
-                                          ? "editor-backend-${widget.editorBloc.server.name}"
+                                      tag: _editorBloc != null
+                                          ? "editor-backend-${_editorBloc.server.name}"
                                           : "backend-icon-${server.entry.collection.index}-${server.entry.user.name}-${server.entry.name}",
-                                      child: widget.editorBloc != null
+                                      child: _editorBloc != null
                                           ? Container()
                                           : UniversalImage(
                                               url: server.url + "/icon",
@@ -126,7 +128,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                     )
                   ];
                 },
-                body: widget.editorBloc != null
+                body: _editorBloc != null
                     ? TabBarView(
                         controller: _tabController,
                         children: [_buildGeneral(context, server), _buildCourses(context)])
@@ -134,7 +136,23 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
             floatingActionButton: _buildFab(),
           ));
 
-  Widget _buildCourses(BuildContext context) => Scrollbar(child: ListView(children: []));
+  Widget _buildCourses(BuildContext context) => Scrollbar(
+          child: ListView.builder(
+        itemCount: _editorBloc.courses.length,
+        itemBuilder: (context, index) {
+          var courseBloc = _editorBloc.courses[index];
+          return Dismissible(
+              background: Container(color: Colors.red),
+              onDismissed: (direction) async {
+                _editorBloc.courses.remove(courseBloc);
+                _editorBloc = await _editorBloc.save();
+              },
+              key: Key(courseBloc.course.slug),
+              child: ListTile(
+                  title: Text(courseBloc.course.name),
+                  subtitle: Text(courseBloc.course.description ?? "")));
+        },
+      ));
 
   Widget _buildFab() {
     return _tabController.index == 0
@@ -157,7 +175,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                 child: Padding(
                     padding: const EdgeInsets.all(64.0),
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      if (widget.editorBloc == null) ...[
+                      if (_editorBloc == null) ...[
                         Padding(
                             padding: const EdgeInsets.all(16),
                             child: TextButton.icon(
@@ -178,7 +196,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                           hintText: "editor.create.name.hint".tr()),
                                       validator: (value) {
                                         if (value.isEmpty) return "editor.create.name.empty".tr();
-                                        if (_names.contains(value))
+                                        if (_names.contains(value) &&
+                                            value != _editorBloc.server.name)
                                           return "editor.create.name.exist".tr();
                                         return null;
                                       },
@@ -191,8 +210,15 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                   Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: ElevatedButton.icon(
-                                        onPressed: () {
-                                          if (_formKey.currentState.validate()) {}
+                                        onPressed: () async {
+                                          if (!_formKey.currentState.validate()) return;
+                                          _editorBloc = await _editorBloc
+                                              .copyWith(
+                                                  server:
+                                                      server.copyWith(name: _nameController.text),
+                                                  note: _noteController.text)
+                                              .save();
+                                          setState(() {});
                                         },
                                         icon: Icon(Icons.save_outlined),
                                         label: Text("save".tr().toUpperCase())),
@@ -257,8 +283,23 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                 ]));
   }
 
-  void _createCourse(String name) {
-    widget.editorBloc.courses.add(CourseEditorBloc(Course(name: name)));
-    widget.editorBloc.save();
+  Future<void> _createCourse(String name) async {
+    if (_editorBloc.courses.map((e) => e.course.slug).contains(name))
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                  title: Text("course.add.exist.title").tr(),
+                  content: Text("course.add.exist.content").tr(),
+                  actions: [
+                    TextButton.icon(
+                        icon: Icon(Icons.close_outlined),
+                        onPressed: () => Navigator.of(context).pop(),
+                        label: Text("close").tr())
+                  ]));
+    else {
+      _editorBloc.courses.add(CourseEditorBloc(Course(name: name, slug: name)));
+      _editorBloc = await _editorBloc.save();
+      setState(() {});
+    }
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:animations/animations.dart';
 import 'package:dev_doctor/editor/bloc/server.dart';
 import 'package:dev_doctor/editor/create.dart';
@@ -27,19 +25,18 @@ class _EditorPageState extends State<EditorPage> {
                 child: ListView.builder(
                     itemCount: _box.length,
                     itemBuilder: (context, index) {
-                      var item = json.decode(_box.getAt(index));
-                      var bloc = ServerEditorBloc.fromJson(item);
+                      var key = _box.keyAt(index);
+                      var bloc = ServerEditorBloc.fromKey(key);
                       return Dismissible(
-                          key: Key(_box.name),
+                          key: Key(key.toString()),
                           background: Container(color: Colors.red),
                           onDismissed: (direction) {
-                            _box.deleteAt(index);
+                            _box.delete(key);
                           },
                           child: ListTile(
                               title: Text(bloc.server.name),
                               subtitle: Text(bloc.note),
-                              onTap: () =>
-                                  Modular.to.pushNamed("/editor/details?serverId=$index")));
+                              onTap: () => Modular.to.pushNamed("/editor/details?serverId=$key")));
                     }))),
         floatingActionButton: OpenContainer(
             transitionType: ContainerTransitionType.fadeThrough,
