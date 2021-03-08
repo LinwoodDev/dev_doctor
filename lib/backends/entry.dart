@@ -98,7 +98,15 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                       expandedHeight: _editorBloc != null ? null : 400.0,
                       floating: false,
                       pinned: true,
-                      actions: [if (_editorBloc == null) AddBackendButton(server: server)],
+                      actions: [
+                        if (_editorBloc == null)
+                          AddBackendButton(server: server)
+                        else
+                          IconButton(
+                              icon: Icon(Icons.save_outlined),
+                              tooltip: "save".tr(),
+                              onPressed: () {})
+                      ],
                       bottom: _editorBloc != null
                           ? TabBar(
                               controller: _tabController,
