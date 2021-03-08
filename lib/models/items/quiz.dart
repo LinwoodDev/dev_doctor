@@ -20,6 +20,16 @@ class QuizPartItem extends PartItem {
   @override
   Map<String, dynamic> toJson() =>
       {"text": text, "time": time, "questions": questions.map((e) => e.toJson())};
+
+  QuizPartItem copyWith(
+          {String text, int time, List<QuizQuestion> questions, String name, String description}) =>
+      QuizPartItem(
+          name: name ?? this.name,
+          description: description ?? this.description,
+          index: index,
+          questions: questions ?? this.questions,
+          text: text ?? this.text,
+          time: time ?? this.time);
 }
 
 @immutable
@@ -43,6 +53,13 @@ class QuizQuestion {
         "evaluation": evaluation,
         "answers": answers.map((e) => e.toJson())
       };
+  QuizQuestion copyWith(
+          {String title, String description, String evaluation, List<QuizAnswer> answers}) =>
+      QuizQuestion(
+          answers: answers ?? this.answers,
+          description: description ?? this.description,
+          evaluation: evaluation ?? this.evaluation,
+          title: title ?? this.title);
 }
 
 @immutable
@@ -60,4 +77,9 @@ class QuizAnswer {
         points = json['points'];
   Map<String, dynamic> toJson() =>
       {"correct": correct, "name": name, "description": description, "points": points};
+  QuizAnswer copyWith({String name, String description, bool correct, int points}) => QuizAnswer(
+      correct: correct ?? this.correct,
+      description: description ?? this.description,
+      name: name ?? this.name,
+      points: points ?? this.points);
 }

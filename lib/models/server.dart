@@ -79,6 +79,25 @@ class CoursesServer {
 
   Future<CoursesServer> toggle() => added ? remove() : add();
 
+  CoursesServer copyWith(
+          {String name,
+          String url,
+          String type,
+          String icon,
+          String supportUrl,
+          List<String> courses,
+          String body}) =>
+      CoursesServer(
+          name: name ?? this.name,
+          body: body ?? this.body,
+          courses: courses ?? this.courses,
+          entry: entry,
+          icon: icon ?? this.icon,
+          index: index,
+          supportUrl: supportUrl ?? this.supportUrl,
+          type: type ?? this.type,
+          url: url ?? this.url);
+
   static Future<CoursesServer> fetch({String url, int index, BackendEntry entry}) async {
     var data = <String, dynamic>{};
     try {

@@ -25,4 +25,12 @@ class VideoPartItem extends PartItem {
   }
 
   Map<String, dynamic> toJson() => {"url": url, "source": EnumToString.convertToString(source)};
+
+  VideoPartItem copyWith({String name, String description, VideoSource source, String url}) =>
+      VideoPartItem(
+          name: name ?? this.name,
+          description: description ?? this.description,
+          index: index,
+          source: source ?? this.source,
+          url: url ?? this.url);
 }

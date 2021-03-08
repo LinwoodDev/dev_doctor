@@ -84,4 +84,35 @@ class Course {
     data['slug'] = part;
     return CoursePart.fromJson(data);
   }
+
+  Course copyWith(
+          {String slug,
+          String name,
+          String description,
+          String icon,
+          String author,
+          String authorUrl,
+          String authorAvatar,
+          String supportUrl,
+          bool installed,
+          String body,
+          String lang,
+          List<String> parts,
+          bool private}) =>
+      Course(
+          author: author ?? this.author,
+          authorAvatar: authorAvatar ?? this.authorAvatar,
+          authorUrl: authorUrl ?? this.authorUrl,
+          body: body ?? this.body,
+          description: description ?? this.description,
+          icon: icon ?? this.icon,
+          index: index,
+          installed: installed ?? this.installed,
+          lang: lang ?? this.lang,
+          name: name ?? this.name,
+          parts: parts ?? this.parts,
+          private: private ?? this.private,
+          server: server ?? this.server,
+          slug: slug ?? this.slug,
+          supportUrl: supportUrl ?? this.supportUrl);
 }

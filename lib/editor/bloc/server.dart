@@ -27,4 +27,13 @@ class ServerEditorBloc {
   void save() {
     Hive.box<String>('editor').put(key, json.encode(toJson()));
   }
+
+  ServerEditorBloc copyWith(
+          {CoursesServer server, String note, int key, List<CourseEditorBloc> courses}) =>
+      ServerEditorBloc(server ?? this.server,
+          key: key, courses: courses ?? this.courses, note: note ?? this.note);
+
+  CourseEditorBloc getCourse(String name) {
+    return courses.firstWhere((element) => element.course.name == name);
+  }
 }

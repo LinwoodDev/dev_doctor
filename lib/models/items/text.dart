@@ -9,5 +9,12 @@ class TextPartItem extends PartItem {
   TextPartItem.fromJson(Map<String, dynamic> json)
       : text = json['text'],
         super.fromJson(json);
+
   Map<String, dynamic> toJson() => {"text": text};
+
+  TextPartItem copyWith({String text, String name, String description}) => TextPartItem(
+      text: text ?? this.text,
+      description: description ?? this.description,
+      index: index,
+      name: name ?? this.name);
 }
