@@ -15,4 +15,6 @@ class CourseEditorBloc {
             .toList(growable: false));
   Map<String, dynamic> toJson() =>
       {"course": course.toJson(), "parts": parts.map((e) => e.toJson()).toList()};
+  CourseEditorBloc copyWith({Course course, List<CoursePart> parts}) =>
+      CourseEditorBloc(course ?? this.course, parts: parts ?? this.parts);
 }

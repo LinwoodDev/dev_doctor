@@ -1,4 +1,8 @@
+import 'package:dev_doctor/models/items/quiz.dart';
+import 'package:dev_doctor/models/items/text.dart';
 import 'package:flutter/foundation.dart';
+
+import 'items/video.dart';
 
 @immutable
 abstract class PartItem {
@@ -12,4 +16,20 @@ abstract class PartItem {
         description = json['description'],
         index = json['index'];
   Map<String, dynamic> toJson();
+}
+
+enum PartItemTypes { text, video, quiz }
+
+extension PartItemTypesExtension on PartItemTypes {
+  PartItem create({@required String name, String description = "", @required int index}) {
+    switch (this) {
+      case PartItemTypes.text:
+        return TextPartItem(name: name, description: description, index: index);
+      case PartItemTypes.video:
+        return VideoPartItem(name: name, description: description, index: index);
+      case PartItemTypes.quiz:
+        return QuizPartItem(name: name, description: description, index: index);
+    }
+    return null;
+  }
 }

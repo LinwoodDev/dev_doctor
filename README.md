@@ -33,6 +33,7 @@
     - [Issues](#issues)
     - [Pull request](#pull-request)
     - [Community Server](#community-server)
+    - [Branches](#branches)
 
 ## Introduction
 
@@ -108,3 +109,10 @@ If you want to help me to code, you can open a pull request. Fork this project a
 ### Community Server
 
 A project without a community isn't a good project. You can [join the discord](https://discord.linwood.tk) and talk to each other!
+
+### Branches
+
+| Name    | Support |                                                                                Description |
+| :------ | :-----: | -----------------------------------------------------------------------------------------: |
+| main    |    ✅    | This branch is production ready. It will be updated when a new stable version is released! |
+| develop |    ❌    |    This branch is only for testing and developing. Pull request should only be added here! |
