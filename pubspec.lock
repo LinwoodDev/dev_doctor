@@ -243,7 +243,7 @@ packages:
       name: flutter_inappwebview
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.0+1"
+    version: "5.1.0+4"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -269,7 +269,7 @@ packages:
       name: flutter_modular
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0-nullsafety.46"
+    version: "3.0.0+1"
   flutter_modular_annotations:
     dependency: transitive
     description:
@@ -419,7 +419,7 @@ packages:
       name: msix
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1-nullsafety.0"
+    version: "0.2.2-nullsafety.0"
   package_config:
     dependency: transitive
     description:

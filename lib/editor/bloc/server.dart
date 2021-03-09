@@ -13,14 +13,15 @@ class ServerEditorBloc {
   final int key;
   final List<CourseEditorBloc> courses;
 
-  ServerEditorBloc(this.server, {this.key, this.courses = const [], this.note});
+  ServerEditorBloc(this.server, {this.key, List<CourseEditorBloc> courses = const [], this.note})
+      : courses = List<CourseEditorBloc>.unmodifiable(courses);
   ServerEditorBloc.fromJson(Map<String, dynamic> json)
       : server = CoursesServer.fromJson(json['server'] ?? {}),
         note = json['note'],
         key = json['key'],
-        courses = (json['courses'] as List<dynamic> ?? [])
+        courses = List<CourseEditorBloc>.unmodifiable((json['courses'] as List<dynamic> ?? [])
             .map((e) => CourseEditorBloc.fromJson(e))
-            .toList();
+            .toList(growable: false));
   factory ServerEditorBloc.fromKey(int key) =>
       ServerEditorBloc.fromJson(json.decode(Hive.box<String>('editor').get(key))..['key'] = key);
   Map<String, dynamic> toJson() =>

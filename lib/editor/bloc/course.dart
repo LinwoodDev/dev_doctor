@@ -5,11 +5,14 @@ class CourseEditorBloc {
   final Course course;
   final List<CoursePart> parts;
 
-  CourseEditorBloc(this.course, {this.parts = const []});
+  CourseEditorBloc(this.course, {List<CoursePart> parts = const []})
+      : parts = List<CoursePart>.unmodifiable(parts);
 
   CourseEditorBloc.fromJson(Map<String, dynamic> json)
       : course = Course.fromJson(json['course']),
-        parts = (json['parts'] as List<dynamic> ?? []).map((e) => CoursePart.fromJson(e)).toList();
+        parts = List<CoursePart>.unmodifiable((json['parts'] as List<dynamic> ?? [])
+            .map((e) => CoursePart.fromJson(e))
+            .toList(growable: false));
   Map<String, dynamic> toJson() =>
       {"course": course.toJson(), "parts": parts.map((e) => e.toJson()).toList()};
 }

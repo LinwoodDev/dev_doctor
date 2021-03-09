@@ -152,8 +152,9 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
           return Dismissible(
               background: Container(color: Colors.red),
               onDismissed: (direction) async {
-                _editorBloc.courses.remove(courseBloc);
-                _editorBloc = await _editorBloc.save();
+                _editorBloc = await _editorBloc
+                    .copyWith(courses: List.from(_editorBloc.courses)..remove(courseBloc))
+                    .save();
               },
               key: Key(courseBloc.course.slug),
               child: ListTile(
@@ -305,8 +306,11 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                         label: Text("close").tr())
                   ]));
     else {
-      _editorBloc.courses.add(CourseEditorBloc(Course(name: name, slug: name)));
-      _editorBloc = await _editorBloc.save();
+      _editorBloc = await _editorBloc
+          .copyWith(
+              courses: List.from(_editorBloc.courses)
+                ..add(CourseEditorBloc(Course(name: name, slug: name))))
+          .save();
       setState(() {});
     }
   }

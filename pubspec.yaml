@@ -29,12 +29,12 @@ dependencies:
   hive: ^2.0.0
   rxdart: ^0.26.0
   hive_flutter: ^1.0.0
-  flutter_modular: ^3.0.0-nullsafety.46
+  flutter_modular: ^3.0.0+1
   url_launcher: ^6.0.2
   flutter_markdown: ^0.6.0
   #universal_html: ^1.2.4
   flutter_svg: ^0.21.0-nullsafety.0
-  flutter_inappwebview: ^5.1.0
+  flutter_inappwebview: ^5.1.0+4
   xml: ^5.0.0-nullsafety.1
   flutter_localized_locales: ^2.0.1
 
@@ -51,7 +51,7 @@ flutter_icons:
 dev_dependencies:
   hive_generator: ^1.0.0
   build_runner: ^1.11.5
-  msix: ^0.2.1-nullsafety.0
+  msix: ^0.2.2-nullsafety.0
   flutter_test:
     sdk: flutter
   #integration_test:
