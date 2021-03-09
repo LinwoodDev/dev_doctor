@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/LinwoodCloud/dev_doctor/develop/images/logo-colored.png" width="350px">
+</p>
+
 # Dev-Doctor
 
 > A free, opensource, serverless learning platform. A linwood project.
