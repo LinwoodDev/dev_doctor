@@ -63,7 +63,7 @@
             "submit":"Create"
         }
     },
-    "browser":"Open in brwoser",
+    "browser":"Open in browser",
     "discord": "Join our discord",
     "error-with-status": "A {statusCode} error occurred on server",
     "error-without-status": "An error occurred on the server",

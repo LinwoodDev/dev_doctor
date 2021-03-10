@@ -63,7 +63,7 @@
             "submit":"Erstellen"
         }
     },
-    "browser": "Open in brwoser",
+    "browser": "Im Browser öffnen",
     "discord": "Betrete unseren Discord",
     "error-with-status": "Auf dem Server ist ein Fehler ({statusCode}) aufgetreten",
     "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",
