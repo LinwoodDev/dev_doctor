@@ -28,6 +28,10 @@ class CoursePage extends StatefulWidget {
 class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   ServerEditorBloc _editorBloc;
   TabController _tabController;
+  TextEditingController _nameController;
+  TextEditingController _descriptionController;
+  TextEditingController _slugController;
+  GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   void initState() {
@@ -35,6 +39,10 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     _editorBloc = widget.editorBloc;
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
+    var courseBloc = _editorBloc.courses[widget.courseId];
+    _nameController = TextEditingController(text: courseBloc.course.name);
+    _descriptionController = TextEditingController(text: courseBloc.course.description);
+    _slugController = TextEditingController(text: courseBloc.course.slug);
   }
 
   void _handleTabIndex() {
@@ -63,6 +71,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                     default:
                       if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                       var course = snapshot.data;
+                      print(course);
                       return _buildView(course);
                   }
                 });
@@ -136,7 +145,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   Widget _buildView(Course course) => Builder(builder: (context) {
-        var supportUrl = course.supportUrl ?? course.server.supportUrl;
+        var supportUrl = course.supportUrl ?? course.server?.supportUrl;
         return Scaffold(
           body: NestedScrollView(
               headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -165,7 +174,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                     bottom: _editorBloc != null
                         ? TabBar(
                             controller: _tabController,
-                            tabs: [Tab(text: "General"), Tab(text: "Courses")],
+                            tabs: [Tab(text: "General"), Tab(text: "Parts")],
                             indicatorSize: TabBarIndicatorSize.label,
                             isScrollable: true,
                           )
@@ -200,59 +209,122 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
         );
       });
 
-  Widget _buildGeneral(BuildContext context, Course course) => Scrollbar(
-          child: ListView(
-        children: <Widget>[
-          Padding(
-              padding: EdgeInsets.all(4),
-              child: Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Column(children: [
-                        GestureDetector(
-                            onTap: () {
-                              if (course.authorUrl != null) launch(course.authorUrl);
-                            },
-                            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                              if (course.authorAvatar != null)
+  Widget _buildGeneral(BuildContext context, Course course) {
+    var _slugs = _editorBloc.courses.map((e) => e.course.slug);
+    return Scrollbar(
+        child: ListView(children: <Widget>[
+      Padding(
+          padding: EdgeInsets.all(4),
+          child: Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(children: [
+                    if (_editorBloc != null)
+                      Form(
+                          key: _formKey,
+                          child: Container(
+                              constraints: BoxConstraints(maxWidth: 1000),
+                              child: Column(children: [
+                                TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "course.name.label".tr(),
+                                        hintText: "course.name.hint".tr()),
+                                    validator: (value) {
+                                      if (value.isEmpty) return "course.name.empty".tr();
+                                      return null;
+                                    },
+                                    controller: _nameController),
+                                TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "course.slug.label".tr(),
+                                        hintText: "course.slug.hint".tr()),
+                                    validator: (value) {
+                                      if (value.isEmpty) return "course.slug.empty".tr();
+                                      if (_slugs.contains(value) && value != course.slug)
+                                        return "course.slug.exist".tr();
+                                      return null;
+                                    },
+                                    controller: _slugController),
+                                TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "course.description.label".tr(),
+                                        hintText: "course.description.hint".tr()),
+                                    controller: _descriptionController),
                                 Padding(
-                                    padding: EdgeInsets.all(8),
-                                    child: CircleAvatar(
-                                      child: ClipOval(
-                                        child: Image.network(course.authorAvatar),
-                                      ),
-                                    )),
-                              Text(course.author ?? "")
-                            ])),
-                        if (course.lang != null)
-                          Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                Padding(
-                                    padding: EdgeInsets.all(4),
-                                    child: Icon(Icons.language_outlined)),
-                                Text(LocaleNames.of(context).nameOf(course.lang))
-                              ]))
-                      ])))),
-          Padding(
-              padding: EdgeInsets.all(16),
-              child: Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  child: Padding(
-                      padding: const EdgeInsets.all(64.0),
-                      child: MarkdownBody(
-                        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-                        onTapLink: (_, url, __) => launch(url),
-                        extensionSet: md.ExtensionSet(
-                          md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                          [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
-                        ),
-                        data: course.body,
-                        selectable: true,
-                      )))),
-        ],
-      ));
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: ElevatedButton.icon(
+                                      onPressed: () async {
+                                        var courseBloc = _editorBloc.courses[widget.courseId];
+                                        courseBloc = courseBloc.copyWith(
+                                            course: course.copyWith(name: _nameController.text));
+                                        if (!_formKey.currentState.validate()) return;
+                                        _editorBloc = await _editorBloc
+                                            .copyWith(
+                                                courses: List.from(_editorBloc.courses)
+                                                  ..[widget.courseId] = courseBloc)
+                                            .save();
+                                        setState(() {});
+                                      },
+                                      icon: Icon(Icons.save_outlined),
+                                      label: Text("save".tr().toUpperCase())),
+                                ),
+                                Divider()
+                              ]))),
+                    GestureDetector(
+                        onTap: () {
+                          if (course.authorUrl != null) launch(course.authorUrl);
+                        },
+                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                          if (course.authorAvatar != null)
+                            Padding(
+                                padding: EdgeInsets.all(8),
+                                child: CircleAvatar(
+                                  child: ClipOval(
+                                    child: Image.network(course.authorAvatar),
+                                  ),
+                                )),
+                          Text(course.author ?? _editorBloc != null
+                              ? 'course.author.notset'.tr()
+                              : ''),
+                          if (_editorBloc != null)
+                            IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
+                        ])),
+                    if (course.lang != null || _editorBloc != null)
+                      Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            Padding(
+                                padding: EdgeInsets.all(4), child: Icon(Icons.language_outlined)),
+                            Text(course.lang != null
+                                ? LocaleNames.of(context).nameOf(course.lang)
+                                : 'course.lang.notset'),
+                            if (_editorBloc != null)
+                              IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
+                          ])),
+                    Row(children: [
+                      Expanded(
+                          child: (course.body != null)
+                              ? MarkdownBody(
+                                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                                  onTapLink: (_, url, __) => launch(url),
+                                  extensionSet: md.ExtensionSet(
+                                    md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                                    [
+                                      md.EmojiSyntax(),
+                                      ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
+                                    ],
+                                  ),
+                                  data: course.body,
+                                  selectable: true,
+                                )
+                              : Container()),
+                      IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
+                    ])
+                  ]))))
+    ]));
+  }
+
   Widget _buildParts(BuildContext context) {
     var parts = _editorBloc.courses[widget.courseId].parts;
     return Scrollbar(
@@ -268,7 +340,11 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                   .save();
             },
             key: Key(part.slug),
-            child: ListTile(title: Text(part.name), subtitle: Text(part.description ?? "")));
+            child: ListTile(
+                title: Text(part.name),
+                subtitle: Text(part.description ?? ""),
+                onTap: () => Modular.to.pushNamed(
+                    '/editor/part?serverId=${_editorBloc.key}&courseId=${widget.courseId}&part=$index')));
       },
     ));
   }

@@ -159,7 +159,9 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
               key: Key(courseBloc.course.slug),
               child: ListTile(
                   title: Text(courseBloc.course.name),
-                  subtitle: Text(courseBloc.course.description ?? "")));
+                  subtitle: Text(courseBloc.course.description ?? ""),
+                  onTap: () => Modular.to
+                      .pushNamed('/editor/course?serverId=${_editorBloc.key}&courseId=$index')));
         },
       ));
 
