@@ -3,6 +3,7 @@ import 'package:dev_doctor/editor/bloc/server.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/models/server.dart';
+import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
@@ -39,10 +40,12 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     _editorBloc = widget.editorBloc;
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
-    var courseBloc = _editorBloc.courses[widget.courseId];
-    _nameController = TextEditingController(text: courseBloc.course.name);
-    _descriptionController = TextEditingController(text: courseBloc.course.description);
-    _slugController = TextEditingController(text: courseBloc.course.slug);
+    if (_editorBloc != null) {
+      var courseBloc = _editorBloc.courses[widget.courseId];
+      _nameController = TextEditingController(text: courseBloc.course.name);
+      _descriptionController = TextEditingController(text: courseBloc.course.description);
+      _slugController = TextEditingController(text: courseBloc.course.slug);
+    }
   }
 
   void _handleTabIndex() {
@@ -61,7 +64,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     return widget.model != null
         ? _buildView(widget.model)
         : widget.editorBloc != null
-            ? _buildView(widget.editorBloc.courses[widget.courseId].course)
+            ? _buildView(widget.editorBloc?.courses[widget.courseId]?.course)
             : FutureBuilder<Course>(
                 future: _buildFuture(),
                 builder: (context, snapshot) {
@@ -169,7 +172,10 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                         )
                       } else
                         IconButton(
-                            icon: Icon(Icons.save_outlined), tooltip: "save".tr(), onPressed: () {})
+                            icon: Icon(Icons.save_outlined),
+                            tooltip: "save".tr(),
+                            onPressed: () {}),
+                      WindowButtons()
                     ],
                     bottom: _editorBloc != null
                         ? TabBar(
@@ -210,7 +216,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       });
 
   Widget _buildGeneral(BuildContext context, Course course) {
-    var _slugs = _editorBloc.courses.map((e) => e.course.slug);
+    var _slugs = _editorBloc?.courses?.map((e) => e.course.slug);
     return Scrollbar(
         child: ListView(children: <Widget>[
       Padding(
@@ -284,7 +290,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                     child: Image.network(course.authorAvatar),
                                   ),
                                 )),
-                          Text(course.author ?? _editorBloc != null
+                          Text(course.author != null ?? _editorBloc != null
                               ? 'course.author.notset'.tr()
                               : ''),
                           if (_editorBloc != null)
@@ -326,7 +332,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   Widget _buildParts(BuildContext context) {
-    var parts = _editorBloc.courses[widget.courseId].parts;
+    var parts = _editorBloc?.courses[widget.courseId]?.parts;
     return Scrollbar(
         child: ListView.builder(
       itemCount: parts.length,

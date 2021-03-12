@@ -29,7 +29,7 @@ dependencies:
   hive: ^2.0.0
   rxdart: ^0.26.0
   hive_flutter: ^1.0.0
-  flutter_modular: ^3.0.0+1
+  flutter_modular: ^3.0.1
   url_launcher: ^6.0.2
   flutter_markdown: ^0.6.0
   #universal_html: ^1.2.4
@@ -37,6 +37,7 @@ dependencies:
   flutter_inappwebview: ^5.1.0+4
   xml: ^5.0.0-nullsafety.1
   flutter_localized_locales: ^2.0.1
+  bitsdojo_window: ^0.0.9
 
 
   # The following adds the Cupertino Icons font to your application.
