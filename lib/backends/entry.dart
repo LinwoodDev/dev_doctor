@@ -5,6 +5,7 @@ import 'package:dev_doctor/editor/bloc/server.dart';
 import 'package:dev_doctor/models/collection.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/server.dart';
+import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -105,7 +106,9 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                           IconButton(
                               icon: Icon(Icons.save_outlined),
                               tooltip: "save".tr(),
-                              onPressed: () {})
+                              onPressed: () {}),
+                        VerticalDivider(),
+                        WindowButtons()
                       ],
                       bottom: _editorBloc != null
                           ? TabBar(

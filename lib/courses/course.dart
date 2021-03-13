@@ -175,6 +175,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                             icon: Icon(Icons.save_outlined),
                             tooltip: "save".tr(),
                             onPressed: () {}),
+                      VerticalDivider(),
                       WindowButtons()
                     ],
                     bottom: _editorBloc != null

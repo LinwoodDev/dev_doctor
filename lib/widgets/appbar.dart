@@ -21,19 +21,24 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     if (!kIsWeb) if (Platform.isWindows || Platform.isLinux || Platform.isMacOS)
-      return WindowBorder(color: borderColor, width: 1, child: _buildAppBar());
+      return MoveWindow(child: WindowBorder(color: borderColor, width: 1, child: _buildAppBar()));
     return _buildAppBar();
   }
 
-  Widget _buildAppBar() => MoveWindow(
-          child: AppBar(
+  Widget _buildAppBar() => AppBar(
         elevation: 5.0,
         title: WindowTitleBarBox(child: Text(title)),
         bottom: bottom,
-        actions: [...actions, if (actions.isNotEmpty) VerticalDivider(), WindowButtons()],
+        actions: [
+          ...actions,
+          if (actions.isNotEmpty)
+            if (!kIsWeb)
+              if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) VerticalDivider(),
+          WindowButtons()
+        ],
         //actions: [IconButton(icon: Icon(Icons.settings_outlined), onPressed: () {})],
         automaticallyImplyLeading: true,
-      ));
+      );
 }
 
 const buttonColors = WindowButtonColors(
