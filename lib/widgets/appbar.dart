@@ -80,3 +80,16 @@ class WindowButtons extends StatelessWidget {
     return Container();
   }
 }
+
+class ConditionalMoveWindow extends StatelessWidget {
+  final Widget child;
+
+  const ConditionalMoveWindow({Key key, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (!kIsWeb) if (Platform.isWindows || Platform.isLinux || Platform.isMacOS)
+      return MoveWindow(child: child);
+    return child;
+  }
+}

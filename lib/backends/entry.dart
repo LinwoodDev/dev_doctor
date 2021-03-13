@@ -95,7 +95,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
             body: NestedScrollView(
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
-                    SliverAppBar(
+                    ConditionalMoveWindow(
+                        child: SliverAppBar(
                       expandedHeight: _editorBloc != null ? null : 400.0,
                       floating: false,
                       pinned: true,
@@ -136,7 +137,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                               type: server.icon,
                                             ))),
                             ),
-                    )
+                    ))
                   ];
                 },
                 body: _editorBloc != null
