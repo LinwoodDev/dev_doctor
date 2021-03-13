@@ -308,7 +308,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                     TextButton.icon(
                         icon: Icon(Icons.close_outlined),
                         onPressed: () => Navigator.of(context).pop(),
-                        label: Text("close").tr())
+                        label: Text("close".tr().toUpperCase()))
                   ]));
     else {
       _editorBloc = await _editorBloc

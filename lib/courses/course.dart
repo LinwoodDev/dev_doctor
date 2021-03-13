@@ -8,7 +8,7 @@ import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:markdown/markdown.dart' as md;
+// import 'package:markdown/markdown.dart' as md;
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -135,7 +135,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                     TextButton.icon(
                         icon: Icon(Icons.close_outlined),
                         onPressed: () => Navigator.of(context).pop(),
-                        label: Text("close").tr())
+                        label: Text("close".tr().toUpperCase()))
                   ]));
     else {
       var parts = List<CoursePart>.from(_editorBloc.courses[widget.courseId].parts)
@@ -154,57 +154,56 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
               headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
-                    expandedHeight: _editorBloc != null ? null : 400.0,
-                    floating: false,
-                    pinned: true,
-                    actions: [
-                      if (_editorBloc == null) ...{
-                        if (supportUrl != null)
+                      expandedHeight: _editorBloc != null ? null : 400.0,
+                      floating: false,
+                      pinned: true,
+                      actions: [
+                        if (_editorBloc == null) ...{
+                          if (supportUrl != null)
+                            IconButton(
+                                icon: Icon(Icons.help_outline_outlined),
+                                tooltip: "course.support".tr(),
+                                onPressed: () => launch(supportUrl)),
                           IconButton(
-                              icon: Icon(Icons.help_outline_outlined),
-                              tooltip: "course.support".tr(),
-                              onPressed: () => launch(supportUrl)),
-                        IconButton(
-                          icon: Icon(Icons.play_circle_outline_outlined),
-                          tooltip: "course.start".tr(),
-                          onPressed: () => Modular.to.navigate(
-                              '/courses/start/item?serverId=${widget.serverId}&courseId=${widget.courseId}&partId=0'),
-                        )
-                      } else
-                        IconButton(
-                            icon: Icon(Icons.save_outlined),
-                            tooltip: "save".tr(),
-                            onPressed: () {}),
-                      VerticalDivider(),
-                      WindowButtons()
-                    ],
-                    bottom: _editorBloc != null
-                        ? TabBar(
-                            controller: _tabController,
-                            tabs: [Tab(text: "General"), Tab(text: "Parts")],
-                            indicatorSize: TabBarIndicatorSize.label,
-                            isScrollable: true,
+                            icon: Icon(Icons.play_circle_outline_outlined),
+                            tooltip: "course.start".tr(),
+                            onPressed: () => Modular.to.navigate(
+                                '/courses/start/item?serverId=${widget.serverId}&courseId=${widget.courseId}&partId=0'),
                           )
-                        : null,
-                    title: Text(course.name),
-                    flexibleSpace: _editorBloc != null
-                        ? null
-                        : FlexibleSpaceBar(
-                            background: Container(
-                                margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
-                                child: Hero(
-                                    tag: _editorBloc != null
-                                        ? "course-icon-${_editorBloc.server.name}"
-                                        : "course-icon-${course.server.index}-${course.index}",
-                                    child: _editorBloc != null
-                                        ? Container()
-                                        : UniversalImage(
-                                            url: course.url + "/icon",
-                                            height: 500,
-                                            type: course.icon,
-                                          ))),
-                          )
-                  )
+                        } else
+                          IconButton(
+                              icon: Icon(Icons.save_outlined),
+                              tooltip: "save".tr(),
+                              onPressed: () {}),
+                        VerticalDivider(),
+                        WindowButtons()
+                      ],
+                      bottom: _editorBloc != null
+                          ? TabBar(
+                              controller: _tabController,
+                              tabs: [Tab(text: "General"), Tab(text: "Parts")],
+                              indicatorSize: TabBarIndicatorSize.label,
+                              isScrollable: true,
+                            )
+                          : null,
+                      title: Text(course.name),
+                      flexibleSpace: _editorBloc != null
+                          ? null
+                          : FlexibleSpaceBar(
+                              background: Container(
+                                  margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
+                                  child: Hero(
+                                      tag: _editorBloc != null
+                                          ? "course-icon-${_editorBloc.server.name}"
+                                          : "course-icon-${course.server.index}-${course.index}",
+                                      child: _editorBloc != null
+                                          ? Container()
+                                          : UniversalImage(
+                                              url: course.url + "/icon",
+                                              height: 500,
+                                              type: course.icon,
+                                            ))),
+                            ))
                 ];
               },
               body: _editorBloc != null
@@ -218,6 +217,50 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
 
   Widget _buildGeneral(BuildContext context, Course course) {
     var _slugs = _editorBloc?.courses?.map((e) => e.course.slug);
+    var data = """"Changes are automatically rendered as you type.
+
+  * Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
+  * Renders actual, "native" React DOM elements
+  * Allows you to escape or skip HTML (try toggling the checkboxes above)
+  * If you escape or skip the HTML, no `dangerouslySetInnerHTML` is used! Yay!
+
+  ## Table of Contents
+
+  ## HTML block below
+
+  <blockquote>
+    This blockquote will change based on the HTML settings above.
+  </blockquote>
+
+  ## How about some fe?
+
+  ```
+  var React = require('react');
+  var Markdown = require('react-markdown');
+
+  React.render(
+    <Markdown source="# Your markdown here" />,
+    document.getElementById('content')
+  );
+  ```
+
+  Pretty neat, eh?
+
+  ## Tables?
+
+  | Feature   | Support |
+  | :-------: | ------- |
+  | tables    | âœ” |
+  | alignment | âœ” |
+  | wewt      | âœ” |
+
+  ## More info?
+
+  Read usage information and more on [GitHub](https://github.com/remarkjs/react-markdown)
+
+  ---------------
+
+  A component by [Espen Hovlandsdal](https://espen.codes/)""";
     return Scrollbar(
         child: ListView(children: <Widget>[
       Padding(
@@ -313,20 +356,13 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       Expanded(
                           child: (course.body != null)
                               ? MarkdownBody(
-                                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
                                   onTapLink: (_, url, __) => launch(url),
-                                  extensionSet: md.ExtensionSet(
-                                    md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                                    [
-                                      md.EmojiSyntax(),
-                                      ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
-                                    ],
-                                  ),
-                                  data: course.body,
+                                  data: data,
                                   selectable: true,
                                 )
                               : Container()),
-                      IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
+                      if (_editorBloc != null)
+                        IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
                     ])
                   ]))))
     ]));

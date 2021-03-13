@@ -136,7 +136,7 @@ class _CoursesPageState extends State<CoursesPage> {
                         actions: [
                           TextButton.icon(
                               icon: Icon(Icons.close_outlined),
-                              label: Text("close").tr(),
+                              label: Text("close".tr().toUpperCase()),
                               onPressed: () => Navigator.of(context).pop())
                         ],
                         content: StatefulBuilder(

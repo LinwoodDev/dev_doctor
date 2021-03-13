@@ -104,7 +104,7 @@ If you find bugs or have feature request, you can create an issue by clicking [h
 
 ### Pull request
 
-If you want to help me to code, you can open a pull request. Fork this project and make a pull request. I only accept pull request for the -develop- branch.
+If you want to help me to code, you can open a pull request. Fork this project and make a pull request. I only accept pull request for the *develop* branch.
 
 ### Community Server
 

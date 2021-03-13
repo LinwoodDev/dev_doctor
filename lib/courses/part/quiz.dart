@@ -38,7 +38,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                 TextButton.icon(
                     onPressed: () => Navigator.of(context).pop(),
                     icon: Icon(Icons.close_outlined),
-                    label: Text("close").tr())
+                    label: Text("close".tr().toUpperCase()))
               ],
             ));
   }
