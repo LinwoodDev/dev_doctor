@@ -46,8 +46,10 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
     _editorBloc = widget.editorBloc;
-    _nameController = TextEditingController(text: _editorBloc.server.name);
-    _noteController = TextEditingController(text: _editorBloc.note);
+    if (_editorBloc != null) {
+      _nameController = TextEditingController(text: _editorBloc.server.name);
+      _noteController = TextEditingController(text: _editorBloc.note);
+    }
   }
 
   @override
@@ -95,49 +97,46 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
             body: NestedScrollView(
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
-                    ConditionalMoveWindow(
-                        child: SliverAppBar(
-                      expandedHeight: _editorBloc != null ? null : 400.0,
-                      floating: false,
-                      pinned: true,
-                      actions: [
-                        if (_editorBloc == null)
-                          AddBackendButton(server: server)
-                        else
-                          IconButton(
-                              icon: Icon(Icons.save_outlined),
-                              tooltip: "save".tr(),
-                              onPressed: () {}),
-                        VerticalDivider(),
-                        WindowButtons()
-                      ],
-                      bottom: _editorBloc != null
-                          ? TabBar(
-                              controller: _tabController,
-                              tabs: [Tab(text: "General"), Tab(text: "Courses")],
-                              indicatorSize: TabBarIndicatorSize.label,
-                              isScrollable: true,
-                            )
-                          : null,
-                      title: Text(server.name),
-                      flexibleSpace: _editorBloc != null
-                          ? null
-                          : FlexibleSpaceBar(
-                              background: Container(
-                                  margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
-                                  child: Hero(
-                                      tag: _editorBloc != null
-                                          ? "editor-backend-${_editorBloc.server.name}"
-                                          : "backend-icon-${server.entry.collection.index}-${server.entry.user.name}-${server.entry.name}",
-                                      child: _editorBloc != null
-                                          ? Container()
-                                          : UniversalImage(
-                                              url: server.url + "/icon",
-                                              height: 500,
-                                              type: server.icon,
-                                            ))),
-                            ),
-                    ))
+                    SliverAppBar(
+                        expandedHeight: _editorBloc != null ? null : 400.0,
+                        floating: false,
+                        pinned: true,
+                        actions: [
+                          if (_editorBloc == null)
+                            AddBackendButton(server: server)
+                          else
+                            IconButton(
+                                icon: Icon(Icons.save_outlined),
+                                tooltip: "save".tr(),
+                                onPressed: () {}),
+                          VerticalDivider(),
+                          WindowButtons()
+                        ],
+                        bottom: _editorBloc != null
+                            ? TabBar(
+                                controller: _tabController,
+                                tabs: [Tab(text: "General"), Tab(text: "Courses")],
+                                indicatorSize: TabBarIndicatorSize.label,
+                                isScrollable: true,
+                              )
+                            : null,
+                        title: Text(server.name),
+                        flexibleSpace: _editorBloc != null
+                            ? null
+                            : FlexibleSpaceBar(
+                                background: Container(
+                                    margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
+                                    child: Hero(
+                                        tag: _editorBloc != null
+                                            ? "editor-backend-${_editorBloc.server.name}"
+                                            : "backend-icon-${server.entry.collection.index}-${server.entry.user.name}-${server.entry.name}",
+                                        child: _editorBloc != null
+                                            ? Container()
+                                            : UniversalImage(
+                                                url: server.url + "/icon",
+                                                height: 500,
+                                                type: server.icon,
+                                              )))))
                   ];
                 },
                 body: _editorBloc != null

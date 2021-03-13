@@ -25,9 +25,8 @@ void main() async {
 
   if (isWindow())
     doWhenWindowReady(() {
-      final initialSize = Size(600, 450);
-      appWindow.minSize = initialSize;
-      appWindow.size = initialSize;
+      appWindow.minSize = Size(400, 300);
+      appWindow.size = Size(400, 600);
       appWindow.alignment = Alignment.center;
       appWindow.title = "Dev-Doctor";
       appWindow.show();

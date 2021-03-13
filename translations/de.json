@@ -2,9 +2,9 @@
     "title": "Dev-Doctor.cf",
     "subtitle": "Kostenlose, quelloffene, serverfreie Lernplattform. Ein Linwood Projekt",
     "course": {
-        "add":{
-            "name":"Name",
-            "hint":"Beispielkurs"
+        "add": {
+            "name": "Name",
+            "hint": "Beispielkurs"
         },
         "course": "Kurs",
         "home": "Start",
@@ -31,7 +31,19 @@
             "open": "Öffne Video"
         },
         "start": "Start",
-        "support": "Support"
+        "support": "Support",
+        "description": {
+            "label": "Beschreibung",
+            "hint": "Dieser Kurs ist nur ein Beispiel wie die Konfiguration funktioniert"
+        },
+        "slug": {
+            "label": "Slug",
+            "hint": "Dies ist der Name des Ordners auf dem Server"
+        },
+        "name": {
+            "label": "Name",
+            "hint": "Beispielkurs"
+        }
     },
     "courses": {
         "title": "Kurse",
@@ -47,20 +59,20 @@
     },
     "editor": {
         "title": "Editor",
-        "create":{
-            "fab":"Erstelle Backend",
+        "create": {
+            "fab": "Erstelle Backend",
             "title": "Erstelle Backend",
-            "name":{
-                "label":"Name",
-                "hint":"Dev-Doctor",
-                "empty":"Der Name darf nicht leer sein!",
-                "exist":"Ein Backend mit dem gleichen Namen existiert bereits!"
+            "name": {
+                "label": "Name",
+                "hint": "Dev-Doctor",
+                "empty": "Der Name darf nicht leer sein!",
+                "exist": "Ein Backend mit dem gleichen Namen existiert bereits!"
             },
             "note": {
-                "label":"Notiz",
-                "hint":"Das Beispiel-Backend von dev-doctor"
+                "label": "Notiz",
+                "hint": "Das Beispiel-Backend von dev-doctor"
             },
-            "submit":"Erstellen"
+            "submit": "Erstellen"
         }
     },
     "browser": "Im Browser öffnen",
@@ -146,7 +158,7 @@
     },
     "agree": "Akzeptieren",
     "disagree": "Ablehnen",
-    "save":"Speichern",
+    "save": "Speichern",
     "cancel": "Abbrechen",
     "create": "Erstellen",
     "close": "Schließen",
@@ -156,5 +168,4 @@
         "refresh": "Neuladen"
     },
     "coming-soon": "In Planung..."
-
 }

@@ -153,59 +153,57 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
           body: NestedScrollView(
               headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
-                  ConditionalMoveWindow(
-                    child: SliverAppBar(
-                      expandedHeight: _editorBloc != null ? null : 400.0,
-                      floating: false,
-                      pinned: true,
-                      actions: [
-                        if (_editorBloc == null) ...{
-                          if (supportUrl != null)
-                            IconButton(
-                                icon: Icon(Icons.help_outline_outlined),
-                                tooltip: "course.support".tr(),
-                                onPressed: () => launch(supportUrl)),
+                  SliverAppBar(
+                    expandedHeight: _editorBloc != null ? null : 400.0,
+                    floating: false,
+                    pinned: true,
+                    actions: [
+                      if (_editorBloc == null) ...{
+                        if (supportUrl != null)
                           IconButton(
-                            icon: Icon(Icons.play_circle_outline_outlined),
-                            tooltip: "course.start".tr(),
-                            onPressed: () => Modular.to.navigate(
-                                '/courses/start/item?serverId=${widget.serverId}&courseId=${widget.courseId}&partId=0'),
+                              icon: Icon(Icons.help_outline_outlined),
+                              tooltip: "course.support".tr(),
+                              onPressed: () => launch(supportUrl)),
+                        IconButton(
+                          icon: Icon(Icons.play_circle_outline_outlined),
+                          tooltip: "course.start".tr(),
+                          onPressed: () => Modular.to.navigate(
+                              '/courses/start/item?serverId=${widget.serverId}&courseId=${widget.courseId}&partId=0'),
+                        )
+                      } else
+                        IconButton(
+                            icon: Icon(Icons.save_outlined),
+                            tooltip: "save".tr(),
+                            onPressed: () {}),
+                      VerticalDivider(),
+                      WindowButtons()
+                    ],
+                    bottom: _editorBloc != null
+                        ? TabBar(
+                            controller: _tabController,
+                            tabs: [Tab(text: "General"), Tab(text: "Parts")],
+                            indicatorSize: TabBarIndicatorSize.label,
+                            isScrollable: true,
                           )
-                        } else
-                          IconButton(
-                              icon: Icon(Icons.save_outlined),
-                              tooltip: "save".tr(),
-                              onPressed: () {}),
-                        VerticalDivider(),
-                        WindowButtons()
-                      ],
-                      bottom: _editorBloc != null
-                          ? TabBar(
-                              controller: _tabController,
-                              tabs: [Tab(text: "General"), Tab(text: "Parts")],
-                              indicatorSize: TabBarIndicatorSize.label,
-                              isScrollable: true,
-                            )
-                          : null,
-                      title: Text(course.name),
-                      flexibleSpace: _editorBloc != null
-                          ? null
-                          : FlexibleSpaceBar(
-                              background: Container(
-                                  margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
-                                  child: Hero(
-                                      tag: _editorBloc != null
-                                          ? "course-icon-${_editorBloc.server.name}"
-                                          : "course-icon-${course.server.index}-${course.index}",
-                                      child: _editorBloc != null
-                                          ? Container()
-                                          : UniversalImage(
-                                              url: course.url + "/icon",
-                                              height: 500,
-                                              type: course.icon,
-                                            ))),
-                            ),
-                    ),
+                        : null,
+                    title: Text(course.name),
+                    flexibleSpace: _editorBloc != null
+                        ? null
+                        : FlexibleSpaceBar(
+                            background: Container(
+                                margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
+                                child: Hero(
+                                    tag: _editorBloc != null
+                                        ? "course-icon-${_editorBloc.server.name}"
+                                        : "course-icon-${course.server.index}-${course.index}",
+                                    child: _editorBloc != null
+                                        ? Container()
+                                        : UniversalImage(
+                                            url: course.url + "/icon",
+                                            height: 500,
+                                            type: course.icon,
+                                          ))),
+                          )
                   )
                 ];
               },

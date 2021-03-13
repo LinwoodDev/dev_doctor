@@ -2,9 +2,9 @@
     "title": "Dev-Doctor.cf",
     "subtitle": "A free, opensource, serverless learning platform. A linwood project",
     "course": {
-        "add":{
-            "name":"Name",
-            "hint":"Sample course"
+        "add": {
+            "name": "Name",
+            "hint": "Sample course"
         },
         "course": "Course",
         "home": "HOME",
@@ -17,21 +17,33 @@
             "correct": "Correct!",
             "wrong": "Sorry, wrong answer!",
             "check": "CHECK ANSWER",
-            "retry":"Retry",
-            "start":"Start quiz",
-            "points":"points",
-            "time":"seconds remaining",
+            "retry": "Retry",
+            "start": "Start quiz",
+            "points": "points",
+            "time": "seconds remaining",
             "validation": {
                 "title": "Validation",
                 "correct": "You got everything right!",
                 "wrong": "You made mistakes!"
             }
         },
-        "video":{
-            "open":"Open video"
+        "video": {
+            "open": "Open video"
         },
         "start": "Start",
-        "support": "Support"
+        "support": "Support",
+        "description": {
+            "label": "Description",
+            "hint": "This course is just an example of how the configuration works"
+        },
+        "slug": {
+            "label": "Slug",
+            "hint": "This is the name of the folder on the server"
+        },
+        "name": {
+            "label": "Name",
+            "hint": "Example course"
+        }
     },
     "courses": {
         "view": "View courses",
@@ -47,23 +59,23 @@
     },
     "editor": {
         "title": "Editor",
-        "create":{
-            "fab":"Create backend",
+        "create": {
+            "fab": "Create backend",
             "title": "Create backend",
-            "name":{
-                "label":"Name",
-                "hint":"Dev-Doctor",
-                "empty":"The name cannot be empty!",
-                "exist":"A backend with this name already exist!"
+            "name": {
+                "label": "Name",
+                "hint": "Dev-Doctor",
+                "empty": "The name cannot be empty!",
+                "exist": "A backend with this name already exist!"
             },
             "note": {
-                "label":"Note",
-                "hint":"The sample backend of dev-doctor"
+                "label": "Note",
+                "hint": "The sample backend of dev-doctor"
             },
-            "submit":"Create"
+            "submit": "Create"
         }
     },
-    "browser":"Open in browser",
+    "browser": "Open in browser",
     "discord": "Join our discord",
     "error-with-status": "A {statusCode} error occurred on server",
     "error-without-status": "An error occurred on the server",
@@ -77,7 +89,7 @@
         "information": "Information",
         "title": "Settings",
         "privacypolicy": "Privacy Policy",
-        "changelog":"Changelog",
+        "changelog": "Changelog",
         "home": {
             "title": "Home",
             "username": "Username"
@@ -97,11 +109,11 @@
                 "en": "English",
                 "de": "German"
             },
-            "color":{
-                "title":"Color",
-                "classic":"Classic",
-                "modern":"Modern",
-                "artistic":"Artistic",
+            "color": {
+                "title": "Color",
+                "classic": "Classic",
+                "modern": "Modern",
+                "artistic": "Artistic",
                 "spring": "Spring",
                 "summer": "Summer",
                 "autumn": "Autumn",
@@ -139,7 +151,7 @@
         },
         "agree": "Agree",
         "disagree": "Disagree",
-        "save":"Save",
+        "save": "Save",
         "about": "About",
         "imprint": "Imprint",
         "code": "Code",
