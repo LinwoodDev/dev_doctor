@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 const borderColor = Color(0xFF805306);
+isWindow() => !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
@@ -20,20 +21,19 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!kIsWeb) if (Platform.isWindows || Platform.isLinux || Platform.isMacOS)
+    if (isWindow())
       return MoveWindow(child: WindowBorder(color: borderColor, width: 1, child: _buildAppBar()));
     return _buildAppBar();
   }
 
   Widget _buildAppBar() => AppBar(
         elevation: 5.0,
-        title: WindowTitleBarBox(child: Text(title)),
+        title: isWindow() ? WindowTitleBarBox(child: Text(title)) : Text(title),
         bottom: bottom,
         actions: [
           ...actions,
           if (actions.isNotEmpty)
-            if (!kIsWeb)
-              if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) VerticalDivider(),
+            if (isWindow()) VerticalDivider(),
           WindowButtons()
         ],
         //actions: [IconButton(icon: Icon(Icons.settings_outlined), onPressed: () {})],
@@ -57,7 +57,7 @@ const closeButtonColors = WindowButtonColors(
 class WindowButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (!kIsWeb) if (Platform.isWindows || Platform.isLinux || Platform.isMacOS)
+    if (!kIsWeb) if (isWindow())
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -88,8 +88,7 @@ class ConditionalMoveWindow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!kIsWeb) if (Platform.isWindows || Platform.isLinux || Platform.isMacOS)
-      return MoveWindow(child: child);
+    if (!kIsWeb) if (isWindow()) return MoveWindow(child: child);
     return child;
   }
 }
