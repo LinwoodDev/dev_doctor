@@ -10,8 +10,9 @@ typedef EditorCallback = void Function(String markdown);
 
 class MarkdownEditor extends StatefulWidget {
   final String markdown;
+  final EditorCallback onSubmit;
 
-  const MarkdownEditor({Key key, this.markdown}) : super(key: key);
+  const MarkdownEditor({Key key, this.markdown, this.onSubmit}) : super(key: key);
   @override
   _MarkdownEditorState createState() => _MarkdownEditorState();
 }

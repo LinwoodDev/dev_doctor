@@ -10,7 +10,7 @@ class EditorService {
   EditorService();
 
   List<ServerEditorService> get servers =>
-      _box.values.map((e) => ServerEditorService(bloc: ServerEditorBloc.fromJson(json.decode(e))));
+      _box.values.map((e) => ServerEditorService(ServerEditorBloc.fromJson(json.decode(e))));
   ServerEditorService getServer(String name) =>
       servers.firstWhere((e) => e.bloc.server.name == name);
 }

@@ -334,9 +334,11 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                     child: Image.network(course.authorAvatar),
                                   ),
                                 )),
-                          Text(course.author != null ?? _editorBloc != null
-                              ? 'course.author.notset'.tr()
-                              : ''),
+                          Text(course.author == null
+                              ? _editorBloc != null
+                                  ? 'course.author.notset'.tr()
+                                  : ''
+                              : course.author),
                           if (_editorBloc != null)
                             IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
                         ])),
