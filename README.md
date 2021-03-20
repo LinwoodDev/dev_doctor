@@ -9,6 +9,7 @@
 ![Play store badge](https://img.shields.io/endpoint?color=green&style=for-the-badge&url=https%3A%2F%2Fplayshields.herokuapp.com%2Fplay%3Fi%3Dcom.github.linwoodcloud.dev_doctor%26l%3DPlay%2520Store%26m%3D%24version)
 [![GitHub License badge](https://img.shields.io/github/license/LinwoodCloud/dev_doctor?style=for-the-badge)](https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE)
 [![Discord badge](https://img.shields.io/discord/735424757142519848?style=for-the-badge)](https://discord.linwood.tk)
+[![GitHub downloads](https://img.shields.io/github/downloads/LinwoodCloud/dev_doctor/total?style=for-the-badge)](https://github.com/LinwoodCloud/dev_doctor/releases/latest)
 
 ## Table of Contents
 
