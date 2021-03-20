@@ -23,7 +23,7 @@ class _PartDetailsPageState extends State<PartDetailsPage> {
   Future<CoursePart> _buildFuture() async {
     if (widget.model != null) return widget.model;
     if (widget.editorBloc != null)
-      return widget.editorBloc.courses[widget.courseId].parts[widget.partId];
+      return widget.editorBloc.courses[widget.courseId]._parts[widget.partId];
     var server = await CoursesServer.fetch(index: widget.serverId);
     var course = await server.fetchCourse(widget.courseId);
     return course.fetchPart(widget.partId);

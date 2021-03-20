@@ -130,3 +130,14 @@ class CoursesServer {
     return Course.fromJson(data);
   }
 }
+
+class CoursesServerAdapter extends TypeAdapter<CoursesServer> {
+  @override
+  CoursesServer read(BinaryReader reader) => CoursesServer.fromJson(reader.read());
+
+  @override
+  final typeId = 0;
+
+  @override
+  void write(BinaryWriter writer, CoursesServer obj) => writer.write(obj.toJson());
+}

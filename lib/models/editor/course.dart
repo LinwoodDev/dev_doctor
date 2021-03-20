@@ -1,0 +1,37 @@
+import 'package:dev_doctor/models/course.dart';
+import 'package:dev_doctor/models/editor/server.dart';
+import 'package:dev_doctor/models/part.dart';
+import 'package:hive/hive.dart';
+
+@HiveType(typeId: 3)
+class CourseEditorBloc extends HiveObject {
+  @HiveField(0)
+  Course course;
+  @HiveField(1)
+  final List<CoursePart> _parts;
+  List<CoursePart> get parts => List.unmodifiable(_parts);
+
+  CourseEditorBloc(this.course, {List<CoursePart> parts = const []})
+      : _parts = List<CoursePart>.unmodifiable(parts);
+
+  CourseEditorBloc.fromJson(Map<String, dynamic> json)
+      : course = Course.fromJson(json['course']),
+        _parts = List<CoursePart>.unmodifiable((json['parts'] as List<dynamic> ?? [])
+                .map((e) => CoursePart.fromJson(e))
+                .toList(growable: false) ??
+            []);
+  Map<String, dynamic> toJson() =>
+      {"course": course.toJson(), "parts": _parts.map((e) => e.toJson()).toList()};
+
+  List<String> getCoursePartSlugs() => _parts.map((e) => e.slug).toList();
+  CoursePart createCoursePart(String slug) {
+    if (getCoursePartSlugs().contains(slug)) return null;
+    var part = CoursePart(name: slug, slug: slug);
+    _parts.add(part);
+    return part;
+  }
+
+  void deleteCoursePart(String slug) => _parts.removeWhere((element) => element.slug == slug);
+
+  CoursePart getCoursePart(String slug) => _parts.firstWhere((element) => element.slug == slug);
+}

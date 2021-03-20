@@ -1,9 +1,8 @@
 import 'dart:convert';
-
-import 'package:dev_doctor/editor/bloc/course.dart';
-import 'package:dev_doctor/editor/bloc/server.dart';
 import 'package:dev_doctor/models/collection.dart';
 import 'package:dev_doctor/models/course.dart';
+import 'package:dev_doctor/models/editor/course.dart';
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
@@ -155,9 +154,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
           return Dismissible(
               background: Container(color: Colors.red),
               onDismissed: (direction) async {
-                _editorBloc = await _editorBloc
-                    .copyWith(courses: List.from(_editorBloc.courses)..remove(courseBloc))
-                    .save();
+                _editorBloc.courses.remove(courseBloc);
+                await _editorBloc.save();
               },
               key: Key(courseBloc.course.slug),
               child: ListTile(
@@ -226,12 +224,10 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                     child: ElevatedButton.icon(
                                         onPressed: () async {
                                           if (!_formKey.currentState.validate()) return;
-                                          _editorBloc = await _editorBloc
-                                              .copyWith(
-                                                  server:
-                                                      server.copyWith(name: _nameController.text),
-                                                  note: _noteController.text)
-                                              .save();
+                                          _editorBloc.server =
+                                              server.copyWith(name: _nameController.text);
+                                          _editorBloc.note = _noteController.text;
+                                          await _editorBloc.save();
                                           setState(() {});
                                         },
                                         icon: Icon(Icons.save_outlined),
@@ -311,6 +307,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                         label: Text("close".tr().toUpperCase()))
                   ]));
     else {
+      _editorBloc.createCourse(name);
+      _editorBloc.save();
       _editorBloc = await _editorBloc
           .copyWith(
               courses: List.from(_editorBloc.courses)

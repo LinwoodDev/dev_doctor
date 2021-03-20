@@ -34,6 +34,7 @@
     - [Pull request](#pull-request)
     - [Community Server](#community-server)
     - [Branches](#branches)
+    - [Hive Types](#hive-types)
 
 ## Introduction
 
@@ -116,3 +117,12 @@ A project without a community isn't a good project. You can [join the discord](h
 | :------ | :-----: | -----------------------------------------------------------------------------------------: |
 | main    |    ✅    | This branch is production ready. It will be updated when a new stable version is released! |
 | develop |    ❌    |    This branch is only for testing and developing. Pull request should only be added here! |
+
+### Hive Types
+
+| Index |                   Current class                   |
+| :---- | :-----------------------------------------------: |
+| 0     |      [CoursesServer](lib/models/server.dart)      |
+| 1     |         [Course](lib/models/course.dart)          |
+| 2     | [ServerEditorBloc](lib/models/editor/server.dart) |
+| 3     | [CourseEditorBloc](lib/models/editor/course.dart) |

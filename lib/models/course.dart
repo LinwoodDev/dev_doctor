@@ -1,6 +1,7 @@
 import 'package:dev_doctor/loader.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 import 'part.dart';
 
 @immutable
@@ -115,4 +116,15 @@ class Course {
           server: server ?? this.server,
           slug: slug ?? this.slug,
           supportUrl: supportUrl ?? this.supportUrl);
+}
+
+class CourseAdapter extends TypeAdapter<Course> {
+  @override
+  Course read(BinaryReader reader) => Course.fromJson(reader.read());
+
+  @override
+  final typeId = 1;
+
+  @override
+  void write(BinaryWriter writer, Course obj) => writer.write(obj.toJson());
 }

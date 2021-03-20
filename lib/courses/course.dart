@@ -125,7 +125,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   Future<void> _createPart(String name) async {
-    if (_editorBloc.courses[widget.courseId].parts.map((e) => e.course.slug).contains(name))
+    if (_editorBloc.courses[widget.courseId]._parts.map((e) => e.course.slug).contains(name))
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -138,10 +138,10 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                         label: Text("close".tr().toUpperCase()))
                   ]));
     else {
-      var parts = List<CoursePart>.from(_editorBloc.courses[widget.courseId].parts)
+      var parts = List<CoursePart>.from(_editorBloc.courses[widget.courseId]._parts)
         ..add(CoursePart(name: name));
       var courses = List<CourseEditorBloc>.from(_editorBloc.courses)
-        ..[widget.courseId].copyWith(parts: parts);
+        ..[widget.courseId].copyWith(_parts: parts);
       _editorBloc = await _editorBloc.copyWith(courses: courses).save();
       setState(() {});
     }
@@ -371,7 +371,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   Widget _buildParts(BuildContext context) {
-    var parts = _editorBloc?.courses[widget.courseId]?.parts;
+    var parts = _editorBloc?.courses[widget.courseId]?._parts;
     return Scrollbar(
         child: ListView.builder(
       itemCount: parts.length,
