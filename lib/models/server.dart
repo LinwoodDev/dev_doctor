@@ -116,11 +116,9 @@ class CoursesServer {
     return CoursesServer.fromJson(data);
   }
 
-  Future<List<Course>> fetchCourses() => Future.wait(
-      courses.asMap().map((index, value) => MapEntry(index, fetchCourse(index))).values);
+  Future<List<Course>> fetchCourses() => Future.wait(courses.map((course) => fetchCourse(course)));
 
-  Future<Course> fetchCourse(int index) async {
-    var course = courses[index];
+  Future<Course> fetchCourse(String course) async {
     var data = await loadFile("$url/$course/config");
 
     data['server'] = this;

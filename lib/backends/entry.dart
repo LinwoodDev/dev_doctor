@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:dev_doctor/models/collection.dart';
-import 'package:dev_doctor/models/course.dart';
-import 'package:dev_doctor/models/editor/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
@@ -161,8 +159,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
               child: ListTile(
                   title: Text(courseBloc.course.name),
                   subtitle: Text(courseBloc.course.description ?? ""),
-                  onTap: () => Modular.to
-                      .pushNamed('/editor/course?serverId=${_editorBloc.key}&courseId=$index')));
+                  onTap: () => Modular.to.pushNamed(
+                      '/editor/course?serverId=${_editorBloc.key}&course=${courseBloc.course.slug}')));
         },
       ));
 
@@ -309,11 +307,6 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
     else {
       _editorBloc.createCourse(name);
       _editorBloc.save();
-      _editorBloc = await _editorBloc
-          .copyWith(
-              courses: List.from(_editorBloc.courses)
-                ..add(CourseEditorBloc(Course(name: name, slug: name))))
-          .save();
       setState(() {});
     }
   }

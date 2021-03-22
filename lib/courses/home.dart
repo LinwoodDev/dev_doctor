@@ -243,7 +243,7 @@ class _CoursesListState extends State<CoursesList> {
             title: Text(course.name),
             subtitle: Text(course.description),
             onTap: () => Modular.to.pushNamed(
-                "/courses/details?serverId=${course.server.index}&courseId=${course.index}",
+                "/courses/details?serverId=${course.server.index}&course=${course.slug}",
                 arguments: course),
             leading: course.icon?.isEmpty ?? true
                 ? null

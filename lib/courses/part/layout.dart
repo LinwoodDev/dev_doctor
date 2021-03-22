@@ -17,7 +17,8 @@ class PartItemLayout extends StatefulWidget {
 
 class _PartItemLayoutState extends State<PartItemLayout> {
   CoursePartBloc bloc;
-  int serverId, courseId, partId, itemId;
+  int serverId, partId, itemId;
+  String course;
 
   @override
   void initState() {
@@ -29,10 +30,10 @@ class _PartItemLayoutState extends State<PartItemLayout> {
     var params = Modular.args.queryParams;
     bloc = CoursePartModule.to.get<CoursePartBloc>();
     serverId = int.parse(params['serverId']);
-    courseId = int.parse(params['courseId']);
+    course = params['course'];
     partId = int.parse(params['partId']);
     itemId = int.parse(params['itemId'] ?? '0');
-    bloc?.fetch(serverId: serverId, courseId: courseId, partId: partId);
+    bloc?.fetch(serverId: serverId, course: course, partId: partId);
   }
 
   @override
@@ -51,9 +52,9 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                     course: data.course,
                     onChange: (int index) {
                       Modular.to.navigate(
-                          "/courses/start/item?serverId=$serverId&courseId=$courseId&partId=$index");
+                          "/courses/start/item?serverId=$serverId&course=$course&partId=$index");
                       setState(() => bloc.reset());
-                      bloc?.fetch(serverId: serverId, courseId: courseId, partId: index);
+                      bloc?.fetch(serverId: serverId, course: course, partId: index);
                     },
                   ),
                   appBar: MyAppBar(
@@ -62,7 +63,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                     bottom: TabBar(
                         isScrollable: true,
                         onTap: (index) => Modular.to.pushReplacementNamed(
-                            "/courses/start/item?serverId=$serverId&courseId=$courseId&partId=$partId&itemId=$index"),
+                            "/courses/start/item?serverId=$serverId&course=$course&partId=$partId&itemId=$index"),
                         tabs: List.generate(data.items.length, (index) {
                           var item = data.items[index];
                           if (item is TextPartItem)

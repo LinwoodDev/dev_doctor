@@ -1,7 +1,6 @@
 import 'package:dev_doctor/backends/entry.dart';
 import 'package:dev_doctor/courses/course.dart';
-import 'package:dev_doctor/editor/bloc/server.dart';
-import 'package:dev_doctor/editor/services/server.dart';
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'home.dart';
@@ -17,13 +16,13 @@ class EditorModule extends Module {
         }),
         ChildRoute('/course', child: (_, args) {
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']));
-          return CoursePage(editorBloc: bloc, courseId: int.parse(args.queryParams['courseId']));
+          return CoursePage(editorBloc: bloc, course: args.queryParams['course']);
         }),
         ChildRoute('/edit', child: (_, args) {
-          var service = ServerEditorService.fromKey(int.parse(args.queryParams['serverId']));
+          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']));
           return MarkdownEditor(
-              markdown: service.server.body,
-              onSubmit: (value) => service.server = service.server.copyWith(body: value));
+              markdown: bloc.server.body,
+              onSubmit: (value) => bloc.server = bloc.server.copyWith(body: value));
         })
       ];
 }

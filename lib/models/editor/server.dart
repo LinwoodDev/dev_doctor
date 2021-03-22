@@ -27,18 +27,29 @@ class ServerEditorBloc extends HiveObject {
             .toList(growable: false));
   factory ServerEditorBloc.fromKey(int key) =>
       ServerEditorBloc.fromJson(json.decode(Hive.box<String>('editor').get(key))..['key'] = key);
-  Map<String, dynamic> toJson() =>
-      {"server": server.toJson(), "note": note, "courses": _courses.map((e) => e.toJson()).toList()}
+  Map<String, dynamic> toJson() => {
+        "server": server.toJson(),
+        "note": note,
+        "courses": _courses.map((e) => e.toJson()).toList()
+      };
 
   List<String> getCourseSlugs() => _courses.map((e) => e.course.slug).toList();
   CourseEditorBloc createCourse(String slug) {
-    if(getCourseSlugs().contains(slug))
-      return null;
+    if (getCourseSlugs().contains(slug)) return null;
     var courseBloc = CourseEditorBloc(Course(name: slug, slug: slug));
     _courses.add(courseBloc);
     return courseBloc;
   }
-  void deleteCourse(String slug)=> _courses.removeWhere((element) => element.course.slug == slug);
 
-  CourseEditorBloc getCourse(String slug) => _courses.firstWhere((element) => element.course.slug == slug);
+  void deleteCourse(String slug) => _courses.removeWhere((element) => element.course.slug == slug);
+
+  CourseEditorBloc getCourse(String slug) =>
+      _courses.firstWhere((element) => element.course.slug == slug);
+  CourseEditorBloc changeCourseSlug(String oldSlug, String newSlug) {
+    var courseBloc = getCourse(oldSlug);
+    var course = courseBloc.course.copyWith(slug: newSlug);
+    var newBloc = CourseEditorBloc(course, parts: courseBloc.parts);
+    _courses[_courses.indexOf(courseBloc)] = newBloc;
+    return newBloc;
+  }
 }

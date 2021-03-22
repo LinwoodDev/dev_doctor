@@ -1,6 +1,6 @@
 import 'package:animations/animations.dart';
-import 'package:dev_doctor/editor/bloc/server.dart';
 import 'package:dev_doctor/editor/create.dart';
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';

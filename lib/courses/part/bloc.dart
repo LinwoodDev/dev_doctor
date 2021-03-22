@@ -6,11 +6,11 @@ import 'package:rxdart/rxdart.dart';
 class CoursePartBloc extends Disposable {
   BehaviorSubject<CoursePart> coursePart = BehaviorSubject<CoursePart>();
   CoursePartBloc() {}
-  Future<dynamic> fetch({int serverId, int courseId, int partId}) async {
+  Future<dynamic> fetch({int serverId, String course, int partId}) async {
     reset();
     var server = await CoursesServer.fetch(index: serverId);
-    var course = await server.fetchCourse(courseId);
-    var part = await course.fetchPart(partId);
+    var current = await server.fetchCourse(course);
+    var part = await current.fetchPart(partId);
     coursePart.add(part);
   }
 

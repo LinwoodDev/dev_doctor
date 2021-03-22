@@ -1,12 +1,11 @@
 import 'dart:convert';
 
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hive/hive.dart';
-
-import 'bloc/server.dart';
 
 class CreateServerPage extends StatefulWidget {
   @override

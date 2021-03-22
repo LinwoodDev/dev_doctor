@@ -12,7 +12,7 @@ class CourseModule extends Module {
             child: (_, args) => CoursePage(
                 model: args.data,
                 serverId: int.parse(args.queryParams['serverId']),
-                courseId: int.parse(args.queryParams['courseId']))),
+                course: args.queryParams['course'])),
         ModuleRoute('/start', module: CoursePartModule()),
       ];
 }

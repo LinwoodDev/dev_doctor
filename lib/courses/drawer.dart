@@ -17,11 +17,12 @@ class CourseDrawer extends StatefulWidget {
 }
 
 class _CourseDrawerState extends State<CourseDrawer> {
-  int serverId, courseId, partId;
+  int serverId, partId;
+  String course;
   @override
   void initState() {
     serverId = int.parse(Modular.args.queryParams['serverId']);
-    courseId = int.parse(Modular.args.queryParams['courseId']);
+    course = Modular.args.queryParams['course'];
     partId = int.parse(Modular.args.queryParams['partId']);
     super.initState();
   }
