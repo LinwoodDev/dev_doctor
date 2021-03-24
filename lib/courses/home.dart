@@ -5,7 +5,6 @@ import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -242,9 +241,15 @@ class _CoursesListState extends State<CoursesList> {
         return ListTile(
             title: Text(course.name),
             subtitle: Text(course.description),
-            onTap: () => Modular.to.pushNamed(
-                "/courses/details?serverId=${course.server.index}&course=${course.slug}",
-                arguments: course),
+            onTap: () {
+              Navigator.of(context).pushNamed(Uri(pathSegments: [
+                "courses",
+                "details"
+              ], queryParameters: <String, String>{
+                "serverId": course.server.index.toString(),
+                "courseId": course.slug
+              }).toString());
+            },
             leading: course.icon?.isEmpty ?? true
                 ? null
                 : Hero(
