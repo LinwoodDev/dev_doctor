@@ -1,3 +1,6 @@
+import 'package:dev_doctor/models/course.dart';
+import 'package:dev_doctor/models/editor/server.dart';
+import 'package:dev_doctor/models/server.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -7,6 +10,7 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 import 'app_module.dart';
 import 'app_widget.dart';
+import 'models/editor/course.dart';
 import 'widgets/appbar.dart';
 
 void main() async {
@@ -19,6 +23,10 @@ void main() async {
   await Hive.openBox<String>('editor');
   var _serversBox = await Hive.openBox<String>('servers');
   var _collectionsBox = await Hive.openBox<String>('collections');
+  Hive.registerAdapter(CoursesServerAdapter());
+  Hive.registerAdapter(CourseAdapter());
+  Hive.registerAdapter(ServerEditorBlocAdapter());
+  Hive.registerAdapter(CourseEditorBlocAdapter());
   if (_collectionsBox.isEmpty) await _collectionsBox.add('https://collection.dev-doctor.cf');
   if (_serversBox.isEmpty) await _serversBox.add('https://backend.dev-doctor.cf');
   runApp(ModularApp(module: AppModule(), child: AppWidget()));

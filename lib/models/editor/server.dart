@@ -6,6 +6,8 @@ import 'package:hive/hive.dart';
 
 import 'course.dart';
 
+part 'server.g.dart';
+
 @HiveType(typeId: 2)
 class ServerEditorBloc extends HiveObject {
   @HiveField(0)

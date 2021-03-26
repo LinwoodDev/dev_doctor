@@ -162,7 +162,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                           IconButton(
                               icon: Icon(Icons.play_circle_outline_outlined),
                               tooltip: "course.start".tr(),
-                              onPressed: () => Modular.to.navigate(Uri(pathSegments: [
+                              onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
                                     "",
                                     "courses",
                                     "start",

@@ -2,6 +2,8 @@ import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:hive/hive.dart';
 
+part 'course.g.dart';
+
 @HiveType(typeId: 3)
 class CourseEditorBloc extends HiveObject {
   @HiveField(0)

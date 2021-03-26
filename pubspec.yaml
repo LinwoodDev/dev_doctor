@@ -50,8 +50,8 @@ flutter_icons:
   ios: true
   image_path: "images/logo-light-background.png"
 dev_dependencies:
-  hive_generator: ^1.0.0
   build_runner: ^1.11.5
+  hive_generator: ^1.0.0
   msix: ^1.0.3
   flutter_test:
     sdk: flutter
