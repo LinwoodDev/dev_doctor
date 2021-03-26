@@ -92,7 +92,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                                   _formKey.currentState.reset();
                                                   if (widget.item.time != null) startTimer();
                                                 }),
-                                            label: Text("course.question.retry").tr()))
+                                            label:
+                                                Text("course.question.retry".tr().toUpperCase())))
                                   ]))
                             else
                               Container(),

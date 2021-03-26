@@ -243,6 +243,7 @@ class _CoursesListState extends State<CoursesList> {
             subtitle: Text(course.description),
             onTap: () {
               Navigator.of(context).pushNamed(Uri(pathSegments: [
+                "",
                 "courses",
                 "details"
               ], queryParameters: <String, String>{

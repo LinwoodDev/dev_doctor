@@ -11,29 +11,24 @@ import 'bloc.dart';
 import 'module.dart';
 
 class PartItemLayout extends StatefulWidget {
+  final Widget child;
+  final int serverId, partId, itemId;
+  final String course;
+
+  const PartItemLayout({Key key, this.child, this.serverId, this.partId, this.itemId, this.course})
+      : super(key: key);
+
   @override
   _PartItemLayoutState createState() => _PartItemLayoutState();
 }
 
 class _PartItemLayoutState extends State<PartItemLayout> {
   CoursePartBloc bloc;
-  int serverId, partId, itemId;
-  String course;
 
   @override
   void initState() {
     super.initState();
-    _buildBloc();
-  }
-
-  void _buildBloc() {
-    var params = Modular.args.queryParams;
     bloc = CoursePartModule.to.get<CoursePartBloc>();
-    serverId = int.parse(params['serverId']);
-    course = params['course'];
-    partId = int.parse(params['partId']);
-    itemId = int.parse(params['itemId'] ?? '0');
-    bloc?.fetch(serverId: serverId, course: course, partId: partId);
   }
 
   @override
@@ -46,22 +41,23 @@ class _PartItemLayoutState extends State<PartItemLayout> {
           var data = snapshot.data;
           return DefaultTabController(
               length: data.items.length,
-              initialIndex: itemId,
+              initialIndex: widget.itemId,
               child: Scaffold(
                   drawer: CourseDrawer(
                     course: data.course,
                     onChange: (int index) {
-                      Navigator.of(context).pushNamed(Uri(pathSegments: [
+                      Modular.to.pushNamed(Uri(pathSegments: [
+                        "",
                         "courses",
                         "start",
                         "item"
                       ], queryParameters: <String, String>{
-                        "serverId": serverId.toString(),
-                        "course": course,
+                        "serverId": widget.serverId.toString(),
+                        "course": widget.course,
                         "partId": index.toString()
                       }).toString());
                       setState(() => bloc.reset());
-                      bloc?.fetch(serverId: serverId, course: course, partId: index);
+                      bloc?.fetch(serverId: widget.serverId, course: widget.course, partId: index);
                     },
                   ),
                   appBar: MyAppBar(
@@ -69,16 +65,16 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                     height: 125,
                     bottom: TabBar(
                         isScrollable: true,
-                        onTap: (index) => Modular.to.navigate(Uri(pathSegments: [
-                              "/",
+                        onTap: (index) => Modular.to.pushReplacementNamed(Uri(pathSegments: [
+                              "",
                               "courses",
                               "start",
                               "item"
                             ], queryParameters: {
-                              "serverId": serverId,
-                              "course": course,
-                              "partId": partId,
-                              "itemId": index
+                              "serverId": widget.serverId.toString(),
+                              "course": widget.course,
+                              "partId": widget.partId.toString(),
+                              "itemId": index.toString()
                             }).toString()),
                         tabs: List.generate(data.items.length, (index) {
                           var item = data.items[index];
@@ -91,7 +87,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                           return null;
                         })),
                   ),
-                  body: RouterOutlet()));
+                  body: widget.child));
         });
   }
 }

@@ -163,13 +163,14 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               icon: Icon(Icons.play_circle_outline_outlined),
                               tooltip: "course.start".tr(),
                               onPressed: () => Modular.to.navigate(Uri(pathSegments: [
-                                    "/",
+                                    "",
                                     "courses",
                                     "start",
                                     "item"
                                   ], queryParameters: {
-                                    "serverId": widget.serverId,
-                                    "course": widget.course
+                                    "serverId": widget.serverId.toString(),
+                                    "course": widget.course,
+                                    "partId": 0.toString()
                                   }).toString()))
                         } else
                           IconButton(
@@ -384,8 +385,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
             child: ListTile(
                 title: Text(part.name),
                 subtitle: Text(part.description ?? ""),
-                onTap: () => Modular.to.navigate(Uri(pathSegments: [
-                      "/",
+                onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
+                      "",
                       "editor",
                       "part"
                     ], queryParameters: {

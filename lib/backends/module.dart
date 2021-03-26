@@ -1,5 +1,4 @@
 import 'package:dev_doctor/backends/user.dart';
-import 'package:dev_doctor/models/collection.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'entry.dart';
@@ -12,7 +11,7 @@ class BackendsModule extends Module {
     ChildRoute("/user", child: (_, args) {
       //print("User will be rendered with argument ${args.data}");
       return BackendUserPage(
-          model: args.data is BackendUser ? args.data : null,
+          model: args.data,
           collectionId: int.parse(args.queryParams['collectionId']),
           user: args.queryParams['user']);
     }),
