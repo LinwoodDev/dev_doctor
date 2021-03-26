@@ -14,7 +14,7 @@ class EditorPage extends StatefulWidget {
 }
 
 class _EditorPageState extends State<EditorPage> {
-  Box<String> _box = Hive.box<String>('editor');
+  Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
   @override
   Widget build(BuildContext context) {
     return Scaffold(

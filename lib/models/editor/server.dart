@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:hive/hive.dart';
@@ -19,16 +17,16 @@ class ServerEditorBloc extends HiveObject {
 
   List<CourseEditorBloc> get courses => List.unmodifiable(_courses);
 
-  ServerEditorBloc(this.server, {List<CourseEditorBloc> courses = const [], this.note})
-      : _courses = List<CourseEditorBloc>.unmodifiable(courses);
+  ServerEditorBloc({List<CourseEditorBloc> courses = const [], this.note, String name})
+      : server = CoursesServer(name: name),
+        _courses = List<CourseEditorBloc>.from(courses);
   ServerEditorBloc.fromJson(Map<String, dynamic> json)
       : server = CoursesServer.fromJson(json['server'] ?? {}),
         note = json['note'],
-        _courses = List<CourseEditorBloc>.unmodifiable((json['courses'] as List<dynamic> ?? [])
+        _courses = List<CourseEditorBloc>.from((json['courses'] as List<dynamic> ?? [])
             .map((e) => CourseEditorBloc.fromJson(e))
             .toList(growable: false));
-  factory ServerEditorBloc.fromKey(int key) =>
-      ServerEditorBloc.fromJson(json.decode(Hive.box<String>('editor').get(key))..['key'] = key);
+  factory ServerEditorBloc.fromKey(int key) => Hive.box<ServerEditorBloc>('editor').get(key);
   Map<String, dynamic> toJson() => {
         "server": server.toJson(),
         "note": note,

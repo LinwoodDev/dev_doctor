@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:dev_doctor/models/editor/server.dart';
-import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -16,10 +13,10 @@ class _CreateServerPageState extends State<CreateServerPage> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _noteController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey();
-  Box<String> _box = Hive.box<String>('editor');
+  Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
   @override
   Widget build(BuildContext context) {
-    var _names = _box.values.map((e) => ServerEditorBloc.fromJson(json.decode(e)).server.name);
+    var _names = _box.values.map((e) => e.server.name);
     return Scaffold(
         appBar: MyAppBar(title: "editor.create.title".tr()),
         body: Form(
@@ -50,9 +47,7 @@ class _CreateServerPageState extends State<CreateServerPage> {
             tooltip: "editor.create.submit".tr(),
             onPressed: () async {
               if (_formKey.currentState.validate()) {
-                await ServerEditorBloc(CoursesServer(name: _nameController.text),
-                        note: _noteController.text)
-                    .save();
+                _box.add(ServerEditorBloc(name: _nameController.text, note: _noteController.text));
                 Navigator.of(context).pop();
               }
             }));

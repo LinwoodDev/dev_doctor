@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dev_doctor/models/collection.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
@@ -34,7 +33,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
   TextEditingController _nameController;
   TextEditingController _noteController;
   GlobalKey<FormState> _formKey = GlobalKey();
-  Box<String> _box = Hive.box<String>('editor');
+  Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
   ServerEditorBloc _editorBloc;
 
   @override
@@ -174,7 +173,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
   }
 
   Widget _buildGeneral(BuildContext context, CoursesServer server) {
-    var _names = _box.values.map((e) => ServerEditorBloc.fromJson(json.decode(e)).server.name);
+    var _names = _box.values.map((e) => e.server.name);
     return Scrollbar(
         child: ListView(
       children: <Widget>[

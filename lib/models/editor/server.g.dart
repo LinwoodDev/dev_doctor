@@ -17,9 +17,8 @@ class ServerEditorBlocAdapter extends TypeAdapter<ServerEditorBloc> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ServerEditorBloc(
-      fields[0] as CoursesServer,
       note: fields[1] as String,
-    );
+    )..server = fields[0] as CoursesServer;
   }
 
   @override

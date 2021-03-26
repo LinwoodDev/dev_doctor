@@ -72,7 +72,6 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                     default:
                       if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                       var course = snapshot.data;
-                      print(course);
                       return _buildView(course);
                   }
                 });

@@ -20,7 +20,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('settings');
   await Hive.openBox('appearance');
-  await Hive.openBox<String>('editor');
+  await Hive.openBox<ServerEditorBloc>('editor');
   var _serversBox = await Hive.openBox<String>('servers');
   var _collectionsBox = await Hive.openBox<String>('collections');
   Hive.registerAdapter(CoursesServerAdapter());
