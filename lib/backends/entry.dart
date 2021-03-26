@@ -160,7 +160,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                   title: Text(courseBloc.course.name),
                   subtitle: Text(courseBloc.course.description ?? ""),
                   onTap: () => Modular.to.pushNamed(
-                      '/editor/course?serverId=${_editorBloc.key}&course=${courseBloc.course.slug}')));
+                      '/editor/course?serverId=${_editorBloc.key}&courseId=${courseBloc.course.index}')));
         },
       ));
 

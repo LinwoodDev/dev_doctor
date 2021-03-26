@@ -160,11 +160,17 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 tooltip: "course.support".tr(),
                                 onPressed: () => launch(supportUrl)),
                           IconButton(
-                            icon: Icon(Icons.play_circle_outline_outlined),
-                            tooltip: "course.start".tr(),
-                            onPressed: () => Modular.to.navigate(
-                                '/courses/start/item?serverId=${widget.serverId}&course=${widget.course}&partId=0'),
-                          )
+                              icon: Icon(Icons.play_circle_outline_outlined),
+                              tooltip: "course.start".tr(),
+                              onPressed: () => Modular.to.navigate(Uri(pathSegments: [
+                                    "/",
+                                    "courses",
+                                    "start",
+                                    "item"
+                                  ], queryParameters: {
+                                    "serverId": widget.serverId,
+                                    "course": widget.course
+                                  }).toString()))
                         } else
                           IconButton(
                               icon: Icon(Icons.save_outlined),
@@ -378,8 +384,15 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
             child: ListTile(
                 title: Text(part.name),
                 subtitle: Text(part.description ?? ""),
-                onTap: () => Modular.to.pushNamed(
-                    '/editor/part?serverId=${_editorBloc.key}&course=${widget.course}&part=$index')));
+                onTap: () => Modular.to.navigate(Uri(pathSegments: [
+                      "/",
+                      "editor",
+                      "part"
+                    ], queryParameters: {
+                      "serverId": _editorBloc.key,
+                      "course": widget.course,
+                      "part": index
+                    }).toString())));
       },
     ));
   }

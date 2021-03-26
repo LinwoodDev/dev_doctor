@@ -51,8 +51,15 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                   drawer: CourseDrawer(
                     course: data.course,
                     onChange: (int index) {
-                      Modular.to.navigate(
-                          "/courses/start/item?serverId=$serverId&course=$course&partId=$index");
+                      Navigator.of(context).pushNamed(Uri(pathSegments: [
+                        "courses",
+                        "start",
+                        "item"
+                      ], queryParameters: <String, String>{
+                        "serverId": serverId.toString(),
+                        "course": course,
+                        "partId": index.toString()
+                      }).toString());
                       setState(() => bloc.reset());
                       bloc?.fetch(serverId: serverId, course: course, partId: index);
                     },
@@ -62,8 +69,17 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                     height: 125,
                     bottom: TabBar(
                         isScrollable: true,
-                        onTap: (index) => Modular.to.pushReplacementNamed(
-                            "/courses/start/item?serverId=$serverId&course=$course&partId=$partId&itemId=$index"),
+                        onTap: (index) => Modular.to.navigate(Uri(pathSegments: [
+                              "/",
+                              "courses",
+                              "start",
+                              "item"
+                            ], queryParameters: {
+                              "serverId": serverId,
+                              "course": course,
+                              "partId": partId,
+                              "itemId": index
+                            }).toString()),
                         tabs: List.generate(data.items.length, (index) {
                           var item = data.items[index];
                           if (item is TextPartItem)

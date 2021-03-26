@@ -247,7 +247,7 @@ class _CoursesListState extends State<CoursesList> {
                 "details"
               ], queryParameters: <String, String>{
                 "serverId": course.server.index.toString(),
-                "courseId": course.slug
+                "course": course.slug
               }).toString());
             },
             leading: course.icon?.isEmpty ?? true
