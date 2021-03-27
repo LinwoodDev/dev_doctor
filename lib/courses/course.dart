@@ -274,27 +274,29 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 ),
                                 Divider()
                               ]))),
-                    GestureDetector(
-                        onTap: () {
-                          if (course.author?.url != null) launch(course.author?.url);
-                        },
-                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          if (course.author?.avatar != null)
-                            Padding(
-                                padding: EdgeInsets.all(8),
-                                child: CircleAvatar(
-                                  child: ClipOval(
-                                    child: Image.network(course.author.avatar),
-                                  ),
-                                )),
-                          Text(course.author?.name == null
-                              ? _editorBloc != null
-                                  ? 'course.author.notset'.tr()
-                                  : ''
-                              : course.author.name),
-                          if (_editorBloc != null)
-                            IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
-                        ])),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      GestureDetector(
+                          onTap: () {
+                            if (course.author?.url != null) launch(course.author?.url);
+                          },
+                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            if (course.author?.avatar != null)
+                              Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: CircleAvatar(
+                                    child: ClipOval(
+                                      child: Image.network(course.author.avatar),
+                                    ),
+                                  )),
+                            Text(course.author?.name == null
+                                ? _editorBloc != null
+                                    ? 'course.author.notset'.tr()
+                                    : ''
+                                : course.author.name),
+                          ])),
+                      if (_editorBloc != null)
+                        IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
+                    ]),
                     if (course.lang != null || _editorBloc != null)
                       Padding(
                           padding: EdgeInsets.all(8),
