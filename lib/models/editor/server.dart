@@ -4,15 +4,9 @@ import 'package:hive/hive.dart';
 
 import 'course.dart';
 
-part 'server.g.dart';
-
-@HiveType(typeId: 2)
 class ServerEditorBloc extends HiveObject {
-  @HiveField(0)
   CoursesServer server;
-  @HiveField(1)
   String note;
-  @HiveField(2)
   final List<CourseEditorBloc> _courses;
 
   List<CourseEditorBloc> get courses => List.unmodifiable(_courses);
@@ -21,7 +15,7 @@ class ServerEditorBloc extends HiveObject {
       : server = CoursesServer(name: name),
         _courses = List<CourseEditorBloc>.from(courses);
   ServerEditorBloc.fromJson(Map<String, dynamic> json)
-      : server = CoursesServer.fromJson(json['server']) ?? {},
+      : server = CoursesServer.fromJson(Map<String, dynamic>.from(json['server'] ?? {})),
         note = json['note'],
         _courses = List<CourseEditorBloc>.from((json['courses'] as List<dynamic> ?? [])
             .map((e) => CourseEditorBloc.fromJson(e))
@@ -52,4 +46,16 @@ class ServerEditorBloc extends HiveObject {
     _courses[_courses.indexOf(courseBloc)] = newBloc;
     return newBloc;
   }
+}
+
+class ServerEditorBlocAdapter extends TypeAdapter<ServerEditorBloc> {
+  @override
+  ServerEditorBloc read(BinaryReader reader) =>
+      ServerEditorBloc.fromJson(Map<String, dynamic>.from(reader.read()));
+
+  @override
+  final typeId = 2;
+
+  @override
+  void write(BinaryWriter writer, ServerEditorBloc obj) => writer.write(obj.toJson());
 }

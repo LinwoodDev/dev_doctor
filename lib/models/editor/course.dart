@@ -2,13 +2,8 @@ import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:hive/hive.dart';
 
-part 'course.g.dart';
-
-@HiveType(typeId: 3)
 class CourseEditorBloc extends HiveObject {
-  @HiveField(0)
   Course _course;
-  @HiveField(1)
   final List<CoursePart> _parts;
   List<CoursePart> get parts => List.unmodifiable(_parts);
 
@@ -16,7 +11,7 @@ class CourseEditorBloc extends HiveObject {
       : _parts = List<CoursePart>.unmodifiable(parts);
 
   CourseEditorBloc.fromJson(Map<String, dynamic> json)
-      : _course = Course.fromJson(json['course']),
+      : _course = Course.fromJson(Map<String, dynamic>.from(json['course'])),
         _parts = List<CoursePart>.unmodifiable((json['parts'] as List<dynamic> ?? [])
                 .map((e) => CoursePart.fromJson(e))
                 .toList(growable: false) ??
@@ -40,4 +35,16 @@ class CourseEditorBloc extends HiveObject {
   void deleteCoursePart(String slug) => _parts.removeWhere((element) => element.slug == slug);
 
   CoursePart getCoursePart(String slug) => _parts.firstWhere((element) => element.slug == slug);
+}
+
+class CourseEditorBlocAdapter extends TypeAdapter<CourseEditorBloc> {
+  @override
+  CourseEditorBloc read(BinaryReader reader) =>
+      CourseEditorBloc.fromJson(Map<String, dynamic>.from(reader.read()));
+
+  @override
+  final typeId = 3;
+
+  @override
+  void write(BinaryWriter writer, CourseEditorBloc obj) => writer.write(obj.toJson());
 }
