@@ -2,7 +2,7 @@ import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:hive/hive.dart';
 
-class CourseEditorBloc extends HiveObject {
+class CourseEditorBloc {
   Course _course;
   final List<CoursePart> _parts;
   List<CoursePart> get parts => List.unmodifiable(_parts);
@@ -21,8 +21,8 @@ class CourseEditorBloc extends HiveObject {
     if (_course.slug == value.slug) _course = value;
   }
 
-  Map<String, dynamic> toJson() =>
-      {"course": _course.toJson(), "parts": _parts.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson(int apiVersion) =>
+      {"course": _course.toJson(apiVersion), "parts": _parts.map((e) => e.toJson()).toList()};
 
   List<String> getCoursePartSlugs() => _parts.map((e) => e.slug).toList();
   CoursePart createCoursePart(String slug) {
@@ -38,6 +38,9 @@ class CourseEditorBloc extends HiveObject {
 }
 
 class CourseEditorBlocAdapter extends TypeAdapter<CourseEditorBloc> {
+  final int apiVersion;
+
+  CourseEditorBlocAdapter({this.apiVersion});
   @override
   CourseEditorBloc read(BinaryReader reader) =>
       CourseEditorBloc.fromJson(Map<String, dynamic>.from(reader.read()));
@@ -46,5 +49,7 @@ class CourseEditorBlocAdapter extends TypeAdapter<CourseEditorBloc> {
   final typeId = 3;
 
   @override
-  void write(BinaryWriter writer, CourseEditorBloc obj) => writer.write(obj.toJson());
+  void write(BinaryWriter writer, CourseEditorBloc obj) async {
+    writer.write(obj.toJson(apiVersion));
+  }
 }

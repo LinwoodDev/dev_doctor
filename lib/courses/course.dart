@@ -2,6 +2,7 @@ import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
+import 'package:dev_doctor/widgets/author.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -266,7 +267,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                             widget.course, _slugController.text);
                                         courseBloc.course =
                                             courseBloc.course.copyWith(name: _nameController.text);
-                                        courseBloc.save();
+                                        _editorBloc.save();
                                         setState(() {});
                                       },
                                       icon: Icon(Icons.save_outlined),
@@ -275,27 +276,29 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 Divider()
                               ]))),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      GestureDetector(
-                          onTap: () {
-                            if (course.author?.url != null) launch(course.author?.url);
-                          },
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            if (course.author?.avatar != null)
-                              Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: CircleAvatar(
-                                    child: ClipOval(
-                                      child: Image.network(course.author.avatar),
-                                    ),
-                                  )),
-                            Text(course.author?.name == null
-                                ? _editorBloc != null
-                                    ? 'course.author.notset'.tr()
-                                    : ''
-                                : course.author.name),
-                          ])),
-                      if (_editorBloc != null)
-                        IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
+                      AuthorDisplay(author: course.author, editing: _editorBloc != null),
+                      if (_editorBloc != null) ...[
+                        IconButton(
+                            icon: Icon(Icons.edit_outlined),
+                            onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
+                                  '',
+                                  'editor',
+                                  'course',
+                                  'author'
+                                ], queryParameters: {
+                                  "serverId": _editorBloc.key.toString(),
+                                  "course": widget.course
+                                }).toString())),
+                        if (course.author != null)
+                          IconButton(
+                              icon: Icon(Icons.delete_outline_outlined),
+                              onPressed: () async {
+                                var courseBloc = _editorBloc.getCourse(widget.course);
+                                courseBloc.course = courseBloc.course.copyWith(author: null);
+                                await _editorBloc.save();
+                                setState(() {});
+                              })
+                      ]
                     ]),
                     if (course.lang != null || _editorBloc != null)
                       Padding(

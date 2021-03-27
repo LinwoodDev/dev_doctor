@@ -1,5 +1,6 @@
 import 'package:dev_doctor/backends/entry.dart';
 import 'package:dev_doctor/courses/course.dart';
+import 'package:dev_doctor/editor/author.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -35,7 +36,18 @@ class EditorModule extends Module {
               markdown: bloc.server.body,
               onSubmit: (value) {
                 courseBloc.course = courseBloc.course.copyWith(body: value);
-                courseBloc.save();
+                bloc.save();
+              });
+        }),
+        ChildRoute('/course/author', child: (_, args) {
+          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']));
+          var course = args.queryParams['course'];
+          var courseBloc = bloc.getCourse(course);
+          return AuthorEditingPage(
+              author: courseBloc.course.author,
+              onSubmit: (value) {
+                courseBloc.course = courseBloc.course.copyWith(author: value);
+                bloc.save();
               });
         })
       ];

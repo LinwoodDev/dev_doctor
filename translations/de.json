@@ -16,6 +16,22 @@
             "hint": "de",
             "label": "Sprach Tag"
         },
+        "author":{
+            "notset":"Autor nicht gesetzt",
+            "title": "Autor",
+            "name":{
+                "hint": "CodeDoctorDE",
+                "label": "Name"
+            },
+            "url": {
+                "hint":"https://github.com/CodeDoctorDE",
+                "label": "URL"
+            },
+            "avatar": {
+                "hint":"https://source.unsplash.com/random",
+                "label": "Avatar"
+            }
+        },
         "question": {
             "choose": "Wähle weise!",
             "select": "Bitte wähle eine Antwort aus!",
@@ -78,6 +94,12 @@
                 "hint": "Das Beispiel-Backend von dev-doctor"
             },
             "submit": "Erstellen"
+        },
+        "markdown": {
+            "title": "Markdown Editor",
+            "preview": {
+                "title": "Vorschau"
+            }
         }
     },
     "browser": "Im Browser öffnen",

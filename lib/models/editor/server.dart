@@ -21,10 +21,10 @@ class ServerEditorBloc extends HiveObject {
             .map((e) => CourseEditorBloc.fromJson(Map<String, dynamic>.from(e)))
             .toList(growable: false));
   factory ServerEditorBloc.fromKey(int key) => Hive.box<ServerEditorBloc>('editor').get(key);
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson(int apiVersion) => {
         "server": server.toJson(),
         "note": note,
-        "courses": _courses.map((e) => e.toJson()).toList()
+        "courses": _courses.map((e) => e.toJson(apiVersion)).toList()
       };
 
   List<String> getCourseSlugs() => _courses.map((e) => e.course.slug).toList();
@@ -49,6 +49,9 @@ class ServerEditorBloc extends HiveObject {
 }
 
 class ServerEditorBlocAdapter extends TypeAdapter<ServerEditorBloc> {
+  final int apiVersion;
+
+  ServerEditorBlocAdapter({this.apiVersion});
   @override
   ServerEditorBloc read(BinaryReader reader) =>
       ServerEditorBloc.fromJson(Map<String, dynamic>.from(reader.read()));
@@ -57,5 +60,7 @@ class ServerEditorBlocAdapter extends TypeAdapter<ServerEditorBloc> {
   final typeId = 2;
 
   @override
-  void write(BinaryWriter writer, ServerEditorBloc obj) => writer.write(obj.toJson());
+  void write(BinaryWriter writer, ServerEditorBloc obj) {
+    writer.write(obj.toJson(apiVersion));
+  }
 }

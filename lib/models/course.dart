@@ -59,13 +59,14 @@ class Course {
         private: json['private'],
         supportUrl: json['support_url']);
   }
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson(int apiVersion) => {
+        "api-version": apiVersion,
         "server": server,
         "slug": slug,
         "name": name,
         "description": description,
         "icon": icon,
-        "author": author,
+        "author": author?.toJson(),
         "body": body,
         "index": index,
         "installed": installed,
@@ -94,9 +95,7 @@ class Course {
           String name,
           String description,
           String icon,
-          String author,
-          String authorUrl,
-          String authorAvatar,
+          Author author,
           String supportUrl,
           bool installed,
           String body,
@@ -120,6 +119,10 @@ class Course {
 }
 
 class CourseAdapter extends TypeAdapter<Course> {
+  final int apiVersion;
+
+  CourseAdapter({this.apiVersion});
+
   @override
   Course read(BinaryReader reader) => Course.fromJson(Map<String, dynamic>.from(reader.read()));
 
@@ -127,5 +130,7 @@ class CourseAdapter extends TypeAdapter<Course> {
   final typeId = 1;
 
   @override
-  void write(BinaryWriter writer, Course obj) => writer.write(obj.toJson());
+  void write(BinaryWriter writer, Course obj) async {
+    writer.write(obj.toJson(apiVersion));
+  }
 }

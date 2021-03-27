@@ -7,6 +7,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'app_module.dart';
 import 'app_widget.dart';
@@ -18,10 +19,12 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   await Hive.initFlutter();
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  var buildNumber = int.parse(packageInfo.buildNumber);
   Hive.registerAdapter(CoursesServerAdapter());
-  Hive.registerAdapter(CourseAdapter());
-  Hive.registerAdapter(ServerEditorBlocAdapter());
-  Hive.registerAdapter(CourseEditorBlocAdapter());
+  Hive.registerAdapter(CourseAdapter(apiVersion: buildNumber));
+  Hive.registerAdapter(ServerEditorBlocAdapter(apiVersion: buildNumber));
+  Hive.registerAdapter(CourseEditorBlocAdapter(apiVersion: buildNumber));
   await Hive.openBox('settings');
   await Hive.openBox('appearance');
   await Hive.openBox<ServerEditorBloc>('editor');

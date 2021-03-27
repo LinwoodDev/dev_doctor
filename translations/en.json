@@ -16,6 +16,22 @@
             "hint": "en",
             "label": "Language tag"
         },
+        "author":{
+            "notset":"Author not set",
+            "title": "Author",
+            "name":{
+                "hint": "CodeDoctorDE",
+                "label": "Name"
+            },
+            "url": {
+                "hint":"https://github.com/CodeDoctorDE",
+                "label": "URL"
+            },
+            "avatar": {
+                "hint":"https://source.unsplash.com/random",
+                "label": "Avatar"
+            }
+        },
         "question": {
             "choose": "Choose whisley!",
             "select": "Please select an option!",
@@ -77,7 +93,13 @@
                 "label": "Note",
                 "hint": "The sample backend of dev-doctor"
             },
-            "submit": "Create"
+            "submit": "Create",
+            "markdown": {
+                "title": "Markdown Editor",
+                "preview": {
+                    "title": "Preview"
+                }
+            }
         }
     },
     "browser": "Open in browser",
