@@ -120,7 +120,7 @@ class Course {
 
 class CourseAdapter extends TypeAdapter<Course> {
   @override
-  Course read(BinaryReader reader) => Course.fromJson(reader.read());
+  Course read(BinaryReader reader) => Course.fromJson(Map<String, dynamic>.from(reader.read()));
 
   @override
   final typeId = 1;

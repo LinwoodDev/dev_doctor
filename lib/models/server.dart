@@ -131,7 +131,8 @@ class CoursesServer {
 
 class CoursesServerAdapter extends TypeAdapter<CoursesServer> {
   @override
-  CoursesServer read(BinaryReader reader) => CoursesServer.fromJson(reader.read());
+  CoursesServer read(BinaryReader reader) =>
+      CoursesServer.fromJson(Map<String, dynamic>.from(reader.read()));
 
   @override
   final typeId = 0;

@@ -18,15 +18,15 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   await Hive.initFlutter();
+  Hive.registerAdapter(CoursesServerAdapter());
+  Hive.registerAdapter(CourseAdapter());
+  Hive.registerAdapter(ServerEditorBlocAdapter());
+  Hive.registerAdapter(CourseEditorBlocAdapter());
   await Hive.openBox('settings');
   await Hive.openBox('appearance');
   await Hive.openBox<ServerEditorBloc>('editor');
   var _serversBox = await Hive.openBox<String>('servers');
   var _collectionsBox = await Hive.openBox<String>('collections');
-  Hive.registerAdapter(CoursesServerAdapter());
-  Hive.registerAdapter(CourseAdapter());
-  Hive.registerAdapter(ServerEditorBlocAdapter());
-  Hive.registerAdapter(CourseEditorBlocAdapter());
   if (_collectionsBox.isEmpty) await _collectionsBox.add('https://collection.dev-doctor.cf');
   if (_serversBox.isEmpty) await _serversBox.add('https://backend.dev-doctor.cf');
   runApp(ModularApp(module: AppModule(), child: AppWidget()));
