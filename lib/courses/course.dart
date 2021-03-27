@@ -3,6 +3,7 @@ import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -176,8 +177,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               icon: Icon(Icons.save_outlined),
                               tooltip: "save".tr(),
                               onPressed: () {}),
-                        VerticalDivider(),
-                        WindowButtons()
+                        if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
                       ],
                       bottom: _editorBloc != null
                           ? TabBar(
@@ -218,50 +218,6 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
 
   Widget _buildGeneral(BuildContext context, Course course) {
     var _slugs = _editorBloc?.courses?.map((e) => e.course.slug);
-    var data = """"Changes are automatically rendered as you type.
-
-  * Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
-  * Renders actual, "native" React DOM elements
-  * Allows you to escape or skip HTML (try toggling the checkboxes above)
-  * If you escape or skip the HTML, no `dangerouslySetInnerHTML` is used! Yay!
-
-  ## Table of Contents
-
-  ## HTML block below
-
-  <blockquote>
-    This blockquote will change based on the HTML settings above.
-  </blockquote>
-
-  ## How about some fe?
-
-  ```
-  var React = require('react');
-  var Markdown = require('react-markdown');
-
-  React.render(
-    <Markdown source="# Your markdown here" />,
-    document.getElementById('content')
-  );
-  ```
-
-  Pretty neat, eh?
-
-  ## Tables?
-
-  | Feature   | Support |
-  | :-------: | ------- |
-  | tables    | âœ” |
-  | alignment | âœ” |
-  | wewt      | âœ” |
-
-  ## More info?
-
-  Read usage information and more on [GitHub](https://github.com/remarkjs/react-markdown)
-
-  ---------------
-
-  A component by [Espen Hovlandsdal](https://espen.codes/)""";
     return Scrollbar(
         child: ListView(children: <Widget>[
       Padding(
@@ -347,7 +303,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 padding: EdgeInsets.all(4), child: Icon(Icons.language_outlined)),
                             Text(course.lang != null
                                 ? LocaleNames.of(context).nameOf(course.lang)
-                                : 'course.lang.notset'),
+                                : 'course.lang.notset'.tr()),
                             if (_editorBloc != null)
                               IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
                           ])),
@@ -356,7 +312,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                           child: (course.body != null)
                               ? MarkdownBody(
                                   onTapLink: (_, url, __) => launch(url),
-                                  data: data,
+                                  data: course.body ?? '',
                                   selectable: true,
                                 )
                               : Container()),

@@ -11,6 +11,11 @@
         "statistics": "Statistiken",
         "back": "Zurück",
         "materials": "Materialien",
+        "lang":{
+            "notset":"Sprache nicht gesetzt",
+            "hint": "de",
+            "label": "Sprach Tag"
+        },
         "question": {
             "choose": "Wähle weise!",
             "select": "Bitte wähle eine Antwort aus!",

@@ -11,6 +11,11 @@
         "statistics": "Statistics",
         "back": "Back",
         "materials": "Materials",
+        "lang":{
+            "notset":"Language not set",
+            "hint": "en",
+            "label": "Language tag"
+        },
         "question": {
             "choose": "Choose whisley!",
             "select": "Please select an option!",
