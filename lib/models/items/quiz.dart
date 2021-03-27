@@ -19,7 +19,7 @@ class QuizPartItem extends PartItem {
 
   @override
   Map<String, dynamic> toJson() =>
-      {"text": text, "time": time, "questions": questions.map((e) => e.toJson())};
+      {"text": text, "time": time, "type": "quiz", "questions": questions.map((e) => e.toJson())};
 
   QuizPartItem copyWith(
           {String text, int time, List<QuizQuestion> questions, String name, String description}) =>

@@ -18,7 +18,12 @@ class MarkdownEditor extends StatefulWidget {
 }
 
 class _MarkdownEditorState extends State<MarkdownEditor> {
-  TextEditingController _markdownController = TextEditingController(text: '');
+  TextEditingController _markdownController;
+  @override
+  void initState() {
+    _markdownController = TextEditingController(text: widget.markdown);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,7 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
   }
 
   Widget _buildTextEditor(bool isMobile) => Scaffold(
-      appBar: MyAppBar(title: "editor.markdown.title", actions: [
+      appBar: MyAppBar(title: "editor.markdown.title".tr(), actions: [
         if (isMobile)
           IconButton(
               icon: Icon(Icons.play_arrow_outlined),

@@ -1,3 +1,4 @@
+import 'package:dev_doctor/models/author.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
@@ -88,6 +89,43 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
           );
   }
 
+  void _showLanguageDialog() {
+    var courseBloc = _editorBloc.getCourse(widget.course);
+    var language = '';
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+                contentPadding: const EdgeInsets.all(16.0),
+                content: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        autofocus: true,
+                        onChanged: (value) => language = value,
+                        keyboardType: TextInputType.url,
+                        decoration: InputDecoration(
+                            labelText: 'course.lang.label'.tr(), hintText: 'course.lang.hint'.tr()),
+                      ),
+                    )
+                  ],
+                ),
+                actions: <Widget>[
+                  TextButton(
+                      child: Text('cancel'.tr().toUpperCase()),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  TextButton(
+                      child: Text('create'.tr().toUpperCase()),
+                      onPressed: () async {
+                        courseBloc.course = courseBloc.course.copyWith(lang: language);
+                        _editorBloc.save();
+                        Navigator.pop(context);
+                        setState(() {});
+                      })
+                ]));
+  }
+
   void _showCreatePartDialog() {
     var name = '';
     showDialog(
@@ -102,8 +140,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                         onChanged: (value) => name = value,
                         keyboardType: TextInputType.url,
                         decoration: InputDecoration(
-                            labelText: 'course.add.part.name'.tr(),
-                            hintText: 'course.add.part.hint'.tr()),
+                            labelText: 'course.part.add.name'.tr(),
+                            hintText: 'course.part.add.hint'.tr()),
                       ),
                     )
                   ],
@@ -124,23 +162,9 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   Future<void> _createPart(String name) async {
-    if (_editorBloc.getCourse(widget.course).parts.map((e) => e.course.slug).contains(name))
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                  title: Text("course.add.exist.title").tr(),
-                  content: Text("course.add.exist.content").tr(),
-                  actions: [
-                    TextButton.icon(
-                        icon: Icon(Icons.close_outlined),
-                        onPressed: () => Navigator.of(context).pop(),
-                        label: Text("close".tr().toUpperCase()))
-                  ]));
-    else {
-      _editorBloc.createCourse(name);
-      _editorBloc.save();
-      setState(() {});
-    }
+    _editorBloc.getCourse(widget.course).createCoursePart(name);
+    _editorBloc.save();
+    setState(() {});
   }
 
   Widget _buildView(Course course) => Builder(builder: (context) {
@@ -265,8 +289,10 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                       onPressed: () async {
                                         var courseBloc = _editorBloc.changeCourseSlug(
                                             widget.course, _slugController.text);
-                                        courseBloc.course =
-                                            courseBloc.course.copyWith(name: _nameController.text);
+                                        courseBloc.course = courseBloc.course.copyWith(
+                                            name: _nameController.text,
+                                            slug: _slugController.text,
+                                            description: _descriptionController.text);
                                         _editorBloc.save();
                                         setState(() {});
                                       },
@@ -289,12 +315,13 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   "serverId": _editorBloc.key.toString(),
                                   "course": widget.course
                                 }).toString())),
-                        if (course.author != null)
+                        if (course.author?.name != null)
                           IconButton(
                               icon: Icon(Icons.delete_outline_outlined),
                               onPressed: () async {
                                 var courseBloc = _editorBloc.getCourse(widget.course);
-                                courseBloc.course = courseBloc.course.copyWith(author: null);
+                                course = courseBloc.course.copyWith(author: Author());
+                                courseBloc.course = course;
                                 await _editorBloc.save();
                                 setState(() {});
                               })
@@ -307,10 +334,12 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                             Padding(
                                 padding: EdgeInsets.all(4), child: Icon(Icons.language_outlined)),
                             Text(course.lang != null
-                                ? LocaleNames.of(context).nameOf(course.lang)
+                                ? LocaleNames.of(context).nameOf(course.lang) ?? course.lang
                                 : 'course.lang.notset'.tr()),
                             if (_editorBloc != null)
-                              IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
+                              IconButton(
+                                  icon: Icon(Icons.edit_outlined),
+                                  onPressed: () => _showLanguageDialog())
                           ])),
                     Row(children: [
                       Expanded(
@@ -322,14 +351,25 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 )
                               : Container()),
                       if (_editorBloc != null)
-                        IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
+                        IconButton(
+                            icon: Icon(Icons.edit_outlined),
+                            onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
+                                  "",
+                                  "editor",
+                                  "course",
+                                  "edit"
+                                ], queryParameters: {
+                                  "serverId": _editorBloc.key.toString(),
+                                  "course": widget.course
+                                }).toString()))
                     ])
                   ]))))
     ]));
   }
 
   Widget _buildParts(BuildContext context) {
-    var parts = _editorBloc?.getCourse(widget.course)?.parts;
+    var course = _editorBloc?.getCourse(widget.course);
+    var parts = course?.parts;
     return Scrollbar(
         child: ListView.builder(
       itemCount: parts.length,
@@ -345,16 +385,70 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
             child: ListTile(
                 title: Text(part.name),
                 subtitle: Text(part.description ?? ""),
+                trailing: PopupMenuButton<PartOptions>(
+                  onSelected: (option) {},
+                  itemBuilder: (context) {
+                    return PartOptions.values
+                        .map((e) => PopupMenuItem<PartOptions>(
+                            child: Row(children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(e.icon),
+                              ),
+                              Text(e.title)
+                            ]),
+                            value: e))
+                        .toList();
+                  },
+                ),
                 onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
                       "",
                       "editor",
                       "part"
                     ], queryParameters: {
-                      "serverId": _editorBloc.key,
+                      "serverId": _editorBloc.key.toString(),
                       "course": widget.course,
                       "part": index
                     }).toString())));
       },
     ));
+  }
+}
+
+enum PartOptions { rename, description }
+
+extension PartOptionsExtension on PartOptions {
+  String get title {
+    switch (this) {
+      case PartOptions.rename:
+        return 'course.part.rename'.tr();
+      case PartOptions.description:
+        return 'course.part.description'.tr();
+    }
+    return null;
+  }
+
+  IconData get icon {
+    switch (this) {
+      case PartOptions.rename:
+        return Icons.edit_outlined;
+      case PartOptions.description:
+        return Icons.text_snippet_outlined;
+    }
+    return null;
+  }
+
+  void onSelected(ServerEditorBloc bloc, String course, int index) {
+    //var courseBloc = bloc.getCourse(course);
+    //var partItem = courseBloc.parts[index];
+    switch (this) {
+      case PartOptions.rename:
+        break;
+      case PartOptions.description:
+        Modular.to.navigate(Uri(
+            pathSegments: ["", "editor", "part", "edit"],
+            queryParameters: {"serverId": bloc.key, "course": course, "partId": index}).toString());
+        break;
+    }
   }
 }

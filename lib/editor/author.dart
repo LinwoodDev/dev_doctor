@@ -17,14 +17,17 @@ class AuthorEditingPage extends StatefulWidget {
 }
 
 class _AuthorEditingPageState extends State<AuthorEditingPage> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _urlController = TextEditingController();
-  TextEditingController _avatarController = TextEditingController();
+  TextEditingController _nameController;
+  TextEditingController _urlController;
+  TextEditingController _avatarController;
   GlobalKey<FormState> _formKey = GlobalKey();
   Author _author;
   @override
   void initState() {
     _author = widget.author ?? Author();
+    _nameController = TextEditingController(text: _author.name);
+    _urlController = TextEditingController(text: _author.url);
+    _avatarController = TextEditingController(text: _author.avatar);
     super.initState();
   }
 

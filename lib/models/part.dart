@@ -2,9 +2,6 @@ import 'package:dev_doctor/models/server.dart';
 
 import 'course.dart';
 import 'item.dart';
-import 'items/quiz.dart';
-import 'items/text.dart';
-import 'items/video.dart';
 
 class CoursePart {
   final Course course;
@@ -13,29 +10,20 @@ class CoursePart {
   final String slug;
   final List<PartItem> items;
 
-  CoursePart({this.name, this.description, this.slug, this.items, this.course});
+  CoursePart({this.name, this.description, this.slug, this.items = const [], this.course});
   CoursePart.fromJson(Map<String, dynamic> json)
       : course = json['course'],
         description = json['description'],
-        name = json['name'],
+        name = json['name'] ?? '',
         slug = json['slug'],
-        items = (json['items'] as List<dynamic>).map<PartItem>((item) {
-          switch (item['type']) {
-            case 'text':
-              return TextPartItem.fromJson(item);
-            case 'video':
-              return VideoPartItem.fromJson(item);
-            case 'quiz':
-              return QuizPartItem.fromJson(item);
-            default:
-              return null;
-          }
-        }).toList();
+        items = (json['items'] as List<dynamic> ?? [])
+            .map((item) => PartItemTypesExtension.fromName(item['type'])?.fromJson(item))
+            .toList();
   Map<String, dynamic> toJson() => {
-        "course": course,
         "description": description,
         "slug": slug,
-        "items": items.map((e) => e.toJson())
+        "name": name ?? '',
+        "items": items?.map((e) => e.toJson())?.toList() ?? []
       };
 
   CoursesServer get server => course.server;

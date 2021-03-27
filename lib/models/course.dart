@@ -50,7 +50,7 @@ class Course {
         name: json['name'],
         description: json['description'],
         icon: json['icon'],
-        author: Author.fromJson(json['author']),
+        author: Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
         body: json['body'],
         index: json['index'],
         installed: json['installed'],

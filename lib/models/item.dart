@@ -32,4 +32,31 @@ extension PartItemTypesExtension on PartItemTypes {
     }
     return null;
   }
+
+  String get name {
+    switch (this) {
+      case PartItemTypes.text:
+        return 'text';
+      case PartItemTypes.video:
+        return 'video';
+      case PartItemTypes.quiz:
+        return 'quiz';
+    }
+    return null;
+  }
+
+  static PartItemTypes fromName(String name) =>
+      PartItemTypes.values.firstWhere((element) => element.name == name);
+
+  PartItem fromJson(Map<String, dynamic> json) {
+    switch (this) {
+      case PartItemTypes.text:
+        return TextPartItem.fromJson(json);
+      case PartItemTypes.video:
+        return VideoPartItem.fromJson(json);
+      case PartItemTypes.quiz:
+        return QuizPartItem.fromJson(json);
+    }
+    return null;
+  }
 }
