@@ -3,6 +3,7 @@ import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -105,8 +106,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                 icon: Icon(Icons.save_outlined),
                                 tooltip: "save".tr(),
                                 onPressed: () {}),
-                          VerticalDivider(),
-                          WindowButtons()
+                          if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
                         ],
                         bottom: _editorBloc != null
                             ? TabBar(
@@ -255,7 +255,10 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                     selectable: true,
                                   )
                                 : Container()),
-                        IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
+                        IconButton(
+                            icon: Icon(Icons.edit_outlined),
+                            onPressed: () => Modular.to
+                                .pushNamed('/editor/edit?serverId=${_editorBloc.key.toString()}'))
                       ])
                     ]))))
       ],
