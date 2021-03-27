@@ -2,6 +2,7 @@ import 'package:dev_doctor/loader.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
+import 'author.dart';
 import 'part.dart';
 
 @immutable
@@ -11,10 +12,8 @@ class Course {
   final String name;
   final String description;
   final String icon;
-  final String author;
-  final String authorUrl;
-  final String authorAvatar;
   final String supportUrl;
+  final Author author;
   final bool installed;
   final String body;
   final String lang;
@@ -29,31 +28,37 @@ class Course {
       this.description,
       this.icon,
       this.author,
-      this.authorUrl,
-      this.authorAvatar,
       this.installed,
       this.body,
+      this.supportUrl,
       this.lang,
       this.parts,
-      this.supportUrl,
       this.server,
       this.private});
-  Course.fromJson(Map<String, dynamic> json)
-      : server = json['server'],
-        slug = json['slug'],
-        name = json['name'],
-        description = json['description'],
-        icon = json['icon'],
-        author = json['author'],
-        authorUrl = json['author_url'],
-        authorAvatar = json['author_avatar'],
-        body = json['body'],
-        index = json['index'],
-        installed = json['installed'],
-        lang = json['lang'],
-        parts = List<String>.from(json['parts'] ?? []),
-        private = json['private'],
-        supportUrl = json['support_url'];
+  factory Course.fromJson(Map<String, dynamic> json) {
+    var apiVersion = json['api-version'] ?? 0;
+    if (apiVersion < 8) {
+      json['author'] = <String, dynamic>{
+        "name": json['author'],
+        "url": json['author_url'],
+        "avatar": json['author_avatar']
+      };
+    }
+    return Course(
+        server: json['server'],
+        slug: json['slug'],
+        name: json['name'],
+        description: json['description'],
+        icon: json['icon'],
+        author: Author.fromJson(json['author']),
+        body: json['body'],
+        index: json['index'],
+        installed: json['installed'],
+        lang: json['lang'],
+        parts: List<String>.from(json['parts'] ?? []),
+        private: json['private'],
+        supportUrl: json['support_url']);
+  }
   Map<String, dynamic> toJson() => {
         "server": server,
         "slug": slug,
@@ -61,8 +66,6 @@ class Course {
         "description": description,
         "icon": icon,
         "author": author,
-        "author_url": authorUrl,
-        "author_avatar": authorAvatar,
         "body": body,
         "index": index,
         "installed": installed,
@@ -102,8 +105,6 @@ class Course {
           bool private}) =>
       Course(
           author: author ?? this.author,
-          authorAvatar: authorAvatar ?? this.authorAvatar,
-          authorUrl: authorUrl ?? this.authorUrl,
           body: body ?? this.body,
           description: description ?? this.description,
           icon: icon ?? this.icon,

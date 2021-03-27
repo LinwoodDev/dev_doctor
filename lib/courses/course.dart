@@ -276,22 +276,22 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               ]))),
                     GestureDetector(
                         onTap: () {
-                          if (course.authorUrl != null) launch(course.authorUrl);
+                          if (course.author?.url != null) launch(course.author?.url);
                         },
                         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          if (course.authorAvatar != null)
+                          if (course.author?.avatar != null)
                             Padding(
                                 padding: EdgeInsets.all(8),
                                 child: CircleAvatar(
                                   child: ClipOval(
-                                    child: Image.network(course.authorAvatar),
+                                    child: Image.network(course.author.avatar),
                                   ),
                                 )),
-                          Text(course.author == null
+                          Text(course.author?.name == null
                               ? _editorBloc != null
                                   ? 'course.author.notset'.tr()
                                   : ''
-                              : course.author),
+                              : course.author.name),
                           if (_editorBloc != null)
                             IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
                         ])),

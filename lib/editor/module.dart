@@ -22,7 +22,21 @@ class EditorModule extends Module {
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']));
           return MarkdownEditor(
               markdown: bloc.server.body,
-              onSubmit: (value) => bloc.server = bloc.server.copyWith(body: value));
+              onSubmit: (value) {
+                bloc.server = bloc.server.copyWith(body: value);
+                bloc.save();
+              });
+        }),
+        ChildRoute('/course/edit', child: (_, args) {
+          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']));
+          var course = args.queryParams['course'];
+          var courseBloc = bloc.getCourse(course);
+          return MarkdownEditor(
+              markdown: bloc.server.body,
+              onSubmit: (value) {
+                courseBloc.course = courseBloc.course.copyWith(body: value);
+                courseBloc.save();
+              });
         })
       ];
 }
