@@ -167,13 +167,6 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  Future<void> _renamePart(String name) async {
-    var courseBloc = _editorBloc.getCourse(widget.course);
-    courseBloc.course = courseBloc.course.copyWith(name: name);
-    _editorBloc.save();
-    setState(() {});
-  }
-
   Widget _buildView(Course course) => Builder(builder: (context) {
         var supportUrl = course.supportUrl ?? course.server?.supportUrl;
         return Scaffold(
@@ -484,6 +477,10 @@ extension PartOptionsExtension on PartOptions {
                           child: Text('create'.tr().toUpperCase()),
                           onPressed: () async {
                             Navigator.pop(context);
+
+                            var courseBloc = bloc.getCourse(course);
+                            courseBloc.course = courseBloc.course.copyWith(name: name);
+                            bloc.save();
                           })
                     ]));
         break;

@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:dev_doctor/courses/part/video.dart'
     if (dart.library.html) 'package:dev_doctor/courses/part/video_web.dart'
     if (dart.library.io) 'package:dev_doctor/courses/part/video_mobile.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import 'bloc.dart';
 import 'layout.dart';
