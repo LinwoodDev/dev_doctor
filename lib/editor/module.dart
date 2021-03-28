@@ -1,5 +1,6 @@
 import 'package:dev_doctor/backends/entry.dart';
 import 'package:dev_doctor/courses/course.dart';
+import 'package:dev_doctor/courses/part/item.dart';
 import 'package:dev_doctor/editor/author.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -33,7 +34,7 @@ class EditorModule extends Module {
           var course = args.queryParams['course'];
           var courseBloc = bloc.getCourse(course);
           return MarkdownEditor(
-              markdown: bloc.server.body,
+              markdown: courseBloc.course.body,
               onSubmit: (value) {
                 courseBloc.course = courseBloc.course.copyWith(body: value);
                 bloc.save();
@@ -49,6 +50,10 @@ class EditorModule extends Module {
                 courseBloc.course = courseBloc.course.copyWith(author: value);
                 bloc.save();
               });
-        })
+        }),
+        ChildRoute('/course/item',
+            transition: TransitionType.defaultTransition,
+            child: (_, args) => PartItemPage(
+                model: args.data, itemId: int.parse(args?.queryParams['itemId'] ?? '0')))
       ];
 }

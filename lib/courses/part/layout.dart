@@ -52,9 +52,9 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                         "start",
                         "item"
                       ], queryParameters: <String, String>{
-                        "serverId": widget.serverId.toString(),
-                        "course": widget.course,
-                        "partId": index.toString()
+                        ...Modular.args.queryParams,
+                        "partId": index.toString(),
+                        "itemId": 0.toString()
                       }).toString());
                       setState(() => bloc.reset());
                       bloc?.fetch(serverId: widget.serverId, course: widget.course, partId: index);
@@ -71,9 +71,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                               "start",
                               "item"
                             ], queryParameters: {
-                              "serverId": widget.serverId.toString(),
-                              "course": widget.course,
-                              "partId": widget.partId.toString(),
+                              ...Modular.args.queryParams,
                               "itemId": index.toString()
                             }).toString()),
                         tabs: List.generate(data.items.length, (index) {

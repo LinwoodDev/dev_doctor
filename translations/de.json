@@ -64,6 +64,14 @@
         "name": {
             "label": "Name",
             "hint": "Beispielkurs"
+        },
+        "part": {
+            "add": {
+                "name": "Name",
+                "hint": "Part 1"
+            },
+            "rename": "Unbenennen",
+            "description": "Beschreibung ändern"
         }
     },
     "courses": {

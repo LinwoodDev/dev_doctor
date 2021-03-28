@@ -167,6 +167,47 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     setState(() {});
   }
 
+  void _showRenamePartDialog() {
+    var name = '';
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+                contentPadding: const EdgeInsets.all(16.0),
+                content: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        autofocus: true,
+                        onChanged: (value) => name = value,
+                        keyboardType: TextInputType.url,
+                        decoration: InputDecoration(
+                            labelText: 'course.part.add.name'.tr(),
+                            hintText: 'course.part.add.hint'.tr()),
+                      ),
+                    )
+                  ],
+                ),
+                actions: <Widget>[
+                  TextButton(
+                      child: Text('cancel'.tr().toUpperCase()),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  TextButton(
+                      child: Text('create'.tr().toUpperCase()),
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        _createPart(name);
+                      })
+                ]));
+  }
+
+  Future<void> _renamePart(String name) async {
+    _editorBloc.getCourse(widget.course).createCoursePart(name);
+    _editorBloc.save();
+    setState(() {});
+  }
+
   Widget _buildView(Course course) => Builder(builder: (context) {
         var supportUrl = course.supportUrl ?? course.server?.supportUrl;
         return Scaffold(
@@ -378,7 +419,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
         return Dismissible(
             background: Container(color: Colors.red),
             onDismissed: (direction) async {
-              _editorBloc.deleteCourse(part.slug);
+              _editorBloc.getCourse(widget.course).deleteCoursePart(part.slug);
               _editorBloc.save();
             },
             key: Key(part.slug),
@@ -404,18 +445,19 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                 onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
                       "",
                       "editor",
-                      "part"
+                      "course",
+                      "item"
                     ], queryParameters: {
                       "serverId": _editorBloc.key.toString(),
                       "course": widget.course,
-                      "part": index
+                      "part": part.slug
                     }).toString())));
       },
     ));
   }
 }
 
-enum PartOptions { rename, description }
+enum PartOptions { rename, description, slug }
 
 extension PartOptionsExtension on PartOptions {
   String get title {
@@ -424,6 +466,8 @@ extension PartOptionsExtension on PartOptions {
         return 'course.part.rename'.tr();
       case PartOptions.description:
         return 'course.part.description'.tr();
+      case PartOptions.slug:
+        return 'course.part.slug'.tr();
     }
     return null;
   }
@@ -434,6 +478,8 @@ extension PartOptionsExtension on PartOptions {
         return Icons.edit_outlined;
       case PartOptions.description:
         return Icons.text_snippet_outlined;
+      case PartOptions.slug:
+        return Icons.link_outlined;
     }
     return null;
   }
@@ -443,11 +489,15 @@ extension PartOptionsExtension on PartOptions {
     //var partItem = courseBloc.parts[index];
     switch (this) {
       case PartOptions.rename:
+        // TODO: Handle this case.
         break;
       case PartOptions.description:
         Modular.to.navigate(Uri(
             pathSegments: ["", "editor", "part", "edit"],
             queryParameters: {"serverId": bloc.key, "course": course, "partId": index}).toString());
+        break;
+      case PartOptions.slug:
+        // TODO: Handle this case.
         break;
     }
   }

@@ -46,12 +46,8 @@ class _PartItemPageState extends State<PartItemPage> {
   }
 
   void _buildBloc() {
-    var params = Modular.args.queryParams;
     bloc = CoursePartModule.to.get<CoursePartBloc>();
-    serverId = int.parse(params['serverId']);
-    course = params['course'];
-    partId = int.parse(params['partId']);
-    bloc?.fetch(serverId: serverId, course: course, partId: partId);
+    bloc?.fetchFromParams();
   }
 
   @override

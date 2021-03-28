@@ -64,6 +64,16 @@
         "name": {
             "label": "Name",
             "hint": "Example course"
+        },
+        "part": {
+            "add": {
+                "name": "Name",
+                "hint": "Part 1"
+            },
+            "rename": "Rename",
+            "description": "Change description",
+            "slug": "Partslug",
+            "empty": "This part is empty. Click the add button to add a new part item"
         }
     },
     "courses": {
