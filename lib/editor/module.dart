@@ -51,9 +51,12 @@ class EditorModule extends Module {
                 bloc.save();
               });
         }),
-        ChildRoute('/course/item',
-            transition: TransitionType.defaultTransition,
-            child: (_, args) => PartItemPage(
-                model: args.data, itemId: int.parse(args?.queryParams['itemId'] ?? '0')))
+        ChildRoute('/course/item', transition: TransitionType.defaultTransition, child: (_, args) {
+          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']));
+          return PartItemPage(
+              model: args.data,
+              editorBloc: bloc,
+              itemId: int.parse(args?.queryParams['itemId'] ?? '0'));
+        })
       ];
 }

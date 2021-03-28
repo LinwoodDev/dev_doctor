@@ -1,6 +1,7 @@
 import 'package:dev_doctor/courses/part/bloc.dart';
 import 'package:dev_doctor/courses/part/quiz.dart';
 import 'package:dev_doctor/courses/part/text.dart';
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/items/text.dart';
@@ -20,8 +21,9 @@ import 'module.dart';
 class PartItemPage extends StatefulWidget {
   final PartItem model;
   final int itemId;
+  final ServerEditorBloc editorBloc;
 
-  const PartItemPage({Key key, this.model, this.itemId}) : super(key: key);
+  const PartItemPage({Key key, this.model, this.itemId, this.editorBloc}) : super(key: key);
 
   @override
   _PartItemPageState createState() => _PartItemPageState();
@@ -30,13 +32,11 @@ class PartItemPage extends StatefulWidget {
 class _PartItemPageState extends State<PartItemPage> {
   CoursePartBloc bloc;
   GlobalKey _itemKey = GlobalKey();
-  int serverId, partId;
-  String course;
 
   @override
   void initState() {
-    _buildBloc();
     super.initState();
+    _buildBloc();
   }
 
   @override
@@ -45,18 +45,15 @@ class _PartItemPageState extends State<PartItemPage> {
     setState(() {});
   }
 
-  void _buildBloc() {
+  Future<void> _buildBloc() async {
     bloc = CoursePartModule.to.get<CoursePartBloc>();
-    bloc?.fetchFromParams();
+    await bloc?.fetchFromParams(editorBloc: widget.editorBloc);
   }
 
   @override
   Widget build(BuildContext context) {
     return PartItemLayout(
-        course: course,
         itemId: widget.itemId,
-        partId: partId,
-        serverId: serverId,
         child: Container(
             child: StreamBuilder<CoursePart>(
                 stream: bloc.coursePart,

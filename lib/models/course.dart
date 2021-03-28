@@ -79,10 +79,9 @@ class Course {
   get url => server.url + "/" + slug;
 
   Future<List<CoursePart>> fetchParts() async =>
-      Future.wait(parts.asMap().map((index, value) => MapEntry(index, fetchPart(index))).values);
+      Future.wait(parts.map((part) => fetchPart(part)).toList());
 
-  Future<CoursePart> fetchPart(int index) async {
-    var part = parts[index];
+  Future<CoursePart> fetchPart(String part) async {
     var data = await loadFile("${server.url}/$slug/$part/config", type: server.type);
     //data['items'] = yamlListToJson(data['items']).toList();
     data['course'] = this;

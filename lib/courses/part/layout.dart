@@ -12,11 +12,9 @@ import 'module.dart';
 
 class PartItemLayout extends StatefulWidget {
   final Widget child;
-  final int serverId, partId, itemId;
-  final String course;
+  final int itemId;
 
-  const PartItemLayout({Key key, this.child, this.serverId, this.partId, this.itemId, this.course})
-      : super(key: key);
+  const PartItemLayout({Key key, this.child, this.itemId}) : super(key: key);
 
   @override
   _PartItemLayoutState createState() => _PartItemLayoutState();
@@ -27,8 +25,8 @@ class _PartItemLayoutState extends State<PartItemLayout> {
 
   @override
   void initState() {
-    super.initState();
     bloc = CoursePartModule.to.get<CoursePartBloc>();
+    super.initState();
   }
 
   @override
@@ -46,7 +44,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                   drawer: CourseDrawer(
                     course: data.course,
                     onChange: (int index) {
-                      Modular.to.pushNamed(Uri(pathSegments: [
+                      Modular.to.pushReplacementNamed(Uri(pathSegments: [
                         "",
                         "courses",
                         "start",
@@ -56,8 +54,6 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                         "partId": index.toString(),
                         "itemId": 0.toString()
                       }).toString());
-                      setState(() => bloc.reset());
-                      bloc?.fetch(serverId: widget.serverId, course: widget.course, partId: index);
                     },
                   ),
                   appBar: MyAppBar(

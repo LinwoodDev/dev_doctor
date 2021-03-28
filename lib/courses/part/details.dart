@@ -8,12 +8,13 @@ import 'package:easy_localization/easy_localization.dart';
 class PartDetailsPage extends StatefulWidget {
   final CoursePart model;
   final int partId;
+  final String part;
   final String course;
   final int serverId;
   final ServerEditorBloc editorBloc;
 
   const PartDetailsPage(
-      {Key key, this.model, this.partId, this.course, this.serverId, this.editorBloc})
+      {Key key, this.model, this.partId, this.course, this.serverId, this.editorBloc, this.part})
       : super(key: key);
   @override
   _PartDetailsPageState createState() => _PartDetailsPageState();
@@ -26,7 +27,7 @@ class _PartDetailsPageState extends State<PartDetailsPage> {
       return widget.editorBloc.getCourse(widget.course).parts[widget.partId];
     var server = await CoursesServer.fetch(index: widget.serverId);
     var course = await server.fetchCourse(widget.course);
-    return course.fetchPart(widget.partId);
+    return course.fetchPart(widget.partId != null ? course.parts[widget.partId] : widget.part);
   }
 
   @override

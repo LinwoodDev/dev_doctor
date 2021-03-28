@@ -124,7 +124,7 @@ class CoursesServer {
     data['server'] = this;
     data['index'] = index;
     data['slug'] = course;
-    data['parts'] = data['parts'];
+    print(data);
     return Course.fromJson(data);
   }
 }

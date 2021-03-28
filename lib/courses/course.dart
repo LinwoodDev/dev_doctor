@@ -167,43 +167,9 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  void _showRenamePartDialog() {
-    var name = '';
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-                contentPadding: const EdgeInsets.all(16.0),
-                content: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: TextField(
-                        autofocus: true,
-                        onChanged: (value) => name = value,
-                        keyboardType: TextInputType.url,
-                        decoration: InputDecoration(
-                            labelText: 'course.part.add.name'.tr(),
-                            hintText: 'course.part.add.hint'.tr()),
-                      ),
-                    )
-                  ],
-                ),
-                actions: <Widget>[
-                  TextButton(
-                      child: Text('cancel'.tr().toUpperCase()),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      }),
-                  TextButton(
-                      child: Text('create'.tr().toUpperCase()),
-                      onPressed: () async {
-                        Navigator.pop(context);
-                        _createPart(name);
-                      })
-                ]));
-  }
-
   Future<void> _renamePart(String name) async {
-    _editorBloc.getCourse(widget.course).createCoursePart(name);
+    var courseBloc = _editorBloc.getCourse(widget.course);
+    courseBloc.course = courseBloc.course.copyWith(name: name);
     _editorBloc.save();
     setState(() {});
   }
@@ -484,12 +450,42 @@ extension PartOptionsExtension on PartOptions {
     return null;
   }
 
-  void onSelected(ServerEditorBloc bloc, String course, int index) {
+  void onSelected(BuildContext context, ServerEditorBloc bloc, String course, int index) {
     //var courseBloc = bloc.getCourse(course);
     //var partItem = courseBloc.parts[index];
     switch (this) {
       case PartOptions.rename:
-        // TODO: Handle this case.
+        var name = '';
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            onChanged: (value) => name = value,
+                            keyboardType: TextInputType.url,
+                            decoration: InputDecoration(
+                                labelText: 'course.part.add.name'.tr(),
+                                hintText: 'course.part.add.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('create'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                          })
+                    ]));
         break;
       case PartOptions.description:
         Modular.to.navigate(Uri(
