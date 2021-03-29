@@ -8,8 +8,9 @@ import 'video.dart' as defaultVideo;
 
 class VideoPartItemPage extends StatefulWidget {
   final VideoPartItem item;
+  final bool editing;
 
-  const VideoPartItemPage({Key key, this.item}) : super(key: key);
+  const VideoPartItemPage({Key key, this.item, this.editing}) : super(key: key);
   @override
   _VideoPartItemPageState createState() => _VideoPartItemPageState();
 }
@@ -26,18 +27,21 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
   @override
   Widget build(BuildContext context) {
     if (Platform.isAndroid || Platform.isIOS)
-      return Container(
-          child: isEmpty
-              ? Center(child: Text('course.video.empty').tr())
-              : SafeArea(
-                  child: AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: InAppWebView(
-                        onWebViewCreated: (InAppWebViewController controller) {
-                          webView = controller;
-                        },
-                        initialUrlRequest: URLRequest(url: Uri.parse(widget.item.src)),
-                      ))));
+      return Row(children: [
+        Container(
+            child: isEmpty
+                ? Center(child: Text('course.video.empty').tr())
+                : SafeArea(
+                    child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: InAppWebView(
+                          onWebViewCreated: (InAppWebViewController controller) {
+                            webView = controller;
+                          },
+                          initialUrlRequest: URLRequest(url: Uri.parse(widget.item.src)),
+                        )))),
+        if (widget.editing) IconButton(onPressed: () {}, icon: Icon(Icons.edit_outlined))
+      ]);
     else
       return defaultVideo.VideoPartItemPage(item: widget.item);
   }

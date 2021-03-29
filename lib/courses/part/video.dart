@@ -22,7 +22,7 @@ class VideoPartItemPage extends StatelessWidget {
                           label: Text("course.video.open".tr().toUpperCase()),
                           onPressed: () => launch(item.src),
                         )))),
-      IconButton(onPressed: () {}, icon: Icon(Icons.edit_outlined))
+      if (editing) IconButton(onPressed: () {}, icon: Icon(Icons.edit_outlined))
     ]);
   }
 }

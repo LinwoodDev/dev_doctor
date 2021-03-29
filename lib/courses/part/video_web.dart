@@ -8,8 +8,9 @@ import 'package:easy_localization/easy_localization.dart';
 
 class VideoPartItemPage extends StatefulWidget {
   final VideoPartItem item;
+  final bool editing;
 
-  const VideoPartItemPage({Key key, this.item}) : super(key: key);
+  const VideoPartItemPage({Key key, this.item, this.editing}) : super(key: key);
   @override
   _VideoPartItemPageState createState() => _VideoPartItemPageState();
 }
@@ -47,12 +48,15 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: widget.item.source == null || widget.item.url == null
-            ? Center(child: Text('course.video.empty').tr())
-            : AspectRatio(
-                child: _iframeWidget,
-                aspectRatio: 16 / 9,
-              ));
+    return Row(children: [
+      Container(
+          child: widget.item.source == null || widget.item.url == null
+              ? Center(child: Text('course.video.empty').tr())
+              : AspectRatio(
+                  child: _iframeWidget,
+                  aspectRatio: 16 / 9,
+                )),
+      if (widget.editing) IconButton(onPressed: () {}, icon: Icon(Icons.edit_outlined))
+    ]);
   }
 }
