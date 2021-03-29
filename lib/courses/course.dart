@@ -1,3 +1,4 @@
+import 'package:dev_doctor/courses/part/bloc.dart';
 import 'package:dev_doctor/models/author.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
@@ -386,7 +387,6 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
             child: ListTile(
                 title: Text(part.name),
                 subtitle: Text(part.description ?? ""),
-                trailing: EditorCoursePartPopupMenu(part: part),
                 onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
                       "",
                       "editor",
@@ -403,16 +403,20 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
 }
 
 class EditorCoursePartPopupMenu extends StatelessWidget {
-  final CoursePart part;
+  final CoursePartBloc partBloc;
+  final ServerEditorBloc bloc;
 
-  const EditorCoursePartPopupMenu({Key key, this.part}) : super(key: key);
+  const EditorCoursePartPopupMenu({Key key, this.bloc, this.partBloc}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<PartOptions>(
-      onSelected: (option) {},
+      onSelected: (option) {
+        option.onSelected(context, bloc, partBloc);
+      },
       itemBuilder: (context) {
         return PartOptions.values.map((e) {
-          var description = e.getDescription(part);
+          var description =
+              e.getDescription(bloc.getCourse(partBloc.course).getCoursePart(partBloc.part));
           return PopupMenuItem<PartOptions>(
               child: Row(children: [
                 Padding(
@@ -463,17 +467,20 @@ extension PartOptionsExtension on PartOptions {
     switch (this) {
       case PartOptions.slug:
         return part.slug;
-      default:
-        return null;
+      case PartOptions.rename:
+        return part.name;
+      case PartOptions.description:
+        return part.description;
     }
+    return null;
   }
 
-  void onSelected(BuildContext context, ServerEditorBloc bloc, String course, int index) {
-    //var courseBloc = bloc.getCourse(course);
-    //var partItem = courseBloc.parts[index];
+  void onSelected(BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc) {
+    var courseBloc = bloc.getCourse(partBloc.course);
+    var coursePart = courseBloc.getCoursePart(partBloc.part);
     switch (this) {
       case PartOptions.rename:
-        var name = '';
+        var nameController = TextEditingController(text: coursePart.name);
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
@@ -483,11 +490,11 @@ extension PartOptionsExtension on PartOptions {
                         Expanded(
                           child: TextField(
                             autofocus: true,
-                            onChanged: (value) => name = value,
+                            controller: nameController,
                             keyboardType: TextInputType.url,
                             decoration: InputDecoration(
-                                labelText: 'course.part.add.name'.tr(),
-                                hintText: 'course.part.add.hint'.tr()),
+                                labelText: 'course.part.rename.name'.tr(),
+                                hintText: 'course.part.rename.hint'.tr()),
                           ),
                         )
                       ],
@@ -499,23 +506,99 @@ extension PartOptionsExtension on PartOptions {
                             Navigator.pop(context);
                           }),
                       TextButton(
-                          child: Text('create'.tr().toUpperCase()),
+                          child: Text('change'.tr().toUpperCase()),
                           onPressed: () async {
                             Navigator.pop(context);
-
-                            var courseBloc = bloc.getCourse(course);
-                            courseBloc.course = courseBloc.course.copyWith(name: name);
-                            bloc.save();
+                            var courseBloc = bloc.getCourse(partBloc.course);
+                            coursePart = coursePart.copyWith(name: nameController.text);
+                            courseBloc.updateCoursePart(coursePart);
+                            await bloc.save();
+                            partBloc.coursePart.add(coursePart);
                           })
                     ]));
         break;
       case PartOptions.description:
-        Modular.to.navigate(Uri(
-            pathSegments: ["", "editor", "part", "edit"],
-            queryParameters: {"serverId": bloc.key, "course": course, "partId": index}).toString());
+        var descriptionController = TextEditingController(text: coursePart.description);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: descriptionController,
+                            maxLines: 3,
+                            keyboardType: TextInputType.url,
+                            decoration: InputDecoration(
+                                labelText: 'course.part.description.name'.tr(),
+                                hintText: 'course.part.description.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            var courseBloc = bloc.getCourse(partBloc.course);
+                            coursePart =
+                                coursePart.copyWith(description: descriptionController.text);
+                            courseBloc.updateCoursePart(coursePart);
+                            await bloc.save();
+                            partBloc.coursePart.add(coursePart);
+                          })
+                    ]));
         break;
       case PartOptions.slug:
-        // TODO: Handle this case.
+        var slugController = TextEditingController(text: coursePart.slug);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: slugController,
+                            keyboardType: TextInputType.url,
+                            decoration: InputDecoration(
+                                labelText: 'course.part.slug.name'.tr(),
+                                hintText: 'course.part.slug.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            var courseBloc = bloc.getCourse(partBloc.course);
+                            courseBloc.changeCoursePartSlug(coursePart.slug, slugController.text);
+                            await bloc.save();
+                            Modular.to.pushReplacementNamed(Uri(pathSegments: [
+                              '',
+                              ...Modular.args.uri.pathSegments
+                            ], queryParameters: {
+                              ...Modular.args.queryParams,
+                              'part': slugController.text
+                            }).toString());
+                          })
+                    ]));
         break;
     }
   }

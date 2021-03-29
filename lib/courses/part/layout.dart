@@ -1,4 +1,5 @@
 import 'package:dev_doctor/courses/drawer.dart';
+import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
@@ -76,7 +77,9 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                         IconButton(
                             icon: Icon(Icons.add_circle_outline_outlined),
                             onPressed: () => _showCreateDialog(data)),
-                        EditorCoursePartPopupMenu(part: data)
+                        EditorCoursePartPopupMenu(
+                            bloc: widget.editorBloc,
+                            partBloc: EditorPartModule.to.get<CoursePartBloc>())
                       ]
                     ],
                     bottom: TabBar(

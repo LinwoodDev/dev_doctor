@@ -45,6 +45,9 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(title: 'course.video.editor.title'.tr()), body: ListView(children: []));
+        appBar: MyAppBar(title: 'course.video.editor.title'.tr()),
+        body: Scrollbar(
+            child: Container(
+                constraints: BoxConstraints(maxWidth: 1000), child: ListView(children: []))));
   }
 }

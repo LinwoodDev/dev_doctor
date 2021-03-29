@@ -68,7 +68,7 @@
         },
         "video": {
             "open": "Öffne Video",
-            "empty": "Dieses Elemeent ist leer"
+            "empty": "Dieses Element ist leer"
         },
         "start": "Start",
         "support": "Support",
@@ -234,6 +234,7 @@
     "cancel": "Abbrechen",
     "create": "Erstellen",
     "close": "Schließen",
+    "change": "Ändern",
     "no": "Nein",
     "yes": "Ja",
     "ready-for-offline": "Bereit für den Offline Modus",

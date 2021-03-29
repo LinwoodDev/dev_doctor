@@ -39,10 +39,15 @@ class CourseEditorBloc {
     _parts[index] = part;
   }
 
+  CoursePart changeCoursePartSlug(String oldSlug, String newSlug) {
+    var part = getCoursePart(oldSlug);
+    var newBloc = part.copyWith(slug: newSlug);
+    _parts[_parts.indexWhere((element) => element.slug == oldSlug)] = newBloc;
+    return newBloc;
+  }
+
   CoursePart getCoursePart(String slug) =>
       _parts.firstWhere((element) => element.slug == slug).copyWith(course: _course);
-  void udpateCoursePart(CoursePart part) =>
-      _parts[_parts.indexWhere((element) => element.slug == part.slug)] = part;
 }
 
 class CourseEditorBlocAdapter extends TypeAdapter<CourseEditorBloc> {

@@ -1,4 +1,5 @@
 import 'package:dev_doctor/courses/course.dart';
+import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/part.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'part/bloc.dart';
 
 typedef NavigateCallback = void Function(int part);
 
@@ -65,8 +68,13 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
               return ListTile(
                 title: Text(part.name),
                 subtitle: Text(part.description ?? ''),
-                trailing: EditorCoursePartPopupMenu(part: part),
-                selected: Modular.args.queryParams['partId'] == index.toString(),
+                trailing: widget.editorBloc == null
+                    ? null
+                    : EditorCoursePartPopupMenu(
+                        bloc: widget.editorBloc,
+                        partBloc: EditorPartModule.to.get<CoursePartBloc>()),
+                selected: Modular.args.queryParams['partId'] == index.toString() ||
+                    Modular.args.queryParams['part'] == part.slug,
                 onTap: () {
                   setState(() => partId = index);
                   widget.onChange(index);
