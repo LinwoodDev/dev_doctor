@@ -162,7 +162,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
         params['course'] ?? widget.editorBloc.server.courses[int.parse(params['courseId'])]);
     var value = type.create(name: name, description: description);
     var current = part.copyWith(items: List<PartItem>.from(part.items)..add(value));
-    courseBloc.updatePart(current);
+    courseBloc.updateCoursePart(current);
     await widget.editorBloc.save();
     setState(() {
       bloc.coursePart.add(current);
@@ -199,7 +199,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
     var items = List<PartItem>.from(part.items);
     items.removeAt(index);
     var current = part.copyWith(items: items);
-    courseBloc.updatePart(current);
+    courseBloc.updateCoursePart(current);
     await widget.editorBloc.save();
     setState(() {
       bloc.coursePart.add(current);

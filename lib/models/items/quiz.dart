@@ -1,4 +1,3 @@
-import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -39,12 +38,6 @@ class QuizPartItem extends PartItem {
           questions: questions ?? this.questions,
           text: text ?? this.text,
           time: time ?? this.time);
-
-  @override
-  Widget buildEditor(ServerEditorBloc editorBloc) {
-    // TODO: implement buildEditor
-    throw UnimplementedError();
-  }
 }
 
 @immutable

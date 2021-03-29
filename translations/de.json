@@ -134,6 +134,17 @@
             "preview": {
                 "title": "Vorschau"
             }
+        },
+        "item": {
+            "title": "Item Editor",
+            "name": {
+                "hint": "Willkommen",
+                "label": "Name"
+            },
+            "description": {
+                "hint": "Willkommen zu dem Kurs",
+                "label": "Beschreibung"
+            }
         }
     },
     "browser": "Im Browser öffnen",

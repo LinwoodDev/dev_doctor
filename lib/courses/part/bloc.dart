@@ -6,6 +6,7 @@ import 'package:rxdart/rxdart.dart';
 
 class CoursePartBloc extends Disposable {
   BehaviorSubject<CoursePart> coursePart = BehaviorSubject<CoursePart>();
+  String course, part;
   CoursePartBloc() {}
   Future<void> fetch(
       {ServerEditorBloc editorBloc,
@@ -20,10 +21,12 @@ class CoursePartBloc extends Disposable {
         ? editorBloc.server
         : await CoursesServer.fetch(index: serverId, url: server);
     if (courseId != null) course = currentServer.courses[courseId];
+    this.course = course;
     var currentCourse = editorBloc != null
         ? editorBloc.getCourse(course).course
         : await currentServer.fetchCourse(course);
     if (partId != null) part = currentCourse.parts[partId];
+    this.part = part;
     var currentPart = editorBloc != null
         ? editorBloc.getCourse(course).getCoursePart(part)
         : await currentCourse.fetchPart(part);

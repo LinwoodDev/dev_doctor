@@ -1,7 +1,5 @@
-import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 enum VideoSource { youtube, url }
 
@@ -43,10 +41,4 @@ class VideoPartItem extends PartItem {
           index: index,
           source: source ?? this.source,
           url: url ?? this.url);
-
-  @override
-  Widget buildEditor(ServerEditorBloc editorBloc) {
-    // TODO: implement buildEditor
-    throw UnimplementedError();
-  }
 }

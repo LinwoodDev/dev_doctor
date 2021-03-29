@@ -84,7 +84,7 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
                   items: List<PartItem>.from(part.items)
                     ..[widget.itemId] = part.items[widget.itemId].copyWith(
                         name: _nameController.text, description: _descriptionController.text));
-              bloc.updatePart(coursePart);
+              bloc.updateCoursePart(coursePart);
               await widget.editorBloc.save();
               partBloc.coursePart.add(coursePart);
               setState(() {});

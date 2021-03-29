@@ -19,7 +19,7 @@
             }
         },
         "course": "Course",
-        "home": "HOME",
+        "home": "Home",
         "statistics": "Statistics",
         "back": "Back",
         "materials": "Materials",
@@ -127,6 +127,17 @@
                 "preview": {
                     "title": "Preview"
                 }
+            }
+        },
+        "item": {
+            "title": "Item Editor",
+            "name": {
+                "hint": "Welcome",
+                "label": "Name"
+            },
+            "description": {
+                "hint": "Welcome to the course",
+                "label": "Description"
             }
         }
     },

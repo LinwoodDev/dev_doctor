@@ -1,14 +1,16 @@
 import 'dart:async';
 
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class QuizPartItemPage extends StatefulWidget {
   final QuizPartItem item;
-  final bool editing;
+  final ServerEditorBloc editorBloc;
+  final int itemId;
 
-  const QuizPartItemPage({Key key, this.item, this.editing}) : super(key: key);
+  const QuizPartItemPage({Key key, this.item, this.editorBloc, this.itemId}) : super(key: key);
 
   @override
   _QuizPartItemPageState createState() => _QuizPartItemPageState();

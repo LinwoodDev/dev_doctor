@@ -1,6 +1,4 @@
-import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class TextPartItem extends PartItem {
   final String text;
@@ -20,10 +18,4 @@ class TextPartItem extends PartItem {
       description: description ?? this.description,
       index: index,
       name: name ?? this.name);
-
-  @override
-  Widget buildEditor(ServerEditorBloc editorBloc) {
-    // TODO: implement buildEditor
-    throw UnimplementedError();
-  }
 }

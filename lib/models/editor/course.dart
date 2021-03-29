@@ -34,13 +34,15 @@ class CourseEditorBloc {
 
   void deleteCoursePart(String slug) => _parts.removeWhere((element) => element.slug == slug);
 
-  void updatePart(CoursePart part) {
+  void updateCoursePart(CoursePart part) {
     var index = _parts.indexWhere((element) => part.slug == element.slug);
     _parts[index] = part;
   }
 
   CoursePart getCoursePart(String slug) =>
       _parts.firstWhere((element) => element.slug == slug).copyWith(course: _course);
+  void udpateCoursePart(CoursePart part) =>
+      _parts[_parts.indexWhere((element) => element.slug == part.slug)] = part;
 }
 
 class CourseEditorBlocAdapter extends TypeAdapter<CourseEditorBloc> {

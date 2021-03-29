@@ -47,10 +47,9 @@ class _PartDetailsPageState extends State<PartDetailsPage> {
                     child: Container(
                   constraints: BoxConstraints(maxWidth: 1000),
                   child: Column(children: [
-                    Text(
-                      "course.details.statistics.title",
-                      style: Theme.of(context).textTheme.headline5,
-                    ).tr()
+                    Text("course.details.statistics.title",
+                            style: Theme.of(context).textTheme.headline5)
+                        .tr()
                   ]),
                 ))
               ])));
