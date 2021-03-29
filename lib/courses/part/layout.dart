@@ -1,4 +1,5 @@
 import 'package:dev_doctor/courses/drawer.dart';
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/items/text.dart';
 import 'package:dev_doctor/models/items/video.dart';
@@ -12,9 +13,10 @@ import 'module.dart';
 
 class PartItemLayout extends StatefulWidget {
   final Widget child;
+  final ServerEditorBloc editorBloc;
   final int itemId;
 
-  const PartItemLayout({Key key, this.child, this.itemId}) : super(key: key);
+  const PartItemLayout({Key key, this.child, this.itemId, this.editorBloc}) : super(key: key);
 
   @override
   _PartItemLayoutState createState() => _PartItemLayoutState();
@@ -41,7 +43,8 @@ class _PartItemLayoutState extends State<PartItemLayout> {
               length: data.items.length,
               initialIndex: widget.itemId,
               child: Scaffold(
-                  drawer: CourseDrawer(
+                  drawer: CoursePartDrawer(
+                    editorBloc: widget.editorBloc,
                     course: data.course,
                     onChange: (int index) {
                       Modular.to.pushReplacementNamed(Uri(pathSegments: [

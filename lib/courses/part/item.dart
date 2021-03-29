@@ -1,6 +1,7 @@
 import 'package:dev_doctor/courses/part/bloc.dart';
 import 'package:dev_doctor/courses/part/quiz.dart';
 import 'package:dev_doctor/courses/part/text.dart';
+import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
@@ -8,6 +9,7 @@ import 'package:dev_doctor/models/items/text.dart';
 import 'package:dev_doctor/models/items/video.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:dev_doctor/courses/part/video.dart'
     if (dart.library.html) 'package:dev_doctor/courses/part/video_web.dart'
@@ -45,6 +47,7 @@ class _PartItemPageState extends State<PartItemPage> {
   }
 
   Future<void> _buildBloc() async {
+    if (widget.editorBloc != null) bloc = EditorPartModule.to.get<CoursePartBloc>();
     bloc = CoursePartModule.to.get<CoursePartBloc>();
     await bloc?.fetchFromParams(editorBloc: widget.editorBloc);
   }
@@ -52,6 +55,7 @@ class _PartItemPageState extends State<PartItemPage> {
   @override
   Widget build(BuildContext context) {
     return PartItemLayout(
+        editorBloc: widget.editorBloc,
         itemId: widget.itemId,
         child: Container(
             child: StreamBuilder<CoursePart>(
@@ -60,6 +64,9 @@ class _PartItemPageState extends State<PartItemPage> {
                   if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
                   if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                   var part = snapshot.data;
+                  if (part.items.isEmpty) {
+                    return Center(child: Text('course.part.empty'.tr()));
+                  }
                   var item = part.items[widget.itemId];
                   if (item == null) return Center(child: CircularProgressIndicator());
                   Widget itemWidget = Text("Not supported!");

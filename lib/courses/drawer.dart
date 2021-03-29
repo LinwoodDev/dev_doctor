@@ -1,35 +1,45 @@
 import 'package:dev_doctor/models/course.dart';
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'part/bloc.dart';
+
 typedef NavigateCallback = void Function(int part);
 
-class CourseDrawer extends StatefulWidget {
+class CoursePartDrawer extends StatefulWidget {
+  final int partId;
   final Course course;
   final NavigateCallback onChange;
+  final ServerEditorBloc editorBloc;
 
-  const CourseDrawer({Key key, this.course, this.onChange}) : super(key: key);
+  const CoursePartDrawer({Key key, this.course, this.partId, this.onChange, this.editorBloc})
+      : super(key: key);
   @override
-  _CourseDrawerState createState() => _CourseDrawerState();
+  _CoursePartDrawerState createState() => _CoursePartDrawerState();
 }
 
-class _CourseDrawerState extends State<CourseDrawer> {
-  int serverId, partId;
-  String course;
+class _CoursePartDrawerState extends State<CoursePartDrawer> {
+  int partId;
   @override
   void initState() {
-    serverId = int.parse(Modular.args.queryParams['serverId']);
-    course = Modular.args.queryParams['course'];
-    partId = int.parse(Modular.args.queryParams['partId']);
+    var params = Modular.args.queryParams;
     super.initState();
+  }
+
+  Future<List<CoursePart>> _buildFuture() async {
+    if (widget.editorBloc != null) return widget.editorBloc.getCourse(widget.course.slug).parts;
+    return await widget.course.fetchParts();
   }
 
   @override
   Widget build(BuildContext context) {
-    var supportUrl = widget.course.supportUrl ?? widget.course.server.supportUrl;
+    var supportUrl = widget.course?.supportUrl ??
+        widget.course?.server?.supportUrl ??
+        widget.editorBloc?.server?.supportUrl;
     return Drawer(
         child: Scrollbar(
             child: ListView(children: [
@@ -49,12 +59,11 @@ class _CourseDrawerState extends State<CourseDrawer> {
         ),
       Divider(),
       FutureBuilder<List<CoursePart>>(
-          future: widget.course.fetchParts(),
+          future: _buildFuture(),
           builder: (context, snapshot) {
-            if (snapshot.hasError)
-              return Text("Error ${snapshot.error}");
-            else if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
+            if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
               return Center(child: CircularProgressIndicator());
+            if (snapshot.hasError) return Text("Error: ${snapshot.error}");
             var parts = snapshot.data;
             return Column(
                 children: List.generate(parts.length, (index) {

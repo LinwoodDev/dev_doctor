@@ -34,7 +34,8 @@ class CourseEditorBloc {
 
   void deleteCoursePart(String slug) => _parts.removeWhere((element) => element.slug == slug);
 
-  CoursePart getCoursePart(String slug) => _parts.firstWhere((element) => element.slug == slug);
+  CoursePart getCoursePart(String slug) =>
+      _parts.firstWhere((element) => element.slug == slug).copyWith(course: _course);
 }
 
 class CourseEditorBlocAdapter extends TypeAdapter<CourseEditorBloc> {

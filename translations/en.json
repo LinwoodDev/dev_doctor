@@ -72,8 +72,8 @@
             },
             "rename": "Rename",
             "description": "Change description",
-            "slug": "Partslug",
-            "empty": "This part is empty. Click the add button to add a new part item"
+            "slug": "Change slug",
+            "empty": "This part is empty"
         }
     },
     "courses": {

@@ -23,8 +23,6 @@ class CoursePartBloc extends Disposable {
     var currentCourse = editorBloc != null
         ? editorBloc.getCourse(course).course
         : await currentServer.fetchCourse(course);
-    print(partId);
-    print(currentCourse.parts);
     if (partId != null) part = currentCourse.parts[partId];
     var currentPart = editorBloc != null
         ? editorBloc.getCourse(course).getCoursePart(part)
@@ -34,7 +32,6 @@ class CoursePartBloc extends Disposable {
 
   Future<void> fetchFromParams({ServerEditorBloc editorBloc}) {
     var params = Modular.args.queryParams;
-    print(params);
     return fetch(
         editorBloc: editorBloc,
         server: params['server'],

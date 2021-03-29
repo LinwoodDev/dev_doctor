@@ -86,7 +86,7 @@ class HomePage extends StatelessWidget {
       ])
     ];
     return Scaffold(
-        appBar: MyAppBar(title: 'title'.tr()),
+        appBar: MyAppBar(title: 'home'.tr()),
         body: Scrollbar(
           child: ListView.separated(
             separatorBuilder: (context, index) => Padding(

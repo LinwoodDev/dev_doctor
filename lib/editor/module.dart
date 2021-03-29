@@ -2,6 +2,7 @@ import 'package:dev_doctor/backends/entry.dart';
 import 'package:dev_doctor/courses/course.dart';
 import 'package:dev_doctor/courses/part/item.dart';
 import 'package:dev_doctor/editor/author.dart';
+import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -51,12 +52,6 @@ class EditorModule extends Module {
                 bloc.save();
               });
         }),
-        ChildRoute('/course/item', transition: TransitionType.defaultTransition, child: (_, args) {
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']));
-          return PartItemPage(
-              model: args.data,
-              editorBloc: bloc,
-              itemId: int.parse(args?.queryParams['itemId'] ?? '0'));
-        })
+        ModuleRoute('/course/item', module: EditorPartModule())
       ];
 }

@@ -28,9 +28,10 @@ class CoursePart {
 
   CoursesServer get server => course.server;
 
-  CoursePart copyWith({String name, String description, String slug, List<PartItem> items}) =>
+  CoursePart copyWith(
+          {Course course, String name, String description, String slug, List<PartItem> items}) =>
       CoursePart(
-          course: course,
+          course: course ?? this.course,
           description: description ?? this.description,
           items: items ?? this.items,
           name: name ?? this.name,

@@ -71,7 +71,9 @@
                 "hint": "Part 1"
             },
             "rename": "Unbenennen",
-            "description": "Beschreibung ändern"
+            "description": "Beschreibung ändern",
+            "slug": "Slug ändern",
+            "empty": "Dieser Part ist leer"
         }
     },
     "courses": {

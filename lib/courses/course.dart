@@ -1,6 +1,7 @@
 import 'package:dev_doctor/models/author.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
+import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/author.dart';
@@ -388,17 +389,22 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                 trailing: PopupMenuButton<PartOptions>(
                   onSelected: (option) {},
                   itemBuilder: (context) {
-                    return PartOptions.values
-                        .map((e) => PopupMenuItem<PartOptions>(
-                            child: Row(children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(e.icon),
-                              ),
-                              Text(e.title)
-                            ]),
-                            value: e))
-                        .toList();
+                    return PartOptions.values.map((e) {
+                      var description = e.getDescription(part);
+                      return PopupMenuItem<PartOptions>(
+                          child: Row(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(e.icon),
+                            ),
+                            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                              Text(e.title),
+                              if (description != null)
+                                Text(description, style: Theme.of(context).textTheme.caption)
+                            ])
+                          ]),
+                          value: e);
+                    }).toList();
                   },
                 ),
                 onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
@@ -441,6 +447,15 @@ extension PartOptionsExtension on PartOptions {
         return Icons.link_outlined;
     }
     return null;
+  }
+
+  String getDescription(CoursePart part) {
+    switch (this) {
+      case PartOptions.slug:
+        return part.slug;
+      default:
+        return null;
+    }
   }
 
   void onSelected(BuildContext context, ServerEditorBloc bloc, String course, int index) {
