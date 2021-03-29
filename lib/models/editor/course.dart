@@ -16,7 +16,7 @@ class CourseEditorBloc {
                 .map((e) => CoursePart.fromJson(Map<String, dynamic>.from(e) ?? {}))
                 .toList() ??
             []);
-  Course get course => _course;
+  Course get course => _course.copyWith(parts: parts.map((e) => e.slug).toList());
   set course(Course value) {
     if (_course.slug == value.slug) _course = value;
   }
@@ -33,6 +33,11 @@ class CourseEditorBloc {
   }
 
   void deleteCoursePart(String slug) => _parts.removeWhere((element) => element.slug == slug);
+
+  void updatePart(CoursePart part) {
+    var index = _parts.indexWhere((element) => part.slug == element.slug);
+    _parts[index] = part;
+  }
 
   CoursePart getCoursePart(String slug) =>
       _parts.firstWhere((element) => element.slug == slug).copyWith(course: _course);

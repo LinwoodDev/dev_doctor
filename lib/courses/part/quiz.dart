@@ -32,8 +32,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: Text("course.question.validation.title").tr(),
-              content: Text("course.question.validation." + (validate ? "correct" : "wrong")).tr(),
+              title: Text("course.quiz.validation.title").tr(),
+              content: Text("course.quiz.validation." + (validate ? "correct" : "wrong")).tr(),
               actions: [
                 TextButton.icon(
                     onPressed: () => Navigator.of(context).pop(),
@@ -80,7 +80,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                       _points.toString(),
                                       style: Theme.of(context).textTheme.headline2,
                                     ),
-                                    Text("course.question.points",
+                                    Text("course.quiz.points",
                                             style: Theme.of(context).textTheme.subtitle2)
                                         .tr(),
                                     Padding(
@@ -92,8 +92,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                                   _formKey.currentState.reset();
                                                   if (widget.item.time != null) startTimer();
                                                 }),
-                                            label:
-                                                Text("course.question.retry".tr().toUpperCase())))
+                                            label: Text("course.quiz.retry".tr().toUpperCase())))
                                   ]))
                             else
                               Container(),
@@ -105,7 +104,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                       _start.toString() + "/" + widget.item.time.toString(),
                                       style: Theme.of(context).textTheme.headline2,
                                     ),
-                                    Text("course.question.time",
+                                    Text("course.quiz.time",
                                             style: Theme.of(context).textTheme.subtitle2)
                                         .tr()
                                   ]))
@@ -120,9 +119,9 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                       ),
                       FormField<int>(
                           validator: (value) {
-                            if (value == null) return "course.question.choose".tr();
+                            if (value == null) return "course.quiz.choose".tr();
                             if (!question.answers[value].correct)
-                              return question.evaluation ?? "course.question.wrong".tr();
+                              return question.evaluation ?? "course.quiz.wrong".tr();
                             _points += question.answers[value].points ?? 1;
                             return null;
                           },
@@ -150,12 +149,12 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                     ElevatedButton.icon(
                         onPressed: () => validate(),
                         icon: Icon(Icons.check_outlined),
-                        label: Text("course.question.check".tr().toUpperCase()))
+                        label: Text("course.quiz.check".tr().toUpperCase()))
                 ]))
             : Center(
                 child: ElevatedButton.icon(
                     icon: Icon(Icons.check_box_outlined),
                     onPressed: () => setState(() => startTimer()),
-                    label: Text("course.question.start".tr().toUpperCase()))));
+                    label: Text("course.quiz.start".tr().toUpperCase()))));
   }
 }

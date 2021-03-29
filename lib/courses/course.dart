@@ -386,27 +386,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
             child: ListTile(
                 title: Text(part.name),
                 subtitle: Text(part.description ?? ""),
-                trailing: PopupMenuButton<PartOptions>(
-                  onSelected: (option) {},
-                  itemBuilder: (context) {
-                    return PartOptions.values.map((e) {
-                      var description = e.getDescription(part);
-                      return PopupMenuItem<PartOptions>(
-                          child: Row(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(e.icon),
-                            ),
-                            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                              Text(e.title),
-                              if (description != null)
-                                Text(description, style: Theme.of(context).textTheme.caption)
-                            ])
-                          ]),
-                          value: e);
-                    }).toList();
-                  },
-                ),
+                trailing: EditorCoursePartPopupMenu(part: part),
                 onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
                       "",
                       "editor",
@@ -419,6 +399,36 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                     }).toString())));
       },
     ));
+  }
+}
+
+class EditorCoursePartPopupMenu extends StatelessWidget {
+  final CoursePart part;
+
+  const EditorCoursePartPopupMenu({Key key, this.part}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<PartOptions>(
+      onSelected: (option) {},
+      itemBuilder: (context) {
+        return PartOptions.values.map((e) {
+          var description = e.getDescription(part);
+          return PopupMenuItem<PartOptions>(
+              child: Row(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(e.icon),
+                ),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(e.title),
+                  if (description != null)
+                    Text(description, style: Theme.of(context).textTheme.caption)
+                ])
+              ]),
+              value: e);
+        }).toList();
+      },
+    );
   }
 }
 

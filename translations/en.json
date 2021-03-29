@@ -4,7 +4,19 @@
     "course": {
         "add": {
             "name": "Name",
-            "hint": "Sample course"
+            "hint": "Sample course",
+            "item": {
+                "title": "Create item",
+                "name": {
+                    "label": "Name",
+                    "hint": "Welcome"
+                },
+                "description": {
+                    "label": "Description",
+                    "hint": "Welcome to the course"
+                },
+                "type": "Type"
+            }
         },
         "course": "Course",
         "home": "HOME",
@@ -32,7 +44,7 @@
                 "label": "Avatar"
             }
         },
-        "question": {
+        "quiz": {
             "choose": "Choose whisley!",
             "select": "Please select an option!",
             "correct": "Correct!",
@@ -74,6 +86,11 @@
             "description": "Change description",
             "slug": "Change slug",
             "empty": "This part is empty"
+        },
+        "type": {
+            "text": "Text",
+            "quiz": "Quiz",
+            "video": "Video"
         }
     },
     "courses": {
@@ -186,15 +203,19 @@
             },
             "error": "Collection server not available!"
         },
-        "agree": "Agree",
-        "disagree": "Disagree",
-        "save": "Save",
         "about": "About",
         "imprint": "Imprint",
         "code": "Code",
         "license": "License"
     },
+    "agree": "Agree",
+    "disagree": "Disagree",
+    "save": "Save",
+    "cancel": "Cancel",
+    "create": "Create",
     "close": "Close",
+    "no": "No",
+    "yes": "Yes",
     "ready-for-offline": "Ready for offline!",
     "update-available": {
         "message": "Update available!",

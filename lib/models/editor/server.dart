@@ -5,17 +5,21 @@ import 'package:hive/hive.dart';
 import 'course.dart';
 
 class ServerEditorBloc extends HiveObject {
-  CoursesServer server;
+  CoursesServer _server;
   String note;
   final List<CourseEditorBloc> _courses;
+
+  CoursesServer get server =>
+      _server.copyWith(courses: _courses.map((e) => e.course.slug).toList());
+  set server(CoursesServer value) => _server = value;
 
   List<CourseEditorBloc> get courses => List.unmodifiable(_courses);
 
   ServerEditorBloc({List<CourseEditorBloc> courses = const [], this.note, String name})
-      : server = CoursesServer(name: name),
+      : _server = CoursesServer(name: name),
         _courses = List<CourseEditorBloc>.from(courses);
   ServerEditorBloc.fromJson(Map<String, dynamic> json)
-      : server = CoursesServer.fromJson(Map<String, dynamic>.from(json['server'] ?? {})),
+      : _server = CoursesServer.fromJson(Map<String, dynamic>.from(json['server'] ?? {})),
         note = json['note'],
         _courses = List<CourseEditorBloc>.from((json['courses'] as List<dynamic> ?? [])
             .map((e) => CourseEditorBloc.fromJson(Map<String, dynamic>.from(e)))

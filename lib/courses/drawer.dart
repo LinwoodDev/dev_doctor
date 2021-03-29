@@ -1,3 +1,4 @@
+import 'package:dev_doctor/courses/course.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/part.dart';
@@ -5,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'part/bloc.dart';
 
 typedef NavigateCallback = void Function(int part);
 
@@ -24,11 +23,6 @@ class CoursePartDrawer extends StatefulWidget {
 
 class _CoursePartDrawerState extends State<CoursePartDrawer> {
   int partId;
-  @override
-  void initState() {
-    var params = Modular.args.queryParams;
-    super.initState();
-  }
 
   Future<List<CoursePart>> _buildFuture() async {
     if (widget.editorBloc != null) return widget.editorBloc.getCourse(widget.course.slug).parts;
@@ -71,6 +65,7 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
               return ListTile(
                 title: Text(part.name),
                 subtitle: Text(part.description ?? ''),
+                trailing: EditorCoursePartPopupMenu(part: part),
                 selected: Modular.args.queryParams['partId'] == index.toString(),
                 onTap: () {
                   setState(() => partId = index);

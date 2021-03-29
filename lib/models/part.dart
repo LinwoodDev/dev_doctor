@@ -10,14 +10,16 @@ class CoursePart {
   final String slug;
   final List<PartItem> items;
 
-  CoursePart({this.name, this.description, this.slug, this.items = const [], this.course});
+  CoursePart({this.name, this.description, this.slug, List<PartItem> items = const [], this.course})
+      : this.items = List<PartItem>.unmodifiable(items);
   CoursePart.fromJson(Map<String, dynamic> json)
       : course = json['course'],
         description = json['description'],
         name = json['name'] ?? '',
         slug = json['slug'],
         items = (json['items'] as List<dynamic> ?? [])
-            .map((item) => PartItemTypesExtension.fromName(item['type'])?.fromJson(item))
+            .map((item) => PartItemTypesExtension.fromName(item['type'])
+                ?.fromJson(Map<String, dynamic>.from(item)))
             .toList();
   Map<String, dynamic> toJson() => {
         "description": description,

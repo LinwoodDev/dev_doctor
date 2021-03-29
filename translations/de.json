@@ -4,7 +4,25 @@
     "course": {
         "add": {
             "name": "Name",
-            "hint": "Beispielkurs"
+            "hint": "Beispielkurs",
+            "item": {
+                "title": "Erstelle Element",
+                "name": {
+                    "label": "Name",
+                    "hint": "Willkommen"
+                },
+                "description": {
+                    "label": "Beschreibung",
+                    "hint": "Willkommen zu dem Kurs"
+                },
+                "type": "Type"
+            },
+            "delete": {
+                "item":{
+                    "title": "Confirm delete item",
+                    "content": "Do you really want to delete {name} #{index}?"
+                }
+            }
         },
         "course": "Kurs",
         "home": "Start",
@@ -32,7 +50,7 @@
                 "label": "Avatar"
             }
         },
-        "question": {
+        "quiz": {
             "choose": "Wähle weise!",
             "select": "Bitte wähle eine Antwort aus!",
             "correct": "Richtig!",
@@ -74,6 +92,11 @@
             "description": "Beschreibung ändern",
             "slug": "Slug ändern",
             "empty": "Dieser Part ist leer"
+        },
+        "type": {
+            "text": "Text",
+            "quiz": "Quiz",
+            "video": "Video"
         }
     },
     "courses": {
@@ -199,6 +222,8 @@
     "cancel": "Abbrechen",
     "create": "Erstellen",
     "close": "Schließen",
+    "no": "Nein",
+    "yes": "Ja",
     "ready-for-offline": "Bereit für den Offline Modus",
     "update-available": {
         "message": "Update verfügbar!",

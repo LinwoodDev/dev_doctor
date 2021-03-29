@@ -1,6 +1,5 @@
 import 'package:dev_doctor/backends/entry.dart';
 import 'package:dev_doctor/courses/course.dart';
-import 'package:dev_doctor/courses/part/item.dart';
 import 'package:dev_doctor/editor/author.dart';
 import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';

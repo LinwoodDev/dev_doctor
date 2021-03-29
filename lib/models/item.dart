@@ -21,7 +21,7 @@ abstract class PartItem {
 enum PartItemTypes { text, video, quiz }
 
 extension PartItemTypesExtension on PartItemTypes {
-  PartItem create({@required String name, String description = "", @required int index}) {
+  PartItem create({@required String name, String description = "", int index}) {
     switch (this) {
       case PartItemTypes.text:
         return TextPartItem(name: name, description: description, index: index);
