@@ -61,7 +61,8 @@
             }
         },
         "video": {
-            "open": "Open video"
+            "open": "Open video",
+            "empty": "This part is empty"
         },
         "start": "Start",
         "support": "Support",

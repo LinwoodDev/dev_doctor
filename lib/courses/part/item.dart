@@ -14,6 +14,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:dev_doctor/courses/part/video.dart'
     if (dart.library.html) 'package:dev_doctor/courses/part/video_web.dart'
     if (dart.library.io) 'package:dev_doctor/courses/part/video_mobile.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import 'bloc.dart';
 import 'layout.dart';
@@ -73,12 +74,13 @@ class _PartItemPageState extends State<PartItemPage> {
                   var item = part.items[itemId];
                   if (item == null) return Center(child: CircularProgressIndicator());
                   Widget itemWidget = Text("Not supported!");
+                  var editing = widget.editorBloc != null;
                   if (item is VideoPartItem)
-                    itemWidget = VideoPartItemPage(item: item, key: _itemKey);
+                    itemWidget = VideoPartItemPage(item: item, key: _itemKey, editing: editing);
                   if (item is TextPartItem)
-                    itemWidget = TextPartItemPage(item: item, key: _itemKey);
+                    itemWidget = TextPartItemPage(item: item, key: _itemKey, editing: editing);
                   if (item is QuizPartItem)
-                    itemWidget = QuizPartItemPage(item: item, key: _itemKey);
+                    itemWidget = QuizPartItemPage(item: item, key: _itemKey, editing: editing);
                   final itemBuilder = Builder(builder: (context) => itemWidget);
                   return LayoutBuilder(builder: (context, constraints) {
                     var itemCard = Scrollbar(
@@ -97,10 +99,26 @@ class _PartItemPageState extends State<PartItemPage> {
                                     RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                                 child: Padding(
                                     padding: const EdgeInsets.all(64.0),
-                                    child: Column(children: [
-                                      Text(item.name ?? '',
-                                          style: Theme.of(context).textTheme.headline5),
-                                      Text(item.description ?? '')
+                                    child: Row(children: [
+                                      Expanded(
+                                          child: Column(children: [
+                                        Text(item.name ?? '',
+                                            style: Theme.of(context).textTheme.headline5),
+                                        Text(item.description ?? '')
+                                      ])),
+                                      if (widget.editorBloc != null)
+                                        IconButton(
+                                          icon: Icon(Icons.edit_outlined),
+                                          onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
+                                            '',
+                                            'editor',
+                                            'course',
+                                            'item',
+                                            'edit'
+                                          ], queryParameters: {
+                                            ...Modular.args.queryParams
+                                          }).toString()),
+                                        )
                                     ])))));
                     if (MediaQuery.of(context).size.width > 1000)
                       return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

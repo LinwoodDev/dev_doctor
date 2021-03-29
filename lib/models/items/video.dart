@@ -1,5 +1,7 @@
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 enum VideoSource { youtube, url }
 
@@ -12,7 +14,9 @@ class VideoPartItem extends PartItem {
   @override
   VideoPartItem.fromJson(Map<String, dynamic> json)
       : url = json['url'],
-        source = EnumToString.fromString(VideoSource.values, json['source']),
+        source = json['source'] != null
+            ? EnumToString.fromString(VideoSource.values, json['source'])
+            : null,
         super.fromJson(json);
   get src {
     if (source == VideoSource.youtube)
@@ -27,7 +31,7 @@ class VideoPartItem extends PartItem {
   Map<String, dynamic> toJson() => {
         "type": "video",
         "url": url,
-        "source": EnumToString.convertToString(source),
+        "source": source != null ? EnumToString.convertToString(source) : null,
         "name": name,
         "description": description
       };
@@ -39,4 +43,10 @@ class VideoPartItem extends PartItem {
           index: index,
           source: source ?? this.source,
           url: url ?? this.url);
+
+  @override
+  Widget buildEditor(ServerEditorBloc editorBloc) {
+    // TODO: implement buildEditor
+    throw UnimplementedError();
+  }
 }

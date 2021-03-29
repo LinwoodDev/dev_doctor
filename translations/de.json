@@ -67,7 +67,8 @@
             }
         },
         "video": {
-            "open": "Öffne Video"
+            "open": "Öffne Video",
+            "empty": "Dieses Elemeent ist leer"
         },
         "start": "Start",
         "support": "Support",

@@ -6,8 +6,9 @@ import 'package:easy_localization/easy_localization.dart';
 
 class QuizPartItemPage extends StatefulWidget {
   final QuizPartItem item;
+  final bool editing;
 
-  const QuizPartItemPage({Key key, this.item}) : super(key: key);
+  const QuizPartItemPage({Key key, this.item, this.editing}) : super(key: key);
 
   @override
   _QuizPartItemPageState createState() => _QuizPartItemPageState();

@@ -1,18 +1,21 @@
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 class QuizPartItem extends PartItem {
   final String text;
   final List<QuizQuestion> questions;
   final int time;
 
-  QuizPartItem({this.text, this.time, this.questions, String name, String description, int index})
+  QuizPartItem(
+      {this.text, this.time, this.questions = const [], String name, String description, int index})
       : super(name: name, description: description, index: index);
   @override
   QuizPartItem.fromJson(Map<String, dynamic> json)
       : text = json['text'],
         time = json['time'],
-        questions = (json['questions'] as List<dynamic>)
+        questions = (json['questions'] as List<dynamic> ?? [])
             .map((question) => QuizQuestion.fromJson(question))
             .toList(),
         super.fromJson(json);
@@ -22,7 +25,7 @@ class QuizPartItem extends PartItem {
         "text": text,
         "time": time,
         "type": "quiz",
-        "questions": questions.map((e) => e.toJson()),
+        "questions": questions.map((e) => e.toJson()).toList(),
         "name": name,
         "description": description
       };
@@ -36,6 +39,12 @@ class QuizPartItem extends PartItem {
           questions: questions ?? this.questions,
           text: text ?? this.text,
           time: time ?? this.time);
+
+  @override
+  Widget buildEditor(ServerEditorBloc editorBloc) {
+    // TODO: implement buildEditor
+    throw UnimplementedError();
+  }
 }
 
 @immutable

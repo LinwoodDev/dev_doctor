@@ -43,8 +43,8 @@ class _PartItemLayoutState extends State<PartItemLayout> {
             return Scaffold(body: RouterOutlet());
           var data = snapshot.data;
           var itemId = widget.itemId;
-          if (itemId < 0) itemId = 0;
           if (itemId >= data.items.length) itemId = data.items.length - 1;
+          if (itemId < 0) itemId = 0;
           return DefaultTabController(
               length: data.items.length,
               initialIndex: itemId,
@@ -197,14 +197,9 @@ class _PartItemLayoutState extends State<PartItemLayout> {
     var courseBloc = widget.editorBloc.getCourse(
         params['course'] ?? widget.editorBloc.server.courses[int.parse(params['courseId'])]);
     var items = List<PartItem>.from(part.items);
-    print(items);
     items.removeAt(index);
-    print(items);
-    print(index);
     var current = part.copyWith(items: items);
-    print(current.items);
     courseBloc.updatePart(current);
-    print(courseBloc.parts);
     await widget.editorBloc.save();
     setState(() {
       bloc.coursePart.add(current);

@@ -1,6 +1,7 @@
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/items/text.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import 'items/video.dart';
 
@@ -16,6 +17,10 @@ abstract class PartItem {
         description = json['description'],
         index = json['index'];
   Map<String, dynamic> toJson();
+
+  PartItem copyWith({String name, String description});
+
+  Widget buildEditor(ServerEditorBloc editorBloc);
 }
 
 enum PartItemTypes { text, video, quiz }
