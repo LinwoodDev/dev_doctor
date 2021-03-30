@@ -42,5 +42,6 @@ jobs:
           cd android
           echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > key.jks
           echo "$PLAY_STORE_UPLOAD_KEY_PROPERTIES" | base64 --decode > key.properties
+          echo "$SUPPLY_JSON_KEY_DATA" | base64 --decode > play-store-credentials.json
           bundle exec fastlane beta
 
