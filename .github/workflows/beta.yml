@@ -24,11 +24,15 @@ jobs:
         run: |
           flutter doctor -v
           flutter build appbundle -v
-      - run: cd android
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7 # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Install dependencies
+        run: |
+          cd android
+          gem install bundler
+          bundle install
       - name: Deploy
         env:
           SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
