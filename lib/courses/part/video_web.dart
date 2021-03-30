@@ -51,7 +51,16 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
   }
 
   @override
+  void didUpdateWidget(covariant VideoPartItemPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (widget.editorBloc != null)
+      return defaultVideo.VideoPartItemPage(
+          editorBloc: widget.editorBloc, item: widget.item, itemId: widget.itemId);
     return Row(children: [
       Expanded(
           child: Container(

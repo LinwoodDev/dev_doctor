@@ -53,7 +53,7 @@
             "retry": "Retry",
             "start": "Start quiz",
             "points": "points",
-            "time": "seconds remaining",
+            "time": {"subtitle":"seconds remaining",
             "validation": {
                 "title": "Validation",
                 "correct": "You got everything right!",
@@ -62,7 +62,18 @@
         },
         "video": {
             "open": "Open video",
-            "empty": "This part is empty"
+            "empty": "This part is empty",
+            "editor": {
+                "title": "Video Editor",
+                "url": {
+                    "label": "URL",
+                    "hint": "https://example.com"
+                },
+                "type": {
+                    "url": "URL",
+                    "youtube": "YouTube"
+                }
+            }
         },
         "start": "Start",
         "support": "Support",

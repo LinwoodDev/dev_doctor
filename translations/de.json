@@ -59,7 +59,10 @@
             "retry": "Quiz wiederholen",
             "start": "Quiz starten",
             "points": "Punkte",
-            "time": "Sekunden übrig",
+            "time": {
+                "subtitle": "Sekunden übrig",
+                "notset": "Timer nicht gesetzt!"
+            },
             "validation": {
                 "title": "Auswertung",
                 "correct": "Alles richtig!",
@@ -68,7 +71,18 @@
         },
         "video": {
             "open": "Öffne Video",
-            "empty": "Dieses Element ist leer"
+            "empty": "Dieses Element ist leer",
+            "editor": {
+                "title": "Video Editor",
+                "url": {
+                    "label": "URL",
+                    "hint": "https://example.com"
+                },
+                "type": {
+                    "url": "URL",
+                    "youtube": "YouTube"
+                }
+            }
         },
         "start": "Start",
         "support": "Support",

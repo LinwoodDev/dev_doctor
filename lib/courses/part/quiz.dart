@@ -52,18 +52,19 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
     _start = widget.item.time;
-    _timer = new Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 0) {
-          setState(() => validate());
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
-    );
+    if (widget.editorBloc == null)
+      _timer = new Timer.periodic(
+        oneSec,
+        (Timer timer) {
+          if (_start == 0) {
+            setState(() => validate());
+          } else {
+            setState(() {
+              _start--;
+            });
+          }
+        },
+      );
   }
 
   @override
@@ -99,17 +100,25 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                   ]))
                             else
                               Container(),
-                            if (_start != null)
+                            if (_start != null || widget.editorBloc != null)
                               Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 32),
-                                  child: Column(children: [
-                                    Text(
-                                      _start.toString() + "/" + widget.item.time.toString(),
-                                      style: Theme.of(context).textTheme.headline2,
-                                    ),
-                                    Text("course.quiz.time",
-                                            style: Theme.of(context).textTheme.subtitle2)
-                                        .tr()
+                                  child: Row(children: [
+                                    Expanded(
+                                        child: Column(children: [
+                                      Text(
+                                        widget.editorBloc == null
+                                            ? _start.toString() + "/" + widget.item.time.toString()
+                                            : "course.quiz.time.notset".tr(),
+                                        style: Theme.of(context).textTheme.headline2,
+                                      ),
+                                      if (_start != null)
+                                        Text("course.quiz.time.subtitle",
+                                                style: Theme.of(context).textTheme.subtitle2)
+                                            .tr()
+                                    ])),
+                                    if (widget.editorBloc != null)
+                                      IconButton(icon: Icon(Icons.edit_outlined), onPressed: () {})
                                   ]))
                           ])),
                   Column(

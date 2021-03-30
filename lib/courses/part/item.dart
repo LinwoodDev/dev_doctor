@@ -75,14 +75,14 @@ class _PartItemPageState extends State<PartItemPage> {
                   if (item == null) return Center(child: CircularProgressIndicator());
                   Widget itemWidget = Text("Not supported!");
                   if (item is VideoPartItem)
-                    itemWidget =
-                        VideoPartItemPage(item: item, key: _itemKey, editorBloc: widget.editorBloc);
+                    itemWidget = VideoPartItemPage(
+                        item: item, key: _itemKey, editorBloc: widget.editorBloc, itemId: itemId);
                   if (item is TextPartItem)
                     itemWidget = TextPartItemPage(
                         item: item, key: _itemKey, editorBloc: widget.editorBloc, itemId: itemId);
                   if (item is QuizPartItem)
-                    itemWidget =
-                        QuizPartItemPage(item: item, key: _itemKey, editorBloc: widget.editorBloc);
+                    itemWidget = QuizPartItemPage(
+                        item: item, key: _itemKey, editorBloc: widget.editorBloc, itemId: itemId);
                   final itemBuilder = Builder(builder: (context) => itemWidget);
                   return LayoutBuilder(builder: (context, constraints) {
                     var itemCard = Scrollbar(

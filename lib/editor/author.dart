@@ -75,7 +75,7 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
                               controller: _avatarController),
                           SizedBox(height: 10),
                           AuthorDisplay(author: _author),
-                          SizedBox(height: 10),
+                          SizedBox(height: 10)
                         ]))))),
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.check_outlined),
