@@ -1,4 +1,5 @@
 import 'package:dev_doctor/courses/course.dart';
+import 'package:dev_doctor/courses/part/bloc.dart';
 import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
@@ -7,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'part/bloc.dart';
 
 typedef NavigateCallback = void Function(int part);
 
@@ -62,19 +61,22 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
               return Center(child: CircularProgressIndicator());
             if (snapshot.hasError) return Text("Error: ${snapshot.error}");
             var parts = snapshot.data;
+            var args = Modular.args.queryParams;
             return Column(
                 children: List.generate(parts.length, (index) {
               var part = parts[index];
+              var selected = args['partId'] != null
+                  ? args['partId'] == index.toString()
+                  : args['part'] == part.slug;
               return ListTile(
                 title: Text(part.name),
                 subtitle: Text(part.description ?? ''),
-                trailing: widget.editorBloc == null
-                    ? null
-                    : EditorCoursePartPopupMenu(
+                selected: selected,
+                trailing: selected && widget.editorBloc != null
+                    ? EditorCoursePartPopupMenu(
                         bloc: widget.editorBloc,
-                        partBloc: EditorPartModule.to.get<CoursePartBloc>()),
-                selected: Modular.args.queryParams['partId'] == index.toString() ||
-                    Modular.args.queryParams['part'] == part.slug,
+                        partBloc: EditorPartModule.to.get<CoursePartBloc>())
+                    : null,
                 onTap: () {
                   setState(() => partId = index);
                   widget.onChange(index);

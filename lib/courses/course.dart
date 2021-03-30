@@ -409,30 +409,32 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
   const EditorCoursePartPopupMenu({Key key, this.bloc, this.partBloc}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<PartOptions>(
-      onSelected: (option) {
-        option.onSelected(context, bloc, partBloc);
-      },
-      itemBuilder: (context) {
-        return PartOptions.values.map((e) {
-          var description =
-              e.getDescription(bloc.getCourse(partBloc.course).getCoursePart(partBloc.part));
-          return PopupMenuItem<PartOptions>(
-              child: Row(children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(e.icon),
-                ),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(e.title),
-                  if (description != null)
-                    Text(description, style: Theme.of(context).textTheme.caption)
-                ])
-              ]),
-              value: e);
-        }).toList();
-      },
-    );
+    return IconTheme(
+        data: Theme.of(context).iconTheme,
+        child: PopupMenuButton<PartOptions>(
+          onSelected: (option) {
+            option.onSelected(context, bloc, partBloc);
+          },
+          itemBuilder: (context) {
+            return PartOptions.values.map((e) {
+              var description =
+                  e.getDescription(bloc.getCourse(partBloc.course).getCoursePart(partBloc.part));
+              return PopupMenuItem<PartOptions>(
+                  child: Row(children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(e.icon),
+                    ),
+                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Text(e.title),
+                      if (description != null)
+                        Text(description, style: Theme.of(context).textTheme.caption)
+                    ])
+                  ]),
+                  value: e);
+            }).toList();
+          },
+        ));
   }
 }
 
