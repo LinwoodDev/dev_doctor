@@ -277,7 +277,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                       child: TextField(
                         autofocus: true,
                         onChanged: (value) => name = value,
-                        keyboardType: TextInputType.url,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             labelText: 'course.add.name'.tr(), hintText: 'course.add.hint'.tr()),
                       ),

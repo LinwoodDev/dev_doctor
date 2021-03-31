@@ -93,6 +93,11 @@
                         "label": "Auswertung",
                         "hint": "Eine Erklärung zur Lösung"
                     },
+                    "description": {
+                        "item": "Beschreibung ändern",
+                        "label": "Beschreibung",
+                        "hint": "Eine Erläuterung zur Frage"
+                    },
                     "delete": {
                         "item": "Löschen",
                         "title": "Frage löschen bestätigen",

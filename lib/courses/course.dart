@@ -104,7 +104,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       child: TextField(
                         autofocus: true,
                         onChanged: (value) => language = value,
-                        keyboardType: TextInputType.url,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             labelText: 'course.lang.label'.tr(), hintText: 'course.lang.hint'.tr()),
                       ),
@@ -140,7 +140,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       child: TextField(
                         autofocus: true,
                         onChanged: (value) => name = value,
-                        keyboardType: TextInputType.url,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             labelText: 'course.part.add.name'.tr(),
                             hintText: 'course.part.add.hint'.tr()),
@@ -416,7 +416,7 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
             option.onSelected(context, bloc, partBloc);
           },
           itemBuilder: (context) {
-            return PartOptions.values.map((e) {
+            return PartOptions.values.map<PopupMenuEntry<PartOptions>>((e) {
               var description =
                   e.getDescription(bloc.getCourse(partBloc.course).getCoursePart(partBloc.part));
               return PopupMenuItem<PartOptions>(
@@ -432,13 +432,14 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
                     ])
                   ]),
                   value: e);
-            }).toList();
+            }).toList()
+              ..insert(3, PopupMenuDivider());
           },
         ));
   }
 }
 
-enum PartOptions { rename, description, slug }
+enum PartOptions { rename, description, slug, save }
 
 extension PartOptionsExtension on PartOptions {
   String get title {
@@ -449,6 +450,8 @@ extension PartOptionsExtension on PartOptions {
         return 'course.part.description'.tr();
       case PartOptions.slug:
         return 'course.part.slug'.tr();
+      case PartOptions.save:
+        return 'save'.tr();
     }
     return null;
   }
@@ -461,6 +464,8 @@ extension PartOptionsExtension on PartOptions {
         return Icons.text_snippet_outlined;
       case PartOptions.slug:
         return Icons.link_outlined;
+      case PartOptions.save:
+        return Icons.save_outlined;
     }
     return null;
   }
@@ -473,8 +478,9 @@ extension PartOptionsExtension on PartOptions {
         return part.name;
       case PartOptions.description:
         return part.description;
+      default:
+        return null;
     }
-    return null;
   }
 
   void onSelected(BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc) {
@@ -493,7 +499,7 @@ extension PartOptionsExtension on PartOptions {
                           child: TextField(
                             autofocus: true,
                             controller: nameController,
-                            keyboardType: TextInputType.url,
+                            keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                                 labelText: 'course.part.rename.name'.tr(),
                                 hintText: 'course.part.rename.hint'.tr()),
@@ -532,7 +538,7 @@ extension PartOptionsExtension on PartOptions {
                             autofocus: true,
                             controller: descriptionController,
                             maxLines: 3,
-                            keyboardType: TextInputType.url,
+                            keyboardType: TextInputType.multiline,
                             decoration: InputDecoration(
                                 labelText: 'course.part.description.name'.tr(),
                                 hintText: 'course.part.description.hint'.tr()),
@@ -571,7 +577,7 @@ extension PartOptionsExtension on PartOptions {
                           child: TextField(
                             autofocus: true,
                             controller: slugController,
-                            keyboardType: TextInputType.url,
+                            keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                                 labelText: 'course.part.slug.name'.tr(),
                                 hintText: 'course.part.slug.hint'.tr()),
@@ -601,6 +607,8 @@ extension PartOptionsExtension on PartOptions {
                             }).toString());
                           })
                     ]));
+        break;
+      case PartOptions.save:
         break;
     }
   }

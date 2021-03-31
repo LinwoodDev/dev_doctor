@@ -143,7 +143,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                         IconButton(
                                             icon: Icon(Icons.delete_outline_outlined),
                                             onPressed: () async {
-                                              updateItem(widget.item.copyWith(time: null));
+                                              updateItem(
+                                                  widget.item.copyWith(time: null, timer: false));
                                             })
                                     ]
                                   ]))
@@ -332,7 +333,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   }
 }
 
-enum QuestionOption { answer, title, evaluation, delete }
+enum QuestionOption { answer, title, description, evaluation, delete }
 
 extension QuestionOptionExtension on QuestionOption {
   String get name {
@@ -345,6 +346,8 @@ extension QuestionOptionExtension on QuestionOption {
         return "course.quiz.option.question.evaluation.item".tr();
       case QuestionOption.delete:
         return "course.quiz.option.question.delete.item".tr();
+      case QuestionOption.description:
+        return "course.quiz.option.question.description.item".tr();
     }
     return null;
   }
@@ -359,6 +362,8 @@ extension QuestionOptionExtension on QuestionOption {
         return Icons.verified_outlined;
       case QuestionOption.delete:
         return Icons.delete_outline_outlined;
+      case QuestionOption.description:
+        return Icons.subject_outlined;
     }
     return null;
   }
@@ -393,6 +398,45 @@ extension QuestionOptionExtension on QuestionOption {
                       answers: List<QuizAnswer>.from(question.answers)..add(QuizAnswer()))));
         break;
       case QuestionOption.title:
+        TextEditingController titleController = TextEditingController(text: question.title);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: titleController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                labelText: 'course.quiz.option.question.title.label'.tr(),
+                                hintText: 'course.quiz.option.question.title.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            updateItem(
+                                bloc,
+                                partBloc,
+                                itemId,
+                                item.copyWith(
+                                    questions: List<QuizQuestion>.from(item.questions)
+                                      ..[questionId] =
+                                          question.copyWith(title: titleController.text)));
+                          })
+                    ]));
         break;
       case QuestionOption.evaluation:
         TextEditingController evaluationController =
@@ -407,7 +451,7 @@ extension QuestionOptionExtension on QuestionOption {
                           child: TextField(
                             autofocus: true,
                             controller: evaluationController,
-                            keyboardType: TextInputType.url,
+                            keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                                 labelText: 'course.quiz.option.question.evaluation.label'.tr(),
                                 hintText: 'course.quiz.option.question.evaluation.hint'.tr()),
@@ -425,6 +469,14 @@ extension QuestionOptionExtension on QuestionOption {
                           child: Text('change'.tr().toUpperCase()),
                           onPressed: () async {
                             Navigator.pop(context);
+                            updateItem(
+                                bloc,
+                                partBloc,
+                                itemId,
+                                item.copyWith(
+                                    questions: List<QuizQuestion>.from(item.questions)
+                                      ..[questionId] = question.copyWith(
+                                          evaluation: evaluationController.text)));
                           })
                     ]));
         break;
@@ -453,9 +505,53 @@ extension QuestionOptionExtension on QuestionOption {
                           icon: Icon(Icons.check_outlined),
                           label: Text("yes".tr().toUpperCase()))
                     ],
-                    title: Text("course.quiz.question.delete.title").tr(),
-                    content: Text("course.quiz.question.delete.content")
+                    title: Text("course.quiz.option.question.delete.title").tr(),
+                    content: Text("course.quiz.option.question.delete.content")
                         .tr(namedArgs: {"index": questionId.toString(), "name": question.title})));
+        break;
+      case QuestionOption.description:
+        TextEditingController descriptionController =
+            TextEditingController(text: question.description);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: descriptionController,
+                            minLines: 3,
+                            maxLines: null,
+                            keyboardType: TextInputType.multiline,
+                            decoration: InputDecoration(
+                                labelText: 'course.quiz.option.question.description.label'.tr(),
+                                hintText: 'course.quiz.option.question.description.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            updateItem(
+                                bloc,
+                                partBloc,
+                                itemId,
+                                item.copyWith(
+                                    questions: List<QuizQuestion>.from(item.questions)
+                                      ..[questionId] = question.copyWith(
+                                          description: descriptionController.text)));
+                          })
+                    ]));
         break;
     }
   }
@@ -533,10 +629,55 @@ extension AnswerOptionExtension on AnswerOption {
 
     switch (this) {
       case AnswerOption.rating:
-        // TODO: Handle this case.
+        updateQuestion(
+            bloc,
+            partBloc,
+            itemId,
+            questionId,
+            question.copyWith(
+                answers: List<QuizAnswer>.from(question.answers)
+                  ..[answerId] = answer.copyWith(correct: !answer.correct)));
         break;
       case AnswerOption.title:
-        // TODO: Handle this case.
+        TextEditingController titleController = TextEditingController(text: answer.name);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: titleController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                labelText: 'course.quiz.option.answer.title.label'.tr(),
+                                hintText: 'course.quiz.option.answer.title.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            updateQuestion(
+                                bloc,
+                                partBloc,
+                                itemId,
+                                questionId,
+                                question.copyWith(
+                                    answers: List<QuizAnswer>.from(question.answers)
+                                      ..[answerId] = answer.copyWith(name: titleController.text)));
+                          })
+                    ]));
         break;
       case AnswerOption.delete:
         showDialog(
@@ -564,24 +705,100 @@ extension AnswerOptionExtension on AnswerOption {
                           icon: Icon(Icons.check_outlined),
                           label: Text("yes".tr().toUpperCase()))
                     ],
-                    title: Text("course.quiz.answer.delete.title").tr(),
-                    content: Text("course.quiz.answer.delete.content")
+                    title: Text("course.quiz.option.answer.delete.title").tr(),
+                    content: Text("course.quiz.option.answer.delete.content")
                         .tr(namedArgs: {"index": answerId.toString(), "name": answer.name})));
         break;
       case AnswerOption.description:
-        // TODO: Handle this case.
+        TextEditingController descriptionController =
+            TextEditingController(text: answer.description);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: descriptionController,
+                            minLines: 3,
+                            maxLines: null,
+                            keyboardType: TextInputType.multiline,
+                            decoration: InputDecoration(
+                                labelText: 'course.quiz.option.answer.description.label'.tr(),
+                                hintText: 'course.quiz.option.answer.description.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            updateQuestion(
+                                bloc,
+                                partBloc,
+                                itemId,
+                                questionId,
+                                question.copyWith(
+                                    answers: List<QuizAnswer>.from(question.answers)
+                                      ..[answerId] = answer.copyWith(
+                                          description: descriptionController.text)));
+                          })
+                    ]));
         break;
       case AnswerOption.points:
-        // TODO: Handle this case.
+        TextEditingController pointsController =
+            TextEditingController(text: answer.points.toString());
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: pointsController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                labelText: 'course.quiz.option.answer.points.label'.tr(),
+                                hintText: 'course.quiz.option.answer.points.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            updateQuestion(
+                                bloc,
+                                partBloc,
+                                itemId,
+                                questionId,
+                                question.copyWith(
+                                    answers: List<QuizAnswer>.from(question.answers)
+                                      ..[answerId] = answer.copyWith(
+                                          points: int.tryParse(pointsController.text))));
+                          })
+                    ]));
+
         break;
     }
-    if (this != QuestionOption.delete)
-      item = item.copyWith(
-          questions: List<QuizQuestion>.from(item.questions)..[questionId] = question);
-    part = part.copyWith(items: List<PartItem>.from(part.items)..[itemId] = item);
-    course.updateCoursePart(part);
-    await bloc.save();
-    partBloc.coursePart.add(part);
   }
 
   Future<void> updateQuestion(ServerEditorBloc bloc, CoursePartBloc partBloc, int itemId,

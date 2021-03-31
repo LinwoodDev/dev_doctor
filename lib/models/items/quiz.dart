@@ -30,14 +30,19 @@ class QuizPartItem extends PartItem {
       };
 
   QuizPartItem copyWith(
-          {String text, int time, List<QuizQuestion> questions, String name, String description}) =>
+          {String text,
+          int time,
+          List<QuizQuestion> questions,
+          String name,
+          String description,
+          bool timer = true}) =>
       QuizPartItem(
           name: name ?? this.name,
           description: description ?? this.description,
           index: index,
           questions: questions ?? this.questions,
           text: text ?? this.text,
-          time: time ?? this.time);
+          time: !timer ? null : time ?? this.time);
 }
 
 @immutable

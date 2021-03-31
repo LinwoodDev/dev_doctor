@@ -82,19 +82,52 @@
             },
             "option": {
                 "question": {
-                    "answer": "Antwort hinzufügen",
-                    "title": "Titel ändern",
-                    "evaluation": "Auswertung",
-                    "delete": "Löschen"
+                    "answer": "Add answer",
+                    "title": {
+                        "item": "Change title",
+                        "label": "Title",
+                        "hint": "The quiz title"
+                    },
+                    "evaluation": {
+                        "item": "Evaluation",
+                        "label": "Evaluation",
+                        "hint": "The explanation to the solution"
+                    },
+                    "description": {
+                        "item": "Change description",
+                        "label": "Description",
+                        "hint": "The explanation to the question"
+                    },
+                    "delete": {
+                        "item": "Delete",
+                        "title": "Confirm delete question",
+                        "content": "Do you really want to delete {name} #{index}?"
+                    }
                 },
                 "answer": {
-                    "rating": "Bewertung",
-                    "correct": "Richtig",
-                    "wrong": "Falsch",
-                    "title": "Titel ändern",
-                    "description": "Beschreibung ändern",
-                    "delete": "Löschen",
-                    "points": "Punkte ändern"
+                    "points": {
+                        "item": "Points",
+                        "label": "Points",
+                        "hint": "Number"
+                    },
+                    "rating": "Rating",
+                    "correct": "Correct",
+                    "wrong": "Wrong",
+                    "title": {
+                        "item": "Change title",
+                        "label": "Title",
+                        "hint": "The answer title"
+                    },
+                    "description": {
+                        "item": "Change description",
+                        "label": "Description",
+                        "hint": "The explanation to the answer"
+                    },
+                    "delete": {
+                        "item": "Delete",
+                        "title": "Confirm delete answer",
+                        "content": "Do you really want to delete {name} #{index}?"
+                    }
                 }
             }
         },
