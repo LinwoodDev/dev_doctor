@@ -3,7 +3,7 @@ name: Beta track
 on:
   push:
     branches:
-      - "develop"
+      - "beta"
 jobs:
   build:
     runs-on: ubuntu-18.04

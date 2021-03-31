@@ -21,9 +21,9 @@ class ServerEditorBloc extends HiveObject {
   ServerEditorBloc.fromJson(Map<String, dynamic> json)
       : _server = CoursesServer.fromJson(Map<String, dynamic>.from(json['server'] ?? {})),
         note = json['note'],
-        _courses = List<CourseEditorBloc>.from((json['courses'] as List<dynamic> ?? [])
+        _courses = List<dynamic>.from((json['courses'] ?? [])
             .map((e) => CourseEditorBloc.fromJson(Map<String, dynamic>.from(e)))
-            .toList(growable: false));
+            .toList());
   factory ServerEditorBloc.fromKey(int key) => Hive.box<ServerEditorBloc>('editor').get(key);
   Map<String, dynamic> toJson(int apiVersion) => {
         "server": server.toJson(),
