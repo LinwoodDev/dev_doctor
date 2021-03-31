@@ -23,7 +23,7 @@ class AppModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => MyHomePage(), children: [
       ...HomeRoutes.values.map((e) =>
-          ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
+          ChildRoute(e.route!, child: (_, __) => e.widget!, transition: TransitionType.fadeIn)),
     ]),
     ModuleRoute('/editor', module: EditorModule()),
     ModuleRoute('/backends', module: BackendsModule()),
@@ -36,7 +36,7 @@ class AppModule extends Module {
 enum HomeRoutes { home, backends, courses, editor, settings }
 
 extension HomeRoutesExtension on HomeRoutes {
-  String get route {
+  String? get route {
     switch (this) {
       case HomeRoutes.home:
         return '/';
@@ -49,10 +49,9 @@ extension HomeRoutesExtension on HomeRoutes {
       case HomeRoutes.settings:
         return '/settings';
     }
-    return null;
   }
 
-  Widget get widget {
+  Widget? get widget {
     switch (this) {
       case HomeRoutes.home:
         return HomePage();
@@ -65,7 +64,6 @@ extension HomeRoutesExtension on HomeRoutes {
       case HomeRoutes.settings:
         return SettingsPage();
     }
-    return null;
   }
 
   static HomeRoutes fromRoute(String route) {

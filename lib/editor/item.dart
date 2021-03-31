@@ -9,15 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class PartItemEditorPage extends StatefulWidget {
-  final ServerEditorBloc editorBloc;
-  final String course;
-  final int courseId;
-  final String part;
-  final int partId;
-  final int itemId;
+  final ServerEditorBloc? editorBloc;
+  final String? course;
+  final int? courseId;
+  final String? part;
+  final int? partId;
+  final int? itemId;
 
   const PartItemEditorPage(
-      {Key key, this.editorBloc, this.itemId, this.part, this.course, this.courseId, this.partId})
+      {Key? key, this.editorBloc, this.itemId, this.part, this.course, this.courseId, this.partId})
       : super(key: key);
 
   @override
@@ -25,22 +25,23 @@ class PartItemEditorPage extends StatefulWidget {
 }
 
 class _PartItemEditorPageState extends State<PartItemEditorPage> {
-  CourseEditorBloc bloc;
-  CoursePartBloc partBloc;
-  CoursePart part;
-  TextEditingController _nameController;
-  TextEditingController _descriptionController;
+  late CourseEditorBloc bloc;
+  late CoursePartBloc partBloc;
+  late CoursePart part;
+  TextEditingController? _nameController;
+  TextEditingController? _descriptionController;
   GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   void initState() {
     partBloc = EditorPartModule.to.get<CoursePartBloc>();
     print(widget.course);
-    bloc = widget.editorBloc.getCourse(widget.course ?? widget.editorBloc.courses[widget.courseId]);
+    bloc = widget.editorBloc!
+        .getCourse(widget.course ?? widget.editorBloc!.courses[widget.courseId!] as String);
     print(widget.part);
-    part = bloc.getCoursePart(widget.part ?? bloc.course.parts[widget.partId]);
+    part = bloc.getCoursePart(widget.part ?? bloc.course.parts![widget.partId!]);
     print(widget.itemId);
-    var item = part.items[widget.itemId];
+    var item = part.items[widget.itemId!]!;
     print(item);
     _nameController = TextEditingController(text: item.name);
     _descriptionController = TextEditingController(text: item.description);
@@ -62,7 +63,7 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
                             TextFormField(
                               controller: _nameController,
                               validator: (value) {
-                                if (value.isEmpty) return 'editor.item.name.empty'.tr();
+                                if (value!.isEmpty) return 'editor.item.name.empty'.tr();
                                 return null;
                               },
                               decoration: InputDecoration(
@@ -82,10 +83,10 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
             onPressed: () async {
               var coursePart = part.copyWith(
                   items: List<PartItem>.from(part.items)
-                    ..[widget.itemId] = part.items[widget.itemId].copyWith(
-                        name: _nameController.text, description: _descriptionController.text));
+                    ..[widget.itemId!] = part.items[widget.itemId!]!.copyWith(
+                        name: _nameController!.text, description: _descriptionController!.text));
               bloc.updateCoursePart(coursePart);
-              await widget.editorBloc.save();
+              await widget.editorBloc!.save();
               partBloc.coursePart.add(coursePart);
               setState(() {});
             }));

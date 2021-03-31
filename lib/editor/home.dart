@@ -21,7 +21,7 @@ class _EditorPageState extends State<EditorPage> {
         appBar: MyAppBar(title: 'editor.title'.tr()),
         body: ValueListenableBuilder(
             valueListenable: _box.listenable(),
-            builder: (context, value, child) => Scrollbar(
+            builder: (context, dynamic value, child) => Scrollbar(
                 child: ListView.builder(
                     itemCount: _box.length,
                     itemBuilder: (context, index) {
@@ -34,8 +34,8 @@ class _EditorPageState extends State<EditorPage> {
                             _box.delete(key);
                           },
                           child: ListTile(
-                              title: Text(bloc.server.name),
-                              subtitle: Text(bloc.note),
+                              title: Text(bloc.server.name!),
+                              subtitle: Text(bloc.note!),
                               onTap: () => Modular.to.pushNamed("/editor/details?serverId=$key")));
                     }))),
         floatingActionButton: OpenContainer(

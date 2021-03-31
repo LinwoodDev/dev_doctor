@@ -18,7 +18,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                 valueListenable: _appearanceBox.listenable(),
                 builder: (context, Box<dynamic> box, _) {
                   var theme = ThemeMode.values[_appearanceBox.get('theme', defaultValue: 0)];
-                  var locale = context.locale?.toLanguageTag() ?? 'default';
+                  var locale = context.locale.toLanguageTag();
                   var color = ColorTheme.values[_appearanceBox.get('color', defaultValue: 0)];
                   return Scrollbar(
                       child: ListView(children: [
@@ -28,7 +28,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                         onTap: () => showDialog(
                             context: context,
                             builder: (context) {
-                              String selectedLocale = locale;
+                              String? selectedLocale = locale;
                               var locales = context.supportedLocales;
                               return AlertDialog(
                                   actions: [
@@ -44,7 +44,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                                                 content: Text('settings.appearance.locale.restart')
                                                     .tr()));
                                           } else
-                                            context.setLocale(Locale(selectedLocale));
+                                            context.setLocale(Locale(selectedLocale!));
                                           Navigator.pop(context);
                                         })
                                   ],
@@ -86,7 +86,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                         onTap: () => showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              ThemeMode selectedRadio = theme;
+                              ThemeMode? selectedRadio = theme;
                               return AlertDialog(
                                 actions: [
                                   TextButton(
@@ -95,7 +95,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                                   TextButton(
                                       child: Text('save'.tr().toUpperCase()),
                                       onPressed: () async {
-                                        _appearanceBox.put('theme', selectedRadio.index);
+                                        _appearanceBox.put('theme', selectedRadio!.index);
                                         Navigator.pop(context);
                                       })
                                 ],
@@ -130,7 +130,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                       onTap: () => showDialog(
                           context: context,
                           builder: (context) {
-                            ColorTheme selectedRadio = color;
+                            ColorTheme? selectedRadio = color;
                             return AlertDialog(
                               actions: [
                                 TextButton(
@@ -139,7 +139,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                                 TextButton(
                                     child: Text('save'.tr().toUpperCase()),
                                     onPressed: () async {
-                                      _appearanceBox.put('color', selectedRadio.index);
+                                      _appearanceBox.put('color', selectedRadio!.index);
                                       Navigator.pop(context);
                                     })
                               ],

@@ -21,9 +21,9 @@ class _SettingsPageState extends State<SettingsPage> {
 enum SettingsPages { general, appearance, downloads, servers, collections }
 
 class SettingsList extends StatelessWidget {
-  final SettingsPages activePage;
+  final SettingsPages? activePage;
 
-  const SettingsList({Key key, this.activePage}) : super(key: key);
+  const SettingsList({Key? key, this.activePage}) : super(key: key);
   _showComingSoon(BuildContext context) {
     showDialog(
         context: context,

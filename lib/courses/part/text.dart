@@ -11,11 +11,11 @@ import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
 
 class TextPartItemPage extends StatelessWidget {
-  final TextPartItem item;
-  final ServerEditorBloc editorBloc;
-  final int itemId;
+  final TextPartItem? item;
+  final ServerEditorBloc? editorBloc;
+  final int? itemId;
 
-  const TextPartItemPage({Key key, this.item, this.editorBloc, this.itemId}) : super(key: key);
+  const TextPartItemPage({Key? key, this.item, this.editorBloc, this.itemId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,12 +23,12 @@ class TextPartItemPage extends StatelessWidget {
       Expanded(
           child: MarkdownBody(
         styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-        onTapLink: (_, url, __) => launch(url),
+        onTapLink: (_, url, __) => launch(url!),
         extensionSet: md.ExtensionSet(
           md.ExtensionSet.gitHubFlavored.blockSyntaxes,
           [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
         ),
-        data: item.text,
+        data: item!.text!,
         selectable: true,
       )),
       if (editorBloc != null)
@@ -37,17 +37,17 @@ class TextPartItemPage extends StatelessWidget {
             onPressed: () {
               Modular.to.push(MaterialPageRoute(
                   builder: (context) => MarkdownEditor(
-                      markdown: item.text,
+                      markdown: item!.text,
                       onSubmit: (value) {
                         var bloc = EditorPartModule.to.get<CoursePartBloc>();
-                        var courseBloc = editorBloc.getCourse(bloc.course);
+                        var courseBloc = editorBloc!.getCourse(bloc.course!);
                         var coursePart = courseBloc.getCoursePart(bloc.part);
                         var part = coursePart.copyWith(
                             items: List<PartItem>.from(coursePart.items)
-                              ..[itemId] = item.copyWith(text: value));
+                              ..[itemId!] = item!.copyWith(text: value));
                         courseBloc.updateCoursePart(part);
                         bloc.coursePart.add(part);
-                        editorBloc.save();
+                        editorBloc!.save();
                       })));
             })
     ]));

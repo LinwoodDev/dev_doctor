@@ -11,23 +11,23 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class VideoPartItemPage extends StatelessWidget {
-  final VideoPartItem item;
-  final ServerEditorBloc editorBloc;
-  final int itemId;
+  final VideoPartItem? item;
+  final ServerEditorBloc? editorBloc;
+  final int? itemId;
 
-  const VideoPartItemPage({Key key, this.item, this.editorBloc, this.itemId}) : super(key: key);
+  const VideoPartItemPage({Key? key, this.item, this.editorBloc, this.itemId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(children: [
       Expanded(
           child: Container(
               child: Center(
-                  child: item.source == null || item.url == null
+                  child: item!.source == null || item!.url == null
                       ? Text('course.video.empty').tr()
                       : ElevatedButton.icon(
                           icon: Icon(Icons.play_circle_outline_outlined),
                           label: Text("course.video.open".tr().toUpperCase()),
-                          onPressed: () => launch(item.src),
+                          onPressed: () => launch(item!.src),
                         )))),
       if (editorBloc != null)
         IconButton(
@@ -40,11 +40,11 @@ class VideoPartItemPage extends StatelessWidget {
 }
 
 class VideoPartItemEditorPage extends StatefulWidget {
-  final VideoPartItem item;
-  final ServerEditorBloc editorBloc;
-  final int itemId;
+  final VideoPartItem? item;
+  final ServerEditorBloc? editorBloc;
+  final int? itemId;
 
-  const VideoPartItemEditorPage({Key key, this.item, this.editorBloc, this.itemId})
+  const VideoPartItemEditorPage({Key? key, this.item, this.editorBloc, this.itemId})
       : super(key: key);
 
   @override
@@ -52,14 +52,14 @@ class VideoPartItemEditorPage extends StatefulWidget {
 }
 
 class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
-  TextEditingController _urlController;
-  VideoSource source;
-  CoursePartBloc bloc;
+  TextEditingController? _urlController;
+  VideoSource? source;
+  CoursePartBloc? bloc;
   @override
   void initState() {
     bloc = EditorPartModule.to.get<CoursePartBloc>();
-    _urlController = TextEditingController(text: widget.item.url);
-    source = widget.item.source;
+    _urlController = TextEditingController(text: widget.item!.url);
+    source = widget.item!.source;
     super.initState();
   }
 
@@ -79,7 +79,7 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
                               hintText: 'course.video.editor.url.hint'.tr(),
                               suffix: DropdownButton<VideoSource>(
                                   value: source,
-                                  onChanged: (VideoSource newValue) {
+                                  onChanged: (VideoSource? newValue) {
                                     setState(() {
                                       source = newValue;
                                     });
@@ -96,18 +96,18 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
             child: Icon(Icons.save_outlined),
             onPressed: () async {
               var bloc = EditorPartModule.to.get<CoursePartBloc>();
-              var courseBloc = widget.editorBloc.getCourse(bloc.course);
+              var courseBloc = widget.editorBloc!.getCourse(bloc.course!);
               var coursePart = courseBloc.getCoursePart(bloc.part);
               print(widget.itemId);
               print(widget.editorBloc);
               print(widget.item);
               var part = coursePart.copyWith(
                   items: List<PartItem>.from(coursePart.items)
-                    ..[widget.itemId] =
-                        widget.item.copyWith(source: source, url: _urlController.text));
+                    ..[widget.itemId!] =
+                        widget.item!.copyWith(source: source, url: _urlController!.text));
               courseBloc.updateCoursePart(part);
               bloc.coursePart.add(part);
-              widget.editorBloc.save();
+              widget.editorBloc!.save();
             }));
   }
 }

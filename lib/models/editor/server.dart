@@ -6,7 +6,7 @@ import 'course.dart';
 
 class ServerEditorBloc extends HiveObject {
   CoursesServer _server;
-  String note;
+  String? note;
   final List<CourseEditorBloc> _courses;
 
   CoursesServer get server =>
@@ -15,7 +15,7 @@ class ServerEditorBloc extends HiveObject {
 
   List<CourseEditorBloc> get courses => List.unmodifiable(_courses);
 
-  ServerEditorBloc({List<CourseEditorBloc> courses = const [], this.note, String name})
+  ServerEditorBloc({List<CourseEditorBloc> courses = const [], this.note, String? name})
       : _server = CoursesServer(name: name),
         _courses = List<CourseEditorBloc>.from(courses);
   ServerEditorBloc.fromJson(Map<String, dynamic> json)
@@ -24,15 +24,15 @@ class ServerEditorBloc extends HiveObject {
         _courses = List<CourseEditorBloc>.from((json['courses'] ?? [])
             .map((e) => CourseEditorBloc.fromJson(Map<String, dynamic>.from(e)))
             .toList());
-  factory ServerEditorBloc.fromKey(int key) => Hive.box<ServerEditorBloc>('editor').get(key);
-  Map<String, dynamic> toJson(int apiVersion) => {
+  factory ServerEditorBloc.fromKey(int? key) => Hive.box<ServerEditorBloc>('editor').get(key)!;
+  Map<String, dynamic> toJson(int? apiVersion) => {
         "server": server.toJson(),
         "note": note,
         "courses": _courses.map((e) => e.toJson(apiVersion)).toList()
       };
 
-  List<String> getCourseSlugs() => _courses.map((e) => e.course.slug).toList();
-  CourseEditorBloc createCourse(String slug) {
+  List<String?> getCourseSlugs() => _courses.map((e) => e.course.slug).toList();
+  CourseEditorBloc? createCourse(String slug) {
     if (getCourseSlugs().contains(slug)) return null;
     var courseBloc = CourseEditorBloc(Course(name: slug, slug: slug));
     _courses.add(courseBloc);
@@ -53,7 +53,7 @@ class ServerEditorBloc extends HiveObject {
 }
 
 class ServerEditorBlocAdapter extends TypeAdapter<ServerEditorBloc> {
-  final int apiVersion;
+  final int? apiVersion;
 
   ServerEditorBlocAdapter({this.apiVersion});
   @override

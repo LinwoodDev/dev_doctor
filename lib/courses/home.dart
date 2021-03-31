@@ -26,22 +26,22 @@ class _ItemFetcher {
   _ItemFetcher({this.servers = const []});
 
   // This async function simulates fetching results from Internet, etc.
-  Future<List<Course>> fetch({String query}) async {
+  Future<List<Course>> fetch({String? query}) async {
     if (entries.isEmpty)
       await Future.wait(Hive.box<String>('servers')
           .values
           .where((element) => servers.contains(element))
           .map((e) async {
         var server = await CoursesServer.fetch(url: e);
-        entries.addAll((await server.fetchCourses()).where((element) => !element.private));
+        entries.addAll((await server.fetchCourses()).where((element) => !element.private!));
       }));
     final list = <Course>[];
     var n = min(_itemsPerPage, entries.length - _currentPage * _itemsPerPage);
     for (int i = 0; i < n; i++) {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
-      if ((entry.body != null && entry.body.toUpperCase().contains(query.toUpperCase())) ||
-          entry.name.toUpperCase().contains(query.toUpperCase())) list.add(entry);
+      if ((entry.body != null && entry.body!.toUpperCase().contains(query!.toUpperCase())) ||
+          entry.name!.toUpperCase().contains(query!.toUpperCase())) list.add(entry);
     }
     _currentPage++;
     return list;
@@ -50,7 +50,7 @@ class _ItemFetcher {
 
 class CustomSearchDelegate extends SearchDelegate {
   var _itemFetcher;
-  final List<String> servers;
+  final List<String>? servers;
 
   CustomSearchDelegate(this._itemFetcher, {this.servers});
   @override
@@ -143,13 +143,13 @@ class _CoursesPageState extends State<CoursesPage> {
                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children: List.generate(_box.length, (index) {
-                                      var url = _box.getAt(index);
+                                      var url = _box.getAt(index)!;
                                       return CheckboxListTile(
                                           title: Text(url),
                                           value: _filteredServers.contains(url),
                                           onChanged: (newValue) {
                                             setInnerState(() {
-                                              newValue
+                                              newValue!
                                                   ? _filteredServers.add(url)
                                                   : _filteredServers.remove(url);
                                             });
@@ -163,11 +163,11 @@ class _CoursesPageState extends State<CoursesPage> {
 }
 
 class CoursesList extends StatefulWidget {
-  final _ItemFetcher fetcher;
-  final String query;
-  final List<String> servers;
+  final _ItemFetcher? fetcher;
+  final String? query;
+  final List<String>? servers;
 
-  const CoursesList({Key key, this.fetcher, this.query, this.servers}) : super(key: key);
+  const CoursesList({Key? key, this.fetcher, this.query, this.servers}) : super(key: key);
   @override
   _CoursesListState createState() => _CoursesListState();
 }
@@ -188,7 +188,7 @@ class _CoursesListState extends State<CoursesList> {
   // Triggers fecth() and then add new items or change _hasMore flag
   void _loadMore() {
     _isLoading = true;
-    widget.fetcher.fetch(query: widget.query).then((List<Course> fetchedList) {
+    widget.fetcher!.fetch(query: widget.query).then((List<Course> fetchedList) {
       if (fetchedList.isEmpty) {
         setState(() {
           _isLoading = false;
@@ -200,7 +200,7 @@ class _CoursesListState extends State<CoursesList> {
           _pairList.addAll(fetchedList);
         });
       }
-    }).onError((error, stackTrace) {
+    }).onError((dynamic error, stackTrace) {
       _isLoading = false;
     });
   }
@@ -209,7 +209,7 @@ class _CoursesListState extends State<CoursesList> {
   void didUpdateWidget(covariant CoursesList oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!_isLoading && oldWidget.fetcher != widget.fetcher) {
-      widget.fetcher.reset();
+      widget.fetcher!.reset();
       _pairList.clear();
       _hasMore = true;
       _loadMore();
@@ -239,22 +239,22 @@ class _CoursesListState extends State<CoursesList> {
         }
         var course = _pairList[index];
         return ListTile(
-            title: Text(course.name),
-            subtitle: Text(course.description),
+            title: Text(course.name!),
+            subtitle: Text(course.description!),
             onTap: () {
               Navigator.of(context).pushNamed(Uri(pathSegments: [
                 "",
                 "courses",
                 "details"
-              ], queryParameters: <String, String>{
-                "serverId": course.server.index.toString(),
+              ], queryParameters: <String, String?>{
+                "serverId": course.server!.index.toString(),
                 "course": course.slug
               }).toString());
             },
             leading: course.icon?.isEmpty ?? true
                 ? null
                 : Hero(
-                    tag: "course-icon-${course.server.index}-${course.index}",
+                    tag: "course-icon-${course.server!.index}-${course.index}",
                     child: UniversalImage(type: course.icon, url: course.url + "/icon")));
       },
     ));

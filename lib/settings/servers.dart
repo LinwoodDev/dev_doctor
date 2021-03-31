@@ -50,12 +50,12 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                             child: ListView.builder(
                                 itemCount: box.length,
                                 itemBuilder: (context, index) {
-                                  var current = data[index];
+                                  var current = data![index];
                                   return Container(
                                       child: Dismissible(
                                           // Show a red background as the item is swiped away.
                                           background: Container(color: Colors.red),
-                                          key: Key(current.url),
+                                          key: Key(current.url!),
                                           onDismissed: (direction) => _deleteServer(index),
                                           child: Material(
                                               child: ListTile(
@@ -63,10 +63,10 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                                                       ? null
                                                       : UniversalImage(
                                                           type: current.icon,
-                                                          url: current.url + "/icon"),
+                                                          url: current.url! + "/icon"),
                                                   title: Text(current.name ??
                                                       'settings.servers.error'.tr()),
-                                                  subtitle: Text(current.url)))));
+                                                  subtitle: Text(current.url!)))));
                                 }));
                     }
                   }))),

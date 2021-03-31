@@ -9,21 +9,21 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'video.dart' as defaultVideo;
 
 class VideoPartItemPage extends StatefulWidget {
-  final VideoPartItem item;
-  final ServerEditorBloc editorBloc;
-  final int itemId;
+  final VideoPartItem? item;
+  final ServerEditorBloc? editorBloc;
+  final int? itemId;
 
-  const VideoPartItemPage({Key key, this.item, this.editorBloc, this.itemId}) : super(key: key);
+  const VideoPartItemPage({Key? key, this.item, this.editorBloc, this.itemId}) : super(key: key);
   @override
   _VideoPartItemPageState createState() => _VideoPartItemPageState();
 }
 
 class _VideoPartItemPageState extends State<VideoPartItemPage> {
-  InAppWebViewController webView;
-  bool isEmpty;
+  InAppWebViewController? webView;
+  late bool isEmpty;
   @override
   void initState() {
-    isEmpty = widget.item.source == null || widget.item.url == null;
+    isEmpty = widget.item!.source == null || widget.item!.url == null;
     super.initState();
   }
 
@@ -42,7 +42,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                               onWebViewCreated: (InAppWebViewController controller) {
                                 webView = controller;
                               },
-                              initialUrlRequest: URLRequest(url: Uri.parse(widget.item.src)),
+                              initialUrlRequest: URLRequest(url: Uri.parse(widget.item!.src)),
                             ))))),
         if (widget.editorBloc != null)
           IconButton(

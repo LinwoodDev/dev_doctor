@@ -18,23 +18,23 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CoursePage extends StatefulWidget {
-  final Course model;
+  final Course? model;
   final String course;
-  final int serverId;
-  final ServerEditorBloc editorBloc;
+  final int? serverId;
+  final ServerEditorBloc? editorBloc;
 
-  const CoursePage({Key key, this.course, this.serverId, this.model, this.editorBloc})
+  const CoursePage({Key? key, required this.course, this.serverId, this.model, this.editorBloc})
       : super(key: key);
   @override
   _CoursePageState createState() => _CoursePageState();
 }
 
 class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
-  ServerEditorBloc _editorBloc;
-  TabController _tabController;
-  TextEditingController _nameController;
-  TextEditingController _descriptionController;
-  TextEditingController _slugController;
+  ServerEditorBloc? _editorBloc;
+  TabController? _tabController;
+  TextEditingController? _nameController;
+  TextEditingController? _descriptionController;
+  TextEditingController? _slugController;
   GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
@@ -42,9 +42,9 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     super.initState();
     _editorBloc = widget.editorBloc;
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
-    _tabController.addListener(_handleTabIndex);
+    _tabController!.addListener(_handleTabIndex);
     if (_editorBloc != null) {
-      var courseBloc = _editorBloc.getCourse(widget.course);
+      var courseBloc = _editorBloc!.getCourse(widget.course);
       _nameController = TextEditingController(text: courseBloc.course.name);
       _descriptionController = TextEditingController(text: courseBloc.course.description);
       _slugController = TextEditingController(text: courseBloc.course.slug);
@@ -55,9 +55,9 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  Future<Course> _buildFuture() async {
+  Future<Course?> _buildFuture() async {
     if (widget.model != null) return widget.model;
-    if (widget.editorBloc != null) return widget.editorBloc.getCourse(widget.course).course;
+    if (widget.editorBloc != null) return widget.editorBloc!.getCourse(widget.course).course;
     CoursesServer server = await CoursesServer.fetch(index: widget.serverId);
     return server.fetchCourse(widget.course);
   }
@@ -67,8 +67,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     return widget.model != null
         ? _buildView(widget.model)
         : widget.editorBloc != null
-            ? _buildView(widget.editorBloc?.getCourse(widget.course)?.course)
-            : FutureBuilder<Course>(
+            ? _buildView(widget.editorBloc?.getCourse(widget.course).course)
+            : FutureBuilder<Course?>(
                 future: _buildFuture(),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
@@ -82,8 +82,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                 });
   }
 
-  Widget _buildFab() {
-    return _tabController.index == 0
+  Widget? _buildFab() {
+    return _tabController!.index == 0
         ? null
         : FloatingActionButton(
             onPressed: _showCreatePartDialog,
@@ -92,7 +92,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   void _showLanguageDialog() {
-    var courseBloc = _editorBloc.getCourse(widget.course);
+    var courseBloc = _editorBloc!.getCourse(widget.course);
     var language = '';
     showDialog(
         context: context,
@@ -121,7 +121,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       child: Text('create'.tr().toUpperCase()),
                       onPressed: () async {
                         courseBloc.course = courseBloc.course.copyWith(lang: language);
-                        _editorBloc.save();
+                        _editorBloc!.save();
                         Navigator.pop(context);
                         setState(() {});
                       })
@@ -164,13 +164,13 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   Future<void> _createPart(String name) async {
-    _editorBloc.getCourse(widget.course).createCoursePart(name);
-    _editorBloc.save();
+    _editorBloc!.getCourse(widget.course).createCoursePart(name);
+    _editorBloc!.save();
     setState(() {});
   }
 
-  Widget _buildView(Course course) => Builder(builder: (context) {
-        var supportUrl = course.supportUrl ?? course.server?.supportUrl;
+  Widget _buildView(Course? course) => Builder(builder: (context) {
+        var supportUrl = course!.supportUrl ?? course.server?.supportUrl;
         return Scaffold(
           body: NestedScrollView(
               headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -214,7 +214,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               isScrollable: true,
                             )
                           : null,
-                      title: Text(course.name),
+                      title: Text(course.name!),
                       flexibleSpace: _editorBloc != null
                           ? null
                           : FlexibleSpaceBar(
@@ -222,8 +222,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
                                   child: Hero(
                                       tag: _editorBloc != null
-                                          ? "course-icon-${_editorBloc.server.name}"
-                                          : "course-icon-${course.server.index}-${course.index}",
+                                          ? "course-icon-${_editorBloc!.server.name}"
+                                          : "course-icon-${course.server!.index}-${course.index}",
                                       child: _editorBloc != null
                                           ? Container()
                                           : UniversalImage(
@@ -244,7 +244,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       });
 
   Widget _buildGeneral(BuildContext context, Course course) {
-    var _slugs = _editorBloc?.courses?.map((e) => e.course.slug);
+    var _slugs = _editorBloc?.courses.map((e) => e.course.slug);
     return Scrollbar(
         child: ListView(children: <Widget>[
       Padding(
@@ -265,7 +265,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                         labelText: "course.name.label".tr(),
                                         hintText: "course.name.hint".tr()),
                                     validator: (value) {
-                                      if (value.isEmpty) return "course.name.empty".tr();
+                                      if (value!.isEmpty) return "course.name.empty".tr();
                                       return null;
                                     },
                                     controller: _nameController),
@@ -274,8 +274,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                         labelText: "course.slug.label".tr(),
                                         hintText: "course.slug.hint".tr()),
                                     validator: (value) {
-                                      if (value.isEmpty) return "course.slug.empty".tr();
-                                      if (_slugs.contains(value) && value != course.slug)
+                                      if (value!.isEmpty) return "course.slug.empty".tr();
+                                      if (_slugs!.contains(value) && value != course.slug)
                                         return "course.slug.exist".tr();
                                       return null;
                                     },
@@ -289,13 +289,13 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   padding: const EdgeInsets.all(16.0),
                                   child: ElevatedButton.icon(
                                       onPressed: () async {
-                                        var courseBloc = _editorBloc.changeCourseSlug(
-                                            widget.course, _slugController.text);
+                                        var courseBloc = _editorBloc!
+                                            .changeCourseSlug(widget.course, _slugController!.text);
                                         courseBloc.course = courseBloc.course.copyWith(
-                                            name: _nameController.text,
-                                            slug: _slugController.text,
-                                            description: _descriptionController.text);
-                                        _editorBloc.save();
+                                            name: _nameController!.text,
+                                            slug: _slugController!.text,
+                                            description: _descriptionController!.text);
+                                        _editorBloc!.save();
                                         setState(() {});
                                       },
                                       icon: Icon(Icons.save_outlined),
@@ -314,17 +314,17 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   'course',
                                   'author'
                                 ], queryParameters: {
-                                  "serverId": _editorBloc.key.toString(),
+                                  "serverId": _editorBloc!.key.toString(),
                                   "course": widget.course
                                 }).toString())),
                         if (course.author?.name != null)
                           IconButton(
                               icon: Icon(Icons.delete_outline_outlined),
                               onPressed: () async {
-                                var courseBloc = _editorBloc.getCourse(widget.course);
+                                var courseBloc = _editorBloc!.getCourse(widget.course);
                                 course = courseBloc.course.copyWith(author: Author());
                                 courseBloc.course = course;
-                                await _editorBloc.save();
+                                await _editorBloc!.save();
                                 setState(() {});
                               })
                       ]
@@ -336,7 +336,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                             Padding(
                                 padding: EdgeInsets.all(4), child: Icon(Icons.language_outlined)),
                             Text(course.lang != null
-                                ? LocaleNames.of(context).nameOf(course.lang) ?? course.lang
+                                ? LocaleNames.of(context)!.nameOf(course.lang!) ?? course.lang!
                                 : 'course.lang.notset'.tr()),
                             if (_editorBloc != null)
                               IconButton(
@@ -347,7 +347,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       Expanded(
                           child: (course.body != null)
                               ? MarkdownBody(
-                                  onTapLink: (_, url, __) => launch(url),
+                                  onTapLink: (_, url, __) => launch(url!),
                                   data: course.body ?? '',
                                   selectable: true,
                                 )
@@ -361,7 +361,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   "course",
                                   "edit"
                                 ], queryParameters: {
-                                  "serverId": _editorBloc.key.toString(),
+                                  "serverId": _editorBloc!.key.toString(),
                                   "course": widget.course
                                 }).toString()))
                     ])
@@ -370,8 +370,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   Widget _buildParts(BuildContext context) {
-    var course = _editorBloc?.getCourse(widget.course);
-    var parts = course?.parts;
+    var course = _editorBloc!.getCourse(widget.course);
+    List<CoursePart> parts = course.parts;
     return Scrollbar(
         child: ListView.builder(
       itemCount: parts.length,
@@ -380,12 +380,12 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
         return Dismissible(
             background: Container(color: Colors.red),
             onDismissed: (direction) async {
-              _editorBloc.getCourse(widget.course).deleteCoursePart(part.slug);
-              _editorBloc.save();
+              _editorBloc!.getCourse(widget.course).deleteCoursePart(part.slug);
+              _editorBloc!.save();
             },
-            key: Key(part.slug),
+            key: Key(part.slug!),
             child: ListTile(
-                title: Text(part.name),
+                title: Text(part.name!),
                 subtitle: Text(part.description ?? ""),
                 onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
                       "",
@@ -393,7 +393,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       "course",
                       "item"
                     ], queryParameters: {
-                      "serverId": _editorBloc.key.toString(),
+                      "serverId": _editorBloc!.key.toString(),
                       "course": widget.course,
                       "part": part.slug
                     }).toString())));
@@ -403,22 +403,22 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
 }
 
 class EditorCoursePartPopupMenu extends StatelessWidget {
-  final CoursePartBloc partBloc;
-  final ServerEditorBloc bloc;
+  final CoursePartBloc? partBloc;
+  final ServerEditorBloc? bloc;
 
-  const EditorCoursePartPopupMenu({Key key, this.bloc, this.partBloc}) : super(key: key);
+  const EditorCoursePartPopupMenu({Key? key, this.bloc, this.partBloc}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return IconTheme(
         data: Theme.of(context).iconTheme,
         child: PopupMenuButton<PartOptions>(
           onSelected: (option) {
-            option.onSelected(context, bloc, partBloc);
+            option.onSelected(context, bloc!, partBloc!);
           },
           itemBuilder: (context) {
             return PartOptions.values.map<PopupMenuEntry<PartOptions>>((e) {
-              var description =
-                  e.getDescription(bloc.getCourse(partBloc.course).getCoursePart(partBloc.part));
+              var description = e
+                  .getDescription(bloc!.getCourse(partBloc!.course!).getCoursePart(partBloc!.part));
               return PopupMenuItem<PartOptions>(
                   child: Row(children: [
                     Padding(
@@ -426,7 +426,7 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
                       child: Icon(e.icon),
                     ),
                     Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text(e.title),
+                      Text(e.title!),
                       if (description != null)
                         Text(description, style: Theme.of(context).textTheme.caption)
                     ])
@@ -442,7 +442,7 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
 enum PartOptions { rename, description, slug, save }
 
 extension PartOptionsExtension on PartOptions {
-  String get title {
+  String? get title {
     switch (this) {
       case PartOptions.rename:
         return 'course.part.rename'.tr();
@@ -453,10 +453,9 @@ extension PartOptionsExtension on PartOptions {
       case PartOptions.save:
         return 'save'.tr();
     }
-    return null;
   }
 
-  IconData get icon {
+  IconData? get icon {
     switch (this) {
       case PartOptions.rename:
         return Icons.edit_outlined;
@@ -467,10 +466,9 @@ extension PartOptionsExtension on PartOptions {
       case PartOptions.save:
         return Icons.save_outlined;
     }
-    return null;
   }
 
-  String getDescription(CoursePart part) {
+  String? getDescription(CoursePart part) {
     switch (this) {
       case PartOptions.slug:
         return part.slug;
@@ -484,7 +482,7 @@ extension PartOptionsExtension on PartOptions {
   }
 
   void onSelected(BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc) {
-    var courseBloc = bloc.getCourse(partBloc.course);
+    var courseBloc = bloc.getCourse(partBloc.course!);
     var coursePart = courseBloc.getCoursePart(partBloc.part);
     switch (this) {
       case PartOptions.rename:
@@ -517,7 +515,7 @@ extension PartOptionsExtension on PartOptions {
                           child: Text('change'.tr().toUpperCase()),
                           onPressed: () async {
                             Navigator.pop(context);
-                            var courseBloc = bloc.getCourse(partBloc.course);
+                            var courseBloc = bloc.getCourse(partBloc.course!);
                             coursePart = coursePart.copyWith(name: nameController.text);
                             courseBloc.updateCoursePart(coursePart);
                             await bloc.save();
@@ -556,7 +554,7 @@ extension PartOptionsExtension on PartOptions {
                           child: Text('change'.tr().toUpperCase()),
                           onPressed: () async {
                             Navigator.pop(context);
-                            var courseBloc = bloc.getCourse(partBloc.course);
+                            var courseBloc = bloc.getCourse(partBloc.course!);
                             coursePart =
                                 coursePart.copyWith(description: descriptionController.text);
                             courseBloc.updateCoursePart(coursePart);
@@ -595,14 +593,14 @@ extension PartOptionsExtension on PartOptions {
                           child: Text('change'.tr().toUpperCase()),
                           onPressed: () async {
                             Navigator.pop(context);
-                            var courseBloc = bloc.getCourse(partBloc.course);
+                            var courseBloc = bloc.getCourse(partBloc.course!);
                             courseBloc.changeCoursePartSlug(coursePart.slug, slugController.text);
                             await bloc.save();
                             Modular.to.pushReplacementNamed(Uri(pathSegments: [
                               '',
-                              ...Modular.args.uri.pathSegments
+                              ...Modular.args!.uri!.pathSegments
                             ], queryParameters: {
-                              ...Modular.args.queryParams,
+                              ...Modular.args!.queryParams,
                               'part': slugController.text
                             }).toString());
                           })

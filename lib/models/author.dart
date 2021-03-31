@@ -1,7 +1,7 @@
 class Author {
-  final String name;
-  final String url;
-  final String avatar;
+  final String? name;
+  final String? url;
+  final String? avatar;
   final String avatarType;
   Author({this.name, this.url, this.avatar, this.avatarType = 'png'});
   Author.fromJson(Map<String, dynamic> json)
@@ -11,7 +11,7 @@ class Author {
         avatarType = json['avatar-type'] ?? 'png';
   Map<String, dynamic> toJson() => {"name": name, "url": url, "avatar": avatar};
 
-  Author copyWith({String avatar, String name, String url, String avatarType}) => Author(
+  Author copyWith({String? avatar, String? name, String? url, String? avatarType}) => Author(
       avatar: avatar ?? this.avatar,
       name: name ?? this.name,
       url: url ?? this.url,

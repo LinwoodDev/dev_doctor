@@ -10,16 +10,16 @@ class EditorPartModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', transition: TransitionType.defaultTransition, child: (_, args) {
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']));
+          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
           return PartItemPage(
               model: args.data,
               editorBloc: bloc,
-              itemId: int.parse(args?.queryParams['itemId'] ?? '0'));
+              itemId: int.parse(args.queryParams['itemId'] ?? '0'));
         }),
         ChildRoute('/edit', child: (_, args) {
-          var params = Modular.args.queryParams;
+          var params = Modular.args!.queryParams;
           print(params);
-          var bloc = ServerEditorBloc.fromKey(int.parse(params['serverId']));
+          var bloc = ServerEditorBloc.fromKey(int.parse(params['serverId']!));
           print(bloc);
           return PartItemEditorPage(
             editorBloc: bloc,

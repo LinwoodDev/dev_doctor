@@ -7,17 +7,17 @@ import 'course.dart';
 
 @immutable
 class CoursesServer {
-  final String name;
-  final String url;
-  final String type;
-  final String icon;
-  final String supportUrl;
-  final int index;
-  final BackendEntry entry;
-  final List<String> courses;
-  final String body;
+  final String? name;
+  final String? url;
+  final String? type;
+  final String? icon;
+  final String? supportUrl;
+  final int? index;
+  final BackendEntry? entry;
+  final List<String?>? courses;
+  final String? body;
 
-  static Box<String> get _box => Hive.box<String>('servers');
+  static Box<String?> get _box => Hive.box<String?>('servers');
 
   CoursesServer(
       {this.body,
@@ -80,13 +80,13 @@ class CoursesServer {
   Future<CoursesServer> toggle() => added ? remove() : add();
 
   CoursesServer copyWith(
-          {String name,
-          String url,
-          String type,
-          String icon,
-          String supportUrl,
-          List<String> courses,
-          String body}) =>
+          {String? name,
+          String? url,
+          String? type,
+          String? icon,
+          String? supportUrl,
+          List<String?>? courses,
+          String? body}) =>
       CoursesServer(
           name: name ?? this.name,
           body: body ?? this.body,
@@ -98,14 +98,14 @@ class CoursesServer {
           type: type ?? this.type,
           url: url ?? this.url);
 
-  static Future<CoursesServer> fetch({String url, int index, BackendEntry entry}) async {
+  static Future<CoursesServer> fetch({String? url, int? index, BackendEntry? entry}) async {
     var data = <String, dynamic>{};
     try {
       if (index == null) {
         var current = _box.values.toList().indexOf(url);
         if (current != -1) index = _box.keyAt(current);
       } else if (url == null) url = Hive.box<String>('servers').get(index);
-      data = await loadFile("$url/config") ?? {};
+      data = await loadFile("$url/config");
     } catch (e) {
       print(e);
     }
@@ -116,9 +116,9 @@ class CoursesServer {
     return CoursesServer.fromJson(data);
   }
 
-  Future<List<Course>> fetchCourses() => Future.wait(courses.map((course) => fetchCourse(course)));
+  Future<List<Course>> fetchCourses() => Future.wait(courses!.map((course) => fetchCourse(course)));
 
-  Future<Course> fetchCourse(String course) async {
+  Future<Course> fetchCourse(String? course) async {
     var data = await loadFile("$url/$course/config");
 
     data['server'] = this;

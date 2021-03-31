@@ -11,8 +11,8 @@ class CourseModule extends Module {
         ChildRoute('/details',
             child: (_, args) => CoursePage(
                 model: args.data,
-                serverId: int.parse(args.queryParams['serverId']),
-                course: args.queryParams['course'])),
+                serverId: int.parse(args.queryParams['serverId']!),
+                course: args.queryParams['course']!)),
         ModuleRoute('/start', module: CoursePartModule()),
       ];
 }

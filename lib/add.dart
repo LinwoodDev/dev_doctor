@@ -7,15 +7,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'models/server.dart';
 
 class AddServerPage extends StatefulWidget {
-  final String url;
+  final String? url;
 
-  const AddServerPage({Key key, this.url}) : super(key: key);
+  const AddServerPage({Key? key, this.url}) : super(key: key);
   @override
   _AddServerPageState createState() => _AddServerPageState();
 }
 
 class _AddServerPageState extends State<AddServerPage> {
-  final Box<String> _serversBox = Hive.box<String>('servers');
+  final Box<String?> _serversBox = Hive.box<String?>('servers');
   @override
   void initState() {
     super.initState();
@@ -26,7 +26,7 @@ class _AddServerPageState extends State<AddServerPage> {
     var url = widget.url;
     if (!_serversBox.containsKey(url)) {
       var server = await CoursesServer.fetch(url: url);
-      var shouldAdd = await showDialog<bool>(
+      var shouldAdd = await (showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
                   actions: [
@@ -38,10 +38,10 @@ class _AddServerPageState extends State<AddServerPage> {
                         onPressed: () => Navigator.of(context).pop(true))
                   ],
                   title: Text("settings.servers.add.title")
-                      .tr(namedArgs: {"name": server.name, "url": server.url}),
+                      .tr(namedArgs: {"name": server.name!, "url": server.url!}),
                   content: Text("settings.servers.add.body")
-                      .tr(namedArgs: {"name": server.name, "url": server.url})));
-      if (shouldAdd) {
+                      .tr(namedArgs: {"name": server.name!, "url": server.url!}))));
+      if (shouldAdd!) {
         await _serversBox.add(url);
       }
     }

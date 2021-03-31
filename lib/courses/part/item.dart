@@ -21,18 +21,18 @@ import 'layout.dart';
 import 'module.dart';
 
 class PartItemPage extends StatefulWidget {
-  final PartItem model;
-  final int itemId;
-  final ServerEditorBloc editorBloc;
+  final PartItem? model;
+  final int? itemId;
+  final ServerEditorBloc? editorBloc;
 
-  const PartItemPage({Key key, this.model, this.itemId, this.editorBloc}) : super(key: key);
+  const PartItemPage({Key? key, this.model, this.itemId, this.editorBloc}) : super(key: key);
 
   @override
   _PartItemPageState createState() => _PartItemPageState();
 }
 
 class _PartItemPageState extends State<PartItemPage> {
-  CoursePartBloc bloc;
+  late CoursePartBloc bloc;
   GlobalKey _itemKey = GlobalKey();
   ScrollController _detailsScrollController = ScrollController();
   ScrollController _itemScrollController = ScrollController();
@@ -52,7 +52,7 @@ class _PartItemPageState extends State<PartItemPage> {
   Future<void> _buildBloc() async {
     if (widget.editorBloc != null) bloc = EditorPartModule.to.get<CoursePartBloc>();
     bloc = CoursePartModule.to.get<CoursePartBloc>();
-    await bloc?.fetchFromParams(editorBloc: widget.editorBloc);
+    await bloc.fetchFromParams(editorBloc: widget.editorBloc);
   }
 
   @override
@@ -66,11 +66,11 @@ class _PartItemPageState extends State<PartItemPage> {
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
                   if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                  var part = snapshot.data;
+                  var part = snapshot.data!;
                   if (part.items.isEmpty) {
                     return Center(child: Text('course.part.empty'.tr()));
                   }
-                  var itemId = widget.itemId;
+                  var itemId = widget.itemId!;
                   if (itemId < 0) itemId = 0;
                   if (itemId >= part.items.length) itemId = part.items.length - 1;
                   var item = part.items[itemId];
@@ -124,7 +124,7 @@ class _PartItemPageState extends State<PartItemPage> {
                                             'item',
                                             'edit'
                                           ], queryParameters: {
-                                            ...Modular.args.queryParams
+                                            ...Modular.args!.queryParams
                                           }).toString()),
                                         )
                                     ])))));

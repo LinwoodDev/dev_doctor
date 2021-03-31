@@ -12,16 +12,16 @@ class BackendsModule extends Module {
       //print("User will be rendered with argument ${args.data}");
       return BackendUserPage(
           model: args.data,
-          collectionId: int.parse(args.queryParams['collectionId']),
+          collectionId: int.parse(args.queryParams['collectionId']!),
           user: args.queryParams['user']);
     }),
     ChildRoute('/entry', child: (_, args) {
       //print("Entry will be rendered with argument ${args.data}");
       return BackendPage(
           model: args.data,
-          collectionId: int.parse(args.queryParams['collectionId']),
-          user: args.queryParams['user'],
-          entry: args.queryParams['entry']);
+          collectionId: int.parse(args.queryParams['collectionId']!),
+          user: args.queryParams['user']!,
+          entry: args.queryParams['entry']!);
     })
   ];
 }

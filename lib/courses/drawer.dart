@@ -12,30 +12,30 @@ import 'package:url_launcher/url_launcher.dart';
 typedef NavigateCallback = void Function(int part);
 
 class CoursePartDrawer extends StatefulWidget {
-  final int partId;
-  final Course course;
-  final NavigateCallback onChange;
-  final ServerEditorBloc editorBloc;
+  final int? partId;
+  final Course? course;
+  final NavigateCallback? onChange;
+  final ServerEditorBloc? editorBloc;
 
-  const CoursePartDrawer({Key key, this.course, this.partId, this.onChange, this.editorBloc})
+  const CoursePartDrawer({Key? key, this.course, this.partId, this.onChange, this.editorBloc})
       : super(key: key);
   @override
   _CoursePartDrawerState createState() => _CoursePartDrawerState();
 }
 
 class _CoursePartDrawerState extends State<CoursePartDrawer> {
-  int partId;
+  int? partId;
 
   Future<List<CoursePart>> _buildFuture() async {
-    if (widget.editorBloc != null) return widget.editorBloc.getCourse(widget.course.slug).parts;
-    return await widget.course.fetchParts();
+    if (widget.editorBloc != null) return widget.editorBloc!.getCourse(widget.course!.slug!).parts;
+    return await widget.course!.fetchParts();
   }
 
   @override
   Widget build(BuildContext context) {
     var supportUrl = widget.course?.supportUrl ??
         widget.course?.server?.supportUrl ??
-        widget.editorBloc?.server?.supportUrl;
+        widget.editorBloc?.server.supportUrl;
     return Drawer(
         child: Scrollbar(
             child: ListView(children: [
@@ -60,8 +60,8 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
             if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
               return Center(child: CircularProgressIndicator());
             if (snapshot.hasError) return Text("Error: ${snapshot.error}");
-            var parts = snapshot.data;
-            var args = Modular.args.queryParams;
+            var parts = snapshot.data!;
+            var args = Modular.args!.queryParams;
             return Column(
                 children: List.generate(parts.length, (index) {
               var part = parts[index];
@@ -69,7 +69,7 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
                   ? args['partId'] == index.toString()
                   : args['part'] == part.slug;
               return ListTile(
-                title: Text(part.name),
+                title: Text(part.name!),
                 subtitle: Text(part.description ?? ''),
                 selected: selected,
                 trailing: selected && widget.editorBloc != null
@@ -79,7 +79,7 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
                     : null,
                 onTap: () {
                   setState(() => partId = index);
-                  widget.onChange(index);
+                  widget.onChange!(index);
                 },
                 isThreeLine: true,
               );

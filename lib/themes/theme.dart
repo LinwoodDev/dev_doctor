@@ -27,7 +27,6 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcThemePrimary;
     }
-    return null;
   }
 
   Color get mdcThemeOnPrimary {
@@ -47,7 +46,6 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcThemeOnPrimary;
     }
-    return null;
   }
 
   Color get mdcThemeSecondary {
@@ -67,7 +65,6 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcThemeSecondary;
     }
-    return null;
   }
 
   Color get mdcThemeOnSecondary {
@@ -87,7 +84,6 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcThemeOnSecondary;
     }
-    return null;
   }
 
   Color get mdcThemeBackground {
@@ -107,7 +103,6 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcThemeBackground;
     }
-    return null;
   }
 
   Color get mdcThemeError {
@@ -127,7 +122,6 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcThemeError;
     }
-    return null;
   }
 
   Color get mdcThemeOnError {
@@ -147,7 +141,6 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcThemeOnError;
     }
-    return null;
   }
 
   Color get mdcThemeSurface {
@@ -167,7 +160,6 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcThemeSurface;
     }
-    return null;
   }
 
   Color get mdcThemeOnSurface {
@@ -187,7 +179,6 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcThemeOnSurface;
     }
-    return null;
   }
 
   MaterialColor get mdcPrimarySwatch {
@@ -207,7 +198,6 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcPrimarySwatch;
     }
-    return null;
   }
 
   String get mdcTypographyFontFamily {
@@ -227,6 +217,5 @@ extension ColorThemeExtension on ColorTheme {
       case ColorTheme.winter:
         return winter.mdcTypographyFontFamily;
     }
-    return null;
   }
 }

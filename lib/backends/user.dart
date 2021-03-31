@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BackendUserPage extends StatelessWidget {
-  final String user;
-  final int collectionId;
-  final BackendUser model;
+  final String? user;
+  final int? collectionId;
+  final BackendUser? model;
 
-  const BackendUserPage({Key key, this.user, this.collectionId, this.model}) : super(key: key);
+  const BackendUserPage({Key? key, this.user, this.collectionId, this.model}) : super(key: key);
 
-  Future<BackendUser> _buildFuture() async {
+  Future<BackendUser?> _buildFuture() async {
     if (model != null) return model;
     var collection = await BackendCollection.fetch(index: collectionId);
     var current = await collection.fetchUser(user);
@@ -23,14 +23,14 @@ class BackendUserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: model != null
-            ? _buildView(model)
-            : FutureBuilder<BackendUser>(
+            ? _buildView(model!)
+            : FutureBuilder<BackendUser?>(
                 future: _buildFuture(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
                     return Center(child: CircularProgressIndicator());
                   if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                  var backendUser = snapshot.data;
+                  var backendUser = snapshot.data!;
                   return _buildView(backendUser);
                 }));
   }
@@ -51,7 +51,7 @@ class BackendUserPage extends StatelessWidget {
                     if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
                       return Center(child: CircularProgressIndicator());
                     if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                    var server = snapshot.data;
+                    var server = snapshot.data!;
                     return GestureDetector(
                         onTap: () async {
                           await Modular.to.pushNamed(
@@ -63,10 +63,10 @@ class BackendUserPage extends StatelessWidget {
                             child: Column(children: [
                               Hero(
                                   tag:
-                                      "backend-icon-${server.entry.collection.index}-${server.entry.user.name}-${server.entry.name}",
+                                      "backend-icon-${server.entry!.collection!.index}-${server.entry!.user!.name}-${server.entry!.name}",
                                   child: UniversalImage(
-                                      url: server.url + "/icon", type: server.icon, width: 160)),
-                              Text(server.name)
+                                      url: server.url! + "/icon", type: server.icon, width: 160)),
+                              Text(server.name!)
                             ])));
                   }));
         })))));

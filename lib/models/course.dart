@@ -7,19 +7,19 @@ import 'part.dart';
 
 @immutable
 class Course {
-  final CoursesServer server;
-  final String slug;
-  final String name;
-  final String description;
-  final String icon;
-  final String supportUrl;
-  final Author author;
-  final bool installed;
-  final String body;
-  final String lang;
-  final int index;
-  final List<String> parts;
-  final bool private;
+  final CoursesServer? server;
+  final String? slug;
+  final String? name;
+  final String? description;
+  final String? icon;
+  final String? supportUrl;
+  final Author? author;
+  final bool? installed;
+  final String? body;
+  final String? lang;
+  final int? index;
+  final List<String?>? parts;
+  final bool? private;
 
   Course(
       {this.slug,
@@ -61,7 +61,7 @@ class Course {
         private: json['private'],
         supportUrl: json['support_url']);
   }
-  Map<String, dynamic> toJson(int apiVersion) => {
+  Map<String, dynamic> toJson(int? apiVersion) => {
         "api-version": apiVersion,
         "server": server,
         "slug": slug,
@@ -78,13 +78,13 @@ class Course {
         "support_url": supportUrl
       };
 
-  get url => server.url + "/" + slug;
+  get url => server!.url! + "/" + slug!;
 
   Future<List<CoursePart>> fetchParts() async =>
-      Future.wait(parts.map((part) => fetchPart(part)).toList());
+      Future.wait(parts!.map((part) => fetchPart(part)).toList());
 
-  Future<CoursePart> fetchPart(String part) async {
-    var data = await loadFile("${server.url}/$slug/$part/config", type: server.type);
+  Future<CoursePart> fetchPart(String? part) async {
+    var data = await loadFile("${server!.url}/$slug/$part/config", type: server!.type);
     //data['items'] = yamlListToJson(data['items']).toList();
     data['course'] = this;
     data['slug'] = part;
@@ -92,17 +92,17 @@ class Course {
   }
 
   Course copyWith(
-          {String slug,
-          String name,
-          String description,
-          String icon,
-          Author author,
-          String supportUrl,
-          bool installed,
-          String body,
-          String lang,
-          List<String> parts,
-          bool private}) =>
+          {String? slug,
+          String? name,
+          String? description,
+          String? icon,
+          Author? author,
+          String? supportUrl,
+          bool? installed,
+          String? body,
+          String? lang,
+          List<String?>? parts,
+          bool? private}) =>
       Course(
           author: author ?? this.author,
           body: body ?? this.body,
@@ -120,7 +120,7 @@ class Course {
 }
 
 class CourseAdapter extends TypeAdapter<Course> {
-  final int apiVersion;
+  final int? apiVersion;
 
   CourseAdapter({this.apiVersion});
 

@@ -8,14 +8,14 @@ const borderColor = Color(0xFF805306);
 isWindow() => !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
-  final String title;
+  final String? title;
   @override
   final Size preferredSize;
   final List<Widget> actions;
 
-  final PreferredSizeWidget bottom;
+  final PreferredSizeWidget? bottom;
 
-  final Widget leading;
+  final Widget? leading;
   final bool automaticallyImplyLeading;
 
   MyAppBar(
@@ -23,9 +23,9 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
       this.automaticallyImplyLeading = true,
       this.leading,
       this.actions = const [],
-      Key key,
+      Key? key,
       this.bottom,
-      double height})
+      double? height})
       : preferredSize = Size.fromHeight(height ?? 50.0),
         super(key: key);
 
@@ -40,7 +40,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         leading: this.leading,
         elevation: 5.0,
         automaticallyImplyLeading: automaticallyImplyLeading,
-        title: isWindow() ? WindowTitleBarBox(child: Text(title)) : Text(title),
+        title: isWindow() ? WindowTitleBarBox(child: Text(title!)) : Text(title!),
         bottom: bottom,
         actions: [
           ...actions,
@@ -93,13 +93,13 @@ class WindowButtons extends StatelessWidget {
 }
 
 class ConditionalMoveWindow extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
 
-  const ConditionalMoveWindow({Key key, this.child}) : super(key: key);
+  const ConditionalMoveWindow({Key? key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (!kIsWeb) if (isWindow()) return MoveWindow(child: child);
-    return child;
+    return child!;
   }
 }

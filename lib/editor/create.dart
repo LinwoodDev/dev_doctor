@@ -28,7 +28,7 @@ class _CreateServerPageState extends State<CreateServerPage> {
                         child: ListView(children: [
                           TextFormField(
                               validator: (value) {
-                                if (value.isEmpty) return "editor.create.name.empty".tr();
+                                if (value!.isEmpty) return "editor.create.name.empty".tr();
                                 if (_names.contains(value)) return "editor.create.name.exist".tr();
                                 return null;
                               },
@@ -46,7 +46,7 @@ class _CreateServerPageState extends State<CreateServerPage> {
             child: Icon(Icons.check_outlined),
             tooltip: "editor.create.submit".tr(),
             onPressed: () async {
-              if (_formKey.currentState.validate()) {
+              if (_formKey.currentState!.validate()) {
                 _box.add(ServerEditorBloc(name: _nameController.text, note: _noteController.text));
                 Navigator.of(context).pop();
               }

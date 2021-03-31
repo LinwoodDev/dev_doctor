@@ -9,16 +9,16 @@ import 'package:markdown/markdown.dart' as md;
 typedef EditorCallback = void Function(String markdown);
 
 class MarkdownEditor extends StatefulWidget {
-  final String markdown;
-  final EditorCallback onSubmit;
+  final String? markdown;
+  final EditorCallback? onSubmit;
 
-  const MarkdownEditor({Key key, this.markdown, this.onSubmit}) : super(key: key);
+  const MarkdownEditor({Key? key, this.markdown, this.onSubmit}) : super(key: key);
   @override
   _MarkdownEditorState createState() => _MarkdownEditorState();
 }
 
 class _MarkdownEditorState extends State<MarkdownEditor> {
-  TextEditingController _markdownController;
+  TextEditingController? _markdownController;
   @override
   void initState() {
     _markdownController = TextEditingController(text: widget.markdown);
@@ -34,7 +34,7 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
         return Row(children: [
           Expanded(child: textEditor, flex: 2),
           Expanded(
-              child: _MarkdownEditorPreview(markdown: _markdownController.text, isMobile: false))
+              child: _MarkdownEditorPreview(markdown: _markdownController!.text, isMobile: false))
         ]);
       return textEditor;
     });
@@ -47,10 +47,10 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
               icon: Icon(Icons.play_arrow_outlined),
               onPressed: () => Modular.to.push(MaterialPageRoute(
                   builder: (context) =>
-                      _MarkdownEditorPreview(markdown: _markdownController.text)))),
+                      _MarkdownEditorPreview(markdown: _markdownController!.text)))),
         IconButton(
             icon: Icon(Icons.save_outlined),
-            onPressed: () => widget.onSubmit(_markdownController.text))
+            onPressed: () => widget.onSubmit!(_markdownController!.text))
       ]),
       body: Scrollbar(
           child: SingleChildScrollView(
@@ -65,11 +65,11 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
 }
 
 class _MarkdownEditorPreview extends StatelessWidget {
-  final String markdown;
+  final String? markdown;
   final bool isMobile;
   final ScrollController _scrollController = ScrollController();
 
-  _MarkdownEditorPreview({Key key, this.markdown, this.isMobile = true}) : super(key: key);
+  _MarkdownEditorPreview({Key? key, this.markdown, this.isMobile = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,12 +82,12 @@ class _MarkdownEditorPreview extends StatelessWidget {
                 controller: _scrollController,
                 child: MarkdownBody(
                     styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-                    onTapLink: (_, url, __) => launch(url),
+                    onTapLink: (_, url, __) => launch(url!),
                     extensionSet: md.ExtensionSet(
                       md.ExtensionSet.gitHubFlavored.blockSyntaxes,
                       [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
                     ),
-                    data: markdown,
+                    data: markdown!,
                     selectable: true))));
   }
 }

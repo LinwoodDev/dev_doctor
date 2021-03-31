@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class QuizPartItemPage extends StatefulWidget {
-  final QuizPartItem item;
-  final ServerEditorBloc editorBloc;
-  final int itemId;
+  final QuizPartItem? item;
+  final ServerEditorBloc? editorBloc;
+  final int? itemId;
 
-  const QuizPartItemPage({Key key, this.item, this.editorBloc, this.itemId}) : super(key: key);
+  const QuizPartItemPage({Key? key, this.item, this.editorBloc, this.itemId}) : super(key: key);
 
   @override
   _QuizPartItemPageState createState() => _QuizPartItemPageState();
@@ -21,8 +21,8 @@ class QuizPartItemPage extends StatefulWidget {
 
 class _QuizPartItemPageState extends State<QuizPartItemPage> {
   final _formKey = GlobalKey<FormState>();
-  int _points = null;
-  CoursePartBloc bloc;
+  int? _points = null;
+  late CoursePartBloc bloc;
 
   @override
   void dispose() {
@@ -43,9 +43,9 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     _timer?.cancel();
     _points = 0;
     _start = null;
-    var validate = _formKey.currentState.validate();
+    var validate = _formKey.currentState!.validate();
     if (widget.editorBloc != null) {
-      _start = widget.item.time;
+      _start = widget.item!.time;
       _points = null;
     }
     setState(() {});
@@ -64,12 +64,12 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
               ));
   }
 
-  Timer _timer = null;
-  int _start = null;
+  Timer? _timer = null;
+  int? _start = null;
 
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
-    _start = widget.item.time;
+    _start = widget.item!.time;
     if (widget.editorBloc == null)
       _timer = new Timer.periodic(
         oneSec,
@@ -78,7 +78,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
             setState(() => validate());
           } else {
             setState(() {
-              _start--;
+              _start = _start! - 1;
             });
           }
         },
@@ -88,7 +88,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: _timer != null || widget.item.time == null || widget.editorBloc != null
+        child: _timer != null || widget.item!.time == null || widget.editorBloc != null
             ? Form(
                 key: _formKey,
                 child: Column(children: [
@@ -111,8 +111,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                             icon: Icon(Icons.replay_outlined),
                                             onPressed: () => setState(() {
                                                   _points = null;
-                                                  _formKey.currentState.reset();
-                                                  if (widget.item.time != null) startTimer();
+                                                  _formKey.currentState!.reset();
+                                                  if (widget.item!.time != null) startTimer();
                                                 }),
                                             label: Text("course.quiz.retry".tr().toUpperCase())))
                                   ]))
@@ -126,7 +126,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                         child: Column(children: [
                                       Text(
                                         widget.editorBloc == null || _start != null
-                                            ? _start.toString() + "/" + widget.item.time.toString()
+                                            ? _start.toString() + "/" + widget.item!.time.toString()
                                             : "course.quiz.time.notset".tr(),
                                         style: Theme.of(context).textTheme.headline3,
                                       ),
@@ -144,25 +144,25 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                             icon: Icon(Icons.delete_outline_outlined),
                                             onPressed: () async {
                                               updateItem(
-                                                  widget.item.copyWith(time: null, timer: false));
+                                                  widget.item!.copyWith(time: null, timer: false));
                                             })
                                     ]
                                   ]))
                           ])),
                   Column(children: [
-                    ...List.generate(widget.item.questions.length, (questionIndex) {
-                      var question = widget.item.questions[questionIndex];
+                    ...List.generate(widget.item!.questions.length, (questionIndex) {
+                      var question = widget.item!.questions[questionIndex];
                       return Column(children: [
                         Row(children: [
                           Expanded(
                               child: Text(
-                            question.title,
+                            question.title!,
                             style: Theme.of(context).textTheme.headline6,
                           )),
                           if (widget.editorBloc != null)
                             PopupMenuButton<QuestionOption>(
-                                onSelected: (value) => value.onSelected(
-                                    context, widget.editorBloc, bloc, widget.itemId, questionIndex),
+                                onSelected: (value) => value.onSelected(context, widget.editorBloc!,
+                                    bloc, widget.itemId!, questionIndex),
                                 itemBuilder: (context) => QuestionOption.values.map((e) {
                                       var description = e.getDescription(question);
                                       return PopupMenuItem<QuestionOption>(
@@ -175,7 +175,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                             Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(e.name),
+                                                  Text(e.name!),
                                                   if (description != null)
                                                     Text(description,
                                                         style: Theme.of(context).textTheme.caption)
@@ -186,14 +186,14 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                         FormField<int>(
                             validator: (value) {
                               if (value == null) return "course.quiz.choose".tr();
-                              if (!question.answers[value].correct)
+                              if (!question.answers![value].correct)
                                 return question.evaluation ?? "course.quiz.wrong".tr();
-                              _points += question.answers[value].points ?? 1;
+                              _points = _points! + question.answers![value].points;
                               return null;
                             },
                             builder: (field) => Column(children: [
-                                  ...List.generate(question.answers.length, (index) {
-                                    var answer = question.answers[index];
+                                  ...List.generate(question.answers!.length, (index) {
+                                    var answer = question.answers![index];
                                     return Row(children: [
                                       Expanded(
                                           child: RadioListTile(
@@ -201,15 +201,15 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                               title: Text(answer.name ?? ''),
                                               subtitle: Text(answer.description ?? ''),
                                               value: index,
-                                              onChanged: (int value) =>
+                                              onChanged: (int? value) =>
                                                   _points == null ? field.didChange(value) : {})),
                                       if (widget.editorBloc != null)
                                         PopupMenuButton<AnswerOption>(
                                             onSelected: (value) => value.onSelected(
                                                 context,
-                                                widget.editorBloc,
+                                                widget.editorBloc!,
                                                 bloc,
-                                                widget.itemId,
+                                                widget.itemId!,
                                                 questionIndex,
                                                 index),
                                             itemBuilder: (context) => AnswerOption.values.map((e) {
@@ -225,7 +225,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment.start,
                                                             children: [
-                                                              Text(e.name),
+                                                              Text(e.name!),
                                                               if (description != null)
                                                                 Text(description,
                                                                     style: Theme.of(context)
@@ -238,7 +238,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                   }),
                                   field.hasError
                                       ? Text(
-                                          field.errorText,
+                                          field.errorText!,
                                           style: TextStyle(color: Colors.red),
                                         )
                                       : Container()
@@ -248,8 +248,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                     if (widget.editorBloc != null) ...[
                       OutlinedButton.icon(
                           onPressed: () {
-                            updateItem(widget.item.copyWith(
-                                questions: List<QuizQuestion>.from(widget.item.questions)
+                            updateItem(widget.item!.copyWith(
+                                questions: List<QuizQuestion>.from(widget.item!.questions)
                                   ..add(QuizQuestion(
                                       title: "course.quiz.question.title".tr(),
                                       description: "",
@@ -292,11 +292,11 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   }
 
   Future<void> updateItem(QuizPartItem item) async {
-    var courseBloc = widget.editorBloc.getCourse(bloc.course);
+    var courseBloc = widget.editorBloc!.getCourse(bloc.course!);
     var part = courseBloc.getCoursePart(bloc.part);
-    var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[widget.itemId] = item);
+    var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[widget.itemId!] = item);
     courseBloc.updateCoursePart(coursePart);
-    await widget.editorBloc.save();
+    await widget.editorBloc!.save();
     bloc.coursePart.add(coursePart);
     setState(() {
       _start = item.time;
@@ -319,7 +319,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                   onPressed: () async {
                     Navigator.of(context).pop();
                     var time = int.tryParse(timeController.text);
-                    updateItem(widget.item.copyWith(time: time));
+                    updateItem(widget.item!.copyWith(time: time));
                   },
                   child: Text("change".tr().toUpperCase()))
             ],
@@ -336,7 +336,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
 enum QuestionOption { answer, title, description, evaluation, delete }
 
 extension QuestionOptionExtension on QuestionOption {
-  String get name {
+  String? get name {
     switch (this) {
       case QuestionOption.answer:
         return "course.quiz.option.question.answer.item".tr();
@@ -349,10 +349,9 @@ extension QuestionOptionExtension on QuestionOption {
       case QuestionOption.description:
         return "course.quiz.option.question.description.item".tr();
     }
-    return null;
   }
 
-  IconData get icon {
+  IconData? get icon {
     switch (this) {
       case QuestionOption.answer:
         return Icons.add_outlined;
@@ -365,10 +364,9 @@ extension QuestionOptionExtension on QuestionOption {
       case QuestionOption.description:
         return Icons.subject_outlined;
     }
-    return null;
   }
 
-  String getDescription(QuizQuestion question) {
+  String? getDescription(QuizQuestion question) {
     switch (this) {
       case QuestionOption.title:
         return question.title;
@@ -381,11 +379,10 @@ extension QuestionOptionExtension on QuestionOption {
 
   Future<void> onSelected(BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc,
       int itemId, int questionId) async {
-    var courseBloc = bloc.getCourse(partBloc.course);
+    var courseBloc = bloc.getCourse(partBloc.course!);
     var part = courseBloc.getCoursePart(partBloc.part);
     var item = part.items[itemId] as QuizPartItem;
     var question = item.questions[questionId];
-    print("SELECTED!");
     switch (this) {
       case QuestionOption.answer:
         updateItem(
@@ -395,7 +392,7 @@ extension QuestionOptionExtension on QuestionOption {
             item.copyWith(
                 questions: List<QuizQuestion>.from(item.questions)
                   ..[questionId] = question.copyWith(
-                      answers: List<QuizAnswer>.from(question.answers)..add(QuizAnswer()))));
+                      answers: List<QuizAnswer>.from(question.answers!)..add(QuizAnswer()))));
         break;
       case QuestionOption.title:
         TextEditingController titleController = TextEditingController(text: question.title);
@@ -507,7 +504,7 @@ extension QuestionOptionExtension on QuestionOption {
                     ],
                     title: Text("course.quiz.option.question.delete.title").tr(),
                     content: Text("course.quiz.option.question.delete.content")
-                        .tr(namedArgs: {"index": questionId.toString(), "name": question.title})));
+                        .tr(namedArgs: {"index": questionId.toString(), "name": question.title!})));
         break;
       case QuestionOption.description:
         TextEditingController descriptionController =
@@ -558,7 +555,7 @@ extension QuestionOptionExtension on QuestionOption {
 
   Future<void> updateItem(
       ServerEditorBloc bloc, CoursePartBloc partBloc, int itemId, QuizPartItem item) async {
-    var courseBloc = bloc.getCourse(partBloc.course);
+    var courseBloc = bloc.getCourse(partBloc.course!);
     var part = courseBloc.getCoursePart(partBloc.part);
     var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[itemId] = item);
     courseBloc.updateCoursePart(coursePart);
@@ -570,7 +567,7 @@ extension QuestionOptionExtension on QuestionOption {
 enum AnswerOption { rating, title, description, points, delete }
 
 extension AnswerOptionExtension on AnswerOption {
-  String get name {
+  String? get name {
     switch (this) {
       case AnswerOption.rating:
         return "course.quiz.option.answer.rating".tr();
@@ -583,10 +580,9 @@ extension AnswerOptionExtension on AnswerOption {
       case AnswerOption.points:
         return "course.quiz.option.answer.points.item".tr();
     }
-    return null;
   }
 
-  IconData getIcon(QuizAnswer answer) {
+  IconData? getIcon(QuizAnswer answer) {
     switch (this) {
       case AnswerOption.rating:
         return answer.correct ? Icons.check_outlined : Icons.clear_outlined;
@@ -599,10 +595,9 @@ extension AnswerOptionExtension on AnswerOption {
       case AnswerOption.points:
         return Icons.attach_money_outlined;
     }
-    return null;
   }
 
-  String getDescription(QuizAnswer answer) {
+  String? getDescription(QuizAnswer answer) {
     switch (this) {
       case AnswerOption.rating:
         return answer.correct
@@ -621,11 +616,11 @@ extension AnswerOptionExtension on AnswerOption {
 
   Future<void> onSelected(BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc,
       int itemId, int questionId, int answerId) async {
-    var course = bloc.getCourse(partBloc.course);
+    var course = bloc.getCourse(partBloc.course!);
     var part = course.getCoursePart(partBloc.part);
     var item = part.items[itemId] as QuizPartItem;
     var question = item.questions[questionId];
-    var answer = question.answers[answerId];
+    var answer = question.answers![answerId];
 
     switch (this) {
       case AnswerOption.rating:
@@ -635,7 +630,7 @@ extension AnswerOptionExtension on AnswerOption {
             itemId,
             questionId,
             question.copyWith(
-                answers: List<QuizAnswer>.from(question.answers)
+                answers: List<QuizAnswer>.from(question.answers!)
                   ..[answerId] = answer.copyWith(correct: !answer.correct)));
         break;
       case AnswerOption.title:
@@ -674,7 +669,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers)
+                                    answers: List<QuizAnswer>.from(question.answers!)
                                       ..[answerId] = answer.copyWith(name: titleController.text)));
                           })
                     ]));
@@ -699,7 +694,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers)
+                                    answers: List<QuizAnswer>.from(question.answers!)
                                       ..removeAt(answerId)));
                           },
                           icon: Icon(Icons.check_outlined),
@@ -707,7 +702,7 @@ extension AnswerOptionExtension on AnswerOption {
                     ],
                     title: Text("course.quiz.option.answer.delete.title").tr(),
                     content: Text("course.quiz.option.answer.delete.content")
-                        .tr(namedArgs: {"index": answerId.toString(), "name": answer.name})));
+                        .tr(namedArgs: {"index": answerId.toString(), "name": answer.name!})));
         break;
       case AnswerOption.description:
         TextEditingController descriptionController =
@@ -748,7 +743,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers)
+                                    answers: List<QuizAnswer>.from(question.answers!)
                                       ..[answerId] = answer.copyWith(
                                           description: descriptionController.text)));
                           })
@@ -791,7 +786,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers)
+                                    answers: List<QuizAnswer>.from(question.answers!)
                                       ..[answerId] = answer.copyWith(
                                           points: int.tryParse(pointsController.text))));
                           })
@@ -803,7 +798,7 @@ extension AnswerOptionExtension on AnswerOption {
 
   Future<void> updateQuestion(ServerEditorBloc bloc, CoursePartBloc partBloc, int itemId,
       int questionId, QuizQuestion question) async {
-    var courseBloc = bloc.getCourse(partBloc.course);
+    var courseBloc = bloc.getCourse(partBloc.course!);
     var part = courseBloc.getCoursePart(partBloc.part);
     var item = part.items[itemId] as QuizPartItem;
     var coursePart = part.copyWith(

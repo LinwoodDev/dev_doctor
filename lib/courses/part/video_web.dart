@@ -1,6 +1,6 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
-import 'dart:ui' as ui;
+import '../../platform_view_stub.dart' if (dart.library.html) 'dart:ui' as ui;
 
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/items/video.dart';
@@ -10,32 +10,32 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'video.dart' as defaultVideo;
 
 class VideoPartItemPage extends StatefulWidget {
-  final VideoPartItem item;
-  final ServerEditorBloc editorBloc;
-  final int itemId;
+  final VideoPartItem? item;
+  final ServerEditorBloc? editorBloc;
+  final int? itemId;
 
-  const VideoPartItemPage({Key key, this.item, this.editorBloc, this.itemId}) : super(key: key);
+  const VideoPartItemPage({Key? key, this.item, this.editorBloc, this.itemId}) : super(key: key);
   @override
   _VideoPartItemPageState createState() => _VideoPartItemPageState();
 }
 
 class _VideoPartItemPageState extends State<VideoPartItemPage> {
-  IFrameElement _iframeElement;
-  Widget _iframeWidget;
-  bool isEmpty;
+  IFrameElement? _iframeElement;
+  Widget? _iframeWidget;
+  late bool isEmpty;
   @override
   void initState() {
     super.initState();
-    isEmpty = widget.item.source == null || widget.item.url == null;
+    isEmpty = widget.item!.source == null || widget.item!.url == null;
     if (!isEmpty) {
       _iframeElement = IFrameElement();
 
-      _iframeElement.height = '500';
-      _iframeElement.width = '500';
+      _iframeElement!.height = '500';
+      _iframeElement!.width = '500';
 
-      _iframeElement.src = widget.item.src;
+      _iframeElement!.src = widget.item!.src;
       //_iframeElement.allowFullscreen = true;
-      _iframeElement.style.border = 'none';
+      _iframeElement!.style.border = 'none';
 
       // ignore: undefined_prefixed_name
       ui.platformViewRegistry.registerViewFactory(
@@ -64,7 +64,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
     return Row(children: [
       Expanded(
           child: Container(
-              child: widget.item.source == null || widget.item.url == null
+              child: widget.item!.source == null || widget.item!.url == null
                   ? Center(child: Text('course.video.empty').tr())
                   : AspectRatio(
                       child: _iframeWidget,
