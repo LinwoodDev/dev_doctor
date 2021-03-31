@@ -49,8 +49,8 @@ class QuizQuestion {
 
   QuizQuestion({this.title, this.description, this.answers, this.evaluation});
   QuizQuestion.fromJson(Map<String, dynamic> json)
-      : title = json['title'],
-        description = json['description'],
+      : title = json['title'] ?? '',
+        description = json['description'] ?? '',
         evaluation = json['evaluation'],
         answers = (json['answers'] as List<dynamic>)
             .map((answer) => QuizAnswer.fromJson(Map<String, dynamic>.from(answer)))
@@ -77,12 +77,12 @@ class QuizAnswer {
   final String description;
   final int points;
 
-  QuizAnswer({this.correct, this.name, this.description, this.points});
+  QuizAnswer({this.correct = false, this.name = "", this.description = "", this.points = 1});
   QuizAnswer.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        description = json['description'],
+        description = json['description'] ?? '',
         correct = json['correct'] ?? false,
-        points = json['points'];
+        points = json['points'] ?? 1;
   Map<String, dynamic> toJson() =>
       {"correct": correct, "name": name, "description": description, "points": points};
   QuizAnswer copyWith({String name, String description, bool correct, int points}) => QuizAnswer(

@@ -753,7 +753,7 @@ packages:
       name: triple
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0+1"
+    version: "1.0.1"
   typed_data:
     dependency: transitive
     description:

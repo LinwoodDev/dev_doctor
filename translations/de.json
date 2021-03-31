@@ -18,9 +18,9 @@
                 "type": "Type"
             },
             "delete": {
-                "item":{
+                "item": {
                     "title": "Confirm delete item",
-                    "content": "Do you really want to delete {name} #{index}?"
+                    "content": "Soll wirklich {name} #{index} gelöscht werden?"
                 }
             }
         },
@@ -29,24 +29,24 @@
         "statistics": "Statistiken",
         "back": "Zurück",
         "materials": "Materialien",
-        "lang":{
-            "notset":"Sprache nicht gesetzt",
+        "lang": {
+            "notset": "Sprache nicht gesetzt",
             "hint": "de",
             "label": "Sprach Tag"
         },
-        "author":{
-            "notset":"Autor nicht gesetzt",
+        "author": {
+            "notset": "Autor nicht gesetzt",
             "title": "Autor",
-            "name":{
+            "name": {
                 "hint": "CodeDoctorDE",
                 "label": "Name"
             },
             "url": {
-                "hint":"https://github.com/CodeDoctorDE",
+                "hint": "https://github.com/CodeDoctorDE",
                 "label": "URL"
             },
             "avatar": {
-                "hint":"https://source.unsplash.com/random",
+                "hint": "https://source.unsplash.com/random",
                 "label": "Avatar"
             }
         },
@@ -58,15 +58,72 @@
             "check": "Abschicken",
             "retry": "Quiz wiederholen",
             "start": "Quiz starten",
+            "add": "Frage hinzufügen",
             "points": "Punkte",
             "time": {
                 "subtitle": "Sekunden übrig",
-                "notset": "Timer nicht gesetzt!"
+                "notset": "Timer nicht gesetzt!",
+                "title": "Timer ändern",
+                "label": "Zeit",
+                "hint": "Sekunden"
             },
             "validation": {
                 "title": "Auswertung",
                 "correct": "Alles richtig!",
                 "wrong": "Es gibt Fehler!"
+            },
+            "question": {
+                "title": "Quiztitel",
+                "one": "Antwort 1",
+                "two": "Antwort 2",
+                "three": "Antwort 3",
+                "four": "Antwort 4",
+                "evaluation": "Antwort 1 ist richtig!"
+            },
+            "option": {
+                "question": {
+                    "answer": "Antwort hinzufügen",
+                    "title": {
+                        "item": "Titel ändern",
+                        "label": "Titel",
+                        "hint": "Der Quiztitel"
+                    },
+                    "evaluation": {
+                        "item": "Auswertung",
+                        "label": "Auswertung",
+                        "hint": "Eine Erklärung zur Lösung"
+                    },
+                    "delete": {
+                        "item": "Löschen",
+                        "title": "Frage löschen bestätigen",
+                        "content": "Soll wirklich die Frage {name} #{index} gelöscht werden?"
+                    }
+                },
+                "answer": {
+                    "points": {
+                        "item": "Punkte",
+                        "label": "Punkte",
+                        "hint": "Zahl"
+                    },
+                    "rating": "Bewertung",
+                    "correct": "Richtig",
+                    "wrong": "Falsch",
+                    "title": {
+                        "item": "Titel ändern",
+                        "label": "Titel",
+                        "hint": "Der Antworttitel"
+                    },
+                    "description": {
+                        "item": "Beschreibung ändern",
+                        "label": "Beschreibung",
+                        "hint": "Eine Erläuterung zur Antwort"
+                    },
+                    "delete": {
+                        "item": "Löschen",
+                        "title": "Antwort löschen bestätigen",
+                        "content": "Soll wirklich die Antwort {name} #{index} gelöscht werden?"
+                    }
+                }
             }
         },
         "video": {

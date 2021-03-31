@@ -36,13 +36,15 @@ class Course {
       this.server,
       this.private});
   factory Course.fromJson(Map<String, dynamic> json) {
-    var apiVersion = json['api-version'] ?? 0;
-    if (apiVersion < 8) {
-      json['author'] = <String, dynamic>{
-        "name": json['author'],
-        "url": json['author_url'],
-        "avatar": json['author_avatar']
-      };
+    var apiVersion = json['api-version'];
+    if (apiVersion != null) {
+      if (apiVersion < 8) {
+        json['author'] = <String, dynamic>{
+          "name": json['author'],
+          "url": json['author_url'],
+          "avatar": json['author_avatar']
+        };
+      }
     }
     return Course(
         server: json['server'],

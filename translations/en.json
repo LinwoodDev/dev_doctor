@@ -23,24 +23,24 @@
         "statistics": "Statistics",
         "back": "Back",
         "materials": "Materials",
-        "lang":{
-            "notset":"Language not set",
+        "lang": {
+            "notset": "Language not set",
             "hint": "en",
             "label": "Language tag"
         },
-        "author":{
-            "notset":"Author not set",
+        "author": {
+            "notset": "Author not set",
             "title": "Author",
-            "name":{
+            "name": {
                 "hint": "CodeDoctorDE",
                 "label": "Name"
             },
             "url": {
-                "hint":"https://github.com/CodeDoctorDE",
+                "hint": "https://github.com/CodeDoctorDE",
                 "label": "URL"
             },
             "avatar": {
-                "hint":"https://source.unsplash.com/random",
+                "hint": "https://source.unsplash.com/random",
                 "label": "Avatar"
             }
         },
@@ -53,11 +53,49 @@
             "retry": "Retry",
             "start": "Start quiz",
             "points": "points",
-            "time": {"subtitle":"seconds remaining",
+            "add": "Add question",
+            "time": {
+                "subtitle": "seconds remaining"
+            },
             "validation": {
                 "title": "Validation",
                 "correct": "You got everything right!",
                 "wrong": "You made mistakes!"
+            },
+            "question": {
+                "answer": "Add answer",
+                "title": {
+                    "item": "Change title",
+                    "label": "Title",
+                    "hint": "The quiz title"
+                },
+                "evaluation": {
+                    "item": "Evaluation",
+                    "label": "Evaluation",
+                    "hint": "An explanation to the answer"
+                },
+                "delete": {
+                    "item": "Delete",
+                    "title": "Confirm delete question",
+                    "content": "Do you really want to delete {name} #{index}?"
+                }
+            },
+            "option": {
+                "question": {
+                    "answer": "Antwort hinzufügen",
+                    "title": "Titel ändern",
+                    "evaluation": "Auswertung",
+                    "delete": "Löschen"
+                },
+                "answer": {
+                    "rating": "Bewertung",
+                    "correct": "Richtig",
+                    "wrong": "Falsch",
+                    "title": "Titel ändern",
+                    "description": "Beschreibung ändern",
+                    "delete": "Löschen",
+                    "points": "Punkte ändern"
+                }
             }
         },
         "video": {

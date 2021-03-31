@@ -34,6 +34,8 @@ class PartItemPage extends StatefulWidget {
 class _PartItemPageState extends State<PartItemPage> {
   CoursePartBloc bloc;
   GlobalKey _itemKey = GlobalKey();
+  ScrollController _detailsScrollController = ScrollController();
+  ScrollController _itemScrollController = ScrollController();
 
   @override
   void initState() {
@@ -86,7 +88,9 @@ class _PartItemPageState extends State<PartItemPage> {
                   final itemBuilder = Builder(builder: (context) => itemWidget);
                   return LayoutBuilder(builder: (context, constraints) {
                     var itemCard = Scrollbar(
+                        controller: _detailsScrollController,
                         child: SingleChildScrollView(
+                            controller: _detailsScrollController,
                             child: Card(
                                 shape:
                                     RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -95,7 +99,9 @@ class _PartItemPageState extends State<PartItemPage> {
                                         padding: const EdgeInsets.all(64.0),
                                         child: itemBuilder)))));
                     var detailsCard = Scrollbar(
+                        controller: _itemScrollController,
                         child: SingleChildScrollView(
+                            controller: _itemScrollController,
                             child: Card(
                                 shape:
                                     RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
