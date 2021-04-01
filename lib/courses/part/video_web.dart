@@ -40,7 +40,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
       // ignore: undefined_prefixed_name
       ui.platformViewRegistry.registerViewFactory(
         'iframeElement',
-        (int viewId) => _iframeElement,
+        (int viewId) => _iframeElement!,
       );
 
       _iframeWidget = HtmlElementView(
