@@ -7,14 +7,14 @@ import 'course.dart';
 
 @immutable
 class CoursesServer {
-  final String? name;
+  final String name;
   final String? url;
   final String? type;
   final String? icon;
   final String? supportUrl;
   final int? index;
   final BackendEntry? entry;
-  final List<String?>? courses;
+  final List<String> courses;
   final String? body;
 
   static Box<String?> get _box => Hive.box<String?>('servers');
@@ -23,9 +23,9 @@ class CoursesServer {
       {this.body,
       this.icon,
       this.index,
-      this.name,
+      required this.name,
       this.url,
-      this.courses,
+      required this.courses,
       this.type,
       this.entry,
       this.supportUrl});
@@ -85,7 +85,7 @@ class CoursesServer {
           String? type,
           String? icon,
           String? supportUrl,
-          List<String?>? courses,
+          List<String>? courses,
           String? body}) =>
       CoursesServer(
           name: name ?? this.name,
@@ -98,7 +98,7 @@ class CoursesServer {
           type: type ?? this.type,
           url: url ?? this.url);
 
-  static Future<CoursesServer> fetch({String? url, int? index, BackendEntry? entry}) async {
+  static Future<CoursesServer?> fetch({String? url, int? index, BackendEntry? entry}) async {
     var data = <String, dynamic>{};
     try {
       if (index == null) {
@@ -108,6 +108,7 @@ class CoursesServer {
       data = await loadFile("$url/config");
     } catch (e) {
       print(e);
+      return null;
     }
     data['courses'] = data['courses'] ?? [];
     data['entry'] = entry;
@@ -116,7 +117,7 @@ class CoursesServer {
     return CoursesServer.fromJson(data);
   }
 
-  Future<List<Course>> fetchCourses() => Future.wait(courses!.map((course) => fetchCourse(course)));
+  Future<List<Course>> fetchCourses() => Future.wait(courses.map((course) => fetchCourse(course)));
 
   Future<Course> fetchCourse(String? course) async {
     var data = await loadFile("$url/$course/config");

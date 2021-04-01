@@ -39,9 +39,9 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
     bloc = widget.editorBloc!
         .getCourse(widget.course ?? widget.editorBloc!.courses[widget.courseId!] as String);
     print(widget.part);
-    part = bloc.getCoursePart(widget.part ?? bloc.course.parts![widget.partId!]);
+    part = bloc.getCoursePart(widget.part ?? bloc.course.parts[widget.partId!]);
     print(widget.itemId);
-    var item = part.items[widget.itemId!]!;
+    var item = part.items[widget.itemId!];
     print(item);
     _nameController = TextEditingController(text: item.name);
     _descriptionController = TextEditingController(text: item.description);
@@ -83,7 +83,7 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
             onPressed: () async {
               var coursePart = part.copyWith(
                   items: List<PartItem>.from(part.items)
-                    ..[widget.itemId!] = part.items[widget.itemId!]!.copyWith(
+                    ..[widget.itemId!] = part.items[widget.itemId!].copyWith(
                         name: _nameController!.text, description: _descriptionController!.text));
               bloc.updateCoursePart(coursePart);
               await widget.editorBloc!.save();

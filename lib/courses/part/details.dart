@@ -21,18 +21,18 @@ class PartDetailsPage extends StatefulWidget {
 }
 
 class _PartDetailsPageState extends State<PartDetailsPage> {
-  Future<CoursePart?> _buildFuture() async {
-    if (widget.model != null) return widget.model;
+  Future<CoursePart> _buildFuture() async {
+    if (widget.model != null) return widget.model!;
     if (widget.editorBloc != null)
       return widget.editorBloc!.getCourse(widget.course!).parts[widget.partId!];
     var server = await CoursesServer.fetch(index: widget.serverId);
-    var course = await server.fetchCourse(widget.course);
-    return course.fetchPart(widget.partId != null ? course.parts![widget.partId!] : widget.part);
+    var course = await server?.fetchCourse(widget.course);
+    return course!.fetchPart(widget.partId != null ? course.parts[widget.partId!] : widget.part);
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<CoursePart?>(
+    return FutureBuilder<CoursePart>(
         future: _buildFuture(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)

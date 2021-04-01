@@ -58,8 +58,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   Future<Course?> _buildFuture() async {
     if (widget.model != null) return widget.model;
     if (widget.editorBloc != null) return widget.editorBloc!.getCourse(widget.course).course;
-    CoursesServer server = await CoursesServer.fetch(index: widget.serverId);
-    return server.fetchCourse(widget.course);
+    CoursesServer? server = await CoursesServer.fetch(index: widget.serverId);
+    return server?.fetchCourse(widget.course);
   }
 
   @override
@@ -383,7 +383,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
               _editorBloc!.getCourse(widget.course).deleteCoursePart(part.slug);
               _editorBloc!.save();
             },
-            key: Key(part.slug!),
+            key: Key(part.slug),
             child: ListTile(
                 title: Text(part.name!),
                 subtitle: Text(part.description ?? ""),

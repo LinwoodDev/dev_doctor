@@ -9,11 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class QuizPartItemPage extends StatefulWidget {
-  final QuizPartItem? item;
+  final QuizPartItem item;
   final ServerEditorBloc? editorBloc;
   final int? itemId;
 
-  const QuizPartItemPage({Key? key, this.item, this.editorBloc, this.itemId}) : super(key: key);
+  const QuizPartItemPage({Key? key, required this.item, this.editorBloc, this.itemId})
+      : super(key: key);
 
   @override
   _QuizPartItemPageState createState() => _QuizPartItemPageState();
@@ -45,7 +46,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     _start = null;
     var validate = _formKey.currentState!.validate();
     if (widget.editorBloc != null) {
-      _start = widget.item!.time;
+      _start = widget.item.time;
       _points = null;
     }
     setState(() {});
@@ -69,7 +70,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
 
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
-    _start = widget.item!.time;
+    _start = widget.item.time;
     if (widget.editorBloc == null)
       _timer = new Timer.periodic(
         oneSec,
@@ -88,7 +89,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: _timer != null || widget.item!.time == null || widget.editorBloc != null
+        child: _timer != null || widget.item.time == null || widget.editorBloc != null
             ? Form(
                 key: _formKey,
                 child: Column(children: [
@@ -112,7 +113,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                             onPressed: () => setState(() {
                                                   _points = null;
                                                   _formKey.currentState!.reset();
-                                                  if (widget.item!.time != null) startTimer();
+                                                  if (widget.item.time != null) startTimer();
                                                 }),
                                             label: Text("course.quiz.retry".tr().toUpperCase())))
                                   ]))
@@ -126,7 +127,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                         child: Column(children: [
                                       Text(
                                         widget.editorBloc == null || _start != null
-                                            ? _start.toString() + "/" + widget.item!.time.toString()
+                                            ? _start.toString() + "/" + widget.item.time.toString()
                                             : "course.quiz.time.notset".tr(),
                                         style: Theme.of(context).textTheme.headline3,
                                       ),
@@ -144,21 +145,24 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                             icon: Icon(Icons.delete_outline_outlined),
                                             onPressed: () async {
                                               updateItem(
-                                                  widget.item!.copyWith(time: null, timer: false));
+                                                  widget.item.copyWith(time: null, timer: false));
                                             })
                                     ]
                                   ]))
                           ])),
                   Column(children: [
-                    ...List.generate(widget.item!.questions.length, (questionIndex) {
-                      var question = widget.item!.questions[questionIndex];
+                    ...List.generate(widget.item.questions.length, (questionIndex) {
+                      var question = widget.item.questions[questionIndex];
                       return Column(children: [
                         Row(children: [
                           Expanded(
-                              child: Text(
-                            question.title!,
-                            style: Theme.of(context).textTheme.headline6,
-                          )),
+                              child: Column(children: [
+                            Text(
+                              question.title!,
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                            Text(question.description!)
+                          ])),
                           if (widget.editorBloc != null)
                             PopupMenuButton<QuestionOption>(
                                 onSelected: (value) => value.onSelected(context, widget.editorBloc!,
@@ -248,8 +252,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                     if (widget.editorBloc != null) ...[
                       OutlinedButton.icon(
                           onPressed: () {
-                            updateItem(widget.item!.copyWith(
-                                questions: List<QuizQuestion>.from(widget.item!.questions)
+                            updateItem(widget.item.copyWith(
+                                questions: List<QuizQuestion>.from(widget.item.questions)
                                   ..add(QuizQuestion(
                                       title: "course.quiz.question.title".tr(),
                                       description: "",
@@ -319,7 +323,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                   onPressed: () async {
                     Navigator.of(context).pop();
                     var time = int.tryParse(timeController.text);
-                    updateItem(widget.item!.copyWith(time: time));
+                    updateItem(widget.item.copyWith(time: time));
                   },
                   child: Text("change".tr().toUpperCase()))
             ],

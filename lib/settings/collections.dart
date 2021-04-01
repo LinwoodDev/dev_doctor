@@ -49,16 +49,15 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                                   return Dismissible(
                                       // Show a red background as the item is swiped away.
                                       background: Container(color: Colors.red),
-                                      key: Key(current.url!),
+                                      key: Key(current.url),
                                       onDismissed: (direction) => _deleteServer(index),
                                       child: ListTile(
                                           leading: current.icon?.isEmpty ?? true
                                               ? null
                                               : UniversalImage(
-                                                  type: current.icon, url: current.url! + "/icon"),
-                                          title: Text(
-                                              current.name ?? 'settings.collections.error'.tr()),
-                                          subtitle: Text(current.url!)));
+                                                  type: current.icon, url: current.url + "/icon"),
+                                          title: Text(current.name),
+                                          subtitle: Text(current.url)));
                                 }));
                     }
                   }))),
@@ -76,7 +75,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
 
   _createCollection(String url) async {
     var server = await BackendCollection.fetch(url: url);
-    if (server.name == null)
+    if (server == null)
       showDialog(
           context: context,
           builder: (context) => AlertDialog(

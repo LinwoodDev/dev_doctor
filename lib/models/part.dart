@@ -1,5 +1,4 @@
-import 'package:dev_doctor/models/server.dart';
-
+import 'server.dart';
 import 'course.dart';
 import 'item.dart';
 
@@ -7,11 +6,15 @@ class CoursePart {
   final Course? course;
   final String? name;
   final String? description;
-  final String? slug;
-  final List<PartItem?> items;
+  final String slug;
+  final List<PartItem> items;
 
   CoursePart(
-      {this.name, this.description, this.slug, List<PartItem?> items = const [], this.course})
+      {this.name,
+      this.description,
+      required this.slug,
+      List<PartItem> items = const [],
+      this.course})
       : this.items = List<PartItem>.unmodifiable(items);
   CoursePart.fromJson(Map<String, dynamic> json)
       : course = json['course'],
@@ -26,7 +29,7 @@ class CoursePart {
         "description": description,
         "slug": slug,
         "name": name ?? '',
-        "items": items.map((e) => e!.toJson()).toList()
+        "items": items.map((e) => e.toJson()).toList()
       };
 
   CoursesServer? get server => course!.server;
@@ -36,7 +39,7 @@ class CoursePart {
           String? name,
           String? description,
           String? slug,
-          List<PartItem?>? items}) =>
+          List<PartItem>? items}) =>
       CoursePart(
           course: course ?? this.course,
           description: description ?? this.description,

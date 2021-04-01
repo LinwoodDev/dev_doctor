@@ -15,8 +15,8 @@ class ServerEditorBloc extends HiveObject {
 
   List<CourseEditorBloc> get courses => List.unmodifiable(_courses);
 
-  ServerEditorBloc({List<CourseEditorBloc> courses = const [], this.note, String? name})
-      : _server = CoursesServer(name: name),
+  ServerEditorBloc({List<CourseEditorBloc> courses = const [], this.note, required String name})
+      : _server = CoursesServer(name: name, courses: []),
         _courses = List<CourseEditorBloc>.from(courses);
   ServerEditorBloc.fromJson(Map<String, dynamic> json)
       : _server = CoursesServer.fromJson(Map<String, dynamic>.from(json['server'] ?? {})),
@@ -31,10 +31,10 @@ class ServerEditorBloc extends HiveObject {
         "courses": _courses.map((e) => e.toJson(apiVersion)).toList()
       };
 
-  List<String?> getCourseSlugs() => _courses.map((e) => e.course.slug).toList();
+  List<String> getCourseSlugs() => _courses.map((e) => e.course.slug).toList();
   CourseEditorBloc? createCourse(String slug) {
     if (getCourseSlugs().contains(slug)) return null;
-    var courseBloc = CourseEditorBloc(Course(name: slug, slug: slug));
+    var courseBloc = CourseEditorBloc(Course(name: slug, slug: slug, parts: []));
     _courses.add(courseBloc);
     return courseBloc;
   }

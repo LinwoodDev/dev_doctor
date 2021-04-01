@@ -8,7 +8,7 @@ import 'part.dart';
 @immutable
 class Course {
   final CoursesServer? server;
-  final String? slug;
+  final String slug;
   final String? name;
   final String? description;
   final String? icon;
@@ -18,11 +18,11 @@ class Course {
   final String? body;
   final String? lang;
   final int? index;
-  final List<String?>? parts;
+  final List<String> parts;
   final bool? private;
 
   Course(
-      {this.slug,
+      {required this.slug,
       this.name,
       this.index,
       this.description,
@@ -32,7 +32,7 @@ class Course {
       this.body,
       this.supportUrl,
       this.lang,
-      this.parts,
+      required this.parts,
       this.server,
       this.private});
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -78,10 +78,10 @@ class Course {
         "support_url": supportUrl
       };
 
-  get url => server!.url! + "/" + slug!;
+  get url => server!.url! + "/" + slug;
 
   Future<List<CoursePart>> fetchParts() async =>
-      Future.wait(parts!.map((part) => fetchPart(part)).toList());
+      Future.wait(parts.map((part) => fetchPart(part)).toList());
 
   Future<CoursePart> fetchPart(String? part) async {
     var data = await loadFile("${server!.url}/$slug/$part/config", type: server!.type);
@@ -101,7 +101,7 @@ class Course {
           bool? installed,
           String? body,
           String? lang,
-          List<String?>? parts,
+          List<String>? parts,
           bool? private}) =>
       Course(
           author: author ?? this.author,

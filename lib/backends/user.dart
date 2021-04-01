@@ -15,7 +15,7 @@ class BackendUserPage extends StatelessWidget {
   Future<BackendUser?> _buildFuture() async {
     if (model != null) return model;
     var collection = await BackendCollection.fetch(index: collectionId);
-    var current = await collection.fetchUser(user);
+    var current = await collection!.fetchUser(user);
     return await current;
   }
 
@@ -45,7 +45,7 @@ class BackendUserPage extends StatelessWidget {
                     children: List.generate(entries.length, (index) {
           return Container(
               width: 160.0,
-              child: FutureBuilder<CoursesServer>(
+              child: FutureBuilder<CoursesServer?>(
                   future: entries[index].fetchServer(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
@@ -63,10 +63,10 @@ class BackendUserPage extends StatelessWidget {
                             child: Column(children: [
                               Hero(
                                   tag:
-                                      "backend-icon-${server.entry!.collection!.index}-${server.entry!.user!.name}-${server.entry!.name}",
+                                      "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
                                   child: UniversalImage(
                                       url: server.url! + "/icon", type: server.icon, width: 160)),
-                              Text(server.name!)
+                              Text(server.name)
                             ])));
                   }));
         })))));

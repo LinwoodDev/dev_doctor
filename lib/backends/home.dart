@@ -19,7 +19,7 @@ class _ItemFetcher {
     if (entries.isEmpty)
       await Future.wait(Hive.box<String>('collections').values.map((e) async {
         var collection = await BackendCollection.fetch(url: e);
-        var users = await collection.fetchUsers();
+        var users = await collection!.fetchUsers();
         entries.addAll(users.expand((e) => e.buildEntries()));
       }));
     final list = <CoursesServer>[];
@@ -28,8 +28,8 @@ class _ItemFetcher {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
       var server = await entry.fetchServer();
-      if ((server.body != null && server.body!.toUpperCase().contains(query!.toUpperCase())) ||
-          server.name!.toUpperCase().contains(query!.toUpperCase())) list.add(server);
+      if ((server!.body != null && server.body!.toUpperCase().contains(query!.toUpperCase())) ||
+          server.name.toUpperCase().contains(query!.toUpperCase())) list.add(server);
     }
     _currentPage++;
     return list;
@@ -207,11 +207,11 @@ class _BackendEntryListTileState extends State<BackendEntryListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text(_server!.name!),
+        title: Text(_server!.name),
         subtitle: Text(_server!.url!),
         onTap: () async {
           await Modular.to.pushNamed(
-              "/backends/entry?collectionId=${_server!.entry!.collection!.index}&user=${_server!.entry!.user!.name}&entry=${_server!.entry!.name}",
+              "/backends/entry?collectionId=${_server!.entry!.collection.index}&user=${_server!.entry!.user.name}&entry=${_server!.entry!.name}",
               arguments: _server);
           var current = await _server!.entry!.fetchServer();
           setState(() => _server = current);
@@ -220,7 +220,7 @@ class _BackendEntryListTileState extends State<BackendEntryListTile> {
             ? null
             : Hero(
                 tag:
-                    "backend-icon-${_server!.entry!.collection!.index}-${_server!.entry!.user}-${_server!.entry!.name}",
+                    "backend-icon-${_server!.entry!.collection.index}-${_server!.entry!.user}-${_server!.entry!.name}",
                 child: UniversalImage(type: _server!.icon, url: _server!.url! + "/icon")),
         trailing: AddBackendButton(
             server: _server, onChange: (server) => setState(() => _server = server)));

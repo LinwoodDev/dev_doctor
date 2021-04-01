@@ -92,19 +92,17 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                                   ...Modular.args!.queryParams,
                                   "itemId": index.toString()
                                 }).toString()),
-                        tabs: List.generate(
-                            data.items.length,
-                            (index) {
-                              var item = data.items[index];
-                              if (item is TextPartItem)
-                                return Tab(icon: Icon(Icons.subject_outlined), text: item.name);
-                              else if (item is QuizPartItem)
-                                return Tab(
-                                    icon: Icon(Icons.question_answer_outlined), text: item.name);
-                              else if (item is VideoPartItem)
-                                return Tab(icon: Icon(Icons.play_arrow_outlined), text: item.name);
-                              return null;
-                            } as Widget Function(int))),
+                        tabs: List.generate(data.items.length, (index) {
+                          var item = data.items[index];
+                          if (item is TextPartItem)
+                            return Tab(icon: Icon(Icons.subject_outlined), text: item.name);
+                          else if (item is QuizPartItem)
+                            return Tab(icon: Icon(Icons.question_answer_outlined), text: item.name);
+                          else if (item is VideoPartItem)
+                            return Tab(icon: Icon(Icons.play_arrow_outlined), text: item.name);
+                          return Tab(
+                              icon: Icon(Icons.check_box_outline_blank_outlined), text: item.name);
+                        })),
                   ),
                   body: widget.child));
         });
@@ -113,7 +111,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
   void _showCreateDialog(CoursePart part) {
     TextEditingController nameController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();
-    PartItemTypes? type = PartItemTypes.text;
+    PartItemTypes type = PartItemTypes.text;
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -153,7 +151,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
               DropdownButtonFormField<PartItemTypes>(
                   decoration: InputDecoration(labelText: "course.add.item.type".tr()),
                   value: type,
-                  onChanged: (value) => setState(() => type = value),
+                  onChanged: (value) => setState(() => type = value ?? PartItemTypes.text),
                   items: PartItemTypes.values
                       .map((e) => DropdownMenuItem<PartItemTypes>(
                           child: Text("course.type.${e.name}".tr()), value: e))
@@ -162,12 +160,12 @@ class _PartItemLayoutState extends State<PartItemLayout> {
   }
 
   Future<void> _createItem(CoursePart part,
-      {String? name, String? description, PartItemTypes? type}) async {
+      {required String name, required String description, required PartItemTypes type}) async {
     var params = Modular.args!.queryParams;
     var courseBloc = widget.editorBloc!.getCourse(
-        params['course'] ?? widget.editorBloc!.server.courses![int.parse(params['courseId']!)]!);
+        params['course'] ?? widget.editorBloc!.server.courses[int.parse(params['courseId']!)]);
     var value = type.create(name: name, description: description);
-    var current = part.copyWith(items: List<PartItem?>.from(part.items)..add(value));
+    var current = part.copyWith(items: List<PartItem>.from(part.items)..add(value));
     courseBloc.updateCoursePart(current);
     await widget.editorBloc!.save();
     setState(() {
@@ -195,13 +193,13 @@ class _PartItemLayoutState extends State<PartItemLayout> {
             ],
             title: Text("course.delete.item.title".tr()),
             content: Text("course.delete.item.content".tr(
-                namedArgs: {'index': index.toString(), 'name': part.items[index]!.name ?? ''}))));
+                namedArgs: {'index': index.toString(), 'name': part.items[index].name ?? ''}))));
   }
 
   Future<void> _deleteItem(CoursePart part, int index) async {
     var params = Modular.args!.queryParams;
     var courseBloc = widget.editorBloc!.getCourse(
-        params['course'] ?? widget.editorBloc!.server.courses![int.parse(params['courseId']!)]!);
+        params['course'] ?? widget.editorBloc!.server.courses[int.parse(params['courseId']!)]);
     var items = List<PartItem>.from(part.items);
     items.removeAt(index);
     var current = part.copyWith(items: items);

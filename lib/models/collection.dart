@@ -7,14 +7,15 @@ import '../loader.dart';
 import 'server.dart';
 
 class BackendCollection {
-  final String? name;
+  final String name;
   final String? icon;
-  final String? url;
-  final String? type;
+  final String url;
+  final String type;
   final int? index;
 
   static Box<String?> get _box => Hive.box<String?>('collections');
-  BackendCollection({this.name, this.icon, this.url, this.index, this.type});
+  BackendCollection(
+      {required this.name, this.icon, required this.url, this.index, required this.type});
   BackendCollection.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         url = json['url'],
@@ -22,7 +23,7 @@ class BackendCollection {
         type = json['type'],
         icon = json['icon'];
 
-  static Future<BackendCollection> fetch({String? url, int? index}) async {
+  static Future<BackendCollection?> fetch({String? url, int? index}) async {
     var data = Map<String, dynamic>();
     try {
       if (index == null) {
@@ -32,6 +33,7 @@ class BackendCollection {
       data = await loadFile("$url/config");
     } catch (e) {
       print(e);
+      return null;
     }
     data['url'] = url;
     data['index'] = index;
@@ -49,11 +51,11 @@ class BackendCollection {
 }
 
 class BackendUser {
-  final BackendCollection? collection;
-  final String? name;
-  final Map<String, String>? entries;
+  final BackendCollection collection;
+  final String name;
+  final Map<String, String> entries;
 
-  BackendUser({this.name, this.entries, this.collection});
+  BackendUser({required this.name, required this.entries, required this.collection});
   BackendUser.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         collection = json['collection'],
@@ -61,26 +63,27 @@ class BackendUser {
 
   List<BackendEntry> buildEntries() {
     List<BackendEntry> backendEntries = [];
-    entries!.forEach((element, url) => backendEntries.add(buildEntry(element)));
+    entries.forEach((element, url) => backendEntries.add(buildEntry(element)));
     return backendEntries;
   }
 
-  BackendEntry buildEntry(String? entry) =>
-      BackendEntry(collection: collection, name: entry, url: entries![entry!], user: this);
+  BackendEntry buildEntry(String entry) =>
+      BackendEntry(collection: collection, name: entry, url: entries[entry]!, user: this);
 }
 
 class BackendEntry {
-  final BackendCollection? collection;
-  final BackendUser? user;
-  final String? name;
-  final String? url;
+  final BackendCollection collection;
+  final BackendUser user;
+  final String name;
+  final String url;
 
-  BackendEntry({this.collection, this.user, this.name, this.url});
+  BackendEntry(
+      {required this.collection, required this.user, required this.name, required this.url});
   BackendEntry.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         user = json['user'],
         url = json['url'],
         collection = json['collection'];
 
-  Future<CoursesServer> fetchServer() => CoursesServer.fetch(url: url, entry: this);
+  Future<CoursesServer?> fetchServer() => CoursesServer.fetch(url: url, entry: this);
 }

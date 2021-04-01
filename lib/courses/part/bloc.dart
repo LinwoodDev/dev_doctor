@@ -20,17 +20,17 @@ class CoursePartBloc extends Disposable {
     var currentServer = editorBloc != null
         ? editorBloc.server
         : await CoursesServer.fetch(index: serverId, url: server);
-    if (courseId != null) course = currentServer.courses![courseId];
+    if (courseId != null) course = currentServer?.courses[courseId];
     this.course = course;
     var currentCourse = editorBloc != null
         ? editorBloc.getCourse(course!).course
-        : await currentServer.fetchCourse(course);
-    if (partId != null) part = currentCourse.parts![partId];
+        : await currentServer?.fetchCourse(course);
+    if (partId != null) part = currentCourse?.parts[partId];
     this.part = part;
-    var currentPart = editorBloc != null
+    var current = editorBloc != null
         ? editorBloc.getCourse(course!).getCoursePart(part)
-        : await currentCourse.fetchPart(part);
-    coursePart.add(currentPart);
+        : await currentCourse?.fetchPart(part);
+    if (current != null) coursePart.add(current);
   }
 
   Future<void> fetchFromParams({ServerEditorBloc? editorBloc}) {

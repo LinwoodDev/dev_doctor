@@ -34,7 +34,7 @@ class _EditorPageState extends State<EditorPage> {
                             _box.delete(key);
                           },
                           child: ListTile(
-                              title: Text(bloc.server.name!),
+                              title: Text(bloc.server.name),
                               subtitle: Text(bloc.note!),
                               onTap: () => Modular.to.pushNamed("/editor/details?serverId=$key")));
                     }))),

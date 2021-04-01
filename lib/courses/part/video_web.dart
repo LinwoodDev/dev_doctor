@@ -67,7 +67,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
               child: widget.item!.source == null || widget.item!.url == null
                   ? Center(child: Text('course.video.empty').tr())
                   : AspectRatio(
-                      child: _iframeWidget,
+                      child: _iframeWidget!,
                       aspectRatio: 16 / 9,
                     ))),
       if (widget.editorBloc != null)

@@ -22,8 +22,8 @@ abstract class PartItem {
 
 enum PartItemTypes { text, video, quiz }
 
-extension PartItemTypesExtension on PartItemTypes? {
-  PartItem? create({required String? name, String? description = "", int? index}) {
+extension PartItemTypesExtension on PartItemTypes {
+  PartItem create({required String? name, String? description = "", int? index}) {
     switch (this) {
       case PartItemTypes.text:
         return TextPartItem(name: name, description: description, index: index);
@@ -31,12 +31,10 @@ extension PartItemTypesExtension on PartItemTypes? {
         return VideoPartItem(name: name, description: description, index: index);
       case PartItemTypes.quiz:
         return QuizPartItem(name: name, description: description, index: index);
-      default:
-        return null;
     }
   }
 
-  String? get name {
+  String get name {
     switch (this) {
       case PartItemTypes.text:
         return 'text';
@@ -44,15 +42,13 @@ extension PartItemTypesExtension on PartItemTypes? {
         return 'video';
       case PartItemTypes.quiz:
         return 'quiz';
-      default:
-        return null;
     }
   }
 
   static PartItemTypes fromName(String? name) =>
       PartItemTypes.values.firstWhere((element) => element.name == name);
 
-  PartItem? fromJson(Map<String, dynamic> json) {
+  PartItem fromJson(Map<String, dynamic> json) {
     switch (this) {
       case PartItemTypes.text:
         return TextPartItem.fromJson(json);
@@ -60,8 +56,6 @@ extension PartItemTypesExtension on PartItemTypes? {
         return VideoPartItem.fromJson(json);
       case PartItemTypes.quiz:
         return QuizPartItem.fromJson(json);
-      default:
-        return null;
     }
   }
 }

@@ -25,7 +25,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
     var servers = <CoursesServer>[];
     for (var key in urls.keys) {
       var value = urls[key];
-      servers.add(await CoursesServer.fetch(url: value, index: key));
+      servers.add((await CoursesServer.fetch(url: value, index: key))!);
     }
     return servers;
   }
@@ -64,8 +64,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                                                       : UniversalImage(
                                                           type: current.icon,
                                                           url: current.url! + "/icon"),
-                                                  title: Text(current.name ??
-                                                      'settings.servers.error'.tr()),
+                                                  title: Text(current.name),
                                                   subtitle: Text(current.url!)))));
                                 }));
                     }
@@ -84,7 +83,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
 
   _createServer(String url) async {
     var server = await CoursesServer.fetch(url: url);
-    if (server.name == null)
+    if (server == null)
       showDialog(
           context: context,
           builder: (context) => AlertDialog(

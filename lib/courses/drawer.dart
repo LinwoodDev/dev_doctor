@@ -27,7 +27,7 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
   int? partId;
 
   Future<List<CoursePart>> _buildFuture() async {
-    if (widget.editorBloc != null) return widget.editorBloc!.getCourse(widget.course!.slug!).parts;
+    if (widget.editorBloc != null) return widget.editorBloc!.getCourse(widget.course!.slug).parts;
     return await widget.course!.fetchParts();
   }
 

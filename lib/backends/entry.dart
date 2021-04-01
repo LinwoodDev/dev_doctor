@@ -60,13 +60,13 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
     setState(() {});
   }
 
-  Future<CoursesServer?> _buildFuture() async {
-    if (widget.model != null) return widget.model;
+  Future<CoursesServer> _buildFuture() async {
+    if (widget.model != null) return widget.model!;
     var collection = await BackendCollection.fetch(index: widget.collectionId);
-    var currentUser = await collection.fetchUser(widget.user);
-    var currentEntry = currentUser.buildEntry(widget.entry);
+    var currentUser = await collection!.fetchUser(widget.user);
+    var currentEntry = currentUser.buildEntry(widget.entry!);
     var server = await currentEntry.fetchServer();
-    return server;
+    return server!;
   }
 
   @override
@@ -75,7 +75,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
         ? _buildView(widget.model)
         : _editorBloc != null
             ? _buildView(_editorBloc!.server)
-            : FutureBuilder<CoursesServer?>(
+            : FutureBuilder<CoursesServer>(
                 future: _buildFuture(),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
@@ -116,7 +116,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                 isScrollable: true,
                               )
                             : null,
-                        title: Text(server!.name!),
+                        title: Text(server!.name),
                         flexibleSpace: _editorBloc != null
                             ? null
                             : FlexibleSpaceBar(
@@ -125,7 +125,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                     child: Hero(
                                         tag: _editorBloc != null
                                             ? "editor-backend-${_editorBloc!.server.name}"
-                                            : "backend-icon-${server.entry!.collection!.index}-${server.entry!.user!.name}-${server.entry!.name}",
+                                            : "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
                                         child: _editorBloc != null
                                             ? Container()
                                             : UniversalImage(
@@ -154,7 +154,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                 _editorBloc!.courses.remove(courseBloc);
                 await _editorBloc!.save();
               },
-              key: Key(courseBloc.course.slug!),
+              key: Key(courseBloc.course.slug),
               child: ListTile(
                   title: Text(courseBloc.course.name!),
                   subtitle: Text(courseBloc.course.description ?? ""),

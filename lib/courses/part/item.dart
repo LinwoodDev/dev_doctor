@@ -74,7 +74,6 @@ class _PartItemPageState extends State<PartItemPage> {
                   if (itemId < 0) itemId = 0;
                   if (itemId >= part.items.length) itemId = part.items.length - 1;
                   var item = part.items[itemId];
-                  if (item == null) return Center(child: CircularProgressIndicator());
                   Widget itemWidget = Text("Not supported!");
                   if (item is VideoPartItem)
                     itemWidget = VideoPartItemPage(
