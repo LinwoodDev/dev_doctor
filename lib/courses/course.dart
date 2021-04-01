@@ -34,6 +34,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   TabController? _tabController;
   TextEditingController? _nameController;
   TextEditingController? _descriptionController;
+  TextEditingController? _supportController;
   TextEditingController? _slugController;
   GlobalKey<FormState> _formKey = GlobalKey();
 
@@ -48,6 +49,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       _nameController = TextEditingController(text: courseBloc.course.name);
       _descriptionController = TextEditingController(text: courseBloc.course.description);
       _slugController = TextEditingController(text: courseBloc.course.slug);
+      _supportController = TextEditingController(text: courseBloc.course.supportUrl ?? '');
     }
   }
 
@@ -281,6 +283,12 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                     },
                                     controller: _slugController),
                                 TextFormField(
+                                    keyboardType: TextInputType.url,
+                                    decoration: InputDecoration(
+                                        labelText: "course.support.label".tr(),
+                                        hintText: "course.support.hint".tr()),
+                                    controller: _supportController),
+                                TextFormField(
                                     decoration: InputDecoration(
                                         labelText: "course.description.label".tr(),
                                         hintText: "course.description.hint".tr()),
@@ -294,6 +302,9 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                         courseBloc.course = courseBloc.course.copyWith(
                                             name: _nameController!.text,
                                             slug: _slugController!.text,
+                                            supportUrl: _supportController!.text.isEmpty
+                                                ? null
+                                                : _supportController!.text,
                                             description: _descriptionController!.text);
                                         _editorBloc!.save();
                                         setState(() {});
@@ -409,33 +420,31 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
   const EditorCoursePartPopupMenu({Key? key, this.bloc, this.partBloc}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return IconTheme(
-        data: Theme.of(context).iconTheme,
-        child: PopupMenuButton<PartOptions>(
-          onSelected: (option) {
-            option.onSelected(context, bloc!, partBloc!);
-          },
-          itemBuilder: (context) {
-            return PartOptions.values.map<PopupMenuEntry<PartOptions>>((e) {
-              var description = e
-                  .getDescription(bloc!.getCourse(partBloc!.course!).getCoursePart(partBloc!.part));
-              return PopupMenuItem<PartOptions>(
-                  child: Row(children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(e.icon),
-                    ),
-                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text(e.title!),
-                      if (description != null)
-                        Text(description, style: Theme.of(context).textTheme.caption)
-                    ])
-                  ]),
-                  value: e);
-            }).toList()
-              ..insert(3, PopupMenuDivider());
-          },
-        ));
+    return PopupMenuButton<PartOptions>(
+      onSelected: (option) {
+        option.onSelected(context, bloc!, partBloc!);
+      },
+      itemBuilder: (context) {
+        return PartOptions.values.map<PopupMenuEntry<PartOptions>>((e) {
+          var description =
+              e.getDescription(bloc!.getCourse(partBloc!.course!).getCoursePart(partBloc!.part));
+          return PopupMenuItem<PartOptions>(
+              child: Row(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(e.icon, color: Theme.of(context).iconTheme.color),
+                ),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(e.title!),
+                  if (description != null)
+                    Text(description, style: Theme.of(context).textTheme.caption)
+                ])
+              ]),
+              value: e);
+        }).toList()
+          ..insert(3, PopupMenuDivider());
+      },
+    );
   }
 }
 

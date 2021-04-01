@@ -73,9 +73,11 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
                 subtitle: Text(part.description ?? ''),
                 selected: selected,
                 trailing: selected && widget.editorBloc != null
-                    ? EditorCoursePartPopupMenu(
-                        bloc: widget.editorBloc,
-                        partBloc: EditorPartModule.to.get<CoursePartBloc>())
+                    ? IconTheme(
+                        data: Theme.of(context).iconTheme,
+                        child: EditorCoursePartPopupMenu(
+                            bloc: widget.editorBloc,
+                            partBloc: EditorPartModule.to.get<CoursePartBloc>()))
                     : null,
                 onTap: () {
                   setState(() => partId = index);
