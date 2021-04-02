@@ -212,9 +212,11 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               onPressed: () async {
                                 var packageInfo = await PackageInfo.fromPlatform();
                                 var buildNumber = int.tryParse(packageInfo.buildNumber);
+                                var encoder = JsonEncoder.withIndent("  ");
                                 var data = await Modular.to.push(MaterialPageRoute(
                                     builder: (context) => EditorCodeDialogPage(
-                                        initialValue: json.encode(course.toJson(buildNumber)))));
+                                        initialValue:
+                                            encoder.convert(course.toJson(buildNumber)))));
                                 if (data != null) {
                                   var courseBloc = _editorBloc!.getCourse(widget.course);
                                   courseBloc.course = Course.fromJson(data);
