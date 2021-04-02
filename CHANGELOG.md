@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0
+## 1.3.0 (April 2, 2021)
 
 * Add desktop support (windows, linux)
   * Add custom title bar
