@@ -106,16 +106,19 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                             AddBackendButton(server: server)
                           else
                             IconButton(
-                                icon: Icon(Icons.save_outlined),
-                                tooltip: "save".tr(),
-                                onPressed: () => Modular.to.push(MaterialPageRoute(
-                                    builder: (context) => EditorCodeDialogPage(
-                                        initialValue: json.encode(server!.toJson()),
-                                        onSubmit: (Map<String, dynamic> json) async {
-                                          _editorBloc!.server = CoursesServer.fromJson(json);
-                                          await _editorBloc!.save();
-                                          setState(() {});
-                                        })))),
+                                icon: Icon(Icons.code_outlined),
+                                tooltip: "code".tr(),
+                                onPressed: () async {
+                                  var encoder = JsonEncoder.withIndent("  ");
+                                  var data = await Modular.to.push(MaterialPageRoute(
+                                      builder: (context) => EditorCodeDialogPage(
+                                          initialValue: encoder.convert(server!.toJson()))));
+                                  if (data != null) {
+                                    _editorBloc!.server = CoursesServer.fromJson(data);
+                                    await _editorBloc?.save();
+                                    setState(() {});
+                                  }
+                                }),
                           if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
                         ],
                         bottom: _editorBloc != null
@@ -162,7 +165,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
               background: Container(color: Colors.red),
               onDismissed: (direction) async {
                 _editorBloc!.courses.remove(courseBloc);
-                await _editorBloc!.save();
+                await _editorBloc?.save();
               },
               key: Key(courseBloc.course.slug),
               child: ListTile(
@@ -240,7 +243,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                           _editorBloc!.server =
                                               server.copyWith(name: _nameController!.text);
                                           _editorBloc!.note = _noteController!.text;
-                                          await _editorBloc!.save();
+                                          await _editorBloc?.save();
                                           setState(() {});
                                         },
                                         icon: Icon(Icons.save_outlined),
@@ -324,7 +327,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                   ]));
     else {
       _editorBloc!.createCourse(name);
-      _editorBloc!.save();
+      _editorBloc?.save();
       setState(() {});
     }
   }

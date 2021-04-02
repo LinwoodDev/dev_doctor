@@ -40,8 +40,8 @@ class _ItemFetcher {
     for (int i = 0; i < n; i++) {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
-      if ((entry.body != null && entry.body!.toUpperCase().contains(query!.toUpperCase())) ||
-          entry.name!.toUpperCase().contains(query!.toUpperCase())) list.add(entry);
+      if (entry.body.toUpperCase().contains(query!.toUpperCase()) ||
+          entry.name!.toUpperCase().contains(query.toUpperCase())) list.add(entry);
     }
     _currentPage++;
     return list;

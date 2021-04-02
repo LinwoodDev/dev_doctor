@@ -9,7 +9,8 @@ class Author {
         url = json['url'],
         avatar = json['avatar'],
         avatarType = json['avatar-type'] ?? 'png';
-  Map<String, dynamic> toJson() => {"name": name, "url": url, "avatar": avatar};
+  Map<String, dynamic> toJson(int? apiVersion) =>
+      {"api-version": apiVersion, "name": name, "url": url, "avatar": avatar};
 
   Author copyWith({String? avatar, String? name, String? url, String? avatarType}) => Author(
       avatar: avatar ?? this.avatar,

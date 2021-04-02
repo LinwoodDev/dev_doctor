@@ -127,7 +127,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       child: Text('create'.tr().toUpperCase()),
                       onPressed: () async {
                         courseBloc.course = courseBloc.course.copyWith(lang: language);
-                        _editorBloc!.save();
+                        _editorBloc?.save();
                         Navigator.pop(context);
                         setState(() {});
                       })
@@ -171,7 +171,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
 
   Future<void> _createPart(String name) async {
     _editorBloc!.getCourse(widget.course).createCoursePart(name);
-    _editorBloc!.save();
+    _editorBloc?.save();
     setState(() {});
   }
 
@@ -208,15 +208,19 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                         } else
                           IconButton(
                               icon: Icon(Icons.code_outlined),
-                              tooltip: "save".tr(),
+                              tooltip: "code".tr(),
                               onPressed: () async {
                                 var packageInfo = await PackageInfo.fromPlatform();
                                 var buildNumber = int.tryParse(packageInfo.buildNumber);
-                                Modular.to.push(MaterialPageRoute(
+                                var data = await Modular.to.push(MaterialPageRoute(
                                     builder: (context) => EditorCodeDialogPage(
-                                          initialValue: json.encode(course.toJson(buildNumber)),
-                                          onSubmit: (Map<String, dynamic> json) {},
-                                        )));
+                                        initialValue: json.encode(course.toJson(buildNumber)))));
+                                if (data != null) {
+                                  var courseBloc = _editorBloc!.getCourse(widget.course);
+                                  courseBloc.course = Course.fromJson(data);
+                                  _editorBloc?.save();
+                                  setState(() {});
+                                }
                               }),
                         if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
                       ],
@@ -318,7 +322,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                                 ? null
                                                 : _supportController!.text,
                                             description: _descriptionController!.text);
-                                        _editorBloc!.save();
+                                        _editorBloc?.save();
                                         setState(() {});
                                       },
                                       icon: Icon(Icons.save_outlined),
@@ -347,7 +351,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 var courseBloc = _editorBloc!.getCourse(widget.course);
                                 course = courseBloc.course.copyWith(author: Author());
                                 courseBloc.course = course;
-                                await _editorBloc!.save();
+                                await _editorBloc?.save();
                                 setState(() {});
                               })
                       ]
@@ -368,10 +372,10 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                           ])),
                     Row(children: [
                       Expanded(
-                          child: (course.body != null)
+                          child: (course.body.isEmpty)
                               ? MarkdownBody(
                                   onTapLink: (_, url, __) => launch(url!),
-                                  data: course.body ?? '',
+                                  data: course.body,
                                   selectable: true,
                                 )
                               : Container()),
@@ -404,7 +408,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
             background: Container(color: Colors.red),
             onDismissed: (direction) async {
               _editorBloc!.getCourse(widget.course).deleteCoursePart(part.slug);
-              _editorBloc!.save();
+              _editorBloc?.save();
             },
             key: Key(part.slug),
             child: ListTile(
@@ -461,7 +465,7 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
   }
 }
 
-enum PartOptions { rename, description, slug, save }
+enum PartOptions { rename, description, slug, code }
 
 extension PartOptionsExtension on PartOptions {
   String? get title {
@@ -472,8 +476,8 @@ extension PartOptionsExtension on PartOptions {
         return 'course.part.description'.tr();
       case PartOptions.slug:
         return 'course.part.slug'.tr();
-      case PartOptions.save:
-        return 'save'.tr();
+      case PartOptions.code:
+        return 'code'.tr();
     }
   }
 
@@ -485,8 +489,8 @@ extension PartOptionsExtension on PartOptions {
         return Icons.text_snippet_outlined;
       case PartOptions.slug:
         return Icons.link_outlined;
-      case PartOptions.save:
-        return Icons.save_outlined;
+      case PartOptions.code:
+        return Icons.code_outlined;
     }
   }
 
@@ -503,7 +507,8 @@ extension PartOptionsExtension on PartOptions {
     }
   }
 
-  void onSelected(BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc) {
+  Future<void> onSelected(
+      BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc) async {
     var courseBloc = bloc.getCourse(partBloc.course!);
     var coursePart = courseBloc.getCoursePart(partBloc.part);
     switch (this) {
@@ -628,10 +633,19 @@ extension PartOptionsExtension on PartOptions {
                           })
                     ]));
         break;
-      case PartOptions.save:
-        Modular.to.push(MaterialPageRoute(
-            builder: (context) =>
-                EditorCodeDialogPage(initialValue: json.encode(coursePart.toJson()))));
+      case PartOptions.code:
+        var encoder = JsonEncoder.withIndent("  ");
+        var packageInfo = await PackageInfo.fromPlatform();
+        var buildNumber = int.tryParse(packageInfo.buildNumber);
+        var data = await Modular.to.push(MaterialPageRoute(
+            builder: (context) => EditorCodeDialogPage(
+                initialValue: encoder.convert(coursePart.toJson(buildNumber)))));
+        if (data != null) {
+          var part = CoursePart.fromJson(data..['course'] = courseBloc.course);
+          partBloc.coursePart.add(part);
+          courseBloc.updateCoursePart(part);
+          bloc.save();
+        }
         break;
     }
   }

@@ -44,7 +44,6 @@ class CoursesServer {
         "name": name,
         "url": url,
         "index": index,
-        "type": type,
         "courses": courses,
         "icon": icon,
         "entry": entry,

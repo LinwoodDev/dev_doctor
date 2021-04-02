@@ -20,8 +20,10 @@ class CourseEditorBloc {
     if (_course.slug == value.slug) _course = value;
   }
 
-  Map<String, dynamic> toJson(int? apiVersion) =>
-      {"course": _course.toJson(apiVersion), "parts": _parts.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson(int? apiVersion) => {
+        "course": _course.toJson(apiVersion),
+        "parts": _parts.map((e) => e.toJson(apiVersion)).toList()
+      };
 
   List<String?> getCoursePartSlugs() => _parts.map((e) => e.slug).toList();
   CoursePart? createCoursePart(String slug) {

@@ -222,9 +222,10 @@
                 "label": "Beschreibung"
             }
         },
-        "save": {
-            "title": "Speichern",
-            "copy": "Kopieren"
+        "code": {
+            "title": "Code",
+            "hint": "Daten hier einfügen",
+            "label": "JSON"
         }
     },
     "browser": "Im Browser öffnen",
@@ -237,6 +238,7 @@
     "welcome": "Willkommen zurück, {name}!",
     "profile": "Profil",
     "stats": "Statistiken",
+    "code": "Code anzeigen",
     "settings": {
         "information": "Informationen",
         "title": "Einstellungen",

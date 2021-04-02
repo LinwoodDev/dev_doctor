@@ -222,9 +222,10 @@
                 "label": "Description"
             }
         },
-        "save": {
-            "title": "Speichern",
-            "copy": "Kopieren"
+        "code": {
+            "title": "Code",
+            "hint": "Insert data here",
+            "label": "JSON"
         }
     },
     "browser": "Open in browser",
@@ -306,6 +307,7 @@
         "code": "Code",
         "license": "License"
     },
+    "code": "Show code",
     "agree": "Agree",
     "disagree": "Disagree",
     "save": "Save",

@@ -25,7 +25,8 @@ class CoursePart {
             .map((item) => PartItemTypesExtension.fromName(item['type'])
                 .fromJson(Map<String, dynamic>.from(item)))
             .toList();
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson(int? apiVersion) => {
+        "api-version": apiVersion,
         "description": description,
         "slug": slug,
         "name": name ?? '',

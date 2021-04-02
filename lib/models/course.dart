@@ -15,7 +15,7 @@ class Course {
   final String? supportUrl;
   final Author? author;
   final bool? installed;
-  final String? body;
+  final String body;
   final String? lang;
   final int? index;
   final List<String> parts;
@@ -29,7 +29,7 @@ class Course {
       this.icon,
       this.author,
       this.installed,
-      this.body,
+      this.body = '',
       this.supportUrl,
       this.lang,
       required this.parts,
@@ -53,7 +53,7 @@ class Course {
         description: json['description'],
         icon: json['icon'],
         author: Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
-        body: json['body'],
+        body: json['body'] ?? '',
         index: json['index'],
         installed: json['installed'],
         lang: json['lang'],
@@ -68,7 +68,7 @@ class Course {
         "name": name,
         "description": description,
         "icon": icon,
-        "author": author?.toJson(),
+        "author": author?.toJson(apiVersion),
         "body": body,
         "index": index,
         "installed": installed,
