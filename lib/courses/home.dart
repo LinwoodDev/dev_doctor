@@ -41,7 +41,7 @@ class _ItemFetcher {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
       if (entry.body.toUpperCase().contains(query!.toUpperCase()) ||
-          entry.name!.toUpperCase().contains(query.toUpperCase())) list.add(entry);
+          entry.name.toUpperCase().contains(query.toUpperCase())) list.add(entry);
     }
     _currentPage++;
     return list;
@@ -239,7 +239,7 @@ class _CoursesListState extends State<CoursesList> {
         }
         var course = _pairList[index];
         return ListTile(
-            title: Text(course.name!),
+            title: Text(course.name),
             subtitle: Text(course.description!),
             onTap: () {
               Navigator.of(context).pushNamed(Uri(pathSegments: [

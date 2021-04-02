@@ -9,7 +9,7 @@ import 'part.dart';
 class Course {
   final CoursesServer? server;
   final String slug;
-  final String? name;
+  final String name;
   final String? description;
   final String? icon;
   final String? supportUrl;
@@ -23,7 +23,7 @@ class Course {
 
   Course(
       {required this.slug,
-      this.name,
+      this.name = '',
       this.index,
       this.description,
       this.icon,
@@ -49,7 +49,7 @@ class Course {
     return Course(
         server: json['server'],
         slug: json['slug'],
-        name: json['name'],
+        name: json['name'] ?? '',
         description: json['description'],
         icon: json['icon'],
         author: Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),

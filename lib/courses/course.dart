@@ -232,7 +232,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               isScrollable: true,
                             )
                           : null,
-                      title: Text(course.name!),
+                      title: Text(course.name),
                       flexibleSpace: _editorBloc != null
                           ? null
                           : FlexibleSpaceBar(

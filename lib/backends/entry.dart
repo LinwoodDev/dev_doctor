@@ -33,9 +33,9 @@ class BackendPage extends StatefulWidget {
 }
 
 class _BackendPageState extends State<BackendPage> with SingleTickerProviderStateMixin {
-  TabController? _tabController;
-  TextEditingController? _nameController;
-  TextEditingController? _noteController;
+  late TabController _tabController;
+  late TextEditingController _nameController;
+  late TextEditingController _noteController;
   GlobalKey<FormState> _formKey = GlobalKey();
   Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
   ServerEditorBloc? _editorBloc;
@@ -44,7 +44,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
-    _tabController!.addListener(_handleTabIndex);
+    _tabController.addListener(_handleTabIndex);
     _editorBloc = widget.editorBloc;
     if (_editorBloc != null) {
       _nameController = TextEditingController(text: _editorBloc!.server.name);
@@ -54,8 +54,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
 
   @override
   void dispose() {
-    _tabController!.removeListener(_handleTabIndex);
-    _tabController!.dispose();
+    _tabController.removeListener(_handleTabIndex);
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -114,9 +114,12 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                       builder: (context) => EditorCodeDialogPage(
                                           initialValue: encoder.convert(server!.toJson()))));
                                   if (data != null) {
-                                    _editorBloc!.server = CoursesServer.fromJson(data);
+                                    var server = CoursesServer.fromJson(data);
+                                    _editorBloc!.server = server;
                                     await _editorBloc?.save();
-                                    setState(() {});
+                                    setState(() {
+                                      _nameController.text = server.name;
+                                    });
                                   }
                                 }),
                           if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
@@ -164,12 +167,13 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
           return Dismissible(
               background: Container(color: Colors.red),
               onDismissed: (direction) async {
-                _editorBloc!.courses.remove(courseBloc);
+                _editorBloc!.deleteCourse(courseBloc.course.slug);
                 await _editorBloc?.save();
+                setState(() {});
               },
               key: Key(courseBloc.course.slug),
               child: ListTile(
-                  title: Text(courseBloc.course.name!),
+                  title: Text(courseBloc.course.name),
                   subtitle: Text(courseBloc.course.description ?? ""),
                   onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
                         "",
@@ -183,7 +187,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
       ));
 
   Widget? _buildFab() {
-    return _tabController!.index == 0
+    return _tabController.index == 0
         ? null
         : FloatingActionButton(
             onPressed: _showCreateCourseDialog,
@@ -241,8 +245,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                         onPressed: () async {
                                           if (!_formKey.currentState!.validate()) return;
                                           _editorBloc!.server =
-                                              server.copyWith(name: _nameController!.text);
-                                          _editorBloc!.note = _noteController!.text;
+                                              server.copyWith(name: _nameController.text);
+                                          _editorBloc!.note = _noteController.text;
                                           await _editorBloc?.save();
                                           setState(() {});
                                         },

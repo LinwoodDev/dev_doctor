@@ -27,7 +27,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
       body: SettingsLayout(
           child: ValueListenableBuilder(
               valueListenable: _box.listenable(),
-              builder: (context, Box<String> box, _) => FutureBuilder(
+              builder: (context, Box<String> box, _) => FutureBuilder<List<BackendCollection?>>(
                   future: Future.wait(_box.values
                       .toList()
                       .asMap()
@@ -40,24 +40,25 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                         return Center(child: CircularProgressIndicator());
                       default:
                         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                        var data = snapshot.data as List<BackendCollection>?;
+                        var data = snapshot.data!;
                         return Scrollbar(
                             child: ListView.builder(
                                 itemCount: box.length,
                                 itemBuilder: (context, index) {
-                                  var current = data![index];
+                                  var current = data[index];
                                   return Dismissible(
                                       // Show a red background as the item is swiped away.
                                       background: Container(color: Colors.red),
-                                      key: Key(current.url),
+                                      key: Key(_box.getAt(index)!),
                                       onDismissed: (direction) => _deleteServer(index),
                                       child: ListTile(
-                                          leading: current.icon?.isEmpty ?? true
+                                          leading: current?.icon?.isEmpty ?? current == null
                                               ? null
                                               : UniversalImage(
-                                                  type: current.icon, url: current.url + "/icon"),
-                                          title: Text(current.name),
-                                          subtitle: Text(current.url)));
+                                                  type: current!.icon, url: current.url + "/icon"),
+                                          title: Text(
+                                              current?.name ?? "settings.collections.error".tr()),
+                                          subtitle: Text(current?.url ?? "")));
                                 }));
                     }
                   }))),
