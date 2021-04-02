@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dev_doctor/courses/part/bloc.dart';
+import 'package:dev_doctor/editor/code.dart';
 import 'package:dev_doctor/models/author.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
@@ -15,6 +18,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CoursePage extends StatefulWidget {
@@ -203,9 +207,17 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   }).toString()))
                         } else
                           IconButton(
-                              icon: Icon(Icons.save_outlined),
+                              icon: Icon(Icons.code_outlined),
                               tooltip: "save".tr(),
-                              onPressed: () {}),
+                              onPressed: () async {
+                                var packageInfo = await PackageInfo.fromPlatform();
+                                var buildNumber = int.tryParse(packageInfo.buildNumber);
+                                Modular.to.push(MaterialPageRoute(
+                                    builder: (context) => EditorCodeDialogPage(
+                                          initialValue: json.encode(course.toJson(buildNumber)),
+                                          onSubmit: (Map<String, dynamic> json) {},
+                                        )));
+                              }),
                         if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
                       ],
                       bottom: _editorBloc != null
@@ -414,20 +426,21 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
 }
 
 class EditorCoursePartPopupMenu extends StatelessWidget {
-  final CoursePartBloc? partBloc;
-  final ServerEditorBloc? bloc;
+  final CoursePartBloc partBloc;
+  final ServerEditorBloc bloc;
 
-  const EditorCoursePartPopupMenu({Key? key, this.bloc, this.partBloc}) : super(key: key);
+  const EditorCoursePartPopupMenu({Key? key, required this.bloc, required this.partBloc})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<PartOptions>(
       onSelected: (option) {
-        option.onSelected(context, bloc!, partBloc!);
+        option.onSelected(context, bloc, partBloc);
       },
       itemBuilder: (context) {
         return PartOptions.values.map<PopupMenuEntry<PartOptions>>((e) {
           var description =
-              e.getDescription(bloc!.getCourse(partBloc!.course!).getCoursePart(partBloc!.part));
+              e.getDescription(bloc.getCourse(partBloc.course!).getCoursePart(partBloc.part));
           return PopupMenuItem<PartOptions>(
               child: Row(children: [
                 Padding(
@@ -616,6 +629,9 @@ extension PartOptionsExtension on PartOptions {
                     ]));
         break;
       case PartOptions.save:
+        Modular.to.push(MaterialPageRoute(
+            builder: (context) =>
+                EditorCodeDialogPage(initialValue: json.encode(coursePart.toJson()))));
         break;
     }
   }

@@ -221,6 +221,10 @@
                 "hint": "Welcome to the course",
                 "label": "Description"
             }
+        },
+        "save": {
+            "title": "Speichern",
+            "copy": "Kopieren"
         }
     },
     "browser": "Open in browser",

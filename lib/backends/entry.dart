@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dev_doctor/editor/code.dart';
 import 'package:dev_doctor/models/collection.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
@@ -105,7 +108,14 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                             IconButton(
                                 icon: Icon(Icons.save_outlined),
                                 tooltip: "save".tr(),
-                                onPressed: () {}),
+                                onPressed: () => Modular.to.push(MaterialPageRoute(
+                                    builder: (context) => EditorCodeDialogPage(
+                                        initialValue: json.encode(server!.toJson()),
+                                        onSubmit: (Map<String, dynamic> json) async {
+                                          _editorBloc!.server = CoursesServer.fromJson(json);
+                                          await _editorBloc!.save();
+                                          setState(() {});
+                                        })))),
                           if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
                         ],
                         bottom: _editorBloc != null

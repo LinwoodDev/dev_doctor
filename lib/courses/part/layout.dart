@@ -78,7 +78,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                             icon: Icon(Icons.add_circle_outline_outlined),
                             onPressed: () => _showCreateDialog(data)),
                         EditorCoursePartPopupMenu(
-                            bloc: widget.editorBloc,
+                            bloc: widget.editorBloc!,
                             partBloc: EditorPartModule.to.get<CoursePartBloc>())
                       ]
                     ],

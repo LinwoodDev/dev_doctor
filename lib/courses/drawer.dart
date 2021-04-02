@@ -76,7 +76,7 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
                     ? IconTheme(
                         data: Theme.of(context).iconTheme,
                         child: EditorCoursePartPopupMenu(
-                            bloc: widget.editorBloc,
+                            bloc: widget.editorBloc!,
                             partBloc: EditorPartModule.to.get<CoursePartBloc>()))
                     : null,
                 onTap: () {

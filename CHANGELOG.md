@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.3.0
+
+* Add desktop support (windows, linux)
+  * Add custom title bar
+* 4 new themes: spring, summer, autumn, winter
+* New editor
+  * Changing course, server pages to add support for the editor
+  * Add part options to the title bar
+  * Add markdown editor
+  * Add author editor
+  * Adding save dialog page
+
+### API
+
+* Changing author to an object
+
 ## 1.2.3 (March 2, 2021)
 
 * Add a backend on default, see [#44](https://github.com/LinwoodCloud/dev_doctor/issues/44)

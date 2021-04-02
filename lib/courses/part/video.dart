@@ -54,7 +54,7 @@ class VideoPartItemEditorPage extends StatefulWidget {
 class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
   TextEditingController? _urlController;
   VideoSource? source;
-  CoursePartBloc? bloc;
+  late CoursePartBloc bloc;
   @override
   void initState() {
     bloc = EditorPartModule.to.get<CoursePartBloc>();
