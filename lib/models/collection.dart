@@ -13,7 +13,7 @@ class BackendCollection {
   final String type;
   final int? index;
 
-  static Box<String?> get _box => Hive.box<String?>('collections');
+  static Box<String> get _box => Hive.box<String>('collections');
   BackendCollection(
       {required this.name, this.icon, required this.url, this.index, required this.type});
   BackendCollection.fromJson(Map<String, dynamic> json)
@@ -27,7 +27,7 @@ class BackendCollection {
     var data = Map<String, dynamic>();
     try {
       if (index == null) {
-        var current = _box.values.toList().indexOf(url);
+        var current = _box.values.toList().indexOf(url!);
         if (current != -1) index = _box.keyAt(current);
       } else if (url == null) url = _box.get(index);
       data = await loadFile("$url/config");

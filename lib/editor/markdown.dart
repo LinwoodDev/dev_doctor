@@ -31,16 +31,19 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
       var isMobile = MediaQuery.of(context).size.width <= 1000;
       var textEditor = _buildTextEditor(isMobile);
       if (!isMobile)
-        return Row(children: [
-          Expanded(child: textEditor, flex: 2),
-          Expanded(
-              child: _MarkdownEditorPreview(markdown: _markdownController!.text, isMobile: false))
-        ]);
-      return textEditor;
+        return _buildAppBar(
+            isMobile,
+            Row(children: [
+              Expanded(child: textEditor, flex: 2),
+              Expanded(
+                  child:
+                      _MarkdownEditorPreview(markdown: _markdownController!.text, isMobile: false))
+            ]));
+      return _buildAppBar(isMobile, textEditor);
     });
   }
 
-  Widget _buildTextEditor(bool isMobile) => Scaffold(
+  Widget _buildAppBar(bool isMobile, Widget child) => Scaffold(
       appBar: MyAppBar(title: "editor.markdown.title".tr(), actions: [
         if (isMobile)
           IconButton(
@@ -52,7 +55,9 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
             icon: Icon(Icons.save_outlined),
             onPressed: () => widget.onSubmit!(_markdownController!.text))
       ]),
-      body: Scrollbar(
+      body: child);
+
+  Widget _buildTextEditor(bool isMobile) => Scrollbar(
           child: SingleChildScrollView(
               child: Container(
                   child: TextField(
@@ -61,7 +66,7 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
           setState(() {});
         },
         maxLines: null,
-      )))));
+      ))));
 }
 
 class _MarkdownEditorPreview extends StatelessWidget {
@@ -73,21 +78,25 @@ class _MarkdownEditorPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: MyAppBar(
-            title: "editor.markdown.preview.title".tr(), automaticallyImplyLeading: isMobile),
-        body: Scrollbar(
-            controller: _scrollController,
-            child: SingleChildScrollView(
-                controller: _scrollController,
-                child: MarkdownBody(
-                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-                    onTapLink: (_, url, __) => launch(url!),
-                    extensionSet: md.ExtensionSet(
-                      md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                      [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
-                    ),
-                    data: markdown!,
-                    selectable: true))));
+    return isMobile
+        ? Scaffold(
+            appBar: MyAppBar(
+                title: "editor.markdown.preview.title".tr(), automaticallyImplyLeading: isMobile),
+            body: _buildContent(context))
+        : Container(child: _buildContent(context));
   }
+
+  Widget _buildContent(BuildContext context) => Scrollbar(
+      controller: _scrollController,
+      child: SingleChildScrollView(
+          controller: _scrollController,
+          child: MarkdownBody(
+              styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+              onTapLink: (_, url, __) => launch(url!),
+              extensionSet: md.ExtensionSet(
+                md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
+              ),
+              data: markdown!,
+              selectable: true)));
 }

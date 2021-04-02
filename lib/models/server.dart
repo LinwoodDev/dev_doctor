@@ -17,7 +17,7 @@ class CoursesServer {
   final List<String> courses;
   final String? body;
 
-  static Box<String?> get _box => Hive.box<String?>('servers');
+  static Box<String> get _box => Hive.box<String>('servers');
 
   CoursesServer(
       {this.body,
@@ -54,7 +54,7 @@ class CoursesServer {
   bool get added => index != null;
 
   Future<CoursesServer> add() async => CoursesServer(
-      index: await _box.add(url),
+      index: await _box.add(url!),
       courses: courses,
       name: name,
       type: type,
@@ -101,7 +101,7 @@ class CoursesServer {
     var data = <String, dynamic>{};
     try {
       if (index == null) {
-        var current = _box.values.toList().indexOf(url);
+        var current = _box.values.toList().indexOf(url!);
         if (current != -1) index = _box.keyAt(current);
       } else if (url == null) url = Hive.box<String>('servers').get(index);
       data = await loadFile("$url/config");

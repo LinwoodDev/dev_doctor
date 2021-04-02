@@ -25,7 +25,7 @@ class CourseEditorBloc {
         "parts": _parts.map((e) => e.toJson(apiVersion)).toList()
       };
 
-  List<String?> getCoursePartSlugs() => _parts.map((e) => e.slug).toList();
+  List<String> getCoursePartSlugs() => _parts.map((e) => e.slug).toList();
   CoursePart? createCoursePart(String slug) {
     if (getCoursePartSlugs().contains(slug)) return null;
     var part = CoursePart(name: slug, slug: slug);
