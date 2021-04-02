@@ -1,10 +1,27 @@
 # Changelog
 
-## 1.2.3 (Narcg 2, 2021)
+## 1.3.0 (April 2, 2021)
 
-* Add a backend on default
-* Fix different app bars
-* Fix servers offline issues
+* Add desktop support (windows, linux)
+  * Add custom title bar
+* 4 new themes: spring, summer, autumn, winter
+* Adding new api version system
+* New editor
+  * Changing course, server pages to add support for the editor
+  * Add part options to the title bar
+  * Add markdown editor
+  * Add author editor
+  * Adding code dialog page
+
+### API
+
+* Changing author to an object
+
+## 1.2.3 (March 2, 2021)
+
+* Add a backend on default, see [#44](https://github.com/LinwoodCloud/dev_doctor/issues/44)
+* Fix different app bars, see [#33](https://github.com/LinwoodCloud/dev_doctor/issues/33)
+* Fix servers offline issues, see [#34](https://github.com/LinwoodCloud/dev_doctor/issues/34)
 * Add changelog to settings
 
 ## 1.2.2 (February 24, 2021)
@@ -31,13 +48,13 @@
 
 ## 1.1.0 (Februrary 16, 2021)
 
-* Support for json files, see #22
-* Backend collections, see #15
-* Settings on PC or Tablet more Widescreen-Friendly, see #14
-* Customize theme, see #18
-* More video settings, see #29
-* Course language, see #26
-* Course settings, see #28
+* Support for json files, see [#22](https://github.com/LinwoodCloud/dev_doctor/issues/22)
+* Backend collections, see [#15](https://github.com/LinwoodCloud/dev_doctor/issues/15)
+* Settings on PC or Tablet more Widescreen-Friendly, see [#14](https://github.com/LinwoodCloud/dev_doctor/issues/14)
+* Customize theme, see [#18](https://github.com/LinwoodCloud/dev_doctor/issues/18)
+* More video settings, see [#29](https://github.com/LinwoodCloud/dev_doctor/issues/29)
+* Course language, see [#26](https://github.com/LinwoodCloud/dev_doctor/issues/26)
+* Course settings, see [#28](https://github.com/LinwoodCloud/dev_doctor/issues/28)
 
 ## 1.0.0 (Februrary 13, 2021)
 
@@ -45,7 +62,7 @@ The app is a complete flutter app now
 
 * Android App
 * New app export
-* Prebuilt builds, see #8
+* Prebuilt builds, see [#8](https://github.com/LinwoodCloud/dev_doctor/issues/8)
 * New design
 
 ## 0.2.3 (January 16, 2021)

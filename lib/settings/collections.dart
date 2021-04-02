@@ -27,7 +27,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
       body: SettingsLayout(
           child: ValueListenableBuilder(
               valueListenable: _box.listenable(),
-              builder: (context, Box<String> box, _) => FutureBuilder(
+              builder: (context, Box<String> box, _) => FutureBuilder<List<BackendCollection?>>(
                   future: Future.wait(_box.values
                       .toList()
                       .asMap()
@@ -40,7 +40,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                         return Center(child: CircularProgressIndicator());
                       default:
                         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                        var data = snapshot.data as List<BackendCollection>;
+                        var data = snapshot.data!;
                         return Scrollbar(
                             child: ListView.builder(
                                 itemCount: box.length,
@@ -49,16 +49,16 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                                   return Dismissible(
                                       // Show a red background as the item is swiped away.
                                       background: Container(color: Colors.red),
-                                      key: Key(current.url),
+                                      key: Key(_box.getAt(index)!),
                                       onDismissed: (direction) => _deleteServer(index),
                                       child: ListTile(
-                                          leading: current.icon?.isEmpty ?? true
+                                          leading: current?.icon?.isEmpty ?? current == null
                                               ? null
                                               : UniversalImage(
-                                                  type: current.icon, url: current.url + "/icon"),
+                                                  type: current!.icon, url: current.url + "/icon"),
                                           title: Text(
-                                              current.name ?? 'settings.collections.error'.tr()),
-                                          subtitle: Text(current.url)));
+                                              current?.name ?? "settings.collections.error".tr()),
+                                          subtitle: Text(current?.url ?? "")));
                                 }));
                     }
                   }))),
@@ -76,7 +76,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
 
   _createCollection(String url) async {
     var server = await BackendCollection.fetch(url: url);
-    if (server.name == null)
+    if (server == null)
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -114,12 +114,12 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                 ),
                 actions: <Widget>[
                   TextButton(
-                      child: Text('settings.collections.add.cancel'.tr().toUpperCase()),
+                      child: Text('cancel'.tr().toUpperCase()),
                       onPressed: () {
                         Navigator.pop(context);
                       }),
                   TextButton(
-                      child: Text('settings.collections.add.create'.tr().toUpperCase()),
+                      child: Text('create'.tr().toUpperCase()),
                       onPressed: () async {
                         Navigator.pop(context);
                         _createCollection(url);

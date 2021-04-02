@@ -1,10 +1,40 @@
-# dev_doctor
+<p align="center">
+  <img src="https://raw.githubusercontent.com/LinwoodCloud/dev_doctor/develop/images/logo-colored.png" width="350px">
+</p>
+
+# Dev-Doctor
 
 > A free, opensource, serverless learning platform. A linwood project.
 
-![Play store badge](https://img.shields.io/endpoint?color=green&style=for-the-badge&url=https%3A%2F%2Fplayshields.herokuapp.com%2Fplay%3Fi%3Dcom.github.linwoodcloud.dev_doctor%26l%3DPlay%2520Store%26m%3D%24version)
 [![GitHub License badge](https://img.shields.io/github/license/LinwoodCloud/dev_doctor?style=for-the-badge)](https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE)
 [![Discord badge](https://img.shields.io/discord/735424757142519848?style=for-the-badge)](https://discord.linwood.tk)
+[![GitHub downloads](https://img.shields.io/github/downloads/LinwoodCloud/dev_doctor/total?style=for-the-badge)](https://github.com/LinwoodCloud/dev_doctor/releases/latest)
+
+## Table of Contents
+
+- [Dev-Doctor](#dev-doctor)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+    - [Learn everything](#learn-everything)
+    - [Learn everywhere](#learn-everywhere)
+    - [Try it](#try-it)
+  - [Installation](#installation)
+    - [Mobile](#mobile)
+      - [Android](#android)
+        - [Stores](#stores)
+          - [Community](#community)
+      - [iOS](#ios)
+    - [Web](#web)
+    - [Desktop](#desktop)
+      - [Windows](#windows)
+      - [Linux](#linux)
+      - [MacOS](#macos)
+  - [Contributung](#contributung)
+    - [Issues](#issues)
+    - [Pull request](#pull-request)
+    - [Community Server](#community-server)
+    - [Branches](#branches)
+    - [Hive Types](#hive-types)
 
 ## Introduction
 
@@ -22,30 +52,77 @@ Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 
 ## Installation
 
-### Android
+### Mobile
 
-* [Stable](https://github.com/LinwoodCloud/dev_doctor/releases/download/release/app-release.apk)
-* [Preview](https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/app-release.apk)
+#### Android
 
-#### Stores
+- [Stable](https://github.com/LinwoodCloud/dev_doctor/releases/download/release/app-release.apk)
+- [Preview](https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/app-release.apk)
 
-* Play Store: <https://play.google.com/store/apps/details?id=com.github.linwoodcloud.dev_doctor>
-* SkyDroid: <https://to.skydroid.app/com.github.linwoodcloud.dev_doctor.izzyondroid>
-* FDroid: <https://www.f-droid.org/en/packages/com.github.linwoodcloud.dev_doctor/>
+##### Stores
 
-##### Community
+- Play Store: <https://play.google.com/store/apps/details?id=com.github.linwoodcloud.dev_doctor>
+- SkyDroid: <https://to.skydroid.app/com.github.linwoodcloud.dev_doctor.izzyondroid>
+- FDroid: <https://www.f-droid.org/en/packages/com.github.linwoodcloud.dev_doctor/>
 
-* ApkPure: <https://apkpure.com/dev-doctor/com.github.linwoodcloud.dev_doctor>
+###### Community
 
-### iOS
+- ApkPure: <https://apkpure.com/dev-doctor/com.github.linwoodcloud.dev_doctor>
+
+#### iOS
 
 > Currently not available.
 
-* Stable
-* Preview
-
 ### Web
 
-* [Stable](https://dev-doctor.cf)
-* [Preview](https://preview.dev-doctor.cf)
+- [Stable](https://dev-doctor.cf)
+- [Preview](https://preview.dev-doctor.cf)
 
+### Desktop
+
+#### Windows
+
+- [Stable](https://github.com/LinwoodCloud/dev_doctor/releases/download/release/windows.zip)
+- [Preview](https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/windows.zip)
+
+#### Linux
+
+- [Stable](https://github.com/LinwoodCloud/dev_doctor/releases/download/release/linux.zip)
+- [Preview](https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/linux.zip)
+
+#### MacOS
+
+> Currently not available.
+
+## Contributung
+
+I do this project in my spare time. It helps me a lot if you can contribute to this project.
+Please read the [Code of Conduct](CODE_OF_CONDUCT.md) first!
+
+### Issues
+
+If you find bugs or have feature request, you can create an issue by clicking [here](https://github.com/LinwoodCloud/dev_doctor/issues/new/choose).
+
+### Pull request
+
+If you want to help me to code, you can open a pull request. Fork this project and make a pull request. I only accept pull request for the *develop* branch.
+
+### Community Server
+
+A project without a community isn't a good project. You can [join the discord](https://discord.linwood.tk) and talk to each other!
+
+### Branches
+
+| Name    | Support |                                                                                Description |
+| :------ | :-----: | -----------------------------------------------------------------------------------------: |
+| main    |    ✅    | This branch is production ready. It will be updated when a new stable version is released! |
+| develop |    ❌    |    This branch is only for testing and developing. Pull request should only be added here! |
+
+### Hive Types
+
+| Index |                   Current class                   |
+| :---- | :-----------------------------------------------: |
+| 0     |      [CoursesServer](lib/models/server.dart)      |
+| 1     |         [Course](lib/models/course.dart)          |
+| 2     | [ServerEditorBloc](lib/models/editor/server.dart) |
+| 3     | [CourseEditorBloc](lib/models/editor/course.dart) |

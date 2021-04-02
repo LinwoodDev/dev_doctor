@@ -1,0 +1,47 @@
+name: Beta track
+
+on:
+  push:
+    branches:
+      - "beta"
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: ⬆️ Checkout
+        uses: actions/checkout@v1
+      - name: 🔧 Setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "8.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "beta" # or: 'stable' or 'dev'
+      - name: 📦 Get dependencies
+        run: flutter pub get
+      #- run: flutter test
+      - name: 🏭 Build
+        run: |
+          flutter doctor -v
+          flutter build appbundle -v
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7 # Not needed with a .ruby-version file
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Install dependencies
+        run: |
+          cd android
+          gem install bundler
+          bundle install
+      - name: Deploy
+        env:
+          PLAY_STORE_CREDENTIALS: ${{ secrets.PLAY_STORE_CREDENTIALS }}
+          PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
+          PLAY_STORE_UPLOAD_KEY_PROPERTIES: ${{ secrets.PLAY_STORE_UPLOAD_KEY_PROPERTIES }}
+        run: |
+          cd android
+          echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > key.jks
+          echo "$PLAY_STORE_UPLOAD_KEY_PROPERTIES" | base64 --decode > key.properties
+          echo "$PLAY_STORE_CREDENTIALS" | base64 --decode > play-store-credentials.json
+          bundle exec fastlane beta
+

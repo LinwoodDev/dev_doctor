@@ -2,29 +2,185 @@
     "title": "Dev-Doctor.cf",
     "subtitle": "A free, opensource, serverless learning platform. A linwood project",
     "course": {
+        "add": {
+            "name": "Name",
+            "hint": "Sample course",
+            "item": {
+                "title": "Create item",
+                "name": {
+                    "label": "Name",
+                    "hint": "Welcome"
+                },
+                "description": {
+                    "label": "Description",
+                    "hint": "Welcome to the course"
+                },
+                "type": "Type"
+            }
+        },
         "course": "Course",
-        "home": "HOME",
+        "home": "Home",
         "statistics": "Statistics",
         "back": "Back",
         "materials": "Materials",
-        "question": {
+        "lang": {
+            "notset": "Language not set",
+            "hint": "en",
+            "label": "Language tag"
+        },
+        "author": {
+            "notset": "Author not set",
+            "title": "Author",
+            "name": {
+                "hint": "CodeDoctorDE",
+                "label": "Name"
+            },
+            "url": {
+                "hint": "https://github.com/CodeDoctorDE",
+                "label": "URL"
+            },
+            "avatar": {
+                "hint": "https://source.unsplash.com/random",
+                "label": "Avatar"
+            }
+        },
+        "quiz": {
             "choose": "Choose whisley!",
             "select": "Please select an option!",
             "correct": "Correct!",
             "wrong": "Sorry, wrong answer!",
             "check": "CHECK ANSWER",
-            "retry":"Retry",
-            "start":"Start quiz",
-            "points":"points",
-            "time":"seconds remaining",
+            "retry": "Retry",
+            "start": "Start quiz",
+            "points": "points",
+            "add": "Add question",
+            "time": {
+                "subtitle": "seconds remaining"
+            },
             "validation": {
                 "title": "Validation",
                 "correct": "You got everything right!",
                 "wrong": "You made mistakes!"
+            },
+            "question": {
+                "answer": "Add answer",
+                "title": {
+                    "item": "Change title",
+                    "label": "Title",
+                    "hint": "The quiz title"
+                },
+                "evaluation": {
+                    "item": "Evaluation",
+                    "label": "Evaluation",
+                    "hint": "An explanation to the answer"
+                },
+                "delete": {
+                    "item": "Delete",
+                    "title": "Confirm delete question",
+                    "content": "Do you really want to delete {name} #{index}?"
+                }
+            },
+            "option": {
+                "question": {
+                    "answer": "Add answer",
+                    "title": {
+                        "item": "Change title",
+                        "label": "Title",
+                        "hint": "The quiz title"
+                    },
+                    "evaluation": {
+                        "item": "Evaluation",
+                        "label": "Evaluation",
+                        "hint": "The explanation to the solution"
+                    },
+                    "description": {
+                        "item": "Change description",
+                        "label": "Description",
+                        "hint": "The explanation to the question"
+                    },
+                    "delete": {
+                        "item": "Delete",
+                        "title": "Confirm delete question",
+                        "content": "Do you really want to delete {name} #{index}?"
+                    }
+                },
+                "answer": {
+                    "points": {
+                        "item": "Points",
+                        "label": "Points",
+                        "hint": "Number"
+                    },
+                    "rating": "Rating",
+                    "correct": "Correct",
+                    "wrong": "Wrong",
+                    "title": {
+                        "item": "Change title",
+                        "label": "Title",
+                        "hint": "The answer title"
+                    },
+                    "description": {
+                        "item": "Change description",
+                        "label": "Description",
+                        "hint": "The explanation to the answer"
+                    },
+                    "delete": {
+                        "item": "Delete",
+                        "title": "Confirm delete answer",
+                        "content": "Do you really want to delete {name} #{index}?"
+                    }
+                }
+            }
+        },
+        "video": {
+            "open": "Open video",
+            "empty": "This part is empty",
+            "editor": {
+                "title": "Video Editor",
+                "url": {
+                    "label": "URL",
+                    "hint": "https://example.com"
+                },
+                "type": {
+                    "url": "URL",
+                    "youtube": "YouTube"
+                }
             }
         },
         "start": "Start",
-        "support": "Support"
+        "support": "Support",
+        "description": {
+            "label": "Description",
+            "hint": "This course is just an example of how the configuration works"
+        },
+        "slug": {
+            "label": "Slug",
+            "hint": "This is the name of the folder on the server"
+        },
+        "name": {
+            "label": "Name",
+            "hint": "Example course"
+        },
+        "part": {
+            "add": {
+                "name": "Name",
+                "hint": "Part 1"
+            },
+            "rename": "Rename",
+            "description": "Change description",
+            "slug": "Change slug",
+            "empty": "This part is empty"
+        },
+        "type": {
+            "text": "Text",
+            "quiz": "Quiz",
+            "video": "Video"
+        },
+        "delete":{
+            "item": {
+                "title": "Confirm delete item",
+                "content": "Do you really want to delete {name} #{index}?"
+            }
+        }
     },
     "courses": {
         "view": "View courses",
@@ -39,9 +195,47 @@
         "longer": "Search term must be longer than two letters."
     },
     "editor": {
-        "title": "Editor"
+        "title": "Editor",
+        "create": {
+            "fab": "Create backend",
+            "title": "Create backend",
+            "name": {
+                "label": "Name",
+                "hint": "Dev-Doctor",
+                "empty": "The name cannot be empty!",
+                "exist": "A backend with this name already exist!"
+            },
+            "note": {
+                "label": "Note",
+                "hint": "The sample backend of dev-doctor"
+            },
+            "submit": "Create",
+            "markdown": {
+                "title": "Markdown Editor",
+                "preview": {
+                    "title": "Preview"
+                }
+            }
+        },
+        "item": {
+            "title": "Item Editor",
+            "name": {
+                "hint": "Welcome",
+                "label": "Name"
+            },
+            "description": {
+                "hint": "Welcome to the course",
+                "label": "Description"
+            }
+        },
+        "code": {
+            "title": "Code",
+            "hint": "Insert data here",
+            "label": "JSON",
+            "submit": "Update"
+        }
     },
-    "browser":"Open in brwoser",
+    "browser": "Open in browser",
     "discord": "Join our discord",
     "error-with-status": "A {statusCode} error occurred on server",
     "error-without-status": "An error occurred on the server",
@@ -55,7 +249,7 @@
         "information": "Information",
         "title": "Settings",
         "privacypolicy": "Privacy Policy",
-        "changelog":"Changelog",
+        "changelog": "Changelog",
         "home": {
             "title": "Home",
             "username": "Username"
@@ -75,11 +269,15 @@
                 "en": "English",
                 "de": "German"
             },
-            "color":{
-                "title":"Color",
-                "classic":"Classic",
-                "modern":"Modern",
-                "artistic":"Artistic"
+            "color": {
+                "title": "Color",
+                "classic": "Classic",
+                "modern": "Modern",
+                "artistic": "Artistic",
+                "spring": "Spring",
+                "summer": "Summer",
+                "autumn": "Autumn",
+                "winter": "Winter"
             }
         },
         "general": {
@@ -93,14 +291,10 @@
             "title": "Servers",
             "add": {
                 "fab": "Add server",
-                "cancel": "Cancel",
-                "create": "Create",
                 "url": "URL",
                 "hint": "eg. https://backend.dev-doctor.cf",
                 "title": "Do you want to add the server {name}?",
-                "body": "The server {name} with the url {url} will displayed on the courses page.",
-                "agree": "Agree",
-                "disagree": "Disagree"
+                "body": "The server {name} with the url {url} will displayed on the courses page."
             },
             "error": "Server not available!"
         },
@@ -108,14 +302,10 @@
             "title": "Collections",
             "add": {
                 "fab": "Add collection",
-                "cancel": "Cancel",
-                "create": "Create",
                 "url": "URL",
                 "hint": "eg. https://collection.dev-doctor.cf",
                 "title": "Do you want to add the collection {name}?",
-                "body": "The colelction {name} with the url {url} will displayed on the collection page.",
-                "agree": "Agree",
-                "disagree": "Disagree"
+                "body": "The colelction {name} with the url {url} will displayed on the collection page."
             },
             "error": "Collection server not available!"
         },
@@ -124,7 +314,16 @@
         "code": "Code",
         "license": "License"
     },
+    "code": "Show code",
+    "agree": "Agree",
+    "disagree": "Disagree",
+    "save": "Save",
+    "cancel": "Cancel",
+    "create": "Create",
     "close": "Close",
+    "change": "Change",
+    "no": "No",
+    "yes": "Yes",
     "ready-for-offline": "Ready for offline!",
     "update-available": {
         "message": "Update available!",

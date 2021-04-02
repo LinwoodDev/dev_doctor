@@ -68,16 +68,16 @@ class HomePage extends StatelessWidget {
               if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
                 return Center(child: CircularProgressIndicator());
               if (snapshot.hasError) return Text("Error ${snapshot.error}");
-              var document = XmlDocument.parse(utf8.decode(snapshot.data.bodyBytes));
-              var feed = document.getElement("feed");
+              var document = XmlDocument.parse(utf8.decode(snapshot.data!.bodyBytes));
+              var feed = document.getElement("feed")!;
               var items = feed.findElements("entry").toList();
               return Column(
                 children: List.generate(min(items.length, 10), (index) {
                   var entry = items[index];
                   return ListTile(
-                    title: Text(entry.getElement("title").innerText),
-                    subtitle: Text(entry.getElement("summary").innerText),
-                    onTap: () => launch(entry.getElement("link").getAttribute("href")),
+                    title: Text(entry.getElement("title")!.innerText),
+                    subtitle: Text(entry.getElement("summary")!.innerText),
+                    onTap: () => launch(entry.getElement("link")!.getAttribute("href")!),
                     isThreeLine: true,
                   );
                 }),
@@ -86,7 +86,7 @@ class HomePage extends StatelessWidget {
       ])
     ];
     return Scaffold(
-        appBar: MyAppBar(title: 'title'.tr()),
+        appBar: MyAppBar(title: 'home'.tr()),
         body: Scrollbar(
           child: ListView.separated(
             separatorBuilder: (context, index) => Padding(

@@ -1,38 +1,80 @@
+import 'dart:convert';
+
+import 'package:dev_doctor/courses/part/bloc.dart';
+import 'package:dev_doctor/editor/code.dart';
+import 'package:dev_doctor/models/author.dart';
 import 'package:dev_doctor/models/course.dart';
+import 'package:dev_doctor/models/editor/server.dart';
+import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/models/server.dart';
+import 'package:dev_doctor/widgets/appbar.dart';
+import 'package:dev_doctor/widgets/author.dart';
 import 'package:dev_doctor/widgets/image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:markdown/markdown.dart' as md;
+// import 'package:markdown/markdown.dart' as md;
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CoursePage extends StatefulWidget {
-  final Course model;
-  final int courseId;
-  final int serverId;
+  final Course? model;
+  final String course;
+  final int? serverId;
+  final ServerEditorBloc? editorBloc;
 
-  const CoursePage({Key key, this.courseId, this.serverId, this.model}) : super(key: key);
+  const CoursePage({Key? key, required this.course, this.serverId, this.model, this.editorBloc})
+      : super(key: key);
   @override
   _CoursePageState createState() => _CoursePageState();
 }
 
-class _CoursePageState extends State<CoursePage> {
-  Future<Course> _buildFuture() async {
+class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
+  ServerEditorBloc? _editorBloc;
+  TabController? _tabController;
+  TextEditingController? _nameController;
+  TextEditingController? _descriptionController;
+  TextEditingController? _supportController;
+  TextEditingController? _slugController;
+  GlobalKey<FormState> _formKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _editorBloc = widget.editorBloc;
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController!.addListener(_handleTabIndex);
+    if (_editorBloc != null) {
+      var courseBloc = _editorBloc!.getCourse(widget.course);
+      _nameController = TextEditingController(text: courseBloc.course.name);
+      _descriptionController = TextEditingController(text: courseBloc.course.description);
+      _slugController = TextEditingController(text: courseBloc.course.slug);
+      _supportController = TextEditingController(text: courseBloc.course.supportUrl ?? '');
+    }
+  }
+
+  void _handleTabIndex() {
+    setState(() {});
+  }
+
+  Future<Course?> _buildFuture() async {
     if (widget.model != null) return widget.model;
-    CoursesServer server = await CoursesServer.fetch(index: widget.serverId);
-    return server.fetchCourse(widget.courseId);
+    if (widget.editorBloc != null) return widget.editorBloc!.getCourse(widget.course).course;
+    CoursesServer? server = await CoursesServer.fetch(index: widget.serverId);
+    return server?.fetchCourse(widget.course);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: widget.model != null
-            ? _buildView(widget.model)
-            : FutureBuilder<Course>(
+    return widget.model != null
+        ? _buildView(widget.model)
+        : widget.editorBloc != null
+            ? _buildView(widget.editorBloc?.getCourse(widget.course).course)
+            : FutureBuilder<Course?>(
                 future: _buildFuture(),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
@@ -43,103 +85,570 @@ class _CoursePageState extends State<CoursePage> {
                       var course = snapshot.data;
                       return _buildView(course);
                   }
-                }));
+                });
   }
 
-  Widget _buildView(Course course) => NestedScrollView(
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        var supportUrl = course.supportUrl ?? course.server.supportUrl;
-        return <Widget>[
-          SliverAppBar(
-            expandedHeight: 400.0,
-            floating: false,
-            pinned: true,
-            actions: [
-              if (supportUrl != null)
-                IconButton(
-                    icon: Icon(Icons.help_outline_outlined),
-                    tooltip: "course.support".tr(),
-                    onPressed: () => launch(supportUrl)),
-              IconButton(
-                icon: Icon(Icons.play_circle_outline_outlined),
-                tooltip: "course.start".tr(),
-                onPressed: () => Modular.to.navigate(
-                    '/courses/start/item?serverId=${widget.serverId}&courseId=${widget.courseId}&partId=0'),
-              )
-            ],
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              title: Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withAlpha(200),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(course.name)),
-              background: Container(
-                  margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
-                  child: Hero(
-                      tag: "course-icon-${widget.serverId}-${widget.courseId}",
-                      child: UniversalImage(
-                        url: course.url + "/icon",
-                        height: 500,
-                        type: course.icon,
-                      ))),
-            ),
-          )
-        ];
+  Widget? _buildFab() {
+    return _tabController!.index == 0
+        ? null
+        : FloatingActionButton(
+            onPressed: _showCreatePartDialog,
+            child: Icon(Icons.add_outlined),
+          );
+  }
+
+  void _showLanguageDialog() {
+    var courseBloc = _editorBloc!.getCourse(widget.course);
+    var language = '';
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+                contentPadding: const EdgeInsets.all(16.0),
+                content: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        autofocus: true,
+                        onChanged: (value) => language = value,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                            labelText: 'course.lang.label'.tr(), hintText: 'course.lang.hint'.tr()),
+                      ),
+                    )
+                  ],
+                ),
+                actions: <Widget>[
+                  TextButton(
+                      child: Text('cancel'.tr().toUpperCase()),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  TextButton(
+                      child: Text('create'.tr().toUpperCase()),
+                      onPressed: () async {
+                        courseBloc.course = courseBloc.course.copyWith(lang: language);
+                        _editorBloc?.save();
+                        Navigator.pop(context);
+                        setState(() {});
+                      })
+                ]));
+  }
+
+  void _showCreatePartDialog() {
+    var name = '';
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+                contentPadding: const EdgeInsets.all(16.0),
+                content: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        autofocus: true,
+                        onChanged: (value) => name = value,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                            labelText: 'course.part.add.name'.tr(),
+                            hintText: 'course.part.add.hint'.tr()),
+                      ),
+                    )
+                  ],
+                ),
+                actions: <Widget>[
+                  TextButton(
+                      child: Text('cancel'.tr().toUpperCase()),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  TextButton(
+                      child: Text('create'.tr().toUpperCase()),
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        _createPart(name);
+                      })
+                ]));
+  }
+
+  Future<void> _createPart(String name) async {
+    _editorBloc!.getCourse(widget.course).createCoursePart(name);
+    _editorBloc?.save();
+    setState(() {});
+  }
+
+  Widget _buildView(Course? course) => Builder(builder: (context) {
+        var supportUrl = course!.supportUrl ?? course.server?.supportUrl;
+        return Scaffold(
+          body: NestedScrollView(
+              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  SliverAppBar(
+                      expandedHeight: _editorBloc != null ? null : 400.0,
+                      floating: false,
+                      pinned: true,
+                      actions: [
+                        if (_editorBloc == null) ...{
+                          if (supportUrl != null)
+                            IconButton(
+                                icon: Icon(Icons.help_outline_outlined),
+                                tooltip: "course.support".tr(),
+                                onPressed: () => launch(supportUrl)),
+                          IconButton(
+                              icon: Icon(Icons.play_circle_outline_outlined),
+                              tooltip: "course.start".tr(),
+                              onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
+                                    "",
+                                    "courses",
+                                    "start",
+                                    "item"
+                                  ], queryParameters: {
+                                    "serverId": widget.serverId.toString(),
+                                    "course": widget.course,
+                                    "partId": 0.toString()
+                                  }).toString()))
+                        } else
+                          IconButton(
+                              icon: Icon(Icons.code_outlined),
+                              tooltip: "code".tr(),
+                              onPressed: () async {
+                                var packageInfo = await PackageInfo.fromPlatform();
+                                var buildNumber = int.tryParse(packageInfo.buildNumber);
+                                var encoder = JsonEncoder.withIndent("  ");
+                                var data = await Modular.to.push(MaterialPageRoute(
+                                    builder: (context) => EditorCodeDialogPage(
+                                        initialValue:
+                                            encoder.convert(course.toJson(buildNumber)))));
+                                if (data != null) {
+                                  var courseBloc = _editorBloc!.getCourse(widget.course);
+                                  courseBloc.course = Course.fromJson(data);
+                                  _editorBloc?.save();
+                                  setState(() {});
+                                }
+                              }),
+                        if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
+                      ],
+                      bottom: _editorBloc != null
+                          ? TabBar(
+                              controller: _tabController,
+                              tabs: [Tab(text: "General"), Tab(text: "Parts")],
+                              indicatorSize: TabBarIndicatorSize.label,
+                              isScrollable: true,
+                            )
+                          : null,
+                      title: Text(course.name),
+                      flexibleSpace: _editorBloc != null
+                          ? null
+                          : FlexibleSpaceBar(
+                              background: Container(
+                                  margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
+                                  child: Hero(
+                                      tag: _editorBloc != null
+                                          ? "course-icon-${_editorBloc!.server.name}"
+                                          : "course-icon-${course.server!.index}-${course.index}",
+                                      child: _editorBloc != null
+                                          ? Container()
+                                          : UniversalImage(
+                                              url: course.url + "/icon",
+                                              height: 500,
+                                              type: course.icon,
+                                            ))),
+                            ))
+                ];
+              },
+              body: _editorBloc != null
+                  ? TabBarView(
+                      controller: _tabController,
+                      children: [_buildGeneral(context, course), _buildParts(context)])
+                  : _buildGeneral(context, course)),
+          floatingActionButton: _buildFab(),
+        );
+      });
+
+  Widget _buildGeneral(BuildContext context, Course course) {
+    var _slugs = _editorBloc?.courses.map((e) => e.course.slug);
+    return Scrollbar(
+        child: ListView(children: <Widget>[
+      Padding(
+          padding: EdgeInsets.all(4),
+          child: Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(children: [
+                    if (_editorBloc != null)
+                      Form(
+                          key: _formKey,
+                          child: Container(
+                              constraints: BoxConstraints(maxWidth: 1000),
+                              child: Column(children: [
+                                TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "course.name.label".tr(),
+                                        hintText: "course.name.hint".tr()),
+                                    validator: (value) {
+                                      if (value!.isEmpty) return "course.name.empty".tr();
+                                      return null;
+                                    },
+                                    controller: _nameController),
+                                TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "course.slug.label".tr(),
+                                        hintText: "course.slug.hint".tr()),
+                                    validator: (value) {
+                                      if (value!.isEmpty) return "course.slug.empty".tr();
+                                      if (_slugs!.contains(value) && value != course.slug)
+                                        return "course.slug.exist".tr();
+                                      return null;
+                                    },
+                                    controller: _slugController),
+                                TextFormField(
+                                    keyboardType: TextInputType.url,
+                                    decoration: InputDecoration(
+                                        labelText: "course.support.label".tr(),
+                                        hintText: "course.support.hint".tr()),
+                                    controller: _supportController),
+                                TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "course.description.label".tr(),
+                                        hintText: "course.description.hint".tr()),
+                                    controller: _descriptionController),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: ElevatedButton.icon(
+                                      onPressed: () async {
+                                        var courseBloc = _editorBloc!
+                                            .changeCourseSlug(widget.course, _slugController!.text);
+                                        courseBloc.course = courseBloc.course.copyWith(
+                                            name: _nameController!.text,
+                                            slug: _slugController!.text,
+                                            supportUrl: _supportController!.text.isEmpty
+                                                ? null
+                                                : _supportController!.text,
+                                            description: _descriptionController!.text);
+                                        _editorBloc?.save();
+                                        setState(() {});
+                                      },
+                                      icon: Icon(Icons.save_outlined),
+                                      label: Text("save".tr().toUpperCase())),
+                                ),
+                                Divider()
+                              ]))),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      AuthorDisplay(author: course.author, editing: _editorBloc != null),
+                      if (_editorBloc != null) ...[
+                        IconButton(
+                            icon: Icon(Icons.edit_outlined),
+                            onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
+                                  '',
+                                  'editor',
+                                  'course',
+                                  'author'
+                                ], queryParameters: {
+                                  "serverId": _editorBloc!.key.toString(),
+                                  "course": widget.course
+                                }).toString())),
+                        if (course.author?.name != null)
+                          IconButton(
+                              icon: Icon(Icons.delete_outline_outlined),
+                              onPressed: () async {
+                                var courseBloc = _editorBloc!.getCourse(widget.course);
+                                course = courseBloc.course.copyWith(author: Author());
+                                courseBloc.course = course;
+                                await _editorBloc?.save();
+                                setState(() {});
+                              })
+                      ]
+                    ]),
+                    if (course.lang != null || _editorBloc != null)
+                      Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            Padding(
+                                padding: EdgeInsets.all(4), child: Icon(Icons.language_outlined)),
+                            Text(course.lang != null
+                                ? LocaleNames.of(context)!.nameOf(course.lang!) ?? course.lang!
+                                : 'course.lang.notset'.tr()),
+                            if (_editorBloc != null)
+                              IconButton(
+                                  icon: Icon(Icons.edit_outlined),
+                                  onPressed: () => _showLanguageDialog())
+                          ])),
+                    Row(children: [
+                      Expanded(
+                          child: (course.body.isEmpty)
+                              ? MarkdownBody(
+                                  onTapLink: (_, url, __) => launch(url!),
+                                  data: course.body,
+                                  selectable: true,
+                                )
+                              : Container()),
+                      if (_editorBloc != null)
+                        IconButton(
+                            icon: Icon(Icons.edit_outlined),
+                            onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
+                                  "",
+                                  "editor",
+                                  "course",
+                                  "edit"
+                                ], queryParameters: {
+                                  "serverId": _editorBloc!.key.toString(),
+                                  "course": widget.course
+                                }).toString()))
+                    ])
+                  ]))))
+    ]));
+  }
+
+  Widget _buildParts(BuildContext context) {
+    var course = _editorBloc!.getCourse(widget.course);
+    List<CoursePart> parts = course.parts;
+    return Scrollbar(
+        child: ListView.builder(
+      itemCount: parts.length,
+      itemBuilder: (context, index) {
+        var part = parts[index];
+        return Dismissible(
+            background: Container(color: Colors.red),
+            onDismissed: (direction) async {
+              _editorBloc!.getCourse(widget.course).deleteCoursePart(part.slug);
+              _editorBloc?.save();
+            },
+            key: Key(part.slug),
+            child: ListTile(
+                title: Text(part.name!),
+                subtitle: Text(part.description ?? ""),
+                onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
+                      "",
+                      "editor",
+                      "course",
+                      "item"
+                    ], queryParameters: {
+                      "serverId": _editorBloc!.key.toString(),
+                      "course": widget.course,
+                      "part": part.slug
+                    }).toString())));
       },
-      body: Scrollbar(
-          child: ListView(
-        children: <Widget>[
-          Padding(
-              padding: EdgeInsets.all(4),
-              child: Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Column(children: [
-                        GestureDetector(
-                            onTap: () {
-                              if (course.authorUrl != null) launch(course.authorUrl);
-                            },
-                            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                              if (course.authorAvatar != null)
-                                Padding(
-                                    padding: EdgeInsets.all(8),
-                                    child: CircleAvatar(
-                                      child: ClipOval(
-                                        child: Image.network(course.authorAvatar),
-                                      ),
-                                    )),
-                              Text(course.author ?? "")
-                            ])),
-                        if (course.lang != null)
-                          Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                Padding(
-                                    padding: EdgeInsets.all(4),
-                                    child: Icon(Icons.language_outlined)),
-                                Text(LocaleNames.of(context).nameOf(course.lang))
-                              ]))
-                      ])))),
-          Padding(
-              padding: EdgeInsets.all(16),
-              child: Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  child: Padding(
-                      padding: const EdgeInsets.all(64.0),
-                      child: MarkdownBody(
-                        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-                        onTapLink: (_, url, __) => launch(url),
-                        extensionSet: md.ExtensionSet(
-                          md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                          [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
-                        ),
-                        data: course.body,
-                        selectable: true,
-                      )))),
-        ],
-      )));
+    ));
+  }
+}
+
+class EditorCoursePartPopupMenu extends StatelessWidget {
+  final CoursePartBloc partBloc;
+  final ServerEditorBloc bloc;
+
+  const EditorCoursePartPopupMenu({Key? key, required this.bloc, required this.partBloc})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<PartOptions>(
+      onSelected: (option) {
+        option.onSelected(context, bloc, partBloc);
+      },
+      itemBuilder: (context) {
+        return PartOptions.values.map<PopupMenuEntry<PartOptions>>((e) {
+          var description =
+              e.getDescription(bloc.getCourse(partBloc.course!).getCoursePart(partBloc.part));
+          return PopupMenuItem<PartOptions>(
+              child: Row(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(e.icon, color: Theme.of(context).iconTheme.color),
+                ),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(e.title!),
+                  if (description != null)
+                    Text(description, style: Theme.of(context).textTheme.caption)
+                ])
+              ]),
+              value: e);
+        }).toList()
+          ..insert(3, PopupMenuDivider());
+      },
+    );
+  }
+}
+
+enum PartOptions { rename, description, slug, code }
+
+extension PartOptionsExtension on PartOptions {
+  String? get title {
+    switch (this) {
+      case PartOptions.rename:
+        return 'course.part.rename'.tr();
+      case PartOptions.description:
+        return 'course.part.description'.tr();
+      case PartOptions.slug:
+        return 'course.part.slug'.tr();
+      case PartOptions.code:
+        return 'code'.tr();
+    }
+  }
+
+  IconData? get icon {
+    switch (this) {
+      case PartOptions.rename:
+        return Icons.edit_outlined;
+      case PartOptions.description:
+        return Icons.text_snippet_outlined;
+      case PartOptions.slug:
+        return Icons.link_outlined;
+      case PartOptions.code:
+        return Icons.code_outlined;
+    }
+  }
+
+  String? getDescription(CoursePart part) {
+    switch (this) {
+      case PartOptions.slug:
+        return part.slug;
+      case PartOptions.rename:
+        return part.name;
+      case PartOptions.description:
+        return part.description;
+      default:
+        return null;
+    }
+  }
+
+  Future<void> onSelected(
+      BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc) async {
+    var courseBloc = bloc.getCourse(partBloc.course!);
+    var coursePart = courseBloc.getCoursePart(partBloc.part);
+    switch (this) {
+      case PartOptions.rename:
+        var nameController = TextEditingController(text: coursePart.name);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: nameController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                labelText: 'course.part.rename.name'.tr(),
+                                hintText: 'course.part.rename.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            var courseBloc = bloc.getCourse(partBloc.course!);
+                            coursePart = coursePart.copyWith(name: nameController.text);
+                            courseBloc.updateCoursePart(coursePart);
+                            await bloc.save();
+                            partBloc.coursePart.add(coursePart);
+                          })
+                    ]));
+        break;
+      case PartOptions.description:
+        var descriptionController = TextEditingController(text: coursePart.description);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: descriptionController,
+                            maxLines: 3,
+                            keyboardType: TextInputType.multiline,
+                            decoration: InputDecoration(
+                                labelText: 'course.part.description.name'.tr(),
+                                hintText: 'course.part.description.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            var courseBloc = bloc.getCourse(partBloc.course!);
+                            coursePart =
+                                coursePart.copyWith(description: descriptionController.text);
+                            courseBloc.updateCoursePart(coursePart);
+                            await bloc.save();
+                            partBloc.coursePart.add(coursePart);
+                          })
+                    ]));
+        break;
+      case PartOptions.slug:
+        var slugController = TextEditingController(text: coursePart.slug);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: slugController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                labelText: 'course.part.slug.name'.tr(),
+                                hintText: 'course.part.slug.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            var courseBloc = bloc.getCourse(partBloc.course!);
+                            courseBloc.changeCoursePartSlug(coursePart.slug, slugController.text);
+                            await bloc.save();
+                            Modular.to.pushReplacementNamed(Uri(pathSegments: [
+                              '',
+                              ...Modular.args!.uri!.pathSegments
+                            ], queryParameters: {
+                              ...Modular.args!.queryParams,
+                              'part': slugController.text
+                            }).toString());
+                          })
+                    ]));
+        break;
+      case PartOptions.code:
+        var encoder = JsonEncoder.withIndent("  ");
+        var packageInfo = await PackageInfo.fromPlatform();
+        var buildNumber = int.tryParse(packageInfo.buildNumber);
+        var data = await Modular.to.push(MaterialPageRoute(
+            builder: (context) => EditorCodeDialogPage(
+                initialValue: encoder.convert(coursePart.toJson(buildNumber)))));
+        if (data != null) {
+          var part = CoursePart.fromJson(data..['course'] = courseBloc.course);
+          partBloc.coursePart.add(part);
+          courseBloc.updateCoursePart(part);
+          bloc.save();
+        }
+        break;
+    }
+  }
 }

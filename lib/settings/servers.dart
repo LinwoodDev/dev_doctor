@@ -25,7 +25,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
     var servers = <CoursesServer>[];
     for (var key in urls.keys) {
       var value = urls[key];
-      servers.add(await CoursesServer.fetch(url: value, index: key));
+      servers.add((await CoursesServer.fetch(url: value, index: key))!);
     }
     return servers;
   }
@@ -50,12 +50,12 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                             child: ListView.builder(
                                 itemCount: box.length,
                                 itemBuilder: (context, index) {
-                                  var current = data[index];
+                                  var current = data![index];
                                   return Container(
                                       child: Dismissible(
                                           // Show a red background as the item is swiped away.
                                           background: Container(color: Colors.red),
-                                          key: Key(current.url),
+                                          key: Key(current.url!),
                                           onDismissed: (direction) => _deleteServer(index),
                                           child: Material(
                                               child: ListTile(
@@ -63,10 +63,9 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                                                       ? null
                                                       : UniversalImage(
                                                           type: current.icon,
-                                                          url: current.url + "/icon"),
-                                                  title: Text(current.name ??
-                                                      'settings.servers.error'.tr()),
-                                                  subtitle: Text(current.url)))));
+                                                          url: current.url! + "/icon"),
+                                                  title: Text(current.name),
+                                                  subtitle: Text(current.url!)))));
                                 }));
                     }
                   }))),
@@ -84,7 +83,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
 
   _createServer(String url) async {
     var server = await CoursesServer.fetch(url: url);
-    if (server.name == null)
+    if (server == null)
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -122,12 +121,12 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                 ),
                 actions: <Widget>[
                   TextButton(
-                      child: Text('settings.servers.add.cancel'.tr().toUpperCase()),
+                      child: Text('cancel'.tr().toUpperCase()),
                       onPressed: () {
                         Navigator.pop(context);
                       }),
                   TextButton(
-                      child: Text('settings.servers.add.create'.tr().toUpperCase()),
+                      child: Text('create'.tr().toUpperCase()),
                       onPressed: () async {
                         Navigator.pop(context);
                         _createServer(url);

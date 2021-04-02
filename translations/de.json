@@ -2,29 +2,185 @@
     "title": "Dev-Doctor.cf",
     "subtitle": "Kostenlose, quelloffene, serverfreie Lernplattform. Ein Linwood Projekt",
     "course": {
+        "add": {
+            "name": "Name",
+            "hint": "Beispielkurs",
+            "item": {
+                "title": "Erstelle Element",
+                "name": {
+                    "label": "Name",
+                    "hint": "Willkommen"
+                },
+                "description": {
+                    "label": "Beschreibung",
+                    "hint": "Willkommen zu dem Kurs"
+                },
+                "type": "Type"
+            },
+            "delete": {
+                "item": {
+                    "title": "Confirm delete item",
+                    "content": "Soll wirklich {name} #{index} gelöscht werden?"
+                }
+            }
+        },
         "course": "Kurs",
         "home": "Start",
         "statistics": "Statistiken",
         "back": "Zurück",
         "materials": "Materialien",
-        "question": {
+        "lang": {
+            "notset": "Sprache nicht gesetzt",
+            "hint": "de",
+            "label": "Sprach Tag"
+        },
+        "author": {
+            "notset": "Autor nicht gesetzt",
+            "title": "Autor",
+            "name": {
+                "hint": "CodeDoctorDE",
+                "label": "Name"
+            },
+            "url": {
+                "hint": "https://github.com/CodeDoctorDE",
+                "label": "URL"
+            },
+            "avatar": {
+                "hint": "https://source.unsplash.com/random",
+                "label": "Avatar"
+            }
+        },
+        "quiz": {
             "choose": "Wähle weise!",
             "select": "Bitte wähle eine Antwort aus!",
             "correct": "Richtig!",
             "wrong": "Falsche Antwort!",
             "check": "Abschicken",
-            "retry":"Quiz wiederholen",
-            "start":"Quiz starten",
-            "points":"Punkte",
-            "time":"Sekunden übrig",
+            "retry": "Quiz wiederholen",
+            "start": "Quiz starten",
+            "add": "Frage hinzufügen",
+            "points": "Punkte",
+            "time": {
+                "subtitle": "Sekunden übrig",
+                "notset": "Timer nicht gesetzt!",
+                "title": "Timer ändern",
+                "label": "Zeit",
+                "hint": "Sekunden"
+            },
             "validation": {
                 "title": "Auswertung",
                 "correct": "Alles richtig!",
                 "wrong": "Es gibt Fehler!"
+            },
+            "question": {
+                "title": "Quiztitel",
+                "one": "Antwort 1",
+                "two": "Antwort 2",
+                "three": "Antwort 3",
+                "four": "Antwort 4",
+                "evaluation": "Antwort 1 ist richtig!"
+            },
+            "option": {
+                "question": {
+                    "answer": "Antwort hinzufügen",
+                    "title": {
+                        "item": "Titel ändern",
+                        "label": "Titel",
+                        "hint": "Der Quiztitel"
+                    },
+                    "evaluation": {
+                        "item": "Auswertung",
+                        "label": "Auswertung",
+                        "hint": "Eine Erklärung zur Lösung"
+                    },
+                    "description": {
+                        "item": "Beschreibung ändern",
+                        "label": "Beschreibung",
+                        "hint": "Eine Erläuterung zur Frage"
+                    },
+                    "delete": {
+                        "item": "Löschen",
+                        "title": "Frage löschen bestätigen",
+                        "content": "Soll wirklich die Frage {name} #{index} gelöscht werden?"
+                    }
+                },
+                "answer": {
+                    "points": {
+                        "item": "Punkte",
+                        "label": "Punkte",
+                        "hint": "Zahl"
+                    },
+                    "rating": "Bewertung",
+                    "correct": "Richtig",
+                    "wrong": "Falsch",
+                    "title": {
+                        "item": "Titel ändern",
+                        "label": "Titel",
+                        "hint": "Der Antworttitel"
+                    },
+                    "description": {
+                        "item": "Beschreibung ändern",
+                        "label": "Beschreibung",
+                        "hint": "Eine Erläuterung zur Antwort"
+                    },
+                    "delete": {
+                        "item": "Löschen",
+                        "title": "Antwort löschen bestätigen",
+                        "content": "Soll wirklich die Antwort {name} #{index} gelöscht werden?"
+                    }
+                }
+            }
+        },
+        "video": {
+            "open": "Öffne Video",
+            "empty": "Dieses Element ist leer",
+            "editor": {
+                "title": "Video Editor",
+                "url": {
+                    "label": "URL",
+                    "hint": "https://example.com"
+                },
+                "type": {
+                    "url": "URL",
+                    "youtube": "YouTube"
+                }
             }
         },
         "start": "Start",
-        "support": "Support"
+        "support": "Support",
+        "description": {
+            "label": "Beschreibung",
+            "hint": "Dieser Kurs ist nur ein Beispiel wie die Konfiguration funktioniert"
+        },
+        "slug": {
+            "label": "Slug",
+            "hint": "Dies ist der Name des Ordners auf dem Server"
+        },
+        "name": {
+            "label": "Name",
+            "hint": "Beispielkurs"
+        },
+        "part": {
+            "add": {
+                "name": "Name",
+                "hint": "Part 1"
+            },
+            "rename": "Unbenennen",
+            "description": "Beschreibung ändern",
+            "slug": "Slug ändern",
+            "empty": "Dieser Part ist leer"
+        },
+        "type": {
+            "text": "Text",
+            "quiz": "Quiz",
+            "video": "Video"
+        },
+        "delete":{
+            "item": {
+                "title": "Element löschen bestätigen",
+                "content": "Soll wirklich {name} #{index} gelöscht werden?"
+            }
+        }
     },
     "courses": {
         "title": "Kurse",
@@ -39,9 +195,47 @@
         "longer": "Der Suchbegriff muss länger als 2 Zeichen sein."
     },
     "editor": {
-        "title": "Editor"
+        "title": "Editor",
+        "create": {
+            "fab": "Erstelle Backend",
+            "title": "Erstelle Backend",
+            "name": {
+                "label": "Name",
+                "hint": "Dev-Doctor",
+                "empty": "Der Name darf nicht leer sein!",
+                "exist": "Ein Backend mit dem gleichen Namen existiert bereits!"
+            },
+            "note": {
+                "label": "Notiz",
+                "hint": "Das Beispiel-Backend von dev-doctor"
+            },
+            "submit": "Erstellen"
+        },
+        "markdown": {
+            "title": "Markdown Editor",
+            "preview": {
+                "title": "Vorschau"
+            }
+        },
+        "item": {
+            "title": "Item Editor",
+            "name": {
+                "hint": "Willkommen",
+                "label": "Name"
+            },
+            "description": {
+                "hint": "Willkommen zu dem Kurs",
+                "label": "Beschreibung"
+            }
+        },
+        "code": {
+            "title": "Code",
+            "hint": "Daten hier einfügen",
+            "label": "JSON",
+            "submit": "Aktualisieren"
+        }
     },
-    "browser":"Open in brwoser",
+    "browser": "Im Browser öffnen",
     "discord": "Betrete unseren Discord",
     "error-with-status": "Auf dem Server ist ein Fehler ({statusCode}) aufgetreten",
     "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",
@@ -51,11 +245,12 @@
     "welcome": "Willkommen zurück, {name}!",
     "profile": "Profil",
     "stats": "Statistiken",
+    "code": "Code anzeigen",
     "settings": {
         "information": "Informationen",
         "title": "Einstellungen",
         "privacypolicy": "Datenschutzerklärung",
-        "changelog":"Änderungsliste",
+        "changelog": "Änderungsliste",
         "home": {
             "title": "Start",
             "username": "Benutzername"
@@ -78,11 +273,15 @@
                 "de": "Deutsch",
                 "en": "Englisch"
             },
-            "color":{
-                "title":"Farbe",
-                "classic":"Klassisch",
-                "modern":"Modern",
-                "artistic":"Künstlerisch"
+            "color": {
+                "title": "Farbe",
+                "classic": "Klassisch",
+                "modern": "Modern",
+                "artistic": "Künstlerisch",
+                "spring": "Frühling",
+                "summer": "Sommer",
+                "autumn": "Herbst",
+                "winter": "Winter"
             }
         },
         "downloads": {
@@ -98,9 +297,7 @@
                 "url": "URL",
                 "hint": "zB. https://backend.dev-doctor.cf",
                 "title": "Möchten Sie den Server {name} hinzufügen?",
-                "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt.",
-                "agree": "Akzeptieren",
-                "disagree": "Nicht akzeptieren"
+                "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt."
             },
             "error": "Server nicht erreichbar!"
         },
@@ -108,14 +305,10 @@
             "title": "Kollektionen",
             "add": {
                 "fab": "Kollektion hinzufügen",
-                "cancel": "Abbrechen",
-                "create": "Erstellen",
                 "url": "URL",
                 "hint": "zB. https://collection.dev-doctor.cf",
                 "title": "Möchten Sie den Kollektion {name} hinzufügen?",
-                "body": "Die Kollektion {name} mit der URL {url} wird auf der Kollektionseite angezeigt.",
-                "agree": "Akzeptieren",
-                "disagree": "Nicht akzeptieren"
+                "body": "Die Kollektion {name} mit der URL {url} wird auf der Kollektionseite angezeigt."
             },
             "error": "Kollektionsserver nicht erreichbar!"
         },
@@ -124,12 +317,19 @@
         "code": "Code",
         "license": "Lizenz"
     },
+    "agree": "Akzeptieren",
+    "disagree": "Ablehnen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "create": "Erstellen",
     "close": "Schließen",
+    "change": "Ändern",
+    "no": "Nein",
+    "yes": "Ja",
     "ready-for-offline": "Bereit für den Offline Modus",
     "update-available": {
         "message": "Update verfügbar!",
         "refresh": "Neuladen"
     },
     "coming-soon": "In Planung..."
-
 }

@@ -1,4 +1,8 @@
+import 'package:dev_doctor/courses/course.dart';
+import 'package:dev_doctor/courses/part/bloc.dart';
+import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/course.dart';
+import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -7,28 +11,31 @@ import 'package:url_launcher/url_launcher.dart';
 
 typedef NavigateCallback = void Function(int part);
 
-class CourseDrawer extends StatefulWidget {
-  final Course course;
-  final NavigateCallback onChange;
+class CoursePartDrawer extends StatefulWidget {
+  final int? partId;
+  final Course? course;
+  final NavigateCallback? onChange;
+  final ServerEditorBloc? editorBloc;
 
-  const CourseDrawer({Key key, this.course, this.onChange}) : super(key: key);
+  const CoursePartDrawer({Key? key, this.course, this.partId, this.onChange, this.editorBloc})
+      : super(key: key);
   @override
-  _CourseDrawerState createState() => _CourseDrawerState();
+  _CoursePartDrawerState createState() => _CoursePartDrawerState();
 }
 
-class _CourseDrawerState extends State<CourseDrawer> {
-  int serverId, courseId, partId;
-  @override
-  void initState() {
-    serverId = int.parse(Modular.args.queryParams['serverId']);
-    courseId = int.parse(Modular.args.queryParams['courseId']);
-    partId = int.parse(Modular.args.queryParams['partId']);
-    super.initState();
+class _CoursePartDrawerState extends State<CoursePartDrawer> {
+  int? partId;
+
+  Future<List<CoursePart>> _buildFuture() async {
+    if (widget.editorBloc != null) return widget.editorBloc!.getCourse(widget.course!.slug).parts;
+    return await widget.course!.fetchParts();
   }
 
   @override
   Widget build(BuildContext context) {
-    var supportUrl = widget.course.supportUrl ?? widget.course.server.supportUrl;
+    var supportUrl = widget.course?.supportUrl ??
+        widget.course?.server?.supportUrl ??
+        widget.editorBloc?.server.supportUrl;
     return Drawer(
         child: Scrollbar(
             child: ListView(children: [
@@ -48,23 +55,33 @@ class _CourseDrawerState extends State<CourseDrawer> {
         ),
       Divider(),
       FutureBuilder<List<CoursePart>>(
-          future: widget.course.fetchParts(),
+          future: _buildFuture(),
           builder: (context, snapshot) {
-            if (snapshot.hasError)
-              return Text("Error ${snapshot.error}");
-            else if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
+            if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
               return Center(child: CircularProgressIndicator());
-            var parts = snapshot.data;
+            if (snapshot.hasError) return Text("Error: ${snapshot.error}");
+            var parts = snapshot.data!;
+            var args = Modular.args!.queryParams;
             return Column(
                 children: List.generate(parts.length, (index) {
               var part = parts[index];
+              var selected = args['partId'] != null
+                  ? args['partId'] == index.toString()
+                  : args['part'] == part.slug;
               return ListTile(
-                title: Text(part.name),
+                title: Text(part.name!),
                 subtitle: Text(part.description ?? ''),
-                selected: Modular.args.queryParams['partId'] == index.toString(),
+                selected: selected,
+                trailing: selected && widget.editorBloc != null
+                    ? IconTheme(
+                        data: Theme.of(context).iconTheme,
+                        child: EditorCoursePartPopupMenu(
+                            bloc: widget.editorBloc!,
+                            partBloc: EditorPartModule.to.get<CoursePartBloc>()))
+                    : null,
                 onTap: () {
                   setState(() => partId = index);
-                  widget.onChange(index);
+                  widget.onChange!(index);
                 },
                 isThreeLine: true,
               );

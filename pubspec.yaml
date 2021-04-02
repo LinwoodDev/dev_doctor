@@ -15,45 +15,50 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: '1.2.3+7'
+version: '1.3.0+9'
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  easy_localization: ^2.3.3
-  enum_to_string: ^2.0.0-nullsafety.1
-  http: ^0.13.0
-  hive: ^1.4.4+1
+  easy_localization: ^3.0.0
+  enum_to_string: ^2.0.1
+  http: ^0.13.1
+  hive: ^2.0.2
   rxdart: ^0.26.0
-  hive_flutter: ^0.3.1
-  flutter_modular: ^3.0.0-nullsafety.45
-  url_launcher: ^6.0.0-nullsafety.7
-  flutter_markdown: ^0.5.2
+  hive_flutter: ^1.0.0
+  flutter_modular: ^3.0.2+1
+  url_launcher: ^6.0.3
+  flutter_markdown: ^0.6.1
   #universal_html: ^1.2.4
   flutter_svg: ^0.21.0-nullsafety.0
-  flutter_inappwebview: ^4.0.0+4
-  xml: ^5.0.0-nullsafety.1
+  flutter_inappwebview: ^5.3.0
+  xml: ^5.0.2
   flutter_localized_locales: ^2.0.1
+  bitsdojo_window: ^0.1.0
+  share_plus: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   # cupertino_icons: ^1.0.2
   yaml: ^3.1.0
+  package_info_plus: ^1.0.0
+  animations: ^2.0.0
 flutter_icons:
   android: true
   ios: true
   image_path: "images/logo-light-background.png"
 dev_dependencies:
-  hive_generator: ^0.8.2
-  build_runner: ^1.11.5
+  build_runner: ^1.12.2
+  hive_generator: ^1.0.1
+  msix: ^1.0.4
   flutter_test:
     sdk: flutter
-  integration_test:
-    sdk: flutter
+  #integration_test:
+  #  sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -247,6 +252,95 @@ flutter:
         - asset: fonts/RobotoMono-BoldItalic.ttf
           style: italic
           weight: 700
+    - family: 'Comfortaa'
+      fonts:
+        - asset: fonts/Comfortaa-Regular.ttf
+
+        - asset: fonts/Comfortaa-Light.ttf
+          weight: 300
+
+        - asset: fonts/Comfortaa-Medium.ttf
+          weight: 500
+
+        - asset: fonts/Comfortaa-SemiBold.ttf
+          weight: 600
+
+        - asset: fonts/Comfortaa-Bold.ttf
+          weight: 700
+    - family: 'Josefin Sans'
+      fonts:
+        - asset: fonts/JosefinSans-Regular.ttf
+        - asset: fonts/JosefinSans-Italic.ttf
+          style: italic
+
+        - asset: fonts/JosefinSans-Thin.ttf
+          weight: 100
+        - asset: fonts/JosefinSans-ThinItalic.ttf
+          style: italic
+          weight: 100
+          
+        - asset: fonts/JosefinSans-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/JosefinSans-ExtraLightItalic.ttf
+          style: italic
+          weight: 200
+
+        - asset: fonts/JosefinSans-Light.ttf
+          weight: 300
+        - asset: fonts/JosefinSans-LightItalic.ttf
+          style: italic
+          weight: 300
+
+        - asset: fonts/JosefinSans-Medium.ttf
+          weight: 500
+        - asset: fonts/JosefinSans-MediumItalic.ttf
+          style: italic
+          weight: 500
+
+        - asset: fonts/JosefinSans-SemiBold.ttf
+          weight: 600
+        - asset: fonts/JosefinSans-SemiBoldItalic.ttf
+          style: italic
+          weight: 600
+
+        - asset: fonts/JosefinSans-Bold.ttf
+          weight: 700
+        - asset: fonts/JosefinSans-BoldItalic.ttf
+          style: italic
+          weight: 700
+    - family: 'Oswald'
+      fonts:
+        - asset: fonts/Oswald-Regular.ttf
+          
+        - asset: fonts/Oswald-ExtraLight.ttf
+          weight: 200
+
+        - asset: fonts/Oswald-Light.ttf
+          weight: 300
+
+        - asset: fonts/Oswald-Medium.ttf
+          weight: 500
+
+        - asset: fonts/Oswald-SemiBold.ttf
+          weight: 600
+
+        - asset: fonts/Oswald-Bold.ttf
+          weight: 700
+    - family: 'Shippori Mincho'
+      fonts:
+        - asset: fonts/ShipporiMincho-Regular.ttf
+
+        - asset: fonts/ShipporiMincho-Medium.ttf
+          weight: 500
+
+        - asset: fonts/ShipporiMincho-SemiBold.ttf
+          weight: 600
+
+        - asset: fonts/ShipporiMincho-Bold.ttf
+          weight: 700
+
+        - asset: fonts/ShipporiMincho-ExtraBold.ttf
+          weight: 800
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
@@ -275,3 +369,18 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+msix_config:
+  display_name: Dev-Doctor
+  publisher_display_name: Linwood
+  identity_name: com.github.linwoodcloud.dev-doctor
+  msix_version: 1.3.0.0
+  #certificate_path: C:\<PathToCertificate>\<MyCertificate.pfx>
+  #certificate_password: 1234 (require if using .pfx certificate)
+  #publisher: CN=My Company, O=My Company, L=Berlin, S=Berlin, C=DE
+  logo_path: images/logo-colored.png
+  start_menu_icon_path: images/logo-colored.png
+  tile_icon_path: images/logo-colored.png
+  #vs_generated_images_folder_path: build/windows/runner/Release/data/flutter_assets/images
+  icons_background_color: '#ffffff'
+  architecture: x64
+  capabilities: 'internetClient,location,microphone,webcam'

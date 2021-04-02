@@ -2,9 +2,9 @@ import 'package:dev_doctor/settings/home.dart';
 import 'package:flutter/material.dart';
 
 class SettingsLayout extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
 
-  const SettingsLayout({Key key, this.child}) : super(key: key);
+  const SettingsLayout({Key? key, this.child}) : super(key: key);
 
   @override
   _SettingsLayoutState createState() => _SettingsLayoutState();
@@ -19,7 +19,7 @@ class _SettingsLayoutState extends State<SettingsLayout> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           textDirection: TextDirection.rtl,
           children: [
-            Expanded(flex: 3, child: widget.child),
+            Expanded(flex: 3, child: widget.child!),
             if (!mobile)
               Expanded(
                   child: Container(color: Theme.of(context).canvasColor, child: SettingsList())),

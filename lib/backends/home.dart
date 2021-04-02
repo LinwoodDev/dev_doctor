@@ -15,11 +15,11 @@ class _ItemFetcher {
   List<BackendEntry> entries = <BackendEntry>[];
 
   // This async function simulates fetching results from Internet, etc.
-  Future<List<CoursesServer>> fetch({String query}) async {
+  Future<List<CoursesServer>> fetch({String? query}) async {
     if (entries.isEmpty)
       await Future.wait(Hive.box<String>('collections').values.map((e) async {
         var collection = await BackendCollection.fetch(url: e);
-        var users = await collection.fetchUsers();
+        var users = await collection!.fetchUsers();
         entries.addAll(users.expand((e) => e.buildEntries()));
       }));
     final list = <CoursesServer>[];
@@ -28,8 +28,8 @@ class _ItemFetcher {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
       var server = await entry.fetchServer();
-      if ((server.body != null && server.body.toUpperCase().contains(query.toUpperCase())) ||
-          server.name.toUpperCase().contains(query.toUpperCase())) list.add(server);
+      if ((server!.body != null && server.body!.toUpperCase().contains(query!.toUpperCase())) ||
+          server.name.toUpperCase().contains(query!.toUpperCase())) list.add(server);
     }
     _currentPage++;
     return list;
@@ -92,10 +92,10 @@ class CustomSearchDelegate extends SearchDelegate {
 }
 
 class BackendsList extends StatefulWidget {
-  final _ItemFetcher fetcher;
-  final String query;
+  final _ItemFetcher? fetcher;
+  final String? query;
 
-  const BackendsList({Key key, this.fetcher, this.query}) : super(key: key);
+  const BackendsList({Key? key, this.fetcher, this.query}) : super(key: key);
   @override
   _BackendsListState createState() => _BackendsListState();
 }
@@ -116,7 +116,7 @@ class _BackendsListState extends State<BackendsList> {
   // Triggers fecth() and then add new items or change _hasMore flag
   void _loadMore() {
     _isLoading = true;
-    widget.fetcher.fetch(query: widget.query).then((List<CoursesServer> fetchedList) {
+    widget.fetcher!.fetch(query: widget.query).then((List<CoursesServer> fetchedList) {
       if (fetchedList.isEmpty) {
         setState(() {
           _isLoading = false;
@@ -190,18 +190,14 @@ class _BackendsPageState extends State<BackendsPage> with TickerProviderStateMix
 
 class BackendEntryListTile extends StatefulWidget {
   final CoursesServer server;
-  final int backendId;
-  final String user;
-  final String entry;
 
-  const BackendEntryListTile({Key key, this.server, this.backendId, this.user, this.entry})
-      : super(key: key);
+  const BackendEntryListTile({Key? key, required this.server}) : super(key: key);
   @override
   _BackendEntryListTileState createState() => _BackendEntryListTileState();
 }
 
 class _BackendEntryListTileState extends State<BackendEntryListTile> {
-  CoursesServer _server;
+  CoursesServer? _server;
   @override
   void initState() {
     super.initState();
@@ -211,21 +207,21 @@ class _BackendEntryListTileState extends State<BackendEntryListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text(_server.name),
-        subtitle: Text(_server.url),
+        title: Text(_server!.name),
+        subtitle: Text(_server!.url!),
         onTap: () async {
           await Modular.to.pushNamed(
-              "/backends/entry?collectionId=${_server.entry.collection.index}&user=${_server.entry.user.name}&entry=${_server.entry.name}",
+              "/backends/entry?collectionId=${_server!.entry!.collection.index}&user=${_server!.entry!.user.name}&entry=${_server!.entry!.name}",
               arguments: _server);
-          var current = await _server.entry.fetchServer();
+          var current = await _server!.entry!.fetchServer();
           setState(() => _server = current);
         },
-        leading: _server.icon?.isEmpty ?? true
+        leading: _server!.icon?.isEmpty ?? true
             ? null
             : Hero(
                 tag:
-                    "backend-icon-${_server.entry.collection.index}-${_server.entry.user}-${_server.entry.name}",
-                child: UniversalImage(type: _server.icon, url: _server.url + "/icon")),
+                    "backend-icon-${_server!.entry!.collection.index}-${_server!.entry!.user}-${_server!.entry!.name}",
+                child: UniversalImage(type: _server!.icon, url: _server!.url! + "/icon")),
         trailing: AddBackendButton(
             server: _server, onChange: (server) => setState(() => _server = server)));
   }
@@ -234,18 +230,18 @@ class _BackendEntryListTileState extends State<BackendEntryListTile> {
 typedef OnBackendChanged = void Function(CoursesServer server);
 
 class AddBackendButton extends StatefulWidget {
-  final CoursesServer server;
-  final OnBackendChanged onChange;
+  final CoursesServer? server;
+  final OnBackendChanged? onChange;
 
-  const AddBackendButton({Key key, this.server, this.onChange}) : super(key: key);
+  const AddBackendButton({Key? key, this.server, this.onChange}) : super(key: key);
   @override
   _AddBackendButtonState createState() => _AddBackendButtonState();
 }
 
 class _AddBackendButtonState extends State<AddBackendButton> with SingleTickerProviderStateMixin {
-  CoursesServer _server;
-  AnimationController _controller;
-  Animation<double> _animation;
+  CoursesServer? _server;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -272,17 +268,17 @@ class _AddBackendButtonState extends State<AddBackendButton> with SingleTickerPr
     return RotationTransition(
         turns: _animation,
         child: IconButton(
-          icon: Icon(_server.added ? Icons.remove_outlined : Icons.add_outlined),
+          icon: Icon(_server!.added ? Icons.remove_outlined : Icons.add_outlined),
           onPressed: () async {
-            var toggledServer = await _server.toggle();
+            var toggledServer = await _server!.toggle();
             setState(() {
               _server = toggledServer;
             });
-            if (_server.added)
+            if (_server!.added)
               _controller.reverse();
             else
               _controller.forward();
-            if (widget.onChange != null) return widget.onChange(toggledServer);
+            if (widget.onChange != null) return widget.onChange!(toggledServer);
           },
         ));
   }

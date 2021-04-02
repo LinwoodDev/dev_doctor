@@ -19,7 +19,7 @@ class AppWidget extends StatelessWidget {
         fallbackLocale: Locale('en'),
         child: ValueListenableBuilder(
             valueListenable: Hive.box('appearance').listenable(),
-            builder: (context, box, widget) {
+            builder: (context, dynamic box, widget) {
               var color = Hive.box('appearance').get('color', defaultValue: 0);
               var colorTheme = ColorTheme.values[color];
               return MaterialApp(
@@ -78,7 +78,7 @@ class AppWidget extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key}) : super(key: key);
+  const MyHomePage({Key? key}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onItemTapped(int index) {
-    Modular.to.pushReplacementNamed(HomeRoutes.values[index].route);
+    Modular.to.pushReplacementNamed(HomeRoutes.values[index].route!);
     setState(() => _selectedIndex = index);
   }
 

@@ -8,14 +8,14 @@ import 'course.dart';
 @immutable
 class CoursesServer {
   final String name;
-  final String url;
-  final String type;
-  final String icon;
-  final String supportUrl;
-  final int index;
-  final BackendEntry entry;
+  final String? url;
+  final String? type;
+  final String? icon;
+  final String? supportUrl;
+  final int? index;
+  final BackendEntry? entry;
   final List<String> courses;
-  final String body;
+  final String? body;
 
   static Box<String> get _box => Hive.box<String>('servers');
 
@@ -23,9 +23,9 @@ class CoursesServer {
       {this.body,
       this.icon,
       this.index,
-      this.name,
+      required this.name,
       this.url,
-      this.courses,
+      required this.courses,
       this.type,
       this.entry,
       this.supportUrl});
@@ -34,16 +34,27 @@ class CoursesServer {
         url = json['url'],
         index = (json['index'] != -1) ? json['index'] : null,
         type = json['type'],
-        courses = List<String>.from(json['courses']),
+        courses = List<String>.from(json['courses'] ?? []),
         icon = json['icon'],
         entry = json['entry'],
         body = json['body'],
         supportUrl = json['support_url'];
 
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "url": url,
+        "index": index,
+        "courses": courses,
+        "icon": icon,
+        "entry": entry,
+        "body": body,
+        "support_url": supportUrl
+      };
+
   bool get added => index != null;
 
   Future<CoursesServer> add() async => CoursesServer(
-      index: await _box.add(url),
+      index: await _box.add(url!),
       courses: courses,
       name: name,
       type: type,
@@ -67,16 +78,36 @@ class CoursesServer {
 
   Future<CoursesServer> toggle() => added ? remove() : add();
 
-  static Future<CoursesServer> fetch({String url, int index, BackendEntry entry}) async {
+  CoursesServer copyWith(
+          {String? name,
+          String? url,
+          String? type,
+          String? icon,
+          String? supportUrl,
+          List<String>? courses,
+          String? body}) =>
+      CoursesServer(
+          name: name ?? this.name,
+          body: body ?? this.body,
+          courses: courses ?? this.courses,
+          entry: entry,
+          icon: icon ?? this.icon,
+          index: index,
+          supportUrl: supportUrl ?? this.supportUrl,
+          type: type ?? this.type,
+          url: url ?? this.url);
+
+  static Future<CoursesServer?> fetch({String? url, int? index, BackendEntry? entry}) async {
     var data = <String, dynamic>{};
     try {
       if (index == null) {
-        var current = _box.values.toList().indexOf(url);
+        var current = _box.values.toList().indexOf(url!);
         if (current != -1) index = _box.keyAt(current);
       } else if (url == null) url = Hive.box<String>('servers').get(index);
-      data = await loadFile("$url/config") ?? {};
+      data = await loadFile("$url/config");
     } catch (e) {
       print(e);
+      return null;
     }
     data['courses'] = data['courses'] ?? [];
     data['entry'] = entry;
@@ -85,17 +116,26 @@ class CoursesServer {
     return CoursesServer.fromJson(data);
   }
 
-  Future<List<Course>> fetchCourses() => Future.wait(
-      courses.asMap().map((index, value) => MapEntry(index, fetchCourse(index))).values);
+  Future<List<Course>> fetchCourses() => Future.wait(courses.map((course) => fetchCourse(course)));
 
-  Future<Course> fetchCourse(int index) async {
-    var course = courses[index];
+  Future<Course> fetchCourse(String? course) async {
     var data = await loadFile("$url/$course/config");
 
     data['server'] = this;
     data['index'] = index;
     data['slug'] = course;
-    data['parts'] = data['parts'];
     return Course.fromJson(data);
   }
+}
+
+class CoursesServerAdapter extends TypeAdapter<CoursesServer> {
+  @override
+  CoursesServer read(BinaryReader reader) =>
+      CoursesServer.fromJson(Map<String, dynamic>.from(reader.read()));
+
+  @override
+  final typeId = 0;
+
+  @override
+  void write(BinaryWriter writer, CoursesServer obj) => writer.write(obj.toJson());
 }

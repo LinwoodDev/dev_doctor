@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'classic.dart' as classic;
 import 'modern.dart' as modern;
 import 'artistic.dart' as artistic;
+import 'spring.dart' as spring;
+import 'summer.dart' as summer;
+import 'autumn.dart' as autumn;
+import 'winter.dart' as winter;
 
-enum ColorTheme { classic, modern, artistic }
+enum ColorTheme { classic, modern, artistic, spring, summer, autumn, winter }
 
 extension ColorThemeExtension on ColorTheme {
   Color get mdcThemePrimary {
@@ -14,8 +18,15 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcThemePrimary;
       case ColorTheme.artistic:
         return artistic.mdcThemePrimary;
+      case ColorTheme.spring:
+        return spring.mdcThemePrimary;
+      case ColorTheme.summer:
+        return summer.mdcThemePrimary;
+      case ColorTheme.autumn:
+        return autumn.mdcThemePrimary;
+      case ColorTheme.winter:
+        return winter.mdcThemePrimary;
     }
-    return null;
   }
 
   Color get mdcThemeOnPrimary {
@@ -26,8 +37,15 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcThemeOnPrimary;
       case ColorTheme.artistic:
         return artistic.mdcThemeOnPrimary;
+      case ColorTheme.spring:
+        return spring.mdcThemeOnPrimary;
+      case ColorTheme.summer:
+        return summer.mdcThemeOnPrimary;
+      case ColorTheme.autumn:
+        return autumn.mdcThemeOnPrimary;
+      case ColorTheme.winter:
+        return winter.mdcThemeOnPrimary;
     }
-    return null;
   }
 
   Color get mdcThemeSecondary {
@@ -38,8 +56,15 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcThemeSecondary;
       case ColorTheme.artistic:
         return artistic.mdcThemeSecondary;
+      case ColorTheme.spring:
+        return spring.mdcThemeSecondary;
+      case ColorTheme.summer:
+        return summer.mdcThemeSecondary;
+      case ColorTheme.autumn:
+        return autumn.mdcThemeSecondary;
+      case ColorTheme.winter:
+        return winter.mdcThemeSecondary;
     }
-    return null;
   }
 
   Color get mdcThemeOnSecondary {
@@ -50,8 +75,15 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcThemeOnSecondary;
       case ColorTheme.artistic:
         return artistic.mdcThemeOnSecondary;
+      case ColorTheme.spring:
+        return spring.mdcThemeOnSecondary;
+      case ColorTheme.summer:
+        return summer.mdcThemeOnSecondary;
+      case ColorTheme.autumn:
+        return autumn.mdcThemeOnSecondary;
+      case ColorTheme.winter:
+        return winter.mdcThemeOnSecondary;
     }
-    return null;
   }
 
   Color get mdcThemeBackground {
@@ -62,8 +94,15 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcThemeBackground;
       case ColorTheme.artistic:
         return artistic.mdcThemeBackground;
+      case ColorTheme.spring:
+        return spring.mdcThemeBackground;
+      case ColorTheme.summer:
+        return summer.mdcThemeBackground;
+      case ColorTheme.autumn:
+        return autumn.mdcThemeBackground;
+      case ColorTheme.winter:
+        return winter.mdcThemeBackground;
     }
-    return null;
   }
 
   Color get mdcThemeError {
@@ -74,8 +113,15 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcThemeError;
       case ColorTheme.artistic:
         return artistic.mdcThemeError;
+      case ColorTheme.spring:
+        return spring.mdcThemeError;
+      case ColorTheme.summer:
+        return summer.mdcThemeError;
+      case ColorTheme.autumn:
+        return autumn.mdcThemeError;
+      case ColorTheme.winter:
+        return winter.mdcThemeError;
     }
-    return null;
   }
 
   Color get mdcThemeOnError {
@@ -86,8 +132,15 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcThemeOnError;
       case ColorTheme.artistic:
         return artistic.mdcThemeOnError;
+      case ColorTheme.spring:
+        return spring.mdcThemeOnError;
+      case ColorTheme.summer:
+        return summer.mdcThemeOnError;
+      case ColorTheme.autumn:
+        return autumn.mdcThemeOnError;
+      case ColorTheme.winter:
+        return winter.mdcThemeOnError;
     }
-    return null;
   }
 
   Color get mdcThemeSurface {
@@ -98,8 +151,15 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcThemeSurface;
       case ColorTheme.artistic:
         return artistic.mdcThemeSurface;
+      case ColorTheme.spring:
+        return spring.mdcThemeSurface;
+      case ColorTheme.summer:
+        return summer.mdcThemeSurface;
+      case ColorTheme.autumn:
+        return autumn.mdcThemeSurface;
+      case ColorTheme.winter:
+        return winter.mdcThemeSurface;
     }
-    return null;
   }
 
   Color get mdcThemeOnSurface {
@@ -110,8 +170,15 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcThemeOnSurface;
       case ColorTheme.artistic:
         return artistic.mdcThemeOnSurface;
+      case ColorTheme.spring:
+        return spring.mdcThemeOnSurface;
+      case ColorTheme.summer:
+        return summer.mdcThemeOnSurface;
+      case ColorTheme.autumn:
+        return autumn.mdcThemeOnSurface;
+      case ColorTheme.winter:
+        return winter.mdcThemeOnSurface;
     }
-    return null;
   }
 
   MaterialColor get mdcPrimarySwatch {
@@ -122,8 +189,15 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcPrimarySwatch;
       case ColorTheme.artistic:
         return artistic.mdcPrimarySwatch;
+      case ColorTheme.spring:
+        return spring.mdcPrimarySwatch;
+      case ColorTheme.summer:
+        return summer.mdcPrimarySwatch;
+      case ColorTheme.autumn:
+        return autumn.mdcPrimarySwatch;
+      case ColorTheme.winter:
+        return winter.mdcPrimarySwatch;
     }
-    return null;
   }
 
   String get mdcTypographyFontFamily {
@@ -134,7 +208,14 @@ extension ColorThemeExtension on ColorTheme {
         return modern.mdcTypographyFontFamily;
       case ColorTheme.artistic:
         return artistic.mdcTypographyFontFamily;
+      case ColorTheme.spring:
+        return spring.mdcTypographyFontFamily;
+      case ColorTheme.summer:
+        return summer.mdcTypographyFontFamily;
+      case ColorTheme.autumn:
+        return autumn.mdcTypographyFontFamily;
+      case ColorTheme.winter:
+        return winter.mdcTypographyFontFamily;
     }
-    return null;
   }
 }
