@@ -98,9 +98,6 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
               var bloc = EditorPartModule.to.get<CoursePartBloc>();
               var courseBloc = widget.editorBloc!.getCourse(bloc.course!);
               var coursePart = courseBloc.getCoursePart(bloc.part);
-              print(widget.itemId);
-              print(widget.editorBloc);
-              print(widget.item);
               var part = coursePart.copyWith(
                   items: List<PartItem>.from(coursePart.items)
                     ..[widget.itemId!] =

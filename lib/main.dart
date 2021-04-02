@@ -21,7 +21,6 @@ void main() async {
   await Hive.initFlutter();
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   var buildNumber = int.tryParse(packageInfo.buildNumber);
-  print(buildNumber);
   Hive.registerAdapter(CoursesServerAdapter());
   Hive.registerAdapter(CourseAdapter(apiVersion: buildNumber));
   Hive.registerAdapter(ServerEditorBlocAdapter(apiVersion: buildNumber));

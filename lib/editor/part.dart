@@ -18,9 +18,7 @@ class EditorPartModule extends Module {
         }),
         ChildRoute('/edit', child: (_, args) {
           var params = Modular.args!.queryParams;
-          print(params);
           var bloc = ServerEditorBloc.fromKey(int.parse(params['serverId']!));
-          print(bloc);
           return PartItemEditorPage(
             editorBloc: bloc,
             course: params['course'],

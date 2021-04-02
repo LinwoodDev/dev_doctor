@@ -35,14 +35,10 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
   @override
   void initState() {
     partBloc = EditorPartModule.to.get<CoursePartBloc>();
-    print(widget.course);
     bloc = widget.editorBloc!
         .getCourse(widget.course ?? widget.editorBloc!.courses[widget.courseId!] as String);
-    print(widget.part);
     part = bloc.getCoursePart(widget.part ?? bloc.course.parts[widget.partId!]);
-    print(widget.itemId);
     var item = part.items[widget.itemId!];
-    print(item);
     _nameController = TextEditingController(text: item.name);
     _descriptionController = TextEditingController(text: item.description);
     super.initState();
