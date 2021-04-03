@@ -8,7 +8,6 @@
 
 [![GitHub License badge](https://img.shields.io/github/license/LinwoodCloud/dev_doctor?style=for-the-badge)](https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE)
 [![Discord badge](https://img.shields.io/discord/735424757142519848?style=for-the-badge)](https://discord.linwood.tk)
-[![GitHub downloads](https://img.shields.io/github/downloads/LinwoodCloud/dev_doctor/total?style=for-the-badge)](https://github.com/LinwoodCloud/dev_doctor/releases/latest)
 
 ## Table of Contents
 
