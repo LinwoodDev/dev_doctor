@@ -90,4 +90,4 @@ Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 
 ## Contributung
 
-Read the Contributing guide [here](CONTRIBUTING.md).
+Read the contributing guide [here](CONTRIBUTING.md).
