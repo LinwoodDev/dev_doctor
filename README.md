@@ -31,6 +31,7 @@
   - [Contributung](#contributung)
     - [Issues](#issues)
     - [Pull request](#pull-request)
+    - [Translation](#translation)
     - [Community Server](#community-server)
     - [Branches](#branches)
     - [Hive Types](#hive-types)
@@ -105,6 +106,10 @@ If you find bugs or have feature request, you can create an issue by clicking [h
 ### Pull request
 
 If you want to help me to code, you can open a pull request. Fork this project and make a pull request. I only accept pull request for the *develop* branch.
+
+### Translation
+
+If you can translate well, you can help us by translating the message on [crowdin](https://linwood.crowdin.com/dev-doctor).
 
 ### Community Server
 
