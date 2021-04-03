@@ -63,21 +63,21 @@
                 "wrong": "Es gibt Fehler!"
             },
             "question": {
-                "answer": "Add answer",
+                "answer": "Antwort hinzufügen",
                 "title": {
-                    "item": "Change title",
-                    "label": "Title",
-                    "hint": "The quiz title"
+                    "item": "Titel ändern",
+                    "label": "Titel",
+                    "hint": "Der Quiztitel"
                 },
                 "evaluation": {
-                    "item": "Evaluation",
-                    "label": "Evaluation",
-                    "hint": "An explanation to the answer"
+                    "item": "Auswertung",
+                    "label": "Auswertung",
+                    "hint": "Eine Erklärung zur Lösung"
                 },
                 "delete": {
-                    "item": "Delete",
-                    "title": "Confirm delete question",
-                    "content": "Do you really want to delete {name} #{index}?"
+                    "item": "Löschen",
+                    "title": "Frage löschen bestätigen",
+                    "content": "Soll wirklich die Frage {name} #{index} gelöscht werden?"
                 }
             },
             "option": {
@@ -213,7 +213,7 @@
             "markdown": {
                 "title": "Markdown Editor",
                 "preview": {
-                    "title": "Preview"
+                    "title": "Vorschau"
                 }
             }
         },
