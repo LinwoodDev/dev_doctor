@@ -55,7 +55,8 @@
             "points": "points",
             "add": "Add question",
             "time": {
-                "subtitle": "seconds remaining"
+                "subtitle": "seconds remaining",
+                "notset": "Time not set"
             },
             "validation": {
                 "title": "Validation",
