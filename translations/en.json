@@ -175,7 +175,7 @@
             "quiz": "Quiz",
             "video": "Video"
         },
-        "delete":{
+        "delete": {
             "item": {
                 "title": "Confirm delete item",
                 "content": "Do you really want to delete {name} #{index}?"
