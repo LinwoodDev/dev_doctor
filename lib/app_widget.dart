@@ -14,7 +14,7 @@ class AppWidget extends StatelessWidget {
     // var locale = Hive.box('appearance').get('locale', defaultValue: 'default');
     //if (locale != 'default') context.locale = Locale.fromSubtags(scriptCode: locale);
     return EasyLocalization(
-        supportedLocales: [Locale('en'), Locale('de')],
+        supportedLocales: [Locale('en'), Locale('de'), Locale('fr')],
         path: 'translations',
         fallbackLocale: Locale('en'),
         child: ValueListenableBuilder(
