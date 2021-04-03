@@ -1,36 +1,36 @@
 {
     "title": "Dev-Doctor.cf",
-    "subtitle": "A free, opensource, serverless learning platform. A linwood project",
+    "subtitle": "Kostenlose, quelloffene, serverfreie Lernplattform. Ein Linwood Projekt",
     "course": {
         "add": {
             "name": "Name",
-            "hint": "Sample course",
+            "hint": "Beispielkurs",
             "item": {
-                "title": "Create item",
+                "title": "Erstelle Element",
                 "name": {
                     "label": "Name",
-                    "hint": "Welcome"
+                    "hint": "Willkommen"
                 },
                 "description": {
-                    "label": "Description",
-                    "hint": "Welcome to the course"
+                    "label": "Beschreibung",
+                    "hint": "Willkommen zu dem Kurs"
                 },
                 "type": "Type"
             }
         },
-        "course": "Course",
-        "home": "Home",
-        "statistics": "Statistics",
-        "back": "Back",
-        "materials": "Materials",
+        "course": "Kurs",
+        "home": "Start",
+        "statistics": "Statistiken",
+        "back": "Zurück",
+        "materials": "Materialien",
         "lang": {
-            "notset": "Language not set",
-            "hint": "en",
-            "label": "Language tag"
+            "notset": "Sprache nicht gesetzt",
+            "hint": "de",
+            "label": "Sprach Tag"
         },
         "author": {
-            "notset": "Author not set",
-            "title": "Author",
+            "notset": "Autor nicht gesetzt",
+            "title": "Autor",
             "name": {
                 "hint": "CodeDoctorDE",
                 "label": "Name"
@@ -45,22 +45,22 @@
             }
         },
         "quiz": {
-            "choose": "Choose whisley!",
-            "select": "Please select an option!",
-            "correct": "Correct!",
-            "wrong": "Sorry, wrong answer!",
-            "check": "CHECK ANSWER",
-            "retry": "Retry",
-            "start": "Start quiz",
-            "points": "points",
-            "add": "Add question",
+            "choose": "Wähle weise!",
+            "select": "Bitte wähle eine Antwort aus!",
+            "correct": "Richtig!",
+            "wrong": "Falsche Antwort!",
+            "check": "Abschicken",
+            "retry": "Quiz wiederholen",
+            "start": "Quiz starten",
+            "points": "Punkte",
+            "add": "Frage hinzufügen",
             "time": {
-                "subtitle": "seconds remaining"
+                "subtitle": "Sekunden übrig"
             },
             "validation": {
-                "title": "Validation",
-                "correct": "You got everything right!",
-                "wrong": "You made mistakes!"
+                "title": "Auswertung",
+                "correct": "Alles richtig!",
+                "wrong": "Es gibt Fehler!"
             },
             "question": {
                 "answer": "Add answer",
@@ -82,58 +82,58 @@
             },
             "option": {
                 "question": {
-                    "answer": "Add answer",
+                    "answer": "Antwort hinzufügen",
                     "title": {
-                        "item": "Change title",
-                        "label": "Title",
-                        "hint": "The quiz title"
+                        "item": "Titel ändern",
+                        "label": "Titel",
+                        "hint": "Der Quiztitel"
                     },
                     "evaluation": {
-                        "item": "Evaluation",
-                        "label": "Evaluation",
-                        "hint": "The explanation to the solution"
+                        "item": "Auswertung",
+                        "label": "Auswertung",
+                        "hint": "Eine Erklärung zur Lösung"
                     },
                     "description": {
-                        "item": "Change description",
-                        "label": "Description",
-                        "hint": "The explanation to the question"
+                        "item": "Beschreibung ändern",
+                        "label": "Beschreibung",
+                        "hint": "Eine Erläuterung zur Frage"
                     },
                     "delete": {
-                        "item": "Delete",
-                        "title": "Confirm delete question",
-                        "content": "Do you really want to delete {name} #{index}?"
+                        "item": "Löschen",
+                        "title": "Frage löschen bestätigen",
+                        "content": "Soll wirklich die Frage {name} #{index} gelöscht werden?"
                     }
                 },
                 "answer": {
                     "points": {
-                        "item": "Points",
-                        "label": "Points",
-                        "hint": "Number"
+                        "item": "Punkte",
+                        "label": "Punkte",
+                        "hint": "Zahl"
                     },
-                    "rating": "Rating",
-                    "correct": "Correct",
-                    "wrong": "Wrong",
+                    "rating": "Bewertung",
+                    "correct": "Richtig",
+                    "wrong": "Falsch",
                     "title": {
-                        "item": "Change title",
-                        "label": "Title",
-                        "hint": "The answer title"
+                        "item": "Titel ändern",
+                        "label": "Titel",
+                        "hint": "Der Antworttitel"
                     },
                     "description": {
-                        "item": "Change description",
-                        "label": "Description",
-                        "hint": "The explanation to the answer"
+                        "item": "Beschreibung ändern",
+                        "label": "Beschreibung",
+                        "hint": "Eine Erläuterung zur Antwort"
                     },
                     "delete": {
-                        "item": "Delete",
-                        "title": "Confirm delete answer",
-                        "content": "Do you really want to delete {name} #{index}?"
+                        "item": "Löschen",
+                        "title": "Antwort löschen bestätigen",
+                        "content": "Soll wirklich die Antwort {name} #{index} gelöscht werden?"
                     }
                 }
             }
         },
         "video": {
-            "open": "Open video",
-            "empty": "This part is empty",
+            "open": "Öffne Video",
+            "empty": "Dieses Element ist leer",
             "editor": {
                 "title": "Video Editor",
                 "url": {
@@ -149,26 +149,26 @@
         "start": "Start",
         "support": "Support",
         "description": {
-            "label": "Description",
-            "hint": "This course is just an example of how the configuration works"
+            "label": "Beschreibung",
+            "hint": "Dieser Kurs ist nur ein Beispiel wie die Konfiguration funktioniert"
         },
         "slug": {
             "label": "Slug",
-            "hint": "This is the name of the folder on the server"
+            "hint": "Dies ist der Name des Ordners auf dem Server"
         },
         "name": {
             "label": "Name",
-            "hint": "Example course"
+            "hint": "Beispielkurs"
         },
         "part": {
             "add": {
                 "name": "Name",
                 "hint": "Part 1"
             },
-            "rename": "Rename",
-            "description": "Change description",
-            "slug": "Change slug",
-            "empty": "This part is empty"
+            "rename": "Unbenennen",
+            "description": "Beschreibung ändern",
+            "slug": "Slug ändern",
+            "empty": "Dieser Part ist leer"
         },
         "type": {
             "text": "Text",
@@ -177,39 +177,39 @@
         },
         "delete": {
             "item": {
-                "title": "Confirm delete item",
-                "content": "Do you really want to delete {name} #{index}?"
+                "title": "Element löschen bestätigen",
+                "content": "Soll wirklich {name} #{index} gelöscht werden?"
             }
         }
     },
     "courses": {
-        "view": "View courses",
-        "title": "Courses",
+        "view": "Kurse ansehen",
+        "title": "Kurse",
         "servers": "Server",
         "filter": "Filter",
-        "longer": "Search term must be longer than two letters.",
-        "empty": "No courses available. Add servers using the settings!"
+        "longer": "Der Suchbegriff muss länger als 2 Zeichen sein.",
+        "empty": "Keine Kurse verfügbar. Füge einen neuen Server über die Einstellungen hinzu!"
     },
     "backends": {
         "title": "Backends",
-        "longer": "Search term must be longer than two letters."
+        "longer": "Der Suchbegriff muss länger als 2 Zeichen sein."
     },
     "editor": {
         "title": "Editor",
         "create": {
-            "fab": "Create backend",
-            "title": "Create backend",
+            "fab": "Erstelle Backend",
+            "title": "Erstelle Backend",
             "name": {
                 "label": "Name",
                 "hint": "Dev-Doctor",
-                "empty": "The name cannot be empty!",
-                "exist": "A backend with this name already exist!"
+                "empty": "Der Name darf nicht leer sein!",
+                "exist": "Ein Backend mit dem gleichen Namen existiert bereits!"
             },
             "note": {
-                "label": "Note",
-                "hint": "The sample backend of dev-doctor"
+                "label": "Notiz",
+                "hint": "Das Beispiel-Backend von dev-doctor"
             },
-            "submit": "Create",
+            "submit": "Erstellen",
             "markdown": {
                 "title": "Markdown Editor",
                 "preview": {
@@ -220,114 +220,114 @@
         "item": {
             "title": "Item Editor",
             "name": {
-                "hint": "Welcome",
+                "hint": "Willkommen",
                 "label": "Name"
             },
             "description": {
-                "hint": "Welcome to the course",
-                "label": "Description"
+                "hint": "Willkommen zu dem Kurs",
+                "label": "Beschreibung"
             }
         },
         "code": {
             "title": "Code",
-            "hint": "Insert data here",
+            "hint": "Daten hier einfügen",
             "label": "JSON",
-            "submit": "Update"
+            "submit": "Aktualisieren"
         }
     },
-    "browser": "Open in browser",
-    "discord": "Join our discord",
-    "error-with-status": "A {statusCode} error occurred on server",
-    "error-without-status": "An error occurred on the server",
-    "news": "News",
-    "home": "Home",
-    "docs": "Documentation",
-    "welcome": "Welcome back, {name}!",
-    "profile": "Profile",
-    "stats": "Statistics",
+    "browser": "Im Browser öffnen",
+    "discord": "Betrete unseren Discord",
+    "error-with-status": "Auf dem Server ist ein Fehler ({statusCode}) aufgetreten",
+    "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",
+    "news": "Nachrichten",
+    "home": "Start",
+    "docs": "Dokumentation",
+    "welcome": "Willkommen zurück, {name}!",
+    "profile": "Profil",
+    "stats": "Statistiken",
     "settings": {
-        "information": "Information",
-        "title": "Settings",
-        "privacypolicy": "Privacy Policy",
-        "changelog": "Changelog",
+        "information": "Informationen",
+        "title": "Einstellungen",
+        "privacypolicy": "Datenschutzerklärung",
+        "changelog": "Änderungsliste",
         "home": {
-            "title": "Home",
-            "username": "Username"
+            "title": "Start",
+            "username": "Benutzername"
         },
         "appearance": {
-            "title": "Appearance",
+            "title": "Personalisierung",
             "theme": {
-                "title": "Theme",
-                "dark": "Dark",
-                "light": "Light",
+                "title": "Thema",
+                "dark": "Dunkel",
+                "light": "Hell",
                 "system": "System"
             },
             "locale": {
-                "title": "Locale",
-                "default": "Default",
-                "restart": "This setting needs a restart!",
-                "en": "English",
-                "de": "German"
+                "title": "Sprache",
+                "default": "Standard",
+                "restart": "Diese Einstellung benötigt ein Neustart der App",
+                "en": "Englisch",
+                "de": "Deutsch"
             },
             "color": {
-                "title": "Color",
-                "classic": "Classic",
+                "title": "Farbe",
+                "classic": "Klassisch",
                 "modern": "Modern",
-                "artistic": "Artistic",
-                "spring": "Spring",
-                "summer": "Summer",
-                "autumn": "Autumn",
+                "artistic": "Künstlerisch",
+                "spring": "Frühling",
+                "summer": "Sommer",
+                "autumn": "Herbst",
                 "winter": "Winter"
             }
         },
         "general": {
-            "title": "General"
+            "title": "Generell"
         },
         "downloads": {
             "title": "Downloads"
         },
-        "update": "Update",
+        "update": "Anwenden",
         "servers": {
-            "title": "Servers",
+            "title": "Server",
             "add": {
-                "fab": "Add server",
+                "fab": "Server hinzufügen",
                 "url": "URL",
-                "hint": "eg. https://backend.dev-doctor.cf",
-                "title": "Do you want to add the server {name}?",
-                "body": "The server {name} with the url {url} will displayed on the courses page."
+                "hint": "zB. https://backend.dev-doctor.cf",
+                "title": "Möchten Sie den Server {name} hinzufügen?",
+                "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt."
             },
-            "error": "Server not available!"
+            "error": "Server nicht erreichbar!"
         },
         "collections": {
-            "title": "Collections",
+            "title": "Kollektionen",
             "add": {
-                "fab": "Add collection",
+                "fab": "Kollektion hinzufügen",
                 "url": "URL",
-                "hint": "eg. https://collection.dev-doctor.cf",
-                "title": "Do you want to add the collection {name}?",
-                "body": "The colelction {name} with the url {url} will displayed on the collection page."
+                "hint": "zB. https://collection.dev-doctor.cf",
+                "title": "Möchten Sie den Kollektion {name} hinzufügen?",
+                "body": "Die Kollektion {name} mit der URL {url} wird auf der Kollektionseite angezeigt."
             },
-            "error": "Collection server not available!"
+            "error": "Kollektionsserver nicht erreichbar!"
         },
-        "about": "About",
-        "imprint": "Imprint",
+        "about": "Über",
+        "imprint": "Impressum",
         "code": "Code",
-        "license": "License"
+        "license": "Lizenz"
     },
-    "code": "Show code",
-    "agree": "Agree",
-    "disagree": "Disagree",
-    "save": "Save",
-    "cancel": "Cancel",
-    "create": "Create",
-    "close": "Close",
-    "change": "Change",
-    "no": "No",
-    "yes": "Yes",
-    "ready-for-offline": "Ready for offline!",
+    "code": "Code anzeigen",
+    "agree": "Akzeptieren",
+    "disagree": "Ablehnen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "create": "Erstellen",
+    "close": "Schließen",
+    "change": "Ändern",
+    "no": "Nein",
+    "yes": "Ja",
+    "ready-for-offline": "Bereit für den Offline Modus",
     "update-available": {
-        "message": "Update available!",
-        "refresh": "Reload"
+        "message": "Update verfügbar!",
+        "refresh": "Neuladen"
     },
-    "coming-soon": "Coming soon..."
+    "coming-soon": "In Planung..."
 }
