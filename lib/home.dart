@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
                   padding: EdgeInsets.all(5),
                   child: Wrap(alignment: WrapAlignment.center, children: [
                     ElevatedButton.icon(
-                        onPressed: () => launch("https://linwood.tk/docs/dev-doctor/overview"),
+                        onPressed: () => launch("https://docs.dev-doctor.cf/docs/backend/own"),
                         icon: Icon(Icons.description_outlined,
                             color: Theme.of(context).primaryIconTheme.color),
                         label: Text("docs".tr().toUpperCase(),

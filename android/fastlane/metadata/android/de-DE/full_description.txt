@@ -1,6 +1,6 @@
 # Lerne alles
 
-Jeder kann sein eigenes Backend erstellen. Schaue hier: https://linwood.tk/docs/dev-doctor/own-backend und jeder kann dieses Backend in seinen Einstellungen einfügen.
+Jeder kann sein eigenes Backend erstellen. Schaue hier: https://docs.dev-doctor.cf/docs/backend/own und jeder kann dieses Backend in seinen Einstellungen einfügen.
 
 # Lerne überall
 
