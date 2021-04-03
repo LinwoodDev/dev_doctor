@@ -72,7 +72,7 @@
                 "evaluation": {
                     "item": "Auswertung",
                     "label": "Auswertung",
-                    "hint": "Eine Erklärung zur Lösung"
+                    "hint": "An Erläuterung zur Antwort"
                 },
                 "delete": {
                     "item": "Löschen",
