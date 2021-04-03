@@ -55,7 +55,8 @@
             "points": "Punkte",
             "add": "Frage hinzufügen",
             "time": {
-                "subtitle": "Sekunden übrig"
+                "subtitle": "Sekunden übrig",
+                "notset": "Zeit nicht gesetzt"
             },
             "validation": {
                 "title": "Auswertung",
