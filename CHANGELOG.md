@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1 (April 4, 2021)
+
+* Fixing api version bug
+* Add french language
+
 ## 1.3.0 (April 2, 2021)
 
 * Add desktop support (windows, linux)
