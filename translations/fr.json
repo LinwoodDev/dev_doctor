@@ -268,7 +268,8 @@
                 "default": "Par défaut",
                 "restart": "Ce paramètre nécessite un redémarrage!",
                 "en": "Anglais",
-                "de": "Allemand"
+                "de": "Allemand",
+                "fr": "Français"
             },
             "color": {
                 "title": "Couleur",

@@ -268,7 +268,8 @@
                 "default": "Standard",
                 "restart": "Diese Einstellung benötigt ein Neustart der App",
                 "en": "Englisch",
-                "de": "Deutsch"
+                "de": "Deutsch",
+                "fr": "Französisch"
             },
             "color": {
                 "title": "Farbe",
