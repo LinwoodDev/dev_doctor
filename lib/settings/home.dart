@@ -93,7 +93,7 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: Icon(Icons.description_outlined),
               title: Text("docs").tr(),
-              onTap: () => launch("https://docs.dev-doctor.cf/docs/backend/overview")),
+              onTap: () => launch("https://docs.dev-doctor.cf/backend/overview")),
           ListTile(
               leading: Icon(Icons.history_outlined),
               title: Text("settings.changelog").tr(),
@@ -106,7 +106,7 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: Icon(Icons.privacy_tip_outlined),
               title: Text("settings.privacypolicy").tr(),
-              onTap: () => launch("https://docs.dev-doctor.cf/docs/privacypolicy")),
+              onTap: () => launch("https://docs.dev-doctor.cf/privacypolicy")),
           ListTile(
               leading: Icon(Icons.info_outline),
               title: Text("settings.about").tr(),

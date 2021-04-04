@@ -13,7 +13,7 @@
 
 ### Learn everything
 
-Everyone can create their own backend. See [here](https://docs.dev-doctor.cf/docs/backend/own) and everyone can add it to the server list in the settings.
+Everyone can create their own backend. See [here](https://docs.dev-doctor.cf/backend/own) and everyone can add it to the server list in the settings.
 
 ### Learn everywhere
 

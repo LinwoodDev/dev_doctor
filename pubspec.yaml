@@ -54,7 +54,7 @@ flutter_icons:
 dev_dependencies:
   build_runner: ^1.12.2
   hive_generator: ^1.0.1
-  msix: ^1.0.4
+  msix: ^1.0.5
   flutter_test:
     sdk: flutter
   #integration_test:
