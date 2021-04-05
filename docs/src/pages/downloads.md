@@ -72,7 +72,7 @@ title: Downloads
 
 ## Useful links
 
-- [Changelog](CHANGELOG.md)
+- [Changelog](changelog)
 - [Older releases](https://github.com/LinwoodCloud/dev_doctor/releases)
 - [Latest release](https://github.com/LinwoodCloud/dev_doctor/releases/latest)
 - [Support](https://discord.linwood.tk)
