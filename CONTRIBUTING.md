@@ -14,6 +14,7 @@ If you want to help me to code, you can open a pull request. Fork this project a
 ## Translation
 
 ![Locale chart](https://badges.awesome-crowdin.com/translation-200008942-4.png)
+
 If you can translate well, you can help us by translating the message on [crowdin](https://linwood.crowdin.com/dev-doctor).
 
 ## Community Server
