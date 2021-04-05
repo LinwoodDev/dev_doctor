@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - run: cd docs
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
       - name: Test Build
         run: |
-          cd docs
           if [ -e yarn.lock ]; then
           yarn install --frozen-lockfile
           elif [ -e package-lock.json ]; then
@@ -30,8 +30,8 @@ jobs:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - run: cd docs
       - uses: actions/checkout@v1
+      - run: cd docs
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
