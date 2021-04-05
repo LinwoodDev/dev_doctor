@@ -1,0 +1,68 @@
+{
+  "version-1.2/docs": [
+    {
+      "type": "doc",
+      "id": "version-1.2/introduction"
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Backend",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.2/backend/overview"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.2/backend/own"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.2/backend/collection"
+        }
+      ]
+    },
+    {
+      "type": "doc",
+      "id": "version-1.2/privacypolicy"
+    }
+  ],
+  "version-1.2/api": [
+    {
+      "type": "doc",
+      "id": "version-1.2/api"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.2/api/course"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.2/api/part"
+    },
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Item",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.2/api/item/overview"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.2/api/item/text"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.2/api/item/video"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.2/api/item/quiz"
+        }
+      ]
+    }
+  ]
+}
