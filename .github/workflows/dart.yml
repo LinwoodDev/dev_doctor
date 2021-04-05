@@ -5,8 +5,8 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
+      - run: cd app
       - uses: subosito/flutter-action@v1
         with:
           channel: 'beta' # or: 'stable' or 'dev'
