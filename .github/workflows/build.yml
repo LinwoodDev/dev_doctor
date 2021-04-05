@@ -18,10 +18,13 @@ jobs:
       - name: ✅ Enable platforms
         run: flutter config --enable-web
       - name: 📦 Get dependencies
-        run: flutter pub get
+        run: |
+          cd app
+          flutter pub get
       #- run: flutter test
       - name: 🏭 Build
         run: |
+          cd app
           flutter doctor -v
           flutter build apk -v --release
       - name: Archive
@@ -40,9 +43,12 @@ jobs:
       - name: ✅ Enable platforms
         run: flutter config --enable-windows-desktop
       - name: 📦 Get dependencies
-        run: flutter pub get
+        run: |
+          cd app
+          flutter pub get
       - name: 🏭 Build
         run: |
+          cd app
           flutter clean
           flutter doctor -v
           flutter build windows -v --release
@@ -69,9 +75,11 @@ jobs:
         run: flutter config --enable-linux-desktop
       - name: 📦 Get dependencies
         run: |
+          cd app
           flutter pub get
       - name: 🏭 Build
         run: |
+          cd app
           flutter clean
           flutter doctor -v
           flutter build linux -v --release

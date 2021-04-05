@@ -188,147 +188,148 @@
         "title": "Kurse",
         "servers": "Server",
         "filter": "Filter",
-        "longer": "Search term must be longer than two letters.",
-        "empty": "No courses available. Add servers using the settings!"
+        "longer": "Der Suchbegriff muss länger als 2 Zeichen sein.",
+        "empty": "Keine Kurse verfügbar. Füge einen neuen Server über die Einstellungen hinzu!"
     },
     "backends": {
         "title": "Backends",
-        "longer": "Search term must be longer than two letters."
+        "longer": "Der Suchbegriff muss länger als 2 Zeichen sein."
     },
     "editor": {
         "title": "Editor",
         "create": {
-            "fab": "Create backend",
-            "title": "Create backend",
+            "fab": "Erstelle Backend",
+            "title": "Erstelle Backend",
             "name": {
                 "label": "Name",
                 "hint": "Dev-Doctor",
-                "empty": "The name cannot be empty!",
-                "exist": "A backend with this name already exist!"
+                "empty": "Der Name darf nicht leer sein!",
+                "exist": "Ein Backend mit dem gleichen Namen existiert bereits!"
             },
             "note": {
-                "label": "Note",
-                "hint": "The sample backend of dev-doctor"
+                "label": "Notiz",
+                "hint": "Das Beispiel-Backend von dev-doctor"
             },
-            "submit": "Create",
+            "submit": "Erstellen",
             "markdown": {
                 "title": "Markdown Editor",
                 "preview": {
-                    "title": "Preview"
+                    "title": "Vorschau"
                 }
             }
         },
         "item": {
             "title": "Item Editor",
             "name": {
-                "hint": "Welcome",
+                "hint": "Willkommen",
                 "label": "Name"
             },
             "description": {
-                "hint": "Welcome to the course",
-                "label": "Description"
+                "hint": "Willkommen zu dem Kurs",
+                "label": "Beschreibung"
             }
         },
         "code": {
             "title": "Code",
-            "hint": "Insert data here",
+            "hint": "Daten hier einfügen",
             "label": "JSON",
-            "submit": "Update"
+            "submit": "Aktualisieren"
         }
     },
-    "browser": "Open in browser",
-    "discord": "Join our discord",
-    "error-with-status": "A {statusCode} error occurred on server",
-    "error-without-status": "An error occurred on the server",
-    "news": "News",
-    "home": "Home",
-    "docs": "Documentation",
-    "welcome": "Welcome back, {name}!",
-    "profile": "Profile",
-    "stats": "Statistics",
+    "browser": "Im Browser öffnen",
+    "discord": "Betrete unseren Discord",
+    "error-with-status": "Auf dem Server ist ein Fehler ({statusCode}) aufgetreten",
+    "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",
+    "news": "Nachrichten",
+    "home": "Start",
+    "docs": "Dokumentation",
+    "welcome": "Willkommen zurück, {name}!",
+    "profile": "Profil",
+    "stats": "Statistiken",
     "settings": {
-        "information": "Information",
-        "title": "Settings",
-        "privacypolicy": "Privacy Policy",
-        "changelog": "Changelog",
+        "information": "Informationen",
+        "title": "Einstellungen",
+        "privacypolicy": "Datenschutzerklärung",
+        "changelog": "Änderungsliste",
         "home": {
-            "title": "Home",
-            "username": "Username"
+            "title": "Start",
+            "username": "Benutzername"
         },
         "appearance": {
-            "title": "Appearance",
+            "title": "Personalisierung",
             "theme": {
-                "title": "Theme",
-                "dark": "Dark",
-                "light": "Light",
+                "title": "Thema",
+                "dark": "Dunkel",
+                "light": "Hell",
                 "system": "System"
             },
             "locale": {
-                "title": "Locale",
-                "default": "Default",
-                "restart": "This setting needs a restart!",
-                "en": "English",
-                "de": "German"
+                "title": "Sprache",
+                "default": "Standard",
+                "restart": "Diese Einstellung benötigt ein Neustart der App",
+                "en": "Englisch",
+                "de": "Deutsch",
+                "fr": "Französisch"
             },
             "color": {
-                "title": "Color",
-                "classic": "Classic",
+                "title": "Farbe",
+                "classic": "Klassisch",
                 "modern": "Modern",
-                "artistic": "Artistic",
-                "spring": "Spring",
-                "summer": "Summer",
-                "autumn": "Autumn",
+                "artistic": "Künstlerisch",
+                "spring": "Frühling",
+                "summer": "Sommer",
+                "autumn": "Herbst",
                 "winter": "Winter"
             }
         },
         "general": {
-            "title": "General"
+            "title": "Generell"
         },
         "downloads": {
             "title": "Downloads"
         },
-        "update": "Update",
+        "update": "Anwenden",
         "servers": {
-            "title": "Servers",
+            "title": "Server",
             "add": {
-                "fab": "Add server",
+                "fab": "Server hinzufügen",
                 "url": "URL",
-                "hint": "eg. https://backend.dev-doctor.cf",
-                "title": "Do you want to add the server {name}?",
-                "body": "The server {name} with the url {url} will displayed on the courses page."
+                "hint": "zB. https://backend.dev-doctor.cf",
+                "title": "Möchten Sie den Server {name} hinzufügen?",
+                "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt."
             },
-            "error": "Server not available!"
+            "error": "Server nicht erreichbar!"
         },
         "collections": {
-            "title": "Collections",
+            "title": "Kollektionen",
             "add": {
-                "fab": "Add collection",
+                "fab": "Kollektion hinzufügen",
                 "url": "URL",
-                "hint": "eg. https://collection.dev-doctor.cf",
-                "title": "Do you want to add the collection {name}?",
-                "body": "The colelction {name} with the url {url} will displayed on the collection page."
+                "hint": "zB. https://collection.dev-doctor.cf",
+                "title": "Möchten Sie den Kollektion {name} hinzufügen?",
+                "body": "Die Kollektion {name} mit der URL {url} wird auf der Kollektionseite angezeigt."
             },
-            "error": "Collection server not available!"
+            "error": "Kollektionsserver nicht erreichbar!"
         },
-        "about": "About",
-        "imprint": "Imprint",
+        "about": "Über",
+        "imprint": "Impressum",
         "code": "Code",
-        "license": "License"
+        "license": "Lizenz"
     },
-    "code": "Show code",
-    "agree": "Agree",
-    "disagree": "Disagree",
-    "save": "Save",
-    "cancel": "Cancel",
-    "create": "Create",
-    "close": "Close",
-    "change": "Change",
-    "no": "No",
-    "yes": "Yes",
-    "ready-for-offline": "Ready for offline!",
+    "code": "Code anzeigen",
+    "agree": "Akzeptieren",
+    "disagree": "Ablehnen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "create": "Erstellen",
+    "close": "Schließen",
+    "change": "Ändern",
+    "no": "Nein",
+    "yes": "Ja",
+    "ready-for-offline": "Bereit für den Offline Modus",
     "update-available": {
-        "message": "Update available!",
-        "refresh": "Reload"
+        "message": "Update verfügbar!",
+        "refresh": "Neuladen"
     },
-    "coming-soon": "Coming soon..."
+    "coming-soon": "In Planung..."
 }

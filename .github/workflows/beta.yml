@@ -22,6 +22,7 @@ jobs:
       #- run: flutter test
       - name: 🏭 Build
         run: |
+          cd app
           flutter doctor -v
           flutter build appbundle -v
       - uses: ruby/setup-ruby@v1
@@ -30,6 +31,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - name: Install dependencies
         run: |
+          cd app
           cd android
           gem install bundler
           bundle install
