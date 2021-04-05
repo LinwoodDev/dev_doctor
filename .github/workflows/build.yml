@@ -43,7 +43,9 @@ jobs:
       - name: ✅ Enable platforms
         run: flutter config --enable-windows-desktop
       - name: 📦 Get dependencies
-        run: flutter pub get
+        run: |
+          cd app
+          flutter pub get
       - name: 🏭 Build
         run: |
           cd app
