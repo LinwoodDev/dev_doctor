@@ -17,7 +17,7 @@ module.exports = {
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'LinwoodCloud', // Usually your GitHub org/user name.
-  projectName: 'dev_doctor-docs', // Usually your repo name.
+  projectName: 'dev_doctor', // Usually your repo name.
   themeConfig: {
     navbar: {
       title: 'Dev-Doctor',
@@ -87,10 +87,6 @@ module.exports = {
               href: 'https://github.com/LinwoodCloud/dev_doctor.git',
             },
             {
-              label: 'Documentation',
-              href: 'https://github.com/LinwoodCloud/dev_doctor-docs.git',
-            },
-            {
               label: 'Collection',
               href: 'https://github.com/LinwoodCloud/dev_doctor-collection',
             },
@@ -127,7 +123,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/LinwoodCloud/dev_doctor/edit/main/',
+            'https://github.com/LinwoodCloud/dev_doctor/edit/develop/docs/',
         },
         blog: false,
         theme: {
