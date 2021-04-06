@@ -332,5 +332,7 @@
         "refresh": "Neuladen"
     },
     "coming-soon": "In Planung...",
-    "back": "Zurück"
+    "back": "Zurück",
+    "back-to-home": "Zurück zur Startseite",
+    "error": "Fehler"
 }
