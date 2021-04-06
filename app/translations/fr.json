@@ -331,5 +331,8 @@
         "message": "Mise à jour disponible !",
         "refresh": "Reload"
     },
-    "coming-soon": "Prochainement..."
+    "coming-soon": "Prochainement...",
+    "back": "Retour",
+    "back-to-home": "Retour à l'accueil",
+    "error": "Erreur"
 }
