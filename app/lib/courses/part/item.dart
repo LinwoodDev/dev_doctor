@@ -8,6 +8,7 @@ import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/items/text.dart';
 import 'package:dev_doctor/models/items/video.dart';
 import 'package:dev_doctor/models/part.dart';
+import 'package:dev_doctor/widgets/error.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -67,6 +68,7 @@ class _PartItemPageState extends State<PartItemPage> {
                   if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
                   if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                   var part = snapshot.data!;
+                  if (bloc.hasError) return ErrorDisplay();
                   if (part.items.isEmpty) {
                     return Center(child: Text('course.part.empty'.tr()));
                   }

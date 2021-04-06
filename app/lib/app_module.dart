@@ -2,6 +2,7 @@ import 'package:dev_doctor/backends/home.dart';
 import 'package:dev_doctor/backends/module.dart';
 import 'package:dev_doctor/settings/home.dart';
 import 'package:dev_doctor/settings/module.dart';
+import 'package:dev_doctor/widgets/error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -29,6 +30,7 @@ class AppModule extends Module {
     ModuleRoute('/backends', module: BackendsModule()),
     ModuleRoute('/settings', module: SettingsModule()),
     ModuleRoute('/courses', module: CourseModule()),
+    ChildRoute('/error', child: (_, args) => ErrorDisplay()),
     ChildRoute('/add', child: (_, args) => AddServerPage(url: args.queryParams['url']!)),
   ];
 }
