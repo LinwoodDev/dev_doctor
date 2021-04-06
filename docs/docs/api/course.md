@@ -17,9 +17,11 @@ import TabItem from '@theme/TabItem';
 {
   "icon": "png",
   "name": "Example course",
-  "author": "CodeDoctorDE",
-  "author_url": "https://github.com/CodeDoctorDE",
-  "author_avatar": "https://avatars1.githubusercontent.com/u/20452814?v=4",
+  "author": {
+    "name": "CodeDoctorDE",
+    "url": "https://github.com/CodeDoctorDE",
+    "avatar": "https://avatars1.githubusercontent.com/u/20452814?v=4"
+  },
   "description": "This course is only an example which shows how this config works\n",
   "body": "Changes are automatically rendered as you type.\n* Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)\n* Renders actual, \"native\" React DOM elements\n* Allows you to escape or skip HTML (try toggling the checkboxes above)\n* If you escape or skip the HTML, no `dangerouslySetInnerHTML` is used! Yay!\n## Table of Contents\n## HTML block below\n<blockquote>\n  This blockquote will change based on the HTML settings above.\n</blockquote>\n## How about some code?\n```js\nvar React = require('react');\nvar Markdown = require('react-markdown');\nReact.render(\n  <Markdown source=\"# Your markdown here\" />,\n  document.getElementById('content')\n);\n```\n\nPretty neat, eh?\n\n## Tables?\n\n|  Feature  | Support |\n| :-------: | ------- |\n|  tables   | ✔       |\n| alignment | ✔       |\n|   wewt    | ✔       |\n\n## More info?\n\nRead usage information and more on [GitHub](https://github.com/remarkjs/react-markdown)\n---------------\nA component by [Espen Hovlandsdal](https://espen.codes/)\n",
   "category": [],
@@ -43,9 +45,10 @@ icon: png
 name: Example course
 
 # The author. It will appear on the front page and on the courses list
-author: CodeDoctorDE
-author_url: https://github.com/CodeDoctorDE
-author_avatar: https://avatars1.githubusercontent.com/u/20452814?v=4
+author: 
+  name: CodeDoctorDE
+  url: https://github.com/CodeDoctorDE
+  avatar: https://avatars1.githubusercontent.com/u/20452814?v=4
 
 # The description of the course which can be seen in the list of the courses and the intro page.
 description: >

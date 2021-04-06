@@ -26,6 +26,7 @@ module.exports = {
     'api',
     'api/course',
     'api/part',
+    'api/author',
 
     {
       type: 'category',
