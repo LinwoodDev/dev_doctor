@@ -5,18 +5,16 @@
 Use this section to tell people about which versions of your project are
 currently being supported with security updates.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.2.x   | :heavy_check_mark: |
-| 1.1.x   | :x:                |
-| 1.0.x   | :x:                |
-| 0.2.x   | :x:                |
-| 0.1.x   | :x:                |
+| Version | Supported          |                                                   |
+| ------- | ------------------ | ------------------------------------------------: |
+| Preview | :yellow_circle:    | [Documentation](https://docs.dev-doctor.cf/next/) |
+| 1.3.x   | :heavy_check_mark: |      [Documentation](https://docs.dev-doctor.cf/) |
+| 1.2.x   | :x:                |  [Documentation](https://docs.dev-doctor.cf/1.2/) |
+| 1.1.x   | :x:                |  [Documentation](https://docs.dev-doctor.cf/1.2/) |
+| 1.0.x   | :x:                |  [Documentation](https://docs.dev-doctor.cf/1.2/) |
+| 0.2.x   | :x:                |  [Documentation](https://docs.dev-doctor.cf/1.2/) |
+| 0.1.x   | :x:                |  [Documentation](https://docs.dev-doctor.cf/1.2/) |
 
-## Reporting a Vulnerability
+## Reporting a bug
 
-Use this section to tell people how to report a vulnerability.
-
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Please open an issue [here](https://github.com/LinwoodCloud/dev_doctor/issues/new?assignees=&labels=bug&template=bug_report.md&title=Bug%3A+).
