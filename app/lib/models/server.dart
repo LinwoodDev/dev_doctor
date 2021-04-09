@@ -116,16 +116,28 @@ class CoursesServer {
     return CoursesServer.fromJson(data);
   }
 
-  Future<List<Course>> fetchCourses() => Future.wait(courses.map((course) => fetchCourse(course)));
+  Future<List<Course>> fetchCourses() =>
+      Future.wait(courses.map((course) => fetchCourse(course))).then((value) async {
+        var list = <Course>[];
+        value.forEach((element) {
+          if (element != null) list.add(element);
+        });
+        return list;
+      });
 
-  Future<Course> fetchCourse(String? course) async {
-    var data = await loadFile("$url/$course/config");
+  Future<Course?> fetchCourse(String? course) async {
+    try {
+      var data = await loadFile("$url/$course/config");
 
-    data['server'] = this;
-    data['index'] = index;
-    data['slug'] = course;
-    data['api-version'] = data['api-version'] ?? 0;
-    return Course.fromJson(data);
+      data['server'] = this;
+      data['index'] = index;
+      data['slug'] = course;
+      data['api-version'] = data['api-version'] ?? 0;
+      return Course.fromJson(data);
+    } catch (e) {
+      print("Error $e");
+      return null;
+    }
   }
 }
 

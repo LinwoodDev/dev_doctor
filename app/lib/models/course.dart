@@ -79,15 +79,26 @@ class Course {
 
   get url => server!.url! + "/" + slug;
 
-  Future<List<CoursePart>> fetchParts() async =>
-      Future.wait(parts.map((part) => fetchPart(part)).toList());
+  Future<List<CoursePart>> fetchParts() =>
+      Future.wait(parts.map((course) => fetchPart(course))).then((value) async {
+        var list = <CoursePart>[];
+        value.forEach((element) {
+          if (element != null) list.add(element);
+        });
+        return list;
+      });
 
-  Future<CoursePart> fetchPart(String? part) async {
-    var data = await loadFile("${server!.url}/$slug/$part/config", type: server!.type);
-    //data['items'] = yamlListToJson(data['items']).toList();
-    data['course'] = this;
-    data['slug'] = part;
-    return CoursePart.fromJson(data);
+  Future<CoursePart?> fetchPart(String? part) async {
+    try {
+      var data = await loadFile("${server!.url}/$slug/$part/config", type: server!.type);
+      //data['items'] = yamlListToJson(data['items']).toList();
+      data['course'] = this;
+      data['slug'] = part;
+      return CoursePart.fromJson(data);
+    } catch (e) {
+      print("Error $e");
+      return null;
+    }
   }
 
   Course copyWith(

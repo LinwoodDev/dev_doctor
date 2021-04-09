@@ -1,4 +1,5 @@
 import 'package:dev_doctor/backends/entry.dart';
+import 'package:dev_doctor/courses/bloc.dart';
 import 'package:dev_doctor/courses/course.dart';
 import 'package:dev_doctor/editor/author.dart';
 import 'package:dev_doctor/editor/part.dart';
@@ -9,6 +10,7 @@ import 'home.dart';
 import 'markdown.dart';
 
 class EditorModule extends Module {
+  static Inject get to => Inject<EditorModule>();
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (_, args) => EditorPage()),
@@ -18,7 +20,7 @@ class EditorModule extends Module {
         }),
         ChildRoute('/course', child: (_, args) {
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
-          return CoursePage(editorBloc: bloc, course: args.queryParams['course']!);
+          return CoursePage(editorBloc: bloc);
         }),
         ChildRoute('/edit', child: (_, args) {
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
@@ -53,4 +55,6 @@ class EditorModule extends Module {
         }),
         ModuleRoute('/course/item', module: EditorPartModule())
       ];
+  @override
+  List<Bind<Object>> get binds => [Bind.singleton((i) => CourseBloc())];
 }
