@@ -51,8 +51,9 @@ class _ItemFetcher {
 class CustomSearchDelegate extends SearchDelegate {
   var _itemFetcher;
   final List<String>? servers;
+  final bool gridView;
 
-  CustomSearchDelegate(this._itemFetcher, {this.servers});
+  CustomSearchDelegate(this._itemFetcher, this.gridView, {this.servers});
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -89,7 +90,7 @@ class CustomSearchDelegate extends SearchDelegate {
         ],
       );
     }
-    return CoursesList(fetcher: _itemFetcher, query: query, servers: servers);
+    return CoursesList(fetcher: _itemFetcher, query: query, servers: servers, gridView: gridView);
   }
 
   @override
@@ -103,6 +104,7 @@ class CustomSearchDelegate extends SearchDelegate {
 class _CoursesPageState extends State<CoursesPage> {
   var _itemFetcher;
   var _box = Hive.box<String>('servers');
+  bool gridView = false;
   final List<String> _filteredServers = <String>[];
 
   @override
@@ -121,7 +123,7 @@ class _CoursesPageState extends State<CoursesPage> {
               onPressed: () {
                 showSearch(
                   context: context,
-                  delegate: CustomSearchDelegate(_itemFetcher),
+                  delegate: CustomSearchDelegate(_itemFetcher, gridView),
                 );
               }),
           IconButton(
@@ -156,18 +158,26 @@ class _CoursesPageState extends State<CoursesPage> {
                                           });
                                     }))))));
                 setState(() => _itemFetcher = _ItemFetcher(servers: _filteredServers));
-              })
+              }),
+          IconButton(
+            icon: Icon(gridView ? Icons.view_list_outlined : Icons.grid_view),
+            onPressed: () {
+              setState(() => gridView = !gridView);
+            },
+          )
         ]),
-        body: CoursesList(fetcher: _itemFetcher, query: ""));
+        body: CoursesList(fetcher: _itemFetcher, query: "", gridView: gridView));
   }
 }
 
 class CoursesList extends StatefulWidget {
   final _ItemFetcher? fetcher;
   final String? query;
+  final bool gridView;
   final List<String>? servers;
 
-  const CoursesList({Key? key, this.fetcher, this.query, this.servers}) : super(key: key);
+  const CoursesList({Key? key, this.fetcher, this.query, this.servers, required this.gridView})
+      : super(key: key);
   @override
   _CoursesListState createState() => _CoursesListState();
 }
@@ -216,13 +226,48 @@ class _CoursesListState extends State<CoursesList> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scrollbar(
-        child: ListView.builder(
-      // Need to display a loading tile if more items are coming
-      itemCount: _hasMore ? _pairList.length + 1 : _pairList.length,
-      itemBuilder: (BuildContext context, int index) {
+  Widget _buildTile(BuildContext context, int index) {
+    var course = _pairList[index];
+    var hero = course.icon?.isEmpty ?? true
+        ? null
+        : Hero(
+            tag: "course-icon-${course.server!.index}-${course.index}",
+            child: UniversalImage(type: course.icon, url: course.url + "/icon"));
+    if (widget.gridView)
+      return Card(
+          child: InkWell(
+              onTap: () => _onTap(course),
+              child: Container(
+                constraints: BoxConstraints(maxWidth: 250),
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  Container(padding: const EdgeInsets.all(8.0), child: hero),
+                  Text(course.name),
+                  Text(course.description ?? '', style: Theme.of(context).textTheme.caption)
+                ]),
+              )));
+    return ListTile(
+        title: Text(course.name),
+        subtitle: Text(course.description ?? ''),
+        onTap: () => _onTap(course),
+        leading: hero);
+  }
+
+  void _onTap(Course course) {
+    Navigator.of(context).pushNamed(Uri(pathSegments: [
+      "",
+      "courses",
+      "details"
+    ], queryParameters: <String, String?>{
+      "serverId": course.server!.index.toString(),
+      "course": course.slug
+    }).toString());
+  }
+
+  List<Widget> _buildList(BuildContext context) {
+    return List.generate(
+      _hasMore ? _pairList.length + 1 : _pairList.length,
+      (index) {
         // Uncomment the following line to see in real time how ListView.builder works
         if (index >= _pairList.length) {
           // Don't trigger if one async loading is already under way
@@ -237,26 +282,19 @@ class _CoursesListState extends State<CoursesList> {
             ),
           );
         }
-        var course = _pairList[index];
-        return ListTile(
-            title: Text(course.name),
-            subtitle: Text(course.description!),
-            onTap: () {
-              Navigator.of(context).pushNamed(Uri(pathSegments: [
-                "",
-                "courses",
-                "details"
-              ], queryParameters: <String, String?>{
-                "serverId": course.server!.index.toString(),
-                "course": course.slug
-              }).toString());
-            },
-            leading: course.icon?.isEmpty ?? true
-                ? null
-                : Hero(
-                    tag: "course-icon-${course.server!.index}-${course.index}",
-                    child: UniversalImage(type: course.icon, url: course.url + "/icon")));
+        return _buildTile(context, index);
       },
-    ));
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+        child: SingleChildScrollView(
+            child: widget.gridView
+                ? Wrap(children: _buildList(context))
+                : Column(
+                    // Need to display a loading tile if more items are coming
+                    children: _buildList(context))));
   }
 }

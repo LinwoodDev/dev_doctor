@@ -40,8 +40,8 @@ class HomePage extends StatelessWidget {
               if (kIsWeb)
                 Padding(
                     padding: EdgeInsets.all(5),
-                    child: RawMaterialButton(
-                        onPressed: () =>
+                    child: InkWell(
+                        onTap: () =>
                             launch("https://vercel.com?utm_source=Linwood&utm_campaign=oss"),
                         child: SvgPicture.asset("images/powered-by-vercel.svg",
                             semanticsLabel: 'Powered by Vercel'))),
