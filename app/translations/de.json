@@ -307,7 +307,7 @@
                 "url": "URL",
                 "hint": "zB. https://collection.dev-doctor.cf",
                 "title": "Möchten Sie den Kollektion {name} hinzufügen?",
-                "body": "The collection {name} with the url {url} will displayed on the collection page."
+                "body": "Die Sammlung {name} mit der URL {url} wird auf der Sammlungsseite angezeigt."
             },
             "error": "Kollektionsserver nicht erreichbar!"
         },
