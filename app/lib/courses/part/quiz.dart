@@ -297,7 +297,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
 
   Future<void> updateItem(QuizPartItem item) async {
     var courseBloc = widget.editorBloc!.getCourse(bloc.course!);
-    var part = courseBloc.getCoursePart(bloc.part);
+    var part = courseBloc.getCoursePart(bloc.part!);
     var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[widget.itemId!] = item);
     courseBloc.updateCoursePart(coursePart);
     await widget.editorBloc!.save();
@@ -384,7 +384,7 @@ extension QuestionOptionExtension on QuestionOption {
   Future<void> onSelected(BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc,
       int itemId, int questionId) async {
     var courseBloc = bloc.getCourse(partBloc.course!);
-    var part = courseBloc.getCoursePart(partBloc.part);
+    var part = courseBloc.getCoursePart(partBloc.part!);
     var item = part.items[itemId] as QuizPartItem;
     var question = item.questions[questionId];
     switch (this) {
@@ -560,7 +560,7 @@ extension QuestionOptionExtension on QuestionOption {
   Future<void> updateItem(
       ServerEditorBloc bloc, CoursePartBloc partBloc, int itemId, QuizPartItem item) async {
     var courseBloc = bloc.getCourse(partBloc.course!);
-    var part = courseBloc.getCoursePart(partBloc.part);
+    var part = courseBloc.getCoursePart(partBloc.part!);
     var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[itemId] = item);
     courseBloc.updateCoursePart(coursePart);
     await bloc.save();
@@ -621,7 +621,7 @@ extension AnswerOptionExtension on AnswerOption {
   Future<void> onSelected(BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc,
       int itemId, int questionId, int answerId) async {
     var course = bloc.getCourse(partBloc.course!);
-    var part = course.getCoursePart(partBloc.part);
+    var part = course.getCoursePart(partBloc.part!);
     var item = part.items[itemId] as QuizPartItem;
     var question = item.questions[questionId];
     var answer = question.answers![answerId];
@@ -803,7 +803,7 @@ extension AnswerOptionExtension on AnswerOption {
   Future<void> updateQuestion(ServerEditorBloc bloc, CoursePartBloc partBloc, int itemId,
       int questionId, QuizQuestion question) async {
     var courseBloc = bloc.getCourse(partBloc.course!);
-    var part = courseBloc.getCoursePart(partBloc.part);
+    var part = courseBloc.getCoursePart(partBloc.part!);
     var item = part.items[itemId] as QuizPartItem;
     var coursePart = part.copyWith(
         items: List<PartItem>.from(part.items)

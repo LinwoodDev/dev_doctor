@@ -22,23 +22,15 @@ class CourseBloc extends Disposable {
       var currentServer = editorBloc != null
           ? editorBloc.server
           : await CoursesServer.fetch(index: serverId, url: server);
-      if (currentServer == null) {
-        _error = true;
-        return;
-      }
-      if (courseId != null) course = currentServer.courses[courseId];
+      if (courseId != null) course = currentServer?.courses[courseId];
       this.course = course;
-      if (course == null) {
-        _error = true;
-        return;
-      }
-      var current = editorBloc != null
-          ? editorBloc.getCourse(course).course
-          : await currentServer.fetchCourse(course);
-      if (current != null)
-        courseSubject.add(current);
-      else
-        _error = true;
+      var current = course == null
+          ? null
+          : editorBloc != null
+              ? editorBloc.getCourse(course).course
+              : await currentServer?.fetchCourse(course);
+      courseSubject.add(current ?? Course(parts: [], slug: ''));
+      if (current == null) _error = true;
     } catch (e) {
       print("Error $e");
       _error = true;

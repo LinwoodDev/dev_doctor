@@ -27,7 +27,7 @@ class _PartDetailsPageState extends State<PartDetailsPage> {
     if (widget.editorBloc != null)
       return widget.editorBloc!.getCourse(widget.course!).parts[widget.partId!];
     var server = await CoursesServer.fetch(index: widget.serverId);
-    var course = await server?.fetchCourse(widget.course);
+    var course = await server?.fetchCourse(widget.course!);
     return course?.fetchPart(widget.partId != null ? course.parts[widget.partId!] : widget.part);
   }
 

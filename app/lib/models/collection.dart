@@ -24,13 +24,15 @@ class BackendCollection {
         icon = json['icon'];
 
   static Future<BackendCollection?> fetch({String? url, int? index}) async {
-    var data = Map<String, dynamic>();
+    var data = <String, dynamic>{};
     try {
       if (index == null) {
         var current = _box.values.toList().indexOf(url!);
         if (current != -1) index = _box.keyAt(current);
       } else if (url == null) url = _box.get(index);
-      data = await loadFile("$url/config");
+      var loadedData = await loadFile("$url/config");
+      if (loadedData == null) return null;
+      data = loadedData;
     } catch (e) {
       print(e);
       return null;

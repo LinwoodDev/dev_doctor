@@ -32,6 +32,8 @@ class CourseEditorBloc {
     _parts.add(part);
     return part;
   }
+  bool hasCoursePart(String slug) =>
+      parts.where((element) => element.slug == slug).isNotEmpty;
 
   void deleteCoursePart(String? slug) => _parts.removeWhere((element) => element.slug == slug);
 
@@ -40,14 +42,14 @@ class CourseEditorBloc {
     _parts[index] = part;
   }
 
-  CoursePart changeCoursePartSlug(String? oldSlug, String newSlug) {
+  CoursePart changeCoursePartSlug(String oldSlug, String newSlug) {
     var part = getCoursePart(oldSlug);
     var newBloc = part.copyWith(slug: newSlug);
     _parts[_parts.indexWhere((element) => element.slug == oldSlug)] = newBloc;
     return newBloc;
   }
 
-  CoursePart getCoursePart(String? slug) =>
+  CoursePart getCoursePart(String slug) =>
       _parts.firstWhere((element) => element.slug == slug).copyWith(course: _course);
 }
 

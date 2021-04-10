@@ -43,6 +43,8 @@ class ServerEditorBloc extends HiveObject {
 
   CourseEditorBloc getCourse(String slug) =>
       _courses.firstWhere((element) => element.course.slug == slug);
+  bool hasCourse(String slug) =>
+      _courses.where((element) => element.course.slug == slug).isNotEmpty;
   CourseEditorBloc changeCourseSlug(String oldSlug, String newSlug) {
     var courseBloc = getCourse(oldSlug);
     var course = courseBloc.course.copyWith(slug: newSlug);

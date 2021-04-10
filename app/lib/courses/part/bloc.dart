@@ -29,16 +29,21 @@ class CoursePartBloc extends CourseBloc {
           : await CoursesServer.fetch(index: serverId, url: server);
       if (courseId != null) course = currentServer?.courses[courseId];
       this.course = course;
-      var currentCourse = editorBloc != null
-          ? editorBloc.getCourse(course!).course
-          : await currentServer?.fetchCourse(course);
+      var currentCourse = course == null
+          ? null
+          : editorBloc != null
+              ? editorBloc.getCourse(course).course
+              : await currentServer?.fetchCourse(course);
       courseSubject.add(currentCourse ?? Course(parts: [], slug: ''));
       if (partId != null) part = currentCourse?.parts[partId];
       this.part = part;
       var current = editorBloc != null
-          ? editorBloc.getCourse(course!).getCoursePart(part)
+          ? course == null || part == null || editorBloc.hasCourse(course)
+              ? null
+              : editorBloc.getCourse(course).getCoursePart(part)
           : await currentCourse?.fetchPart(part);
       partSubject.add(current ?? CoursePart(slug: ''));
+      if (current == null) _error = true;
     } catch (e) {
       print("Error $e");
       _error = true;

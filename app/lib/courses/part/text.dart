@@ -41,7 +41,7 @@ class TextPartItemPage extends StatelessWidget {
                       onSubmit: (value) {
                         var bloc = EditorPartModule.to.get<CoursePartBloc>();
                         var courseBloc = editorBloc!.getCourse(bloc.course!);
-                        var coursePart = courseBloc.getCoursePart(bloc.part);
+                        var coursePart = courseBloc.getCoursePart(bloc.part!);
                         var part = coursePart.copyWith(
                             items: List<PartItem>.from(coursePart.items)
                               ..[itemId!] = item!.copyWith(text: value));

@@ -11,6 +11,7 @@ import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/author.dart';
+import 'package:dev_doctor/widgets/error.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -66,24 +67,20 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  Stream<Course> _buildFuture() {
-    return bloc.courseSubject;
-  }
-
   @override
   Widget build(BuildContext context) {
     return widget.model != null
         ? _buildView(widget.model)
         : widget.editorBloc != null
             ? _buildView(widget.editorBloc?.getCourse(bloc.course!).course)
-            : StreamBuilder<Course?>(
-                stream: _buildFuture(),
+            : StreamBuilder<Course>(
+                stream: bloc.courseSubject,
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
                       return Center(child: CircularProgressIndicator());
                     default:
-                      if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                      if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
                       var course = snapshot.data;
                       return _buildView(course);
                   }
@@ -447,7 +444,7 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
       itemBuilder: (context) {
         return PartOptions.values.map<PopupMenuEntry<PartOptions>>((e) {
           var description =
-              e.getDescription(bloc.getCourse(partBloc.course!).getCoursePart(partBloc.part));
+              e.getDescription(bloc.getCourse(partBloc.course!).getCoursePart(partBloc.part!));
           return PopupMenuItem<PartOptions>(
               child: Row(children: [
                 Padding(
@@ -513,7 +510,7 @@ extension PartOptionsExtension on PartOptions {
   Future<void> onSelected(
       BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc) async {
     var courseBloc = bloc.getCourse(partBloc.course!);
-    var coursePart = courseBloc.getCoursePart(partBloc.part);
+    var coursePart = courseBloc.getCoursePart(partBloc.part!);
     switch (this) {
       case PartOptions.rename:
         var nameController = TextEditingController(text: coursePart.name);

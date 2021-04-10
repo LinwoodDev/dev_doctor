@@ -104,7 +104,9 @@ class CoursesServer {
         var current = _box.values.toList().indexOf(url!);
         if (current != -1) index = _box.keyAt(current);
       } else if (url == null) url = Hive.box<String>('servers').get(index);
-      data = await loadFile("$url/config");
+      var loadedData = await loadFile("$url/config");
+      if (loadedData == null) return null;
+      data = loadedData;
     } catch (e) {
       print(e);
       return null;
@@ -125,9 +127,10 @@ class CoursesServer {
         return list;
       });
 
-  Future<Course?> fetchCourse(String? course) async {
+  Future<Course?> fetchCourse(String course) async {
     try {
       var data = await loadFile("$url/$course/config");
+      if (data == null) return null;
 
       data['server'] = this;
       data['index'] = index;

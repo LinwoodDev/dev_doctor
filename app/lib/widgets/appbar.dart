@@ -40,7 +40,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         leading: this.leading,
         elevation: 5.0,
         automaticallyImplyLeading: automaticallyImplyLeading,
-        title: isWindow() ? WindowTitleBarBox(child: Text(title!)) : Text(title!),
+        title: isWindow() ? WindowTitleBarBox(child: Text(title ?? '')) : Text(title ?? ''),
         bottom: bottom,
         actions: [
           ...actions,

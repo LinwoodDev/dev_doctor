@@ -91,6 +91,7 @@ class Course {
   Future<CoursePart?> fetchPart(String? part) async {
     try {
       var data = await loadFile("${server!.url}/$slug/$part/config", type: server!.type);
+      if (data == null) return null;
       //data['items'] = yamlListToJson(data['items']).toList();
       data['course'] = this;
       data['slug'] = part;
