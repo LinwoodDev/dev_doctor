@@ -1,11 +1,14 @@
+import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rxdart/rxdart.dart';
 
-class CoursePartBloc extends Disposable {
-  BehaviorSubject<CoursePart> coursePart = BehaviorSubject<CoursePart>();
+import '../bloc.dart';
+
+class CoursePartBloc extends CourseBloc {
+  BehaviorSubject<CoursePart> partSubject = BehaviorSubject<CoursePart>();
   String? course, part;
   bool _error = false;
 
@@ -29,12 +32,13 @@ class CoursePartBloc extends Disposable {
       var currentCourse = editorBloc != null
           ? editorBloc.getCourse(course!).course
           : await currentServer?.fetchCourse(course);
+      courseSubject.add(currentCourse ?? Course(parts: [], slug: ''));
       if (partId != null) part = currentCourse?.parts[partId];
       this.part = part;
       var current = editorBloc != null
           ? editorBloc.getCourse(course!).getCoursePart(part)
           : await currentCourse?.fetchPart(part);
-      if (current != null) coursePart.add(current);
+      partSubject.add(current ?? CoursePart(slug: ''));
     } catch (e) {
       print("Error $e");
       _error = true;
@@ -54,12 +58,13 @@ class CoursePartBloc extends Disposable {
   }
 
   void reset() {
-    coursePart = BehaviorSubject<CoursePart>();
-    _error = false;
+    partSubject = BehaviorSubject<CoursePart>();
+    super.reset();
   }
 
   @override
   void dispose() {
-    coursePart.close();
+    partSubject.close();
+    super.dispose();
   }
 }

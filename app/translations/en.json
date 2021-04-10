@@ -268,7 +268,8 @@
                 "default": "Default",
                 "restart": "This setting needs a restart!",
                 "en": "English",
-                "de": "German"
+                "de": "German",
+                "fr": "French"
             },
             "color": {
                 "title": "Color",
@@ -306,7 +307,7 @@
                 "url": "URL",
                 "hint": "eg. https://collection.dev-doctor.cf",
                 "title": "Do you want to add the collection {name}?",
-                "body": "The colelction {name} with the url {url} will displayed on the collection page."
+                "body": "The collection {name} with the url {url} will displayed on the collection page."
             },
             "error": "Collection server not available!"
         },
@@ -330,5 +331,8 @@
         "message": "Update available!",
         "refresh": "Reload"
     },
-    "coming-soon": "Coming soon..."
+    "coming-soon": "Coming soon...",
+    "back": "Back",
+    "back-to-home": "Back to home",
+    "error": "Error"
 }

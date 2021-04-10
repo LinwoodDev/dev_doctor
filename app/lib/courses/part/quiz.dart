@@ -301,7 +301,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[widget.itemId!] = item);
     courseBloc.updateCoursePart(coursePart);
     await widget.editorBloc!.save();
-    bloc.coursePart.add(coursePart);
+    bloc.partSubject.add(coursePart);
     setState(() {
       _start = item.time;
     });
@@ -564,7 +564,7 @@ extension QuestionOptionExtension on QuestionOption {
     var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[itemId] = item);
     courseBloc.updateCoursePart(coursePart);
     await bloc.save();
-    partBloc.coursePart.add(coursePart);
+    partBloc.partSubject.add(coursePart);
   }
 }
 
@@ -811,6 +811,6 @@ extension AnswerOptionExtension on AnswerOption {
               questions: List<QuizQuestion>.from(item.questions)..[questionId] = question));
     courseBloc.updateCoursePart(coursePart);
     await bloc.save();
-    partBloc.coursePart.add(coursePart);
+    partBloc.partSubject.add(coursePart);
   }
 }

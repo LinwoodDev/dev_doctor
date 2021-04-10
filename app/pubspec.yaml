@@ -38,7 +38,7 @@ dependencies:
   xml: ^5.1.0
   flutter_localized_locales: ^2.0.1
   bitsdojo_window: ^0.1.0
-  share_plus: ^2.0.0
+  share_plus: ^2.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -83,7 +83,7 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
                         name: _nameController!.text, description: _descriptionController!.text));
               bloc.updateCoursePart(coursePart);
               await widget.editorBloc!.save();
-              partBloc.coursePart.add(coursePart);
+              partBloc.partSubject.add(coursePart);
               setState(() {});
             }));
   }

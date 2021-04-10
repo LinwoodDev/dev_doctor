@@ -549,7 +549,7 @@ extension PartOptionsExtension on PartOptions {
                             coursePart = coursePart.copyWith(name: nameController.text);
                             courseBloc.updateCoursePart(coursePart);
                             await bloc.save();
-                            partBloc.coursePart.add(coursePart);
+                            partBloc.partSubject.add(coursePart);
                           })
                     ]));
         break;
@@ -589,7 +589,7 @@ extension PartOptionsExtension on PartOptions {
                                 coursePart.copyWith(description: descriptionController.text);
                             courseBloc.updateCoursePart(coursePart);
                             await bloc.save();
-                            partBloc.coursePart.add(coursePart);
+                            partBloc.partSubject.add(coursePart);
                           })
                     ]));
         break;
@@ -645,7 +645,7 @@ extension PartOptionsExtension on PartOptions {
                 initialValue: encoder.convert(coursePart.toJson(buildNumber)))));
         if (data != null) {
           var part = CoursePart.fromJson(data..['course'] = courseBloc.course);
-          partBloc.coursePart.add(part);
+          partBloc.partSubject.add(part);
           courseBloc.updateCoursePart(part);
           bloc.save();
         }

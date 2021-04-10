@@ -38,10 +38,10 @@ class _PartItemLayoutState extends State<PartItemLayout> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<CoursePart>(
-        stream: bloc.coursePart,
+        stream: bloc.partSubject,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
-            return Scaffold(body: RouterOutlet());
+            return Scaffold(body: widget.child);
           var data = snapshot.data!;
           var itemId = widget.itemId!;
           if (itemId >= data.items.length) itemId = data.items.length - 1;
@@ -169,7 +169,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
     courseBloc.updateCoursePart(current);
     await widget.editorBloc!.save();
     setState(() {
-      bloc.coursePart.add(current);
+      bloc.partSubject.add(current);
     });
   }
 
@@ -206,7 +206,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
     courseBloc.updateCoursePart(current);
     await widget.editorBloc!.save();
     setState(() {
-      bloc.coursePart.add(current);
+      bloc.partSubject.add(current);
     });
   }
 }

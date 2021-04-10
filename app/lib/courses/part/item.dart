@@ -63,12 +63,11 @@ class _PartItemPageState extends State<PartItemPage> {
         itemId: widget.itemId,
         child: Container(
             child: StreamBuilder<CoursePart>(
-                stream: bloc.coursePart,
+                stream: bloc.partSubject,
                 builder: (context, snapshot) {
+                  if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
                   if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
-                  if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                   var part = snapshot.data!;
-                  if (bloc.hasError) return ErrorDisplay();
                   if (part.items.isEmpty) {
                     return Center(child: Text('course.part.empty'.tr()));
                   }

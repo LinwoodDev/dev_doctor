@@ -46,7 +46,7 @@ class TextPartItemPage extends StatelessWidget {
                             items: List<PartItem>.from(coursePart.items)
                               ..[itemId!] = item!.copyWith(text: value));
                         courseBloc.updateCoursePart(part);
-                        bloc.coursePart.add(part);
+                        bloc.partSubject.add(part);
                         editorBloc!.save();
                       })));
             })

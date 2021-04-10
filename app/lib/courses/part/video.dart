@@ -103,7 +103,7 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
                     ..[widget.itemId!] =
                         widget.item!.copyWith(source: source, url: _urlController!.text));
               courseBloc.updateCoursePart(part);
-              bloc.coursePart.add(part);
+              bloc.partSubject.add(part);
               widget.editorBloc!.save();
             }));
   }
