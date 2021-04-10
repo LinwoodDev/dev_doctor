@@ -1,39 +1,39 @@
 {
     "title": "Dev-Doctor.cf",
-    "subtitle": "A free, opensource, serverless learning platform. A linwood project",
+    "subtitle": "Une plateforme d'apprentissage gratuite, opensource, sans serveur. Un projet en bois de ligne",
     "course": {
         "add": {
-            "name": "Name",
-            "hint": "Sample course",
+            "name": "Nom",
+            "hint": "Exemple de cours",
             "item": {
-                "title": "Create item",
+                "title": "Créer un élément",
                 "name": {
-                    "label": "Name",
-                    "hint": "Welcome"
+                    "label": "Nom",
+                    "hint": "Bienvenue"
                 },
                 "description": {
-                    "label": "Description",
-                    "hint": "Welcome to the course"
+                    "label": "Libellé",
+                    "hint": "Bienvenue sur le cours"
                 },
-                "type": "Type"
+                "type": "Type de texte"
             }
         },
-        "course": "Course",
-        "home": "Home",
-        "statistics": "Statistics",
-        "back": "Back",
-        "materials": "Materials",
+        "course": "Cours",
+        "home": "Domicile",
+        "statistics": "Statistiques",
+        "back": "Précédent",
+        "materials": "Matériaux",
         "lang": {
-            "notset": "Language not set",
-            "hint": "en",
-            "label": "Language tag"
+            "notset": "Langue non définie",
+            "hint": "fr",
+            "label": "Étiquette de langue"
         },
         "author": {
-            "notset": "Author not set",
-            "title": "Author",
+            "notset": "Auteur non défini",
+            "title": "Auteur",
             "name": {
                 "hint": "CodeDoctorDE",
-                "label": "Name"
+                "label": "Nom"
             },
             "url": {
                 "hint": "https://github.com/CodeDoctorDE",
@@ -41,105 +41,105 @@
             },
             "avatar": {
                 "hint": "https://source.unsplash.com/random",
-                "label": "Avatar"
+                "label": "Avatars"
             }
         },
         "quiz": {
-            "choose": "Choose whisley!",
-            "select": "Please select an option!",
-            "correct": "Correct!",
-            "wrong": "Sorry, wrong answer!",
+            "choose": "Choisissez le whisky !",
+            "select": "Veuillez sélectionner une option !",
+            "correct": "Corrige !",
+            "wrong": "Désolé, mauvaise réponse!",
             "check": "CHECK ANSWER",
-            "retry": "Retry",
-            "start": "Start quiz",
-            "points": "points",
-            "add": "Add question",
+            "retry": "Réessayer",
+            "start": "Commencer le quiz",
+            "points": "Points",
+            "add": "Ajouter une question",
             "time": {
-                "subtitle": "seconds remaining",
+                "subtitle": "secondes restantes",
                 "notset": "Heure non définie"
             },
             "validation": {
                 "title": "Validation",
-                "correct": "You got everything right!",
-                "wrong": "You made mistakes!"
+                "correct": "Vous avez tout compris !",
+                "wrong": "Vous avez fait des erreurs!"
             },
             "question": {
-                "answer": "Add answer",
+                "answer": "Ajouter une réponse",
                 "title": {
-                    "item": "Change title",
-                    "label": "Title",
-                    "hint": "The quiz title"
+                    "item": "Changer le titre",
+                    "label": "Titre de la page",
+                    "hint": "Le titre du quiz"
                 },
                 "evaluation": {
-                    "item": "Evaluation",
-                    "label": "Evaluation",
-                    "hint": "An explanation to the answer"
+                    "item": "Évaluation",
+                    "label": "Évaluation",
+                    "hint": "Une explication à la réponse"
                 },
                 "delete": {
-                    "item": "Delete",
-                    "title": "Confirm delete question",
-                    "content": "Do you really want to delete {name} #{index}?"
+                    "item": "Supprimez",
+                    "title": "Confirmer la suppression de la question",
+                    "content": "Voulez-vous vraiment supprimer {name} #{index}?"
                 }
             },
             "option": {
                 "question": {
-                    "answer": "Add answer",
+                    "answer": "Ajouter une réponse",
                     "title": {
-                        "item": "Change title",
-                        "label": "Title",
-                        "hint": "The quiz title"
+                        "item": "Changer le titre",
+                        "label": "Titre de la page",
+                        "hint": "Le titre du quiz"
                     },
                     "evaluation": {
-                        "item": "Evaluation",
-                        "label": "Evaluation",
-                        "hint": "The explanation to the solution"
+                        "item": "Évaluation",
+                        "label": "Évaluation",
+                        "hint": "L'explication à la solution"
                     },
                     "description": {
-                        "item": "Change description",
-                        "label": "Description",
-                        "hint": "The explanation to the question"
+                        "item": "Modifier la description",
+                        "label": "Libellé",
+                        "hint": "L'explication à la question"
                     },
                     "delete": {
-                        "item": "Delete",
-                        "title": "Confirm delete question",
-                        "content": "Do you really want to delete {name} #{index}?"
+                        "item": "Supprimez",
+                        "title": "Confirmer la suppression de la question",
+                        "content": "Voulez-vous vraiment supprimer {name} #{index}?"
                     }
                 },
                 "answer": {
                     "points": {
                         "item": "Points",
                         "label": "Points",
-                        "hint": "Number"
+                        "hint": "Numéros"
                     },
-                    "rating": "Rating",
-                    "correct": "Correct",
-                    "wrong": "Wrong",
+                    "rating": "Évaluation",
+                    "correct": "Corriger",
+                    "wrong": "Mauvais",
                     "title": {
-                        "item": "Change title",
-                        "label": "Title",
-                        "hint": "The answer title"
+                        "item": "Changer le titre",
+                        "label": "Titre de la page",
+                        "hint": "Le titre de la réponse"
                     },
                     "description": {
-                        "item": "Change description",
-                        "label": "Description",
-                        "hint": "The explanation to the answer"
+                        "item": "Modifier la description",
+                        "label": "Libellé",
+                        "hint": "L'explication à la réponse"
                     },
                     "delete": {
-                        "item": "Delete",
-                        "title": "Confirm delete answer",
-                        "content": "Do you really want to delete {name} #{index}?"
+                        "item": "Supprimez",
+                        "title": "Confirmer la suppression de la réponse",
+                        "content": "Voulez-vous vraiment supprimer {name} #{index}?"
                     }
                 }
             }
         },
         "video": {
-            "open": "Open video",
-            "empty": "This part is empty",
+            "open": "Ouvrir la vidéo",
+            "empty": "Cette partie est vide",
             "editor": {
-                "title": "Video Editor",
+                "title": "Editeur de vidéo",
                 "url": {
                     "label": "URL",
-                    "hint": "https://example.com"
+                    "hint": "https://exemple.com"
                 },
                 "type": {
                     "url": "URL",
@@ -147,188 +147,192 @@
                 }
             }
         },
-        "start": "Start",
-        "support": "Support",
+        "start": "Début",
+        "support": "Soutien",
         "description": {
-            "label": "Description",
-            "hint": "This course is just an example of how the configuration works"
+            "label": "Libellé",
+            "hint": "Ce cours n'est qu'un exemple de la façon dont la configuration fonctionne"
         },
         "slug": {
-            "label": "Slug",
-            "hint": "This is the name of the folder on the server"
+            "label": "Limace",
+            "hint": "Ceci est le nom du dossier sur le serveur"
         },
         "name": {
-            "label": "Name",
-            "hint": "Example course"
+            "label": "Nom",
+            "hint": "Exemple de cours"
         },
         "part": {
             "add": {
-                "name": "Name",
-                "hint": "Part 1"
+                "name": "Nom",
+                "hint": "Partie 1"
             },
-            "rename": "Rename",
-            "description": "Change description",
-            "slug": "Change slug",
-            "empty": "This part is empty"
+            "rename": "Renommer",
+            "description": "Modifier la description",
+            "slug": "Changer le slug",
+            "empty": "Cette partie est vide"
         },
         "type": {
-            "text": "Text",
+            "text": "Texte du texte",
             "quiz": "Quiz",
-            "video": "Video"
+            "video": "Vidéo"
         },
         "delete": {
             "item": {
-                "title": "Confirm delete item",
-                "content": "Do you really want to delete {name} #{index}?"
+                "title": "Confirmer la suppression de l'élément",
+                "content": "Voulez-vous vraiment supprimer {name} #{index}?"
             }
         }
     },
     "courses": {
-        "view": "View courses",
-        "title": "Courses",
-        "servers": "Server",
-        "filter": "Filter",
-        "longer": "Search term must be longer than two letters.",
-        "empty": "No courses available. Add servers using the settings!"
+        "view": "Voir les cours",
+        "title": "Cours",
+        "servers": "Serveur",
+        "filter": "Filtre",
+        "longer": "Le terme de recherche doit être plus long que deux lettres.",
+        "empty": "Aucun cours disponible. Ajoutez des serveurs en utilisant les paramètres!"
     },
     "backends": {
         "title": "Backends",
-        "longer": "Search term must be longer than two letters."
+        "longer": "Le terme de recherche doit être plus long que deux lettres."
     },
     "editor": {
-        "title": "Editor",
+        "title": "Editeur",
         "create": {
-            "fab": "Create backend",
-            "title": "Create backend",
+            "fab": "Créer un backend",
+            "title": "Créer un backend",
             "name": {
-                "label": "Name",
-                "hint": "Dev-Doctor",
-                "empty": "The name cannot be empty!",
-                "exist": "A backend with this name already exist!"
+                "label": "Nom",
+                "hint": "Dev-Docteur",
+                "empty": "Le nom ne peut pas être vide !",
+                "exist": "Un backend avec ce nom existe déjà!"
             },
             "note": {
                 "label": "Note",
-                "hint": "The sample backend of dev-doctor"
+                "hint": "L'exemple de backend de dev-doctor"
             },
-            "submit": "Create",
+            "submit": "Créer",
             "markdown": {
                 "title": "Markdown Editor",
                 "preview": {
-                    "title": "Preview"
+                    "title": "Aperçu"
                 }
             }
         },
         "item": {
-            "title": "Item Editor",
+            "title": "Éditeur d'élément",
             "name": {
-                "hint": "Welcome",
-                "label": "Name"
+                "hint": "Bienvenue",
+                "label": "Nom"
             },
             "description": {
-                "hint": "Welcome to the course",
-                "label": "Description"
+                "hint": "Bienvenue sur le cours",
+                "label": "Libellé"
             }
         },
         "code": {
             "title": "Code",
-            "hint": "Insert data here",
+            "hint": "Insérer des données ici",
             "label": "JSON",
-            "submit": "Update"
+            "submit": "Mise à jour"
         }
     },
-    "browser": "Open in browser",
-    "discord": "Join our discord",
-    "error-with-status": "A {statusCode} error occurred on server",
-    "error-without-status": "An error occurred on the server",
-    "news": "News",
-    "home": "Home",
+    "browser": "Ouvrir dans le navigateur",
+    "discord": "Rejoignez notre discorde",
+    "error-with-status": "Une erreur {statusCode} s'est produite sur le serveur",
+    "error-without-status": "Une erreur est survenue sur le serveur",
+    "news": "Actualités",
+    "home": "Domicile",
     "docs": "Documentation",
-    "welcome": "Welcome back, {name}!",
-    "profile": "Profile",
-    "stats": "Statistics",
+    "welcome": "Bienvenue, {name}!",
+    "profile": "Profil",
+    "stats": "Statistiques",
     "settings": {
         "information": "Information",
-        "title": "Settings",
-        "privacypolicy": "Privacy Policy",
-        "changelog": "Changelog",
+        "title": "Réglages",
+        "privacypolicy": "Politique de confidentialité",
+        "changelog": "Historique des modifications",
         "home": {
-            "title": "Home",
-            "username": "Username"
+            "title": "Domicile",
+            "username": "Nom d'utilisateur"
         },
         "appearance": {
-            "title": "Appearance",
+            "title": "Apparence",
             "theme": {
-                "title": "Theme",
-                "dark": "Dark",
-                "light": "Light",
-                "system": "System"
+                "title": "Thème",
+                "dark": "Sombre",
+                "light": "Lumière",
+                "system": "Système"
             },
             "locale": {
                 "title": "Locale",
-                "default": "Default",
-                "restart": "This setting needs a restart!",
-                "en": "English",
-                "de": "German"
+                "default": "Par défaut",
+                "restart": "Ce paramètre nécessite un redémarrage!",
+                "en": "Anglais",
+                "de": "Allemand",
+                "fr": "Français"
             },
             "color": {
-                "title": "Color",
-                "classic": "Classic",
-                "modern": "Modern",
-                "artistic": "Artistic",
-                "spring": "Spring",
-                "summer": "Summer",
-                "autumn": "Autumn",
-                "winter": "Winter"
+                "title": "Couleur",
+                "classic": "Classique",
+                "modern": "Moderne",
+                "artistic": "Artistique",
+                "spring": "Printemps",
+                "summer": "Été",
+                "autumn": "Automne",
+                "winter": "Hiver"
             }
         },
         "general": {
-            "title": "General"
+            "title": "Généraux"
         },
         "downloads": {
-            "title": "Downloads"
+            "title": "Téléchargements"
         },
-        "update": "Update",
+        "update": "Mise à jour",
         "servers": {
-            "title": "Servers",
+            "title": "Serveurs",
             "add": {
-                "fab": "Add server",
+                "fab": "Ajouter un serveur",
                 "url": "URL",
-                "hint": "eg. https://backend.dev-doctor.cf",
-                "title": "Do you want to add the server {name}?",
-                "body": "The server {name} with the url {url} will displayed on the courses page."
+                "hint": "par exemple. https://backend.dev-doctor.cf",
+                "title": "Voulez-vous ajouter le serveur {name}?",
+                "body": "Le serveur {name} avec l'url {url} sera affiché sur la page du cours."
             },
-            "error": "Server not available!"
+            "error": "Serveur non disponible !"
         },
         "collections": {
             "title": "Collections",
             "add": {
-                "fab": "Add collection",
+                "fab": "Ajouter une collection",
                 "url": "URL",
-                "hint": "eg. https://collection.dev-doctor.cf",
-                "title": "Do you want to add the collection {name}?",
-                "body": "The colelction {name} with the url {url} will displayed on the collection page."
+                "hint": "par exemple. https://collection.dev-doctor.cf",
+                "title": "Voulez-vous ajouter la collection {name}?",
+                "body": "La colelction {name} avec l'url {url} sera affichée sur la page de la collection."
             },
-            "error": "Collection server not available!"
+            "error": "Serveur de collecte non disponible !"
         },
-        "about": "About",
-        "imprint": "Imprint",
+        "about": "À propos de",
+        "imprint": "Mentions légales",
         "code": "Code",
-        "license": "License"
+        "license": "Licence"
     },
-    "code": "Show code",
-    "agree": "Agree",
-    "disagree": "Disagree",
-    "save": "Save",
-    "cancel": "Cancel",
-    "create": "Create",
-    "close": "Close",
-    "change": "Change",
-    "no": "No",
-    "yes": "Yes",
-    "ready-for-offline": "Ready for offline!",
+    "code": "Afficher le code",
+    "agree": "Accepter",
+    "disagree": "En désaccord avec",
+    "save": "Enregistrer",
+    "cancel": "Abandonner",
+    "create": "Créer",
+    "close": "Fermer",
+    "change": "Changement",
+    "no": "Non",
+    "yes": "Oui",
+    "ready-for-offline": "Prêt pour le déconnecté!",
     "update-available": {
-        "message": "Update available!",
+        "message": "Mise à jour disponible !",
         "refresh": "Reload"
     },
-    "coming-soon": "Coming soon..."
+    "coming-soon": "Prochainement...",
+    "back": "Retour",
+    "back-to-home": "Retour à l'accueil",
+    "error": "Erreur"
 }
