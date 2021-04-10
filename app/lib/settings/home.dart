@@ -64,7 +64,7 @@ class SettingsList extends StatelessWidget {
               onTap: () => _showComingSoon(context)),
           ListTile(
               selected: activePage == SettingsPages.servers,
-              leading: Icon(Icons.list_outlined),
+              leading: Icon(Icons.format_list_bulleted_outlined),
               title: Text("settings.servers.title").tr(),
               onTap: () => Modular.to.pushNamed("/settings/servers")),
           ListTile(
