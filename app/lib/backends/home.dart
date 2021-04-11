@@ -220,7 +220,7 @@ class _BackendEntryListTileState extends State<BackendEntryListTile> {
             ? null
             : Hero(
                 tag:
-                    "backend-icon-${_server!.entry!.collection.index}-${_server!.entry!.user}-${_server!.entry!.name}",
+                    "backend-icon-${_server!.entry!.collection.index}-${_server!.entry!.user.name}-${_server!.entry!.name}",
                 child: UniversalImage(type: _server!.icon, url: _server!.url! + "/icon")),
         trailing: AddBackendButton(
             server: _server, onChange: (server) => setState(() => _server = server)));

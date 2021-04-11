@@ -304,7 +304,7 @@ packages:
       name: flutter_modular
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.3"
+    version: "3.1.0"
   flutter_modular_annotations:
     dependency: transitive
     description:
