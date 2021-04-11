@@ -32,7 +32,7 @@ A project without a community isn't a good project. You can [join the discord](h
 
 | Index |                   Current class                   |
 | :---- | :-----------------------------------------------: |
-| 0     |      [CoursesServer](lib/models/server.dart)      |
-| 1     |         [Course](lib/models/course.dart)          |
-| 2     | [ServerEditorBloc](lib/models/editor/server.dart) |
-| 3     | [CourseEditorBloc](lib/models/editor/course.dart) |
+| 0     |      [CoursesServer](app/lib/models/server.dart)      |
+| 1     |         [Course](app/lib/models/course.dart)          |
+| 2     | [ServerEditorBloc](app/lib/models/editor/server.dart) |
+| 3     | [CourseEditorBloc](app/lib/models/editor/course.dart) |
