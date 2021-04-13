@@ -15,7 +15,8 @@
                     "label": "Beschreibung",
                     "hint": "Willkommen zu dem Kurs"
                 },
-                "type": "Type"
+                "type": "Type",
+                "tooltip": "Erstelle Element"
             }
         },
         "course": "Kurs",
@@ -179,7 +180,8 @@
         "delete": {
             "item": {
                 "title": "Element löschen bestätigen",
-                "content": "Soll wirklich {name} #{index} gelöscht werden?"
+                "content": "Soll wirklich {name} #{index} gelöscht werden?",
+                "tooltip": "Delete item"
             }
         }
     },
@@ -328,6 +330,7 @@
     "change": "Ändern",
     "no": "Nein",
     "yes": "Ja",
+    "share": "Share",
     "ready-for-offline": "Bereit für den Offline Modus",
     "update-available": {
         "message": "Update verfügbar!",
