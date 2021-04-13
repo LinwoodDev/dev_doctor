@@ -15,7 +15,8 @@
                     "label": "Libellé",
                     "hint": "Bienvenue sur le cours"
                 },
-                "type": "Type de texte"
+                "type": "Type de texte",
+                "tooltip": "Create item"
             }
         },
         "course": "Cours",
@@ -179,7 +180,8 @@
         "delete": {
             "item": {
                 "title": "Confirmer la suppression de l'élément",
-                "content": "Voulez-vous vraiment supprimer {name} #{index}?"
+                "content": "Voulez-vous vraiment supprimer {name} #{index}?",
+                "tooltip": "Delete item"
             }
         }
     },
@@ -328,6 +330,7 @@
     "change": "Changement",
     "no": "Non",
     "yes": "Oui",
+    "share": "Share",
     "ready-for-offline": "Prêt pour le déconnecté!",
     "update-available": {
         "message": "Mise à jour disponible !",
