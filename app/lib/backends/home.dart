@@ -38,8 +38,9 @@ class _ItemFetcher {
 
 class CustomSearchDelegate extends SearchDelegate {
   var _itemFetcher;
+  final bool gridView;
 
-  CustomSearchDelegate(this._itemFetcher);
+  CustomSearchDelegate(this._itemFetcher, this.gridView);
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -77,10 +78,7 @@ class CustomSearchDelegate extends SearchDelegate {
       );
     }
     _itemFetcher = _ItemFetcher();
-    return BackendsList(
-      fetcher: _itemFetcher,
-      query: query,
-    );
+    return BackendsList(fetcher: _itemFetcher, query: query, gridView: gridView);
   }
 
   @override
@@ -94,8 +92,10 @@ class CustomSearchDelegate extends SearchDelegate {
 class BackendsList extends StatefulWidget {
   final _ItemFetcher? fetcher;
   final String? query;
+  final bool gridView;
 
-  const BackendsList({Key? key, this.fetcher, this.query}) : super(key: key);
+  const BackendsList({Key? key, this.fetcher, this.query, required this.gridView})
+      : super(key: key);
   @override
   _BackendsListState createState() => _BackendsListState();
 }
@@ -139,28 +139,79 @@ class _BackendsListState extends State<BackendsList> {
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
-        child: ListView.builder(
-      // Need to display a loading tile if more items are coming
-      itemCount: _hasMore ? _pairList.length + 1 : _pairList.length,
-      itemBuilder: (BuildContext context, int index) {
-        // Uncomment the following line to see in real time how ListView.builder works
-        if (index >= _pairList.length) {
-          // Don't trigger if one async loading is already under way
-          if (!_isLoading) {
-            _loadMore();
+        child: SingleChildScrollView(
+            child: widget.gridView
+                ? Wrap(children: _buildList(context))
+                : Column(
+                    // Need to display a loading tile if more items are coming
+                    children: _buildList(context))));
+  }
+
+  List<Widget> _buildList(BuildContext context) => List.generate(
+        // Need to display a loading tile if more items are coming
+        _hasMore ? _pairList.length + 1 : _pairList.length,
+        (index) {
+          // Uncomment the following line to see in real time how ListView.builder works
+          if (index >= _pairList.length) {
+            // Don't trigger if one async loading is already under way
+            if (!_isLoading) {
+              _loadMore();
+            }
+            return Center(
+              child: SizedBox(
+                child: CircularProgressIndicator(),
+                height: 24,
+                width: 24,
+              ),
+            );
           }
-          return Center(
-            child: SizedBox(
-              child: CircularProgressIndicator(),
-              height: 24,
-              width: 24,
-            ),
-          );
-        }
-        var server = _pairList[index];
-        return BackendEntryListTile(server: server);
-      },
-    ));
+          return _buildTile(context, index);
+        },
+      );
+
+  Widget _buildTile(BuildContext context, int index) {
+    var server = _pairList[index];
+    void onTap() async {
+      await Modular.to.pushNamed(
+          "/backends/entry?collectionId=${server.entry!.collection.index}&user=${server.entry!.user.name}&entry=${server.entry!.name}",
+          arguments: server);
+      var current = await server.entry!.fetchServer();
+      setState(() => server = current!);
+    }
+
+    var hero = server.icon?.isEmpty ?? true
+        ? null
+        : Hero(
+            tag:
+                "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
+            child: UniversalImage(type: server.icon, url: server.url! + "/icon"));
+
+    if (widget.gridView)
+      return Card(
+          child: InkWell(
+              onTap: onTap,
+              child: Container(
+                constraints: BoxConstraints(maxWidth: 250),
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  Container(padding: const EdgeInsets.all(8.0), child: hero),
+                  Row(children: [
+                    Expanded(
+                        child: Column(children: [
+                      Text(server.name),
+                      Text(server.url ?? '', style: Theme.of(context).textTheme.caption)
+                    ])),
+                    AddBackendButton(server: server)
+                  ])
+                ]),
+              )));
+
+    return ListTile(
+        title: Text(server.name),
+        subtitle: Text(server.url ?? ''),
+        onTap: onTap,
+        leading: hero,
+        trailing: AddBackendButton(server: server));
   }
 }
 
@@ -171,6 +222,7 @@ class BackendsPage extends StatefulWidget {
 
 class _BackendsPageState extends State<BackendsPage> with TickerProviderStateMixin {
   final _itemFetcher = _ItemFetcher();
+  bool gridView = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,75 +231,41 @@ class _BackendsPageState extends State<BackendsPage> with TickerProviderStateMix
               icon: Icon(Icons.search),
               onPressed: () {
                 showSearch(
-                  context: context,
-                  delegate: CustomSearchDelegate(_itemFetcher),
-                );
+                    context: context, delegate: CustomSearchDelegate(_itemFetcher, gridView));
+              }),
+          IconButton(
+              icon: Icon(gridView ? Icons.view_list_outlined : Icons.grid_view),
+              onPressed: () {
+                setState(() => gridView = !gridView);
               })
         ]),
-        body: BackendsList(fetcher: _itemFetcher, query: ""));
-  }
-}
-
-class BackendEntryListTile extends StatefulWidget {
-  final CoursesServer server;
-
-  const BackendEntryListTile({Key? key, required this.server}) : super(key: key);
-  @override
-  _BackendEntryListTileState createState() => _BackendEntryListTileState();
-}
-
-class _BackendEntryListTileState extends State<BackendEntryListTile> {
-  CoursesServer? _server;
-  @override
-  void initState() {
-    super.initState();
-    if (_server == null) _server = widget.server;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-        title: Text(_server!.name),
-        subtitle: Text(_server!.url!),
-        onTap: () async {
-          await Modular.to.pushNamed(
-              "/backends/entry?collectionId=${_server!.entry!.collection.index}&user=${_server!.entry!.user.name}&entry=${_server!.entry!.name}",
-              arguments: _server);
-          var current = await _server!.entry!.fetchServer();
-          setState(() => _server = current);
-        },
-        leading: _server!.icon?.isEmpty ?? true
-            ? null
-            : Hero(
-                tag:
-                    "backend-icon-${_server!.entry!.collection.index}-${_server!.entry!.user.name}-${_server!.entry!.name}",
-                child: UniversalImage(type: _server!.icon, url: _server!.url! + "/icon")),
-        trailing: AddBackendButton(
-            server: _server, onChange: (server) => setState(() => _server = server)));
+        body: BackendsList(fetcher: _itemFetcher, query: "", gridView: gridView));
   }
 }
 
 typedef OnBackendChanged = void Function(CoursesServer server);
 
 class AddBackendButton extends StatefulWidget {
-  final CoursesServer? server;
+  final CoursesServer server;
   final OnBackendChanged? onChange;
 
-  const AddBackendButton({Key? key, this.server, this.onChange}) : super(key: key);
+  const AddBackendButton({Key? key, required this.server, this.onChange}) : super(key: key);
   @override
   _AddBackendButtonState createState() => _AddBackendButtonState();
 }
 
 class _AddBackendButtonState extends State<AddBackendButton> with SingleTickerProviderStateMixin {
-  CoursesServer? _server;
+  late CoursesServer _server;
   late AnimationController _controller;
   late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    if (_server == null) _server = widget.server;
-    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 100));
+    _server = widget.server;
+    _controller = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 100), value: _server.added ? 1 : 0);
+    _animation = Tween<double>(begin: -0.25, end: 0).animate(_controller);
   }
 
   @override
@@ -264,20 +282,14 @@ class _AddBackendButtonState extends State<AddBackendButton> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
-    _animation = Tween<double>(begin: 0, end: 0.25).animate(_controller);
     return RotationTransition(
         turns: _animation,
         child: IconButton(
-          icon: Icon(_server!.added ? Icons.remove_outlined : Icons.add_outlined),
+          icon: Icon(_server.added ? Icons.remove_outlined : Icons.add_outlined),
           onPressed: () async {
-            var toggledServer = await _server!.toggle();
-            setState(() {
-              _server = toggledServer;
-            });
-            if (_server!.added)
-              _controller.reverse();
-            else
-              _controller.forward();
+            var toggledServer = await _server.toggle();
+            (_server.added ? _controller.reverse() : _controller.forward())
+                .then((value) => setState(() => _server = toggledServer));
             if (widget.onChange != null) return widget.onChange!(toggledServer);
           },
         ));

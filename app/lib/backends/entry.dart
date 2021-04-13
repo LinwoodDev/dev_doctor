@@ -218,7 +218,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                             child: TextButton.icon(
                                 onPressed: () async => await Modular.to.pushNamed(
                                     "/backends/user?collectionId=${widget.collectionId}&user=${widget.user}",
-                                    arguments: server.entry!.user),
+                                    arguments: {"user": server.entry!.user, "server": server}),
                                 icon: Icon(Icons.account_circle_outlined),
                                 label: Text(widget.user!))),
                       ] else

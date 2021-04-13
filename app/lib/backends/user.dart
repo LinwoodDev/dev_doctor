@@ -5,25 +5,32 @@ import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class BackendUserPage extends StatelessWidget {
+class BackendUserPage extends StatefulWidget {
   final String? user;
   final int? collectionId;
-  final BackendUser? model;
+  final Map? model;
 
   const BackendUserPage({Key? key, this.user, this.collectionId, this.model}) : super(key: key);
 
+  @override
+  _BackendUserPageState createState() => _BackendUserPageState();
+}
+
+class _BackendUserPageState extends State<BackendUserPage> {
+  bool gridView = false;
+
   Future<BackendUser?> _buildFuture() async {
-    if (model != null) return model;
-    var collection = await BackendCollection.fetch(index: collectionId);
-    var current = await collection!.fetchUser(user);
+    if (widget.model != null) return widget.model!['user'];
+    var collection = await BackendCollection.fetch(index: widget.collectionId);
+    var current = await collection!.fetchUser(widget.user);
     return await current;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: model != null
-            ? _buildView(model!)
+        body: widget.model != null
+            ? _buildView(widget.model!['user'], server: widget.model!['server'])
             : FutureBuilder<BackendUser?>(
                 future: _buildFuture(),
                 builder: (context, snapshot) {
@@ -35,40 +42,62 @@ class BackendUserPage extends StatelessWidget {
                 }));
   }
 
-  Widget _buildView(BackendUser backendUser) {
+  Widget _buildView(BackendUser backendUser, {CoursesServer? server}) {
     var entries = backendUser.buildEntries();
     return Scaffold(
-        appBar: MyAppBar(title: backendUser.name),
+        appBar: MyAppBar(title: backendUser.name, actions: [
+          IconButton(
+              icon: Icon(gridView ? Icons.view_list_outlined : Icons.grid_view),
+              onPressed: () {
+                setState(() => gridView = !gridView);
+              })
+        ]),
         body: Scrollbar(
             child: SingleChildScrollView(
-                child: Wrap(
-                    children: List.generate(entries.length, (index) {
-          return Container(
-              width: 160.0,
-              child: FutureBuilder<CoursesServer?>(
-                  future: entries[index].fetchServer(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
-                      return Center(child: CircularProgressIndicator());
-                    if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                    var server = snapshot.data!;
-                    return GestureDetector(
-                        onTap: () async {
-                          await Modular.to.pushNamed(
-                              "/backends/entry?collectionId=${collectionId}&user=${user}&entry=${entries[index].name}",
-                              arguments: server);
-                        },
-                        child: Padding(
-                            padding: EdgeInsets.all(16),
-                            child: Column(children: [
-                              Hero(
-                                  tag:
-                                      "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
-                                  child: UniversalImage(
-                                      url: server.url! + "/icon", type: server.icon, width: 160)),
-                              Text(server.name)
-                            ])));
-                  }));
-        })))));
+                child: gridView
+                    ? Wrap(children: _buildList(entries, server: server))
+                    : Column(children: _buildList(entries, server: server)))));
+  }
+
+  List<Widget> _buildList(List<BackendEntry> entries, {CoursesServer? server}) => List.generate(
+      entries.length,
+      (index) => server != null && server.url == entries[index].url
+          ? _buildTile(server, entries, index)
+          : FutureBuilder<CoursesServer?>(
+              future: entries[index].fetchServer(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
+                  return Center(child: CircularProgressIndicator());
+                if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                var server = snapshot.data!;
+                return _buildTile(server, entries, index);
+              }));
+
+  Widget _buildTile(CoursesServer server, List<BackendEntry> entries, int index) {
+    var hero = Hero(
+        tag:
+            "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
+        child: UniversalImage(url: server.url! + "/icon", type: server.icon));
+    void tileTap() => Modular.to.pushNamed(
+        "/backends/entry?collectionId=${widget.collectionId}&user=${widget.user}&entry=${entries[index].name}",
+        arguments: server);
+    return gridView
+        ? Card(
+            child: InkWell(
+                onTap: tileTap,
+                child: Container(
+                    constraints: BoxConstraints(maxWidth: 250),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(children: [
+                      hero,
+                      Text(server.name),
+                      if (server.url != null)
+                        Text(server.url!, style: Theme.of(context).textTheme.caption)
+                    ]))))
+        : ListTile(
+            leading: hero,
+            title: Text(server.name),
+            subtitle: Text(server.url ?? ''),
+            onTap: tileTap);
   }
 }

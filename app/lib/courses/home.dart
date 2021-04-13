@@ -160,11 +160,10 @@ class _CoursesPageState extends State<CoursesPage> {
                 setState(() => _itemFetcher = _ItemFetcher(servers: _filteredServers));
               }),
           IconButton(
-            icon: Icon(gridView ? Icons.view_list_outlined : Icons.grid_view),
-            onPressed: () {
-              setState(() => gridView = !gridView);
-            },
-          )
+              icon: Icon(gridView ? Icons.view_list_outlined : Icons.grid_view),
+              onPressed: () {
+                setState(() => gridView = !gridView);
+              })
         ]),
         body: CoursesList(fetcher: _itemFetcher, query: "", gridView: gridView));
   }
@@ -228,6 +227,18 @@ class _CoursesListState extends State<CoursesList> {
 
   Widget _buildTile(BuildContext context, int index) {
     var course = _pairList[index];
+
+    void onTap() {
+      Navigator.of(context).pushNamed(Uri(pathSegments: [
+        "",
+        "courses",
+        "details"
+      ], queryParameters: <String, String?>{
+        "serverId": course.server!.index.toString(),
+        "course": course.slug
+      }).toString());
+    }
+
     var hero = course.icon?.isEmpty ?? true
         ? null
         : Hero(
@@ -236,7 +247,7 @@ class _CoursesListState extends State<CoursesList> {
     if (widget.gridView)
       return Card(
           child: InkWell(
-              onTap: () => _onTap(course),
+              onTap: onTap,
               child: Container(
                 constraints: BoxConstraints(maxWidth: 250),
                 padding: const EdgeInsets.all(8.0),
@@ -249,19 +260,8 @@ class _CoursesListState extends State<CoursesList> {
     return ListTile(
         title: Text(course.name),
         subtitle: Text(course.description ?? ''),
-        onTap: () => _onTap(course),
+        onTap: onTap,
         leading: hero);
-  }
-
-  void _onTap(Course course) {
-    Navigator.of(context).pushNamed(Uri(pathSegments: [
-      "",
-      "courses",
-      "details"
-    ], queryParameters: <String, String?>{
-      "serverId": course.server!.index.toString(),
-      "course": course.slug
-    }).toString());
   }
 
   List<Widget> _buildList(BuildContext context) {
