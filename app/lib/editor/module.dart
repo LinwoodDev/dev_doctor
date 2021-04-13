@@ -4,6 +4,7 @@ import 'package:dev_doctor/courses/course.dart';
 import 'package:dev_doctor/editor/author.dart';
 import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
+import 'package:dev_doctor/widgets/error.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'home.dart';
@@ -14,15 +15,19 @@ class EditorModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (_, args) => EditorPage()),
+        WildcardRoute(child: (_, __) => ErrorDisplay()),
         ChildRoute('/details', child: (_, args) {
+          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
           return BackendPage(editorBloc: bloc);
         }),
         ChildRoute('/course', child: (_, args) {
+          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
           return CoursePage(editorBloc: bloc);
         }),
         ChildRoute('/edit', child: (_, args) {
+          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
           return MarkdownEditor(
               markdown: bloc.server.body,
@@ -32,6 +37,7 @@ class EditorModule extends Module {
               });
         }),
         ChildRoute('/course/edit', child: (_, args) {
+          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
           var course = args.queryParams['course'];
           var courseBloc = bloc.getCourse(course!);
@@ -43,6 +49,7 @@ class EditorModule extends Module {
               });
         }),
         ChildRoute('/course/author', child: (_, args) {
+          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
           var course = args.queryParams['course'];
           var courseBloc = bloc.getCourse(course!);

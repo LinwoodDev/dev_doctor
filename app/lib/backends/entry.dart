@@ -5,6 +5,7 @@ import 'package:dev_doctor/models/collection.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
+import 'package:dev_doctor/widgets/error.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -63,22 +64,25 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
     setState(() {});
   }
 
-  Future<CoursesServer> _buildFuture() async {
+  Future<CoursesServer?> _buildFuture() async {
     if (widget.model != null) return widget.model!;
     var collection = await BackendCollection.fetch(index: widget.collectionId);
-    var currentUser = await collection!.fetchUser(widget.user);
-    var currentEntry = currentUser.buildEntry(widget.entry!);
-    var server = await currentEntry.fetchServer();
-    return server!;
+    var currentUser = await collection?.fetchUser(widget.user);
+    if (widget.entry != null) {
+      var currentEntry = currentUser?.buildEntry(widget.entry!);
+      var server = await currentEntry?.fetchServer();
+      return server;
+    }
+    return null;
   }
 
   @override
   Widget build(BuildContext context) {
     return widget.model != null
-        ? _buildView(widget.model)
+        ? _buildView(widget.model!)
         : _editorBloc != null
             ? _buildView(_editorBloc!.server)
-            : FutureBuilder<CoursesServer>(
+            : FutureBuilder<CoursesServer?>(
                 future: _buildFuture(),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
@@ -87,12 +91,13 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                     default:
                       if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                       var server = snapshot.data;
+                      if (server == null) return ErrorDisplay();
                       return _buildView(server);
                   }
                 });
   }
 
-  Widget _buildView(CoursesServer? server) => Builder(
+  Widget _buildView(CoursesServer server) => Builder(
       builder: (context) => Scaffold(
             body: NestedScrollView(
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -112,7 +117,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                   var encoder = JsonEncoder.withIndent("  ");
                                   var data = await Modular.to.push(MaterialPageRoute(
                                       builder: (context) => EditorCodeDialogPage(
-                                          initialValue: encoder.convert(server!.toJson()))));
+                                          initialValue: encoder.convert(server.toJson()))));
                                   if (data != null) {
                                     var server = CoursesServer.fromJson(data);
                                     _editorBloc!.server = server;
@@ -132,7 +137,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                 isScrollable: true,
                               )
                             : null,
-                        title: Text(server!.name),
+                        title: Text(server.name),
                         flexibleSpace: _editorBloc != null
                             ? null
                             : FlexibleSpaceBar(
@@ -154,8 +159,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                 body: _editorBloc != null
                     ? TabBarView(
                         controller: _tabController,
-                        children: [_buildGeneral(context, server!), _buildCourses(context)])
-                    : _buildGeneral(context, server!)),
+                        children: [_buildGeneral(context, server), _buildCourses(context)])
+                    : _buildGeneral(context, server)),
             floatingActionButton: _buildFab(),
           ));
 

@@ -26,7 +26,7 @@ dependencies:
   easy_localization: ^3.0.0
   enum_to_string: ^2.0.1
   http: ^0.13.1
-  hive: ^2.0.2
+  hive: ^2.0.3
   rxdart: ^0.26.0
   hive_flutter: ^1.0.0
   flutter_modular: ^3.1.0
@@ -34,7 +34,7 @@ dependencies:
   flutter_markdown: ^0.6.1
   #universal_html: ^1.2.4
   flutter_svg: ^0.21.0+1
-  flutter_inappwebview: ^5.3.1
+  flutter_inappwebview: ^5.3.2
   xml: ^5.1.0
   flutter_localized_locales: ^2.0.1
   bitsdojo_window: ^0.1.0

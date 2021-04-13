@@ -1,3 +1,4 @@
+import 'package:dev_doctor/widgets/error.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:dev_doctor/app_module.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,13 @@ class AppWidget extends StatelessWidget {
                 locale: context.locale,
                 themeMode: ThemeMode.values[box.get('theme', defaultValue: 0)],
                 debugShowCheckedModeBanner: false,
+                builder: (context, widget) {
+                  ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+                    return ErrorDisplay();
+                  };
+
+                  return widget ?? ErrorDisplay();
+                },
                 theme: ThemeData(
                     // This is the theme of your application.
                     //

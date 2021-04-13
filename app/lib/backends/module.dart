@@ -1,4 +1,5 @@
 import 'package:dev_doctor/backends/user.dart';
+import 'package:dev_doctor/widgets/error.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'entry.dart';
@@ -9,19 +10,23 @@ class BackendsModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => BackendsPage()),
     ChildRoute("/user", child: (_, args) {
-      print("User will be rendered with argument ${args.data}");
-      return BackendUserPage(
-          model: args.data,
-          collectionId: int.parse(args.queryParams['collectionId']!),
-          user: args.queryParams['user']);
+      if (args.queryParams.containsKey('collectionId') && args.queryParams.containsKey('user'))
+        return BackendUserPage(
+            model: args.data,
+            collectionId: int.parse(args.queryParams['collectionId']!),
+            user: args.queryParams['user']);
+      return ErrorDisplay();
     }),
     ChildRoute('/entry', child: (_, args) {
-      print("Entry will be rendered with argument ${args.data}");
-      return BackendPage(
-          model: args.data,
-          collectionId: int.parse(args.queryParams['collectionId']!),
-          user: args.queryParams['user']!,
-          entry: args.queryParams['entry']!);
+      if (args.queryParams.containsKey('collectionId') &&
+          args.queryParams.containsKey('user') &&
+          args.queryParams.containsKey('entry'))
+        return BackendPage(
+            model: args.data,
+            collectionId: int.parse(args.queryParams['collectionId']!),
+            user: args.queryParams['user']!,
+            entry: args.queryParams['entry']!);
+      return ErrorDisplay();
     })
   ];
 }

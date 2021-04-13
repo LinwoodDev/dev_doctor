@@ -25,7 +25,9 @@ class AppModule extends Module {
     ChildRoute('/', child: (_, args) => MyHomePage(), children: [
       ...HomeRoutes.values.map((e) =>
           ChildRoute(e.route!, child: (_, __) => e.widget!, transition: TransitionType.fadeIn)),
+      WildcardRoute(child: (_, __) => ErrorDisplay())
     ]),
+    WildcardRoute(child: (_, __) => ErrorDisplay()),
     ModuleRoute('/editor', module: EditorModule()),
     ModuleRoute('/backends', module: BackendsModule()),
     ModuleRoute('/settings', module: SettingsModule()),
