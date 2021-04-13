@@ -231,20 +231,22 @@ class _CoursesListState extends State<CoursesList> {
     var course = _pairList[index];
 
     void onTap() {
-      Navigator.of(context).pushNamed(Uri(pathSegments: [
-        "",
-        "courses",
-        "details"
-      ], queryParameters: <String, String?>{
-        "serverId": course.server!.index.toString(),
-        "course": course.slug
-      }).toString());
+      Navigator.of(context).pushNamed(
+          Uri(pathSegments: [
+            "",
+            "courses",
+            "details"
+          ], queryParameters: <String, String?>{
+            "serverId": course.server!.index.toString(),
+            "course": course.slug
+          }).toString(),
+          arguments: course);
     }
 
     var hero = course.icon?.isEmpty ?? true
         ? null
         : Hero(
-            tag: "course-icon-${course.server!.index}-${course.index}",
+            tag: "course-icon-${course.server?.index}-${course.index}",
             child: UniversalImage(type: course.icon, url: course.url + "/icon"));
     if (widget.gridView)
       return Card(

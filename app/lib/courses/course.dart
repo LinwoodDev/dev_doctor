@@ -239,17 +239,16 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               : FlexibleSpaceBar(
                                   background: Container(
                                       margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
-                                      child: Hero(
-                                          tag: _editorBloc != null
-                                              ? "course-icon-${_editorBloc!.server.name}"
-                                              : "course-icon-${course.server!.index}-${course.index}",
-                                          child: _editorBloc != null
-                                              ? Container()
-                                              : UniversalImage(
-                                                  url: course.url + "/icon",
-                                                  height: 500,
-                                                  type: course.icon,
-                                                ))),
+                                      child: _editorBloc != null
+                                          ? Container()
+                                          : Hero(
+                                              tag:
+                                                  "course-icon-${course.server?.index}-${course.index}",
+                                              child: UniversalImage(
+                                                url: course.url + "/icon",
+                                                height: 500,
+                                                type: course.icon,
+                                              ))),
                                 ))
                     ];
                   },
