@@ -228,12 +228,14 @@ class _BackendsPageState extends State<BackendsPage> with TickerProviderStateMix
     return Scaffold(
         appBar: MyAppBar(title: "backends.title".tr(), actions: [
           IconButton(
+              tooltip: "search".tr(),
               icon: Icon(Icons.search),
               onPressed: () {
                 showSearch(
                     context: context, delegate: CustomSearchDelegate(_itemFetcher, gridView));
               }),
           IconButton(
+              tooltip: "grid-view".tr(),
               icon: Icon(gridView ? Icons.view_list_outlined : Icons.grid_view),
               onPressed: () {
                 setState(() => gridView = !gridView);

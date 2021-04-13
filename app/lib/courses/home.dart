@@ -120,6 +120,7 @@ class _CoursesPageState extends State<CoursesPage> {
         appBar: MyAppBar(title: "courses.title".tr(), actions: [
           IconButton(
               icon: Icon(Icons.search_outlined),
+              tooltip: "search".tr(),
               onPressed: () {
                 showSearch(
                   context: context,
@@ -160,6 +161,7 @@ class _CoursesPageState extends State<CoursesPage> {
                 setState(() => _itemFetcher = _ItemFetcher(servers: _filteredServers));
               }),
           IconButton(
+              tooltip: "grid-view".tr(),
               icon: Icon(gridView ? Icons.view_list_outlined : Icons.grid_view),
               onPressed: () {
                 setState(() => gridView = !gridView);

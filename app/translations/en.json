@@ -316,6 +316,8 @@
         "code": "Code",
         "license": "License"
     },
+    "grid-view": "Grid view",
+    "search": "Search",
     "code": "Show code",
     "agree": "Agree",
     "disagree": "Disagree",
