@@ -15,7 +15,8 @@
                     "label": "Description",
                     "hint": "Welcome to the course"
                 },
-                "type": "Type"
+                "type": "Type",
+                "tooltip": "Create item"
             }
         },
         "course": "Course",
@@ -179,7 +180,8 @@
         "delete": {
             "item": {
                 "title": "Confirm delete item",
-                "content": "Do you really want to delete {name} #{index}?"
+                "content": "Do you really want to delete {name} #{index}?",
+                "tooltip": "Delete item"
             }
         }
     },
@@ -328,6 +330,7 @@
     "change": "Change",
     "no": "No",
     "yes": "Yes",
+    "share": "Share",
     "ready-for-offline": "Ready for offline!",
     "update-available": {
         "message": "Update available!",

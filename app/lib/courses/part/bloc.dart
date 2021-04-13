@@ -1,7 +1,5 @@
-import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/part.dart';
-import 'package:dev_doctor/models/server.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -10,9 +8,6 @@ import '../bloc.dart';
 class CoursePartBloc extends CourseBloc {
   BehaviorSubject<CoursePart> partSubject = BehaviorSubject<CoursePart>();
   String? course, part;
-  bool _error = false;
-
-  bool get hasError => _error;
   CoursePartBloc() {}
   Future<void> fetch(
       {ServerEditorBloc? editorBloc,
@@ -21,32 +16,37 @@ class CoursePartBloc extends CourseBloc {
       String? course,
       int? courseId,
       String? part,
-      int? partId}) async {
+      int? partId,
+      bool redirectAddServer = true}) async {
     reset();
     try {
-      var currentServer = editorBloc != null
-          ? editorBloc.server
-          : await CoursesServer.fetch(index: serverId, url: server);
-      if (courseId != null) course = currentServer?.courses[courseId];
-      this.course = course;
-      var currentCourse = course == null
-          ? null
-          : editorBloc != null
-              ? editorBloc.getCourse(course).course
-              : await currentServer?.fetchCourse(course);
-      courseSubject.add(currentCourse ?? Course(parts: [], slug: ''));
-      if (partId != null) part = currentCourse?.parts[partId];
-      this.part = part;
-      var current = editorBloc != null
-          ? course == null || part == null || editorBloc.hasCourse(course)
-              ? null
-              : editorBloc.getCourse(course).getCoursePart(part)
-          : await currentCourse?.fetchPart(part);
-      partSubject.add(current ?? CoursePart(slug: ''));
-      if (current == null) _error = true;
+      super.fetch(
+          editorBloc: editorBloc,
+          server: server,
+          serverId: serverId,
+          course: course,
+          courseId: courseId,
+          redirectAddServer: redirectAddServer);
+      await courseSubject.listen((currentCourse) async {
+        if (partId != null) part = currentCourse.parts[partId];
+        this.part = part;
+        if (part == null) {
+          error = true;
+          return;
+        }
+        print("3");
+        var current = editorBloc != null
+            ? course == null || part == null || editorBloc.hasCourse(course)
+                ? null
+                : editorBloc.getCourse(course).getCoursePart(part!)
+            : await currentCourse.fetchPart(part);
+        print("CURRENT: " + current.toString());
+        partSubject.add(current ?? CoursePart(slug: ''));
+        if (current == null) error = true;
+      }).asFuture();
     } catch (e) {
       print("Error $e");
-      _error = true;
+      error = true;
     }
   }
 

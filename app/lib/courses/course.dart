@@ -15,6 +15,7 @@ import 'package:dev_doctor/widgets/error.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 // import 'package:markdown/markdown.dart' as md;
@@ -187,6 +188,25 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                           pinned: true,
                           actions: [
                             if (_editorBloc == null) ...{
+                              IconButton(
+                                  icon: Icon(Icons.share_outlined),
+                                  tooltip: "share",
+                                  onPressed: () {
+                                    Clipboard.setData(ClipboardData(
+                                        text: Uri(
+                                                scheme: Uri.base.scheme,
+                                                port: Uri.base.port,
+                                                host: Uri.base.host,
+                                                fragment: Uri(pathSegments: [
+                                                  "",
+                                                  "courses",
+                                                  "details"
+                                                ], queryParameters: {
+                                                  "server": course.server!.url,
+                                                  "course": bloc.course
+                                                }).toString())
+                                            .toString()));
+                                  }),
                               if (supportUrl != null)
                                 IconButton(
                                     icon: Icon(Icons.help_outline_outlined),
@@ -198,8 +218,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
                                         "",
                                         "courses",
-                                        "start",
-                                        "item"
+                                        "details"
                                       ], queryParameters: {
                                         ...Modular.args!.queryParams,
                                         "partId": 0.toString()

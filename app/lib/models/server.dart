@@ -100,8 +100,8 @@ class CoursesServer {
   static Future<CoursesServer?> fetch({String? url, int? index, BackendEntry? entry}) async {
     var data = <String, dynamic>{};
     try {
-      if (index == null) {
-        var current = _box.values.toList().indexOf(url!);
+      if (index == null && url != null) {
+        var current = _box.values.toList().indexOf(url);
         if (current != -1) index = _box.keyAt(current);
       } else if (url == null) url = Hive.box<String>('servers').get(index);
       var loadedData = await loadFile("$url/config");

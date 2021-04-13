@@ -8,6 +8,7 @@ import 'package:dev_doctor/models/items/video.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -72,15 +73,39 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                       if (widget.editorBloc != null) ...[
                         if (data.items.isNotEmpty)
                           IconButton(
+                              tooltip: "course.delete.item.tooltip".tr(),
                               icon: Icon(Icons.remove_circle_outline_outlined),
                               onPressed: () => _showDeleteDialog(data, widget.itemId ?? 0)),
                         IconButton(
+                            tooltip: "course.add.item.tooltip".tr(),
                             icon: Icon(Icons.add_circle_outline_outlined),
                             onPressed: () => _showCreateDialog(data)),
                         EditorCoursePartPopupMenu(
                             bloc: widget.editorBloc!,
                             partBloc: EditorPartModule.to.get<CoursePartBloc>())
-                      ]
+                      ] else
+                        IconButton(
+                          icon: Icon(Icons.share_outlined),
+                          tooltip: "share",
+                          onPressed: () {
+                            Clipboard.setData(ClipboardData(
+                                text: Uri(
+                                        scheme: Uri.base.scheme,
+                                        port: Uri.base.port,
+                                        host: Uri.base.host,
+                                        fragment: Uri(pathSegments: [
+                                          "",
+                                          "courses",
+                                          "start",
+                                          "item"
+                                        ], queryParameters: {
+                                          "server": data.server!.url,
+                                          "course": bloc.course,
+                                          "part": bloc.part
+                                        }).toString())
+                                    .toString()));
+                          },
+                        )
                     ],
                     bottom: TabBar(
                         isScrollable: true,

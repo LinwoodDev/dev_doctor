@@ -32,10 +32,10 @@ class _AddServerPageState extends State<AddServerPage> {
             builder: (context) => AlertDialog(
                     actions: [
                       TextButton(
-                          child: Text("settings.servers.add.disagree").tr(),
+                          child: Text("disagree").tr(),
                           onPressed: () => Navigator.of(context).pop(false)),
                       TextButton(
-                          child: Text("settings.servers.add.agree").tr(),
+                          child: Text("agree").tr(),
                           onPressed: () => Navigator.of(context).pop(true))
                     ],
                     title: Text("settings.servers.add.title")

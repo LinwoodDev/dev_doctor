@@ -66,7 +66,8 @@ class _PartItemPageState extends State<PartItemPage> {
                 stream: bloc.partSubject,
                 builder: (context, snapshot) {
                   if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
-                  if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+                  if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
+                    return Center(child: CircularProgressIndicator());
                   var part = snapshot.data!;
                   if (part.items.isEmpty) {
                     return Center(child: Text('course.part.empty'.tr()));

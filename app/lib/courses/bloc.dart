@@ -1,27 +1,34 @@
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/server.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CourseBloc extends Disposable {
   BehaviorSubject<Course> courseSubject = BehaviorSubject<Course>();
   String? course;
-  bool _error = false;
+  @protected
+  bool error = false;
 
-  bool get hasError => _error;
+  bool get hasError => error;
   CoursePartBloc() {}
   Future<void> fetch(
       {ServerEditorBloc? editorBloc,
       String? server,
       int? serverId,
       String? course,
-      int? courseId}) async {
+      int? courseId,
+      bool redirectAddServer = true}) async {
     reset();
     try {
       var currentServer = editorBloc != null
           ? editorBloc.server
           : await CoursesServer.fetch(index: serverId, url: server);
+      if (currentServer == null && server != null)
+        Modular.to.pushNamed(Uri(
+            pathSegments: ["", "add"],
+            queryParameters: {"url": server, "redirect": Modular.to.path}).toString());
       if (courseId != null) course = currentServer?.courses[courseId];
       this.course = course;
       var current = course == null
@@ -29,11 +36,12 @@ class CourseBloc extends Disposable {
           : editorBloc != null
               ? editorBloc.getCourse(course).course
               : await currentServer?.fetchCourse(course);
+      print(current);
       courseSubject.add(current ?? Course(parts: [], slug: ''));
-      if (current == null) _error = true;
+      if (current == null) error = true;
     } catch (e) {
       print("Error $e");
-      _error = true;
+      error = true;
     }
   }
 
@@ -49,7 +57,7 @@ class CourseBloc extends Disposable {
 
   void reset() {
     courseSubject = BehaviorSubject<Course>();
-    _error = false;
+    error = false;
   }
 
   @override
