@@ -181,7 +181,7 @@
             "item": {
                 "title": "Element löschen bestätigen",
                 "content": "Soll wirklich {name} #{index} gelöscht werden?",
-                "tooltip": "Delete item"
+                "tooltip": "Element entfernen"
             }
         }
     },
@@ -330,7 +330,7 @@
     "change": "Ändern",
     "no": "Nein",
     "yes": "Ja",
-    "share": "Share",
+    "share": "Teilen",
     "ready-for-offline": "Bereit für den Offline Modus",
     "update-available": {
         "message": "Update verfügbar!",
