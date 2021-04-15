@@ -16,7 +16,7 @@
                     "hint": "Bienvenue sur le cours"
                 },
                 "type": "Type de texte",
-                "tooltip": "Create item"
+                "tooltip": "Créer l'article"
             }
         },
         "course": "Cours",
@@ -181,7 +181,7 @@
             "item": {
                 "title": "Confirmer la suppression de l'élément",
                 "content": "Voulez-vous vraiment supprimer {name} #{index}?",
-                "tooltip": "Delete item"
+                "tooltip": "Supprimer l’article"
             }
         }
     },
@@ -309,7 +309,7 @@
                 "url": "URL",
                 "hint": "par exemple. https://collection.dev-doctor.cf",
                 "title": "Voulez-vous ajouter la collection {name}?",
-                "body": "La colelction {name} avec l'url {url} sera affichée sur la page de la collection."
+                "body": "La collection {name} avec l'url {url} sera affichée sur la page de la collection."
             },
             "error": "Serveur de collecte non disponible !"
         },
@@ -318,8 +318,8 @@
         "code": "Code",
         "license": "Licence"
     },
-    "grid-view": "Grid view",
-    "search": "Search",
+    "grid-view": "Vue de la grille",
+    "search": "Rechercher",
     "code": "Afficher le code",
     "agree": "Accepter",
     "disagree": "En désaccord avec",
@@ -330,7 +330,7 @@
     "change": "Changement",
     "no": "Non",
     "yes": "Oui",
-    "share": "Share",
+    "share": "Partager",
     "ready-for-offline": "Prêt pour le déconnecté!",
     "update-available": {
         "message": "Mise à jour disponible !",
