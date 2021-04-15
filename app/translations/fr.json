@@ -309,7 +309,7 @@
                 "url": "URL",
                 "hint": "par exemple. https://collection.dev-doctor.cf",
                 "title": "Voulez-vous ajouter la collection {name}?",
-                "body": "La collection {name} avec l'url {url} sera affichée sur la page de la collection."
+                "body": "La colelction {name} avec l'url {url} sera affichée sur la page de la collection."
             },
             "error": "Serveur de collecte non disponible !"
         },
