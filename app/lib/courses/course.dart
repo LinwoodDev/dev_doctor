@@ -218,7 +218,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
                                         "",
                                         "courses",
-                                        "details"
+                                        "start",
+                                        "item"
                                       ], queryParameters: {
                                         ...Modular.args!.queryParams,
                                         "partId": 0.toString()
