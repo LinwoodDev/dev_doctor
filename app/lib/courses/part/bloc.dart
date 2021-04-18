@@ -34,13 +34,11 @@ class CoursePartBloc extends CourseBloc {
           error = true;
           return;
         }
-        print("3");
         var current = editorBloc != null
             ? course == null || part == null || editorBloc.hasCourse(course)
                 ? null
                 : editorBloc.getCourse(course).getCoursePart(part!)
             : await currentCourse.fetchPart(part);
-        print("CURRENT: " + current.toString());
         partSubject.add(current ?? CoursePart(slug: ''));
         if (current == null) error = true;
       }).asFuture();

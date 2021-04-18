@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.0 (April 18, 2021)
+
+* Add grid view
+* Add tooltips
+* Add share button
+* Add filter to language
+* Add favourite option to course
+* Fix folder structure in repository
+* Fix hero
+
 ## 1.3.1 (April 4, 2021)
 
 * Fixing api version bug

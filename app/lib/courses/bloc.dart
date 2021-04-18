@@ -36,7 +36,6 @@ class CourseBloc extends Disposable {
           : editorBloc != null
               ? editorBloc.getCourse(course).course
               : await currentServer?.fetchCourse(course);
-      print(current);
       courseSubject.add(current ?? Course(parts: [], slug: ''));
       if (current == null) error = true;
     } catch (e) {
