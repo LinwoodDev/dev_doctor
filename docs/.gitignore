@@ -3,8 +3,6 @@
 
 # Production
 /build
-src/pages/changelog.md
-src/pages/versions.md
 
 # Generated files
 .docusaurus
