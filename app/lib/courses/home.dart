@@ -5,6 +5,7 @@ import 'package:dev_doctor/models/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -16,6 +17,7 @@ class CoursesPage extends StatefulWidget {
 class _ItemFetcher {
   final _itemsPerPage = 5;
   int _currentPage = 0;
+  Box<bool> _favoriteBox = Hive.box<bool>('favorite');
   List<Course> entries = <Course>[];
   final List<String> servers;
 
@@ -27,7 +29,7 @@ class _ItemFetcher {
 
   // This async function simulates fetching results from Internet, etc.
   Future<List<Course>> fetch({String? query}) async {
-    if (entries.isEmpty)
+    if (entries.isEmpty) {
       await Future.wait(Hive.box<String>('servers')
           .values
           .where((element) => servers.contains(element))
@@ -35,6 +37,8 @@ class _ItemFetcher {
         var server = await CoursesServer.fetch(url: e);
         entries.addAll((await server?.fetchCourses())?.where((element) => !element.private!) ?? []);
       }));
+      entries.sort((a, b) => _favoriteBox.get(b.url, defaultValue: false)! ? 1 : -1);
+    }
     final list = <Course>[];
     var n = min(_itemsPerPage, entries.length - _currentPage * _itemsPerPage);
     for (int i = 0; i < n; i++) {
@@ -188,6 +192,7 @@ class _CoursesListState extends State<CoursesList> {
 
   bool _isLoading = true;
   bool _hasMore = true;
+  Box<bool> _favoriteBox = Hive.box<bool>('favorite');
   @override
   void initState() {
     super.initState();
@@ -231,7 +236,7 @@ class _CoursesListState extends State<CoursesList> {
     var course = _pairList[index];
 
     void onTap() {
-      Navigator.of(context).pushNamed(
+      Modular.to.pushNamed(
           Uri(pathSegments: [
             "",
             "courses",
@@ -243,6 +248,13 @@ class _CoursesListState extends State<CoursesList> {
           arguments: course);
     }
 
+    var isFavorite = _favoriteBox.get(course.url, defaultValue: false)!;
+    var favorite = IconButton(
+        icon: Icon(isFavorite ? Icons.favorite_outlined : Icons.favorite_border_outlined),
+        onPressed: () {
+          _favoriteBox.put(course.url, !isFavorite);
+          setState(() {});
+        });
     var hero = course.icon?.isEmpty ?? true
         ? null
         : Hero(
@@ -253,18 +265,24 @@ class _CoursesListState extends State<CoursesList> {
           child: InkWell(
               onTap: onTap,
               child: Container(
-                constraints: BoxConstraints(maxWidth: 250),
-                padding: const EdgeInsets.all(8.0),
-                child: Column(children: [
-                  Container(padding: const EdgeInsets.all(8.0), child: hero),
-                  Text(course.name),
-                  Text(course.description ?? '', style: Theme.of(context).textTheme.caption)
-                ]),
-              )));
+                  constraints: BoxConstraints(maxWidth: 250),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(children: [
+                    Container(padding: const EdgeInsets.all(8.0), child: hero),
+                    Row(children: [
+                      Expanded(
+                          child: Column(children: [
+                        Text(course.name),
+                        Text(course.description ?? '', style: Theme.of(context).textTheme.caption)
+                      ])),
+                      favorite
+                    ])
+                  ]))));
     return ListTile(
         title: Text(course.name),
         subtitle: Text(course.description ?? ''),
         onTap: onTap,
+        trailing: favorite,
         leading: hero);
   }
 

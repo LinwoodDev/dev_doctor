@@ -43,8 +43,13 @@ class HomePage extends StatelessWidget {
                     child: RawMaterialButton(
                         onPressed: () =>
                             launch("https://vercel.com?utm_source=Linwood&utm_campaign=oss"),
-                        child: SvgPicture.asset("images/powered-by-vercel.svg",
-                            semanticsLabel: 'Powered by Vercel'))),
+                        child: SizedBox(
+                            height: 50,
+                            child: SvgPicture.asset("images/powered-by-vercel.svg",
+                                placeholderBuilder: (BuildContext context) => Container(
+                                    padding: const EdgeInsets.all(30.0),
+                                    child: const CircularProgressIndicator()),
+                                semanticsLabel: 'Powered by Vercel'))))
             ]))
       ]),
       Column(children: [
@@ -68,7 +73,8 @@ class HomePage extends StatelessWidget {
               if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
                 return Center(child: CircularProgressIndicator());
               if (snapshot.hasError) return Text("Error ${snapshot.error}");
-              var document = XmlDocument.parse(utf8.decode(snapshot.data!.bodyBytes));
+              var data = utf8.decode(snapshot.data!.bodyBytes);
+              var document = XmlDocument.parse(data);
               var feed = document.getElement("feed")!;
               var items = feed.findElements("entry").toList();
               return Column(

@@ -6,7 +6,7 @@
 * Add tooltips
 * Add share button
 * Add filter to language
-* Add favourite option to course
+* Add favorite option to course
 * Fix folder structure in repository
 * Fix hero
 

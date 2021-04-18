@@ -27,7 +27,7 @@ void main() async {
   Hive.registerAdapter(CourseEditorBlocAdapter(apiVersion: buildNumber));
   await Hive.openBox('settings');
   await Hive.openBox('appearance');
-  await Hive.openBox<String>('favourite');
+  await Hive.openBox<bool>('favorite');
   await Hive.openBox<ServerEditorBloc>('editor');
   var _serversBox = await Hive.openBox<String>('servers');
   var _collectionsBox = await Hive.openBox<String>('collections');
