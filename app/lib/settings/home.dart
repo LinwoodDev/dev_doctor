@@ -82,11 +82,6 @@ class SettingsList extends StatelessWidget {
               title: Text("settings.code").tr(),
               onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor")),
           ListTile(
-              leading: Icon(Icons.history_outlined),
-              title: Text("settings.changelog").tr(),
-              onTap: () =>
-                  launch("https://github.com/LinwoodCloud/dev_doctor/blob/main/CHANGELOG.md")),
-          ListTile(
               leading: Icon(Icons.supervisor_account_outlined),
               title: Text("discord").tr(),
               onTap: () => launch("https://discord.linwood.tk")),
@@ -97,8 +92,7 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: Icon(Icons.history_outlined),
               title: Text("settings.changelog").tr(),
-              onTap: () =>
-                  launch("https://github.com/LinwoodCloud/dev_doctor/blob/main/CHANGELOG.md")),
+              onTap: () => launch("https://docs.dev-doctor.cf/changelog")),
           ListTile(
               leading: Icon(Icons.construction_outlined),
               title: Text("settings.imprint").tr(),
