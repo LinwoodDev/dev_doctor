@@ -31,6 +31,7 @@ class VideoPartItemPage extends StatelessWidget {
                         )))),
       if (editorBloc != null)
         IconButton(
+            tooltip: "edit".tr(),
             onPressed: () => Modular.to.push(MaterialPageRoute(
                 builder: (context) =>
                     VideoPartItemEditorPage(editorBloc: editorBloc, item: item, itemId: itemId))),
@@ -93,6 +94,7 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
                                   }).toList())))
                     ])))),
         floatingActionButton: FloatingActionButton(
+            tooltip: "save".tr(),
             child: Icon(Icons.save_outlined),
             onPressed: () async {
               var bloc = EditorPartModule.to.get<CoursePartBloc>();

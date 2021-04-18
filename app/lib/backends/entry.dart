@@ -195,6 +195,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
     return _tabController.index == 0
         ? null
         : FloatingActionButton(
+            tooltip: "create".tr(),
             onPressed: _showCreateCourseDialog,
             child: Icon(Icons.add_outlined),
           );
@@ -278,6 +279,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                   )
                                 : Container()),
                         IconButton(
+                            tooltip: "edit".tr(),
                             icon: Icon(Icons.edit_outlined),
                             onPressed: () => Modular.to
                                 .pushNamed('/editor/edit?serverId=${_editorBloc!.key.toString()}'))

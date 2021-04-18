@@ -4,6 +4,7 @@ import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class BackendUserPage extends StatefulWidget {
   final String? user;
@@ -47,6 +48,7 @@ class _BackendUserPageState extends State<BackendUserPage> {
     return Scaffold(
         appBar: MyAppBar(title: backendUser.name, actions: [
           IconButton(
+              tooltip: "grid-view".tr(),
               icon: Icon(gridView ? Icons.view_list_outlined : Icons.grid_view),
               onPressed: () {
                 setState(() => gridView = !gridView);

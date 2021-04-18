@@ -47,11 +47,13 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
       appBar: MyAppBar(title: "editor.markdown.title".tr(), actions: [
         if (isMobile)
           IconButton(
+              tooltip: "editor.markdown.preview.button".tr(),
               icon: Icon(Icons.play_arrow_outlined),
               onPressed: () => Modular.to.push(MaterialPageRoute(
                   builder: (context) =>
                       _MarkdownEditorPreview(markdown: _markdownController!.text)))),
         IconButton(
+            tooltip: "save".tr(),
             icon: Icon(Icons.save_outlined),
             onPressed: () => widget.onSubmit!(_markdownController!.text))
       ]),

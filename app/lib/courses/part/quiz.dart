@@ -138,10 +138,12 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                     ])),
                                     if (widget.editorBloc != null) ...[
                                       IconButton(
+                                          tooltip: "edit".tr(),
                                           icon: Icon(Icons.edit_outlined),
                                           onPressed: () => _showTimerDialog()),
                                       if (_start != null)
                                         IconButton(
+                                            tooltip: "delete".tr(),
                                             icon: Icon(Icons.delete_outline_outlined),
                                             onPressed: () async {
                                               updateItem(

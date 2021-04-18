@@ -19,6 +19,7 @@
                 "tooltip": "Create item"
             }
         },
+        "like": "Like",
         "course": "Course",
         "home": "Home",
         "statistics": "Statistics",
@@ -195,7 +196,9 @@
     },
     "backends": {
         "title": "Backends",
-        "longer": "Search term must be longer than two letters."
+        "longer": "Search term must be longer than two letters.",
+        "install": "Install",
+        "uninstall": "Uninstall"
     },
     "editor": {
         "title": "Editor",
@@ -212,12 +215,13 @@
                 "label": "Note",
                 "hint": "The sample backend of dev-doctor"
             },
-            "submit": "Create",
-            "markdown": {
-                "title": "Markdown Editor",
-                "preview": {
-                    "title": "Preview"
-                }
+            "submit": "Create"
+        },
+        "markdown": {
+            "title": "Markdown Editor",
+            "preview": {
+                "title": "Preview",
+                "button": "Preview"
             }
         },
         "item": {
@@ -318,6 +322,9 @@
         "code": "Code",
         "license": "License"
     },
+    "clear": "Clear",
+    "delete": "Delete",
+    "edit": "Edit",
     "grid-view": "Grid view",
     "search": "Search",
     "code": "Show code",

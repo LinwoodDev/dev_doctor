@@ -72,6 +72,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                     ))),
       if (widget.editorBloc != null)
         IconButton(
+            tooltip: "edit".tr(),
             onPressed: () => Modular.to.push(MaterialPageRoute(
                 builder: (context) => defaultVideo.VideoPartItemEditorPage(
                     editorBloc: widget.editorBloc, item: widget.item, itemId: widget.itemId))),

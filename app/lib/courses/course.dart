@@ -92,6 +92,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     return _tabController.index == 0
         ? null
         : FloatingActionButton(
+            tooltip: "create".tr(),
             onPressed: _showCreatePartDialog,
             child: Icon(Icons.add_outlined),
           );
@@ -353,6 +354,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       AuthorDisplay(author: course.author, editing: _editorBloc != null),
                       if (_editorBloc != null) ...[
                         IconButton(
+                            tooltip: "edit".tr(),
                             icon: Icon(Icons.edit_outlined),
                             onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
                                   '',
@@ -365,6 +367,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 }).toString())),
                         if (course.author?.name != null)
                           IconButton(
+                              tooltip: "delete".tr(),
                               icon: Icon(Icons.delete_outline_outlined),
                               onPressed: () async {
                                 var courseBloc = _editorBloc!.getCourse(bloc.course!);
@@ -386,6 +389,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 : 'course.lang.notset'.tr()),
                             if (_editorBloc != null)
                               IconButton(
+                                  tooltip: "edit".tr(),
                                   icon: Icon(Icons.edit_outlined),
                                   onPressed: () => _showLanguageDialog())
                           ])),
@@ -400,6 +404,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               : Container()),
                       if (_editorBloc != null)
                         IconButton(
+                            tooltip: "edit".tr(),
                             icon: Icon(Icons.edit_outlined),
                             onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
                                   "",

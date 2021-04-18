@@ -62,6 +62,7 @@ class CustomSearchDelegate extends SearchDelegate {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
+        tooltip: "clear".tr(),
         icon: Icon(Icons.clear),
         onPressed: () {
           query = '';
@@ -73,6 +74,7 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
+      tooltip: "back".tr(),
       icon: Icon(Icons.arrow_back),
       onPressed: () {
         close(context, null);
@@ -250,6 +252,7 @@ class _CoursesListState extends State<CoursesList> {
 
     var isFavorite = _favoriteBox.get(course.url, defaultValue: false)!;
     var favorite = IconButton(
+        tooltip: "course.like".tr(),
         icon: Icon(isFavorite ? Icons.favorite_outlined : Icons.favorite_border_outlined),
         onPressed: () {
           _favoriteBox.put(course.url, !isFavorite);

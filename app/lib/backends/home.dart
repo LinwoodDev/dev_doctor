@@ -45,6 +45,7 @@ class CustomSearchDelegate extends SearchDelegate {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
+        tooltip: "clear".tr(),
         icon: Icon(Icons.clear),
         onPressed: () {
           query = '';
@@ -56,6 +57,7 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
+      tooltip: "back".tr(),
       icon: Icon(Icons.arrow_back),
       onPressed: () {
         close(context, null);
@@ -287,6 +289,7 @@ class _AddBackendButtonState extends State<AddBackendButton> with SingleTickerPr
     return RotationTransition(
         turns: _animation,
         child: IconButton(
+          tooltip: (_server.added ? "backends.uninstall" : "backends.install").tr(),
           icon: Icon(_server.added ? Icons.remove_outlined : Icons.add_outlined),
           onPressed: () async {
             var toggledServer = await _server.toggle();

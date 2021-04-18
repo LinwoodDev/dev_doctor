@@ -117,6 +117,7 @@ class _PartItemPageState extends State<PartItemPage> {
                                       ])),
                                       if (widget.editorBloc != null)
                                         IconButton(
+                                          tooltip: "edit".tr(),
                                           icon: Icon(Icons.edit_outlined),
                                           onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
                                             '',

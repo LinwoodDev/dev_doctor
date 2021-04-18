@@ -76,6 +76,7 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
                         ))))),
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.save_outlined),
+            tooltip: "save".tr(),
             onPressed: () async {
               var coursePart = part.copyWith(
                   items: List<PartItem>.from(part.items)
