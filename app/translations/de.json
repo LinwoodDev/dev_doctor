@@ -19,7 +19,7 @@
                 "tooltip": "Erstelle Element"
             }
         },
-        "like": "Like",
+        "like": "Gefällt mir",
         "course": "Kurs",
         "home": "Start",
         "statistics": "Statistiken",
@@ -197,8 +197,8 @@
     "backends": {
         "title": "Backends",
         "longer": "Der Suchbegriff muss länger als 2 Zeichen sein.",
-        "install": "Install",
-        "uninstall": "Uninstall"
+        "install": "Installieren",
+        "uninstall": "Deinstallieren"
     },
     "editor": {
         "title": "Editor",
@@ -322,9 +322,9 @@
         "code": "Code",
         "license": "Lizenz"
     },
-    "clear": "Clear",
+    "clear": "Leeren",
     "delete": "Löschen",
-    "edit": "Edit",
+    "edit": "Bearbeiten",
     "grid-view": "Gitteransicht",
     "search": "Suchen",
     "code": "Code anzeigen",
