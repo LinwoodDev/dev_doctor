@@ -19,7 +19,7 @@
                 "tooltip": "Créer l'article"
             }
         },
-        "like": "Like",
+        "like": "J'aime",
         "course": "Cours",
         "home": "Domicile",
         "statistics": "Statistiques",
@@ -197,8 +197,8 @@
     "backends": {
         "title": "Backends",
         "longer": "Le terme de recherche doit être plus long que deux lettres.",
-        "install": "Install",
-        "uninstall": "Uninstall"
+        "install": "Installer",
+        "uninstall": "Désinstaller"
     },
     "editor": {
         "title": "Editeur",
@@ -220,8 +220,8 @@
         "markdown": {
             "title": "Markdown Editor",
             "preview": {
-                "title": "Preview",
-                "button": "Preview"
+                "title": "Aperçu",
+                "button": "Aperçu"
             }
         },
         "item": {
@@ -322,9 +322,9 @@
         "code": "Code",
         "license": "Licence"
     },
-    "clear": "Clear",
-    "delete": "Delete",
-    "edit": "Edit",
+    "clear": "Nettoyer",
+    "delete": "Supprimez",
+    "edit": "Editer",
     "grid-view": "Vue de la grille",
     "search": "Rechercher",
     "code": "Afficher le code",
