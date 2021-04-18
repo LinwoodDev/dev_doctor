@@ -19,6 +19,7 @@
                 "tooltip": "Créer l'article"
             }
         },
+        "like": "Like",
         "course": "Cours",
         "home": "Domicile",
         "statistics": "Statistiques",
@@ -195,7 +196,9 @@
     },
     "backends": {
         "title": "Backends",
-        "longer": "Le terme de recherche doit être plus long que deux lettres."
+        "longer": "Le terme de recherche doit être plus long que deux lettres.",
+        "install": "Install",
+        "uninstall": "Uninstall"
     },
     "editor": {
         "title": "Editeur",
@@ -212,12 +215,13 @@
                 "label": "Note",
                 "hint": "L'exemple de backend de dev-doctor"
             },
-            "submit": "Créer",
-            "markdown": {
-                "title": "Markdown Editor",
-                "preview": {
-                    "title": "Aperçu"
-                }
+            "submit": "Créer"
+        },
+        "markdown": {
+            "title": "Markdown Editor",
+            "preview": {
+                "title": "Preview",
+                "button": "Preview"
             }
         },
         "item": {
@@ -318,6 +322,9 @@
         "code": "Code",
         "license": "Licence"
     },
+    "clear": "Clear",
+    "delete": "Delete",
+    "edit": "Edit",
     "grid-view": "Vue de la grille",
     "search": "Rechercher",
     "code": "Afficher le code",
