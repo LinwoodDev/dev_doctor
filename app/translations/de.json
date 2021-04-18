@@ -15,7 +15,8 @@
                     "label": "Beschreibung",
                     "hint": "Willkommen zu dem Kurs"
                 },
-                "type": "Type"
+                "type": "Type",
+                "tooltip": "Erstelle Element"
             }
         },
         "course": "Kurs",
@@ -179,7 +180,8 @@
         "delete": {
             "item": {
                 "title": "Element löschen bestätigen",
-                "content": "Soll wirklich {name} #{index} gelöscht werden?"
+                "content": "Soll wirklich {name} #{index} gelöscht werden?",
+                "tooltip": "Element entfernen"
             }
         }
     },
@@ -307,7 +309,7 @@
                 "url": "URL",
                 "hint": "zB. https://collection.dev-doctor.cf",
                 "title": "Möchten Sie den Kollektion {name} hinzufügen?",
-                "body": "Die Kollektion {name} mit der URL {url} wird auf der Kollektionseite angezeigt."
+                "body": "Die Sammlung {name} mit der URL {url} wird auf der Sammlungsseite angezeigt."
             },
             "error": "Kollektionsserver nicht erreichbar!"
         },
@@ -316,6 +318,8 @@
         "code": "Code",
         "license": "Lizenz"
     },
+    "grid-view": "Gitteransicht",
+    "search": "Suchen",
     "code": "Code anzeigen",
     "agree": "Akzeptieren",
     "disagree": "Ablehnen",
@@ -326,6 +330,7 @@
     "change": "Ändern",
     "no": "Nein",
     "yes": "Ja",
+    "share": "Teilen",
     "ready-for-offline": "Bereit für den Offline Modus",
     "update-available": {
         "message": "Update verfügbar!",
