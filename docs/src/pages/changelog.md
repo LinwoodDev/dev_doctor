@@ -5,7 +5,6 @@
 * Add grid view
 * Add tooltips
 * Add share button
-* Add filter to language
 * Add favorite option to course
 * Fix folder structure in repository
 * Fix hero
