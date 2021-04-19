@@ -1,0 +1,13 @@
+Add desktop support (windows, linux)
+Add custom title bar
+4 new themes: spring, summer, autumn, winter
+Adding new api version system
+New editor
+Changing course, server pages to add support for the editor
+Add part options to the title bar
+Add markdown editor
+Add author editor
+Adding code dialog page
+
+API
+Changing author to an object
