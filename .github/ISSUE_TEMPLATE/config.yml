@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Linwood Community Server
+    url: https://discord.linwood.tk/
+    about: Talk with other people.
+  - name: Add your backend to the official collection
+    url: https://github.com/LinwoodCloud/dev_doctor-collection/issues/new?assignees=&labels=submit+a+backend&template=submit-a-backend.md&title=Submit+the+backend%3A+
+    about: If you have a backend which you want to publish, you can do it here!
