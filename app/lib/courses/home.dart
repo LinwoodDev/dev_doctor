@@ -270,17 +270,20 @@ class _CoursesListState extends State<CoursesList> {
               child: Container(
                   constraints: BoxConstraints(maxWidth: 250),
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(children: [
-                    Container(padding: const EdgeInsets.all(8.0), child: hero),
-                    Row(children: [
-                      Expanded(
-                          child: Column(children: [
-                        Text(course.name),
-                        Text(course.description ?? '', style: Theme.of(context).textTheme.caption)
-                      ])),
-                      favorite
-                    ])
-                  ]))));
+                  child: SizedBox(
+                    height: 250,
+                    child: Column(children: [
+                      Expanded(child: Container(padding: const EdgeInsets.all(8.0), child: hero)),
+                      Row(children: [
+                        Expanded(
+                            child: Column(children: [
+                          Text(course.name),
+                          Text(course.description ?? '', style: Theme.of(context).textTheme.caption)
+                        ])),
+                        favorite
+                      ])
+                    ]),
+                  ))));
     return ListTile(
         title: Text(course.name),
         subtitle: Text(course.description ?? ''),
@@ -314,12 +317,16 @@ class _CoursesListState extends State<CoursesList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-        child: SingleChildScrollView(
-            child: widget.gridView
-                ? Wrap(children: _buildList(context))
-                : Column(
-                    // Need to display a loading tile if more items are coming
-                    children: _buildList(context))));
+    return Container(
+        child: Scrollbar(
+            child: SingleChildScrollView(
+                child: widget.gridView
+                    ? Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        child: Wrap(children: _buildList(context)))
+                    : Column(
+                        // Need to display a loading tile if more items are coming
+                        children: _buildList(context)))));
   }
 }
