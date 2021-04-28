@@ -4,4 +4,4 @@ slug: /
 id: introduction
 ---
 
-![Alt](/img/banner.png)
+![Alt](/img/banner.svg)
