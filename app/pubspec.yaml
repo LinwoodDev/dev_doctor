@@ -38,7 +38,7 @@ dependencies:
   xml: ^5.1.0
   flutter_localized_locales: ^2.0.1
   bitsdojo_window: ^0.1.0+1
-  share_plus: ^2.0.1
+  share_plus: ^2.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -373,7 +373,6 @@ msix_config:
   display_name: Dev-Doctor
   publisher_display_name: Linwood
   identity_name: com.github.linwoodcloud.dev-doctor
-  msix_version: 1.4.0.0
   #certificate_path: C:\<PathToCertificate>\<MyCertificate.pfx>
   #certificate_password: 1234 (require if using .pfx certificate)
   #publisher: CN=My Company, O=My Company, L=Berlin, S=Berlin, C=DE

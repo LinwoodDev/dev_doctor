@@ -137,7 +137,6 @@ module.exports = {
     [
       '@docusaurus/plugin-pwa',
       {
-        debug: true,
         offlineModeActivationStrategies: [
           'appInstalled',
           'standalone',
@@ -147,7 +146,7 @@ module.exports = {
           {
             tagName: 'link',
             rel: 'icon',
-            href: '/img/docusaurus.png',
+            href: '/img/logo.png',
           },
           {
             tagName: 'link',
@@ -157,7 +156,7 @@ module.exports = {
           {
             tagName: 'meta',
             name: 'theme-color',
-            content: 'rgb(37, 194, 160)',
+            content: 'rgb(92, 48, 112)',
           },
         ],
       },
