@@ -119,14 +119,15 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                                 }).toString()),
                         tabs: List.generate(data.items.length, (index) {
                           var item = data.items[index];
+                          var text = Text(item.name, overflow: TextOverflow.fade, style: null);
                           if (item is TextPartItem)
-                            return Tab(icon: Icon(Icons.subject_outlined), text: item.name);
+                            return Tab(icon: Icon(Icons.subject_outlined), child: text);
                           else if (item is QuizPartItem)
-                            return Tab(icon: Icon(Icons.question_answer_outlined), text: item.name);
+                            return Tab(icon: Icon(Icons.question_answer_outlined), child: text);
                           else if (item is VideoPartItem)
-                            return Tab(icon: Icon(Icons.play_arrow_outlined), text: item.name);
+                            return Tab(icon: Icon(Icons.play_arrow_outlined), child: text);
                           return Tab(
-                              icon: Icon(Icons.check_box_outline_blank_outlined), text: item.name);
+                              icon: Icon(Icons.check_box_outline_blank_outlined), child: text);
                         })),
                   ),
                   body: widget.child));
@@ -217,8 +218,8 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                   child: Text("yes".tr().toUpperCase()))
             ],
             title: Text("course.delete.item.title".tr()),
-            content: Text("course.delete.item.content".tr(
-                namedArgs: {'index': index.toString(), 'name': part.items[index].name ?? ''}))));
+            content: Text("course.delete.item.content"
+                .tr(namedArgs: {'index': index.toString(), 'name': part.items[index].name}))));
   }
 
   Future<void> _deleteItem(CoursePart part, int index) async {

@@ -4,6 +4,7 @@ import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/text.dart';
+import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -11,12 +12,28 @@ import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class TextPartItemPage extends StatelessWidget {
-  final TextPartItem? item;
+class TextPartItemPage extends StatefulWidget {
+  final TextPartItem item;
+  final CoursePart part;
   final ServerEditorBloc? editorBloc;
-  final int? itemId;
+  final int itemId;
 
-  const TextPartItemPage({Key? key, this.item, this.editorBloc, this.itemId}) : super(key: key);
+  const TextPartItemPage(
+      {Key? key, required this.item, required this.part, this.editorBloc, required this.itemId})
+      : super(key: key);
+
+  @override
+  _TextPartItemPageState createState() => _TextPartItemPageState();
+}
+
+class _TextPartItemPageState extends State<TextPartItemPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    widget.part.setItemPoints(widget.itemId, 1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,27 +46,27 @@ class TextPartItemPage extends StatelessWidget {
           md.ExtensionSet.gitHubFlavored.blockSyntaxes,
           [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
         ),
-        data: item!.text!,
+        data: widget.item.text ?? '',
         selectable: true,
       )),
-      if (editorBloc != null)
+      if (widget.editorBloc != null)
         IconButton(
             tooltip: "edit".tr(),
             icon: Icon(Icons.edit_outlined),
             onPressed: () {
               Modular.to.push(MaterialPageRoute(
                   builder: (context) => MarkdownEditor(
-                      markdown: item!.text,
+                      markdown: widget.item.text,
                       onSubmit: (value) {
                         var bloc = EditorPartModule.to.get<CoursePartBloc>();
-                        var courseBloc = editorBloc!.getCourse(bloc.course!);
+                        var courseBloc = widget.editorBloc!.getCourse(bloc.course!);
                         var coursePart = courseBloc.getCoursePart(bloc.part!);
                         var part = coursePart.copyWith(
                             items: List<PartItem>.from(coursePart.items)
-                              ..[itemId!] = item!.copyWith(text: value));
+                              ..[widget.itemId] = widget.item.copyWith(text: value));
                         courseBloc.updateCoursePart(part);
                         bloc.partSubject.add(part);
-                        editorBloc!.save();
+                        widget.editorBloc!.save();
                       })));
             })
     ]));

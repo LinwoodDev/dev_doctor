@@ -11,8 +11,8 @@ class QuizPartItem extends PartItem {
       {this.text,
       this.time,
       this.questions = const [],
-      String? name,
-      String? description,
+      String name = '',
+      String description = '',
       int? index})
       : super(name: name, description: description, index: index);
   @override

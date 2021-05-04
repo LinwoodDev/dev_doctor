@@ -1,3 +1,5 @@
+import 'package:hive/hive.dart';
+
 import 'server.dart';
 import 'course.dart';
 import 'item.dart';
@@ -23,7 +25,7 @@ class CoursePart {
         slug = json['slug'],
         items = (json['items'] as List<dynamic>? ?? [])
             .map((item) => PartItemTypesExtension.fromName(item['type'])
-                .fromJson(Map<String, dynamic>.from(item)))
+                .fromJson(Map<String, dynamic>.from(item)..['part']))
             .toList();
   Map<String, dynamic> toJson(int? apiVersion) => {
         "api-version": apiVersion,
@@ -33,7 +35,17 @@ class CoursePart {
         "items": items.map((e) => e.toJson()).toList()
       };
 
+  Uri getItemUri(int id) =>
+      Uri(scheme: "https", host: server?.url, pathSegments: [slug, id.toString().toString()]);
+  int? getItemPoints(int id) => Hive.box<int>('points').get(getItemUri(id).toString());
+  void removeItemPoints(int id) => Hive.box<int>('points').delete(getItemUri(id).toString());
+  void setItemPoints(int id, int points) =>
+      Hive.box<int>('points').put(getItemUri(id).toString(), points);
+  bool itemVisited(int id) => Hive.box<int>('points').containsKey(getItemUri(id).toString());
+
   CoursesServer? get server => course!.server;
+
+  Uri get uri => Uri(scheme: "https", host: server?.url, pathSegments: [slug]);
 
   CoursePart copyWith(
           {Course? course,

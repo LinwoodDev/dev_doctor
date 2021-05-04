@@ -82,10 +82,18 @@ class _PartItemPageState extends State<PartItemPage> {
                         item: item, key: _itemKey, editorBloc: widget.editorBloc, itemId: itemId);
                   if (item is TextPartItem)
                     itemWidget = TextPartItemPage(
-                        item: item, key: _itemKey, editorBloc: widget.editorBloc, itemId: itemId);
+                        part: part,
+                        item: item,
+                        key: _itemKey,
+                        editorBloc: widget.editorBloc,
+                        itemId: itemId);
                   if (item is QuizPartItem)
                     itemWidget = QuizPartItemPage(
-                        item: item, key: _itemKey, editorBloc: widget.editorBloc, itemId: itemId);
+                        part: part,
+                        item: item,
+                        key: _itemKey,
+                        editorBloc: widget.editorBloc,
+                        itemId: itemId);
                   final itemBuilder = Builder(builder: (context) => itemWidget);
                   return LayoutBuilder(builder: (context, constraints) {
                     var itemCard = Scrollbar(
@@ -111,9 +119,9 @@ class _PartItemPageState extends State<PartItemPage> {
                                     child: Row(children: [
                                       Expanded(
                                           child: Column(children: [
-                                        Text(item.name ?? '',
+                                        Text(item.name,
                                             style: Theme.of(context).textTheme.headline5),
-                                        Text(item.description ?? '')
+                                        Text(item.description)
                                       ])),
                                       if (widget.editorBloc != null)
                                         IconButton(
@@ -128,6 +136,12 @@ class _PartItemPageState extends State<PartItemPage> {
                                           ], queryParameters: {
                                             ...Modular.args!.queryParams
                                           }).toString()),
+                                        )
+                                      else if (item.allowReset)
+                                        IconButton(
+                                          tooltip: "reset".tr(),
+                                          icon: Icon(Icons.restore_sharp),
+                                          onPressed: () => part.removeItemPoints(itemId),
                                         )
                                     ])))));
                     if (MediaQuery.of(context).size.width > 1000)

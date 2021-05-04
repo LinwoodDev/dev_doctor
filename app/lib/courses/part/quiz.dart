@@ -5,15 +5,18 @@ import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
+import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class QuizPartItemPage extends StatefulWidget {
+  final CoursePart part;
   final QuizPartItem item;
   final ServerEditorBloc? editorBloc;
-  final int? itemId;
+  final int itemId;
 
-  const QuizPartItemPage({Key? key, required this.item, this.editorBloc, this.itemId})
+  const QuizPartItemPage(
+      {Key? key, required this.item, this.editorBloc, required this.itemId, required this.part})
       : super(key: key);
 
   @override
@@ -48,7 +51,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     if (widget.editorBloc != null) {
       _start = widget.item.time;
       _points = null;
-    }
+    } else
+      widget.part.setItemPoints(widget.itemId, _points!);
     setState(() {});
     if (widget.editorBloc == null)
       showDialog(
@@ -168,7 +172,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                           if (widget.editorBloc != null)
                             PopupMenuButton<QuestionOption>(
                                 onSelected: (value) => value.onSelected(context, widget.editorBloc!,
-                                    bloc, widget.itemId!, questionIndex),
+                                    bloc, widget.itemId, questionIndex),
                                 itemBuilder: (context) => QuestionOption.values.map((e) {
                                       var description = e.getDescription(question);
                                       return PopupMenuItem<QuestionOption>(
@@ -215,7 +219,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                                 context,
                                                 widget.editorBloc!,
                                                 bloc,
-                                                widget.itemId!,
+                                                widget.itemId,
                                                 questionIndex,
                                                 index),
                                             itemBuilder: (context) => AnswerOption.values.map((e) {
@@ -300,7 +304,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   Future<void> updateItem(QuizPartItem item) async {
     var courseBloc = widget.editorBloc!.getCourse(bloc.course!);
     var part = courseBloc.getCoursePart(bloc.part!);
-    var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[widget.itemId!] = item);
+    var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[widget.itemId] = item);
     courseBloc.updateCoursePart(coursePart);
     await widget.editorBloc!.save();
     bloc.partSubject.add(coursePart);

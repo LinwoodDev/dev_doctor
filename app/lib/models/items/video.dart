@@ -7,7 +7,7 @@ class VideoPartItem extends PartItem {
   final VideoSource? source;
   final String? url;
 
-  VideoPartItem({this.source, this.url, String? name, String? description, int? index})
+  VideoPartItem({this.source, this.url, String name = '', String description = '', int? index})
       : super(name: name, description: description, index: index);
   @override
   VideoPartItem.fromJson(Map<String, dynamic> json)
