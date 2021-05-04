@@ -143,7 +143,10 @@ class _BackendsListState extends State<BackendsList> {
     return Scrollbar(
         child: SingleChildScrollView(
             child: widget.gridView
-                ? Wrap(children: _buildList(context))
+                ? Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Wrap(children: _buildList(context)))
                 : Column(
                     // Need to display a loading tile if more items are coming
                     children: _buildList(context))));

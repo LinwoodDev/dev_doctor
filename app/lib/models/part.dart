@@ -35,17 +35,24 @@ class CoursePart {
         "items": items.map((e) => e.toJson()).toList()
       };
 
-  Uri getItemUri(int id) =>
-      Uri(scheme: "https", host: server?.url, pathSegments: [slug, id.toString().toString()]);
+  Uri getItemUri(int id) {
+    Uri serverUri = server!.uri;
+    return Uri(
+        host: serverUri.host, scheme: serverUri.scheme, pathSegments: ["", slug, id.toString()]);
+  }
+
   int? getItemPoints(int id) => Hive.box<int>('points').get(getItemUri(id).toString());
   void removeItemPoints(int id) => Hive.box<int>('points').delete(getItemUri(id).toString());
   void setItemPoints(int id, int points) =>
       Hive.box<int>('points').put(getItemUri(id).toString(), points);
   bool itemVisited(int id) => Hive.box<int>('points').containsKey(getItemUri(id).toString());
 
-  CoursesServer? get server => course!.server;
+  CoursesServer? get server => course?.server;
 
-  Uri get uri => Uri(scheme: "https", host: server?.url, pathSegments: [slug]);
+  Uri get uri {
+    Uri serverUri = server!.uri;
+    return Uri(host: serverUri.host, scheme: serverUri.scheme, pathSegments: ["", slug]);
+  }
 
   CoursePart copyWith(
           {Course? course,

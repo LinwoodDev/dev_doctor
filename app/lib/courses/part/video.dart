@@ -29,7 +29,6 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
   @override
   void initState() {
     super.initState();
-
     widget.part.setItemPoints(widget.itemId, 1);
   }
 
@@ -39,12 +38,12 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
       Expanded(
           child: Container(
               child: Center(
-                  child: widget.item!.source == null || widget.item!.url == null
+                  child: widget.item.source == null || widget.item.url == null
                       ? Text('course.video.empty').tr()
                       : ElevatedButton.icon(
                           icon: Icon(Icons.play_circle_outline_outlined),
                           label: Text("course.video.open".tr().toUpperCase()),
-                          onPressed: () => launch(widget.item!.src),
+                          onPressed: () => launch(widget.item.src),
                         )))),
       if (widget.editorBloc != null)
         IconButton(

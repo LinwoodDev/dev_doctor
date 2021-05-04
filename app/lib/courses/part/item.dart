@@ -79,7 +79,11 @@ class _PartItemPageState extends State<PartItemPage> {
                   Widget itemWidget = Text("Not supported!");
                   if (item is VideoPartItem)
                     itemWidget = VideoPartItemPage(
-                        item: item, key: _itemKey, editorBloc: widget.editorBloc, itemId: itemId);
+                        part: part,
+                        item: item,
+                        key: _itemKey,
+                        editorBloc: widget.editorBloc,
+                        itemId: itemId);
                   if (item is TextPartItem)
                     itemWidget = TextPartItemPage(
                         part: part,

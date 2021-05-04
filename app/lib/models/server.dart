@@ -142,6 +142,8 @@ class CoursesServer {
       return null;
     }
   }
+
+  Uri get uri => Uri.parse(url!);
 }
 
 class CoursesServerAdapter extends TypeAdapter<CoursesServer> {
