@@ -76,14 +76,14 @@ class HomePage extends StatelessWidget {
               var data = utf8.decode(snapshot.data!.bodyBytes);
               var document = XmlDocument.parse(data);
               var feed = document.getElement("feed")!;
-              var items = feed.findElements("entry").toList();
+              var items = feed.findAllElements("entry").toList();
               return Column(
                 children: List.generate(min(items.length, 10), (index) {
                   var entry = items[index];
                   return ListTile(
-                    title: Text(entry.getElement("title")!.innerText),
-                    subtitle: Text(entry.getElement("summary")!.innerText),
-                    onTap: () => launch(entry.getElement("link")!.getAttribute("href")!),
+                    title: Text(entry.getElement("title")?.innerText ?? ''),
+                    subtitle: Text(entry.getElement("summary")?.innerText ?? ''),
+                    onTap: () => launch(entry.getElement("link")?.getAttribute("href") ?? ''),
                     isThreeLine: true,
                   );
                 }),

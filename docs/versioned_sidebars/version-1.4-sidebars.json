@@ -1,0 +1,76 @@
+{
+  "version-1.4/docs": [
+    {
+      "type": "doc",
+      "id": "version-1.4/introduction"
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Backend",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.4/backend/overview"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.4/backend/own"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.4/backend/collection"
+        }
+      ]
+    },
+    {
+      "type": "doc",
+      "id": "version-1.4/privacypolicy"
+    }
+  ],
+  "version-1.4/api": [
+    {
+      "type": "doc",
+      "id": "version-1.4/api/migrating"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.4/api"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.4/api/course"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.4/api/part"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.4/api/author"
+    },
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Item",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.4/api/item/overview"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.4/api/item/text"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.4/api/item/video"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.4/api/item/quiz"
+        }
+      ]
+    }
+  ]
+}

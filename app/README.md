@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/LinwoodCloud/dev_doctor/develop/app/images/logo-colored.png" width="350px">
+  <img src="https://raw.githubusercontent.com/LinwoodCloud/dev_doctor/develop/app/images/logo.png" width="350px">
 </p>
 
 # Dev-Doctor

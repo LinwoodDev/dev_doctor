@@ -106,7 +106,7 @@ class SettingsList extends StatelessWidget {
               title: Text("settings.about").tr(),
               onTap: () => showAboutDialog(
                   context: context,
-                  applicationIcon: Image.asset("images/logo-colored.png", height: 50))),
+                  applicationIcon: Image.asset("images/logo.png", height: 50))),
         ])))));
   }
 }
