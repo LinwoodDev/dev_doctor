@@ -51,8 +51,10 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     if (widget.editorBloc != null) {
       _start = widget.item.time;
       _points = null;
-    } else
+    } else {
       widget.part.setItemPoints(widget.itemId, _points!);
+      bloc.partSubject.add(widget.part);
+    }
     setState(() {});
     if (widget.editorBloc == null)
       showDialog(
