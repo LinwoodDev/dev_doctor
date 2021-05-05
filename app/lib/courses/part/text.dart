@@ -46,7 +46,7 @@ class _TextPartItemPageState extends State<TextPartItemPage> {
           md.ExtensionSet.gitHubFlavored.blockSyntaxes,
           [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
         ),
-        data: widget.item.text ?? '',
+        data: widget.item.text,
         selectable: true,
       )),
       if (widget.editorBloc != null)
