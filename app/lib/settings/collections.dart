@@ -40,17 +40,17 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                         return Center(child: CircularProgressIndicator());
                       default:
                         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                        var data = snapshot.data!;
+                        var data = snapshot.data;
                         return Scrollbar(
                             child: ListView.builder(
                                 itemCount: box.length,
                                 itemBuilder: (context, index) {
-                                  var current = data[index];
+                                  var current = data?[index];
                                   return Dismissible(
                                       // Show a red background as the item is swiped away.
                                       background: Container(color: Colors.red),
                                       key: Key(_box.getAt(index)!),
-                                      onDismissed: (direction) => _deleteServer(index),
+                                      onDismissed: (direction) => _deleteCollection(index),
                                       child: ListTile(
                                           leading: current?.icon?.isEmpty ?? current == null
                                               ? null
@@ -70,7 +70,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
     );
   }
 
-  _deleteServer(int index) async {
+  _deleteCollection(int index) async {
     await _box.deleteAt(index);
   }
 
