@@ -46,6 +46,7 @@ class CoursePart {
   void setItemPoints(int id, int points) =>
       Hive.box<int>('points').put(getItemUri(id).toString(), points);
   bool itemVisited(int id) => Hive.box<int>('points').containsKey(getItemUri(id).toString());
+  void setItemVisited(int id) => setItemPoints(id, items[id].points);
 
   CoursesServer? get server => course?.server;
 

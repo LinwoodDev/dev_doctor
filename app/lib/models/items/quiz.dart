@@ -48,6 +48,14 @@ class QuizPartItem extends PartItem {
           questions: questions ?? this.questions,
           text: text ?? this.text,
           time: !timer ? null : time ?? this.time);
+
+  @override
+  int get points {
+    int points = 0;
+    questions.forEach((question) =>
+        question.answers.forEach((answer) => points += answer.correct ? answer.points : 0));
+    return points;
+  }
 }
 
 @immutable
@@ -55,21 +63,21 @@ class QuizQuestion {
   final String? title;
   final String? description;
   final String? evaluation;
-  final List<QuizAnswer>? answers;
+  final List<QuizAnswer> answers;
 
-  QuizQuestion({this.title, this.description, this.answers, this.evaluation});
+  QuizQuestion({this.title, this.description, this.answers = const [], this.evaluation});
   QuizQuestion.fromJson(Map<String, dynamic> json)
       : title = json['title'] ?? '',
         description = json['description'] ?? '',
         evaluation = json['evaluation'],
-        answers = (json['answers'] as List<dynamic>)
+        answers = (json['answers'] as List<dynamic>? ?? [])
             .map((answer) => QuizAnswer.fromJson(Map<String, dynamic>.from(answer)))
             .toList();
   Map<String, dynamic> toJson() => {
         "title": title,
         "description": description,
         "evaluation": evaluation,
-        "answers": answers!.map((e) => e.toJson()).toList()
+        "answers": answers.map((e) => e.toJson()).toList()
       };
   QuizQuestion copyWith(
           {String? title, String? description, String? evaluation, List<QuizAnswer>? answers}) =>

@@ -11,6 +11,8 @@ abstract class PartItem {
   final int? index;
   final allowReset;
 
+  int get points;
+
   PartItem(
       {this.allowReset = true, required this.name, required this.description, required this.index});
   PartItem.fromJson(Map<String, dynamic> json)

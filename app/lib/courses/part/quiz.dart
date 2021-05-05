@@ -196,7 +196,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                         FormField<int>(
                             validator: (value) {
                               if (value == null) return "course.quiz.choose".tr();
-                              if (!question.answers![value].correct)
+                              if (!question.answers[value].correct)
                                 return question.evaluation ?? "course.quiz.wrong".tr();
                               _points = _points! + question.answers![value].points;
                               return null;

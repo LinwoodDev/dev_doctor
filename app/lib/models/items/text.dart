@@ -2,12 +2,15 @@ import 'package:dev_doctor/models/item.dart';
 
 class TextPartItem extends PartItem {
   final String? text;
+  final int points;
 
-  TextPartItem({this.text = "", String name = '', String description = '', int? index})
+  TextPartItem(
+      {this.points = 1, this.text = "", String name = '', String description = '', int? index})
       : super(name: name, description: description, index: index);
   @override
   TextPartItem.fromJson(Map<String, dynamic> json)
       : text = json['text'],
+        points = json['points'] ?? 1,
         super.fromJson(json);
 
   Map<String, dynamic> toJson() =>

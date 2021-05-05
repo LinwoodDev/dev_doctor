@@ -6,12 +6,20 @@ enum VideoSource { youtube, url }
 class VideoPartItem extends PartItem {
   final VideoSource? source;
   final String? url;
+  final int points;
 
-  VideoPartItem({this.source, this.url, String name = '', String description = '', int? index})
+  VideoPartItem(
+      {this.points = 1,
+      this.source,
+      this.url,
+      String name = '',
+      String description = '',
+      int? index})
       : super(name: name, description: description, index: index);
   @override
   VideoPartItem.fromJson(Map<String, dynamic> json)
       : url = json['url'],
+        points = json['points'] ?? 1,
         source = json['source'] != null
             ? EnumToString.fromString(VideoSource.values, json['source'])
             : null,
