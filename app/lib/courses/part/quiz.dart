@@ -164,10 +164,10 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                           Expanded(
                               child: Column(children: [
                             Text(
-                              question.title!,
+                              question.title,
                               style: Theme.of(context).textTheme.headline6,
                             ),
-                            Text(question.description!)
+                            Text(question.description)
                           ])),
                           if (widget.editorBloc != null)
                             PopupMenuButton<QuestionOption>(
@@ -195,15 +195,17 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                         ]),
                         FormField<int>(
                             validator: (value) {
+                              if (_points == null) return null;
                               if (value == null) return "course.quiz.choose".tr();
-                              if (!question.answers[value].correct)
+                              if (!question.answers[value].correct) {
+                                _points = _points! - question.answers[value].minusPoints;
                                 return question.evaluation ?? "course.quiz.wrong".tr();
-                              _points = _points! + question.answers![value].points;
-                              return null;
+                              }
+                              _points = _points! + question.answers[value].points;
                             },
                             builder: (field) => Column(children: [
-                                  ...List.generate(question.answers!.length, (index) {
-                                    var answer = question.answers![index];
+                                  ...List.generate(question.answers.length, (index) {
+                                    var answer = question.answers[index];
                                     return Row(children: [
                                       Expanded(
                                           child: RadioListTile(
@@ -402,7 +404,7 @@ extension QuestionOptionExtension on QuestionOption {
             item.copyWith(
                 questions: List<QuizQuestion>.from(item.questions)
                   ..[questionId] = question.copyWith(
-                      answers: List<QuizAnswer>.from(question.answers!)..add(QuizAnswer()))));
+                      answers: List<QuizAnswer>.from(question.answers)..add(QuizAnswer()))));
         break;
       case QuestionOption.title:
         TextEditingController titleController = TextEditingController(text: question.title);
@@ -514,7 +516,7 @@ extension QuestionOptionExtension on QuestionOption {
                     ],
                     title: Text("course.quiz.option.question.delete.title").tr(),
                     content: Text("course.quiz.option.question.delete.content")
-                        .tr(namedArgs: {"index": questionId.toString(), "name": question.title!})));
+                        .tr(namedArgs: {"index": questionId.toString(), "name": question.title})));
         break;
       case QuestionOption.description:
         TextEditingController descriptionController =
@@ -630,7 +632,7 @@ extension AnswerOptionExtension on AnswerOption {
     var part = course.getCoursePart(partBloc.part!);
     var item = part.items[itemId] as QuizPartItem;
     var question = item.questions[questionId];
-    var answer = question.answers![answerId];
+    var answer = question.answers[answerId];
 
     switch (this) {
       case AnswerOption.rating:
@@ -640,7 +642,7 @@ extension AnswerOptionExtension on AnswerOption {
             itemId,
             questionId,
             question.copyWith(
-                answers: List<QuizAnswer>.from(question.answers!)
+                answers: List<QuizAnswer>.from(question.answers)
                   ..[answerId] = answer.copyWith(correct: !answer.correct)));
         break;
       case AnswerOption.title:
@@ -679,7 +681,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers!)
+                                    answers: List<QuizAnswer>.from(question.answers)
                                       ..[answerId] = answer.copyWith(name: titleController.text)));
                           })
                     ]));
@@ -704,7 +706,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers!)
+                                    answers: List<QuizAnswer>.from(question.answers)
                                       ..removeAt(answerId)));
                           },
                           icon: Icon(Icons.check_outlined),
@@ -753,7 +755,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers!)
+                                    answers: List<QuizAnswer>.from(question.answers)
                                       ..[answerId] = answer.copyWith(
                                           description: descriptionController.text)));
                           })
@@ -796,7 +798,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers!)
+                                    answers: List<QuizAnswer>.from(question.answers)
                                       ..[answerId] = answer.copyWith(
                                           points: int.tryParse(pointsController.text))));
                           })

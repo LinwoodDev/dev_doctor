@@ -33,7 +33,7 @@ extension PartItemTypesExtension on PartItemTypes {
       case PartItemTypes.text:
         return TextPartItem(name: name, description: description, index: index);
       case PartItemTypes.video:
-        return VideoPartItem(name: name, description: description, index: index);
+        return VideoPartItem(name: name, description: description, index: index, url: '');
       case PartItemTypes.quiz:
         return QuizPartItem(name: name, description: description, index: index);
     }

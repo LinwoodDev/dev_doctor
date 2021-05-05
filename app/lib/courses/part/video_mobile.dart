@@ -27,7 +27,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
   late bool isEmpty;
   @override
   void initState() {
-    isEmpty = widget.item.source == null || widget.item.url == null;
+    isEmpty = widget.item.url.isEmpty;
     super.initState();
   }
 

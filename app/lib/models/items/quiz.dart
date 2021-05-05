@@ -60,12 +60,12 @@ class QuizPartItem extends PartItem {
 
 @immutable
 class QuizQuestion {
-  final String? title;
-  final String? description;
+  final String title;
+  final String description;
   final String? evaluation;
   final List<QuizAnswer> answers;
 
-  QuizQuestion({this.title, this.description, this.answers = const [], this.evaluation});
+  QuizQuestion({this.title = '', this.description = '', this.answers = const [], this.evaluation});
   QuizQuestion.fromJson(Map<String, dynamic> json)
       : title = json['title'] ?? '',
         description = json['description'] ?? '',
@@ -89,18 +89,49 @@ class QuizQuestion {
 }
 
 @immutable
+class QuizMultipleChoiceQuestion extends QuizQuestion {
+  QuizMultipleChoiceQuestion(
+      {String title = '',
+      String description = '',
+      List<QuizAnswer> answers = const [],
+      String? evaluation})
+      : super(title: title, description: description, answers: answers, evaluation: evaluation);
+  QuizMultipleChoiceQuestion.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "description": description,
+        "evaluation": evaluation,
+        "answers": answers.map((e) => e.toJson()).toList()
+      };
+  QuizQuestion copyWith(
+          {String? title, String? description, String? evaluation, List<QuizAnswer>? answers}) =>
+      QuizQuestion(
+          answers: answers ?? this.answers,
+          description: description ?? this.description,
+          evaluation: evaluation ?? this.evaluation,
+          title: title ?? this.title);
+}
+
+@immutable
 class QuizAnswer {
   final bool correct;
   final String? name;
   final String? description;
   final int points;
+  final int minusPoints;
 
-  QuizAnswer({this.correct = false, this.name = "", this.description = "", this.points = 1});
+  QuizAnswer(
+      {this.correct = false,
+      this.name = "",
+      this.description = "",
+      this.points = 1,
+      this.minusPoints = 0});
   QuizAnswer.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         description = json['description'] ?? '',
         correct = json['correct'] ?? false,
-        points = json['points'] ?? 1;
+        points = json['points'] ?? 1,
+        minusPoints = json['minus-points'] ?? 0;
   Map<String, dynamic> toJson() =>
       {"correct": correct, "name": name, "description": description, "points": points};
   QuizAnswer copyWith({String? name, String? description, bool? correct, int? points}) =>

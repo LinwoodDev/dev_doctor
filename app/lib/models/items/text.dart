@@ -1,7 +1,7 @@
 import 'package:dev_doctor/models/item.dart';
 
 class TextPartItem extends PartItem {
-  final String? text;
+  final String text;
   final int points;
 
   TextPartItem(

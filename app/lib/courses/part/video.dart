@@ -38,7 +38,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
       Expanded(
           child: Container(
               child: Center(
-                  child: widget.item.source == null || widget.item.url == null
+                  child: widget.item.url.isEmpty
                       ? Text('course.video.empty').tr()
                       : ElevatedButton.icon(
                           icon: Icon(Icons.play_circle_outline_outlined),

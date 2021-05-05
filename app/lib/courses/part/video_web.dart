@@ -31,7 +31,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
   @override
   void initState() {
     super.initState();
-    isEmpty = widget.item.source == null || widget.item.url == null;
+    isEmpty = widget.item.url.isEmpty;
     if (!isEmpty) {
       _iframeElement = IFrameElement();
 
@@ -69,7 +69,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
     return Row(children: [
       Expanded(
           child: Container(
-              child: widget.item.source == null || widget.item.url == null
+              child: widget.item.url.isEmpty
                   ? Center(child: Text('course.video.empty').tr())
                   : AspectRatio(
                       child: _iframeWidget!,

@@ -50,22 +50,20 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                             child: ListView.builder(
                                 itemCount: box.length,
                                 itemBuilder: (context, index) {
-                                  var current = data![index];
-                                  return Container(
-                                      child: Dismissible(
-                                          // Show a red background as the item is swiped away.
-                                          background: Container(color: Colors.red),
-                                          key: Key(current.url!),
-                                          onDismissed: (direction) => _deleteServer(index),
-                                          child: Material(
-                                              child: ListTile(
-                                                  leading: current.icon?.isEmpty ?? true
-                                                      ? null
-                                                      : UniversalImage(
-                                                          type: current.icon,
-                                                          url: current.url! + "/icon"),
-                                                  title: Text(current.name),
-                                                  subtitle: Text(current.url!)))));
+                                  var current = data?[index];
+                                  return Dismissible(
+                                      // Show a red background as the item is swiped away.
+                                      background: Container(color: Colors.red),
+                                      key: Key(box.getAt(index)!),
+                                      onDismissed: (direction) => _deleteServer(index),
+                                      child: ListTile(
+                                          leading: current?.icon?.isEmpty ?? current == null
+                                              ? null
+                                              : UniversalImage(
+                                                  type: current!.icon, url: current.url! + "/icon"),
+                                          title:
+                                              Text(current?.name ?? "settings.servers.error".tr()),
+                                          subtitle: Text(current?.url ?? "")));
                                 }));
                     }
                   }))),
