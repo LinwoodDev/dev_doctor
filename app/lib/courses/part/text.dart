@@ -1,4 +1,5 @@
 import 'package:dev_doctor/courses/part/bloc.dart';
+import 'package:dev_doctor/courses/part/module.dart';
 import 'package:dev_doctor/editor/markdown.dart';
 import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
@@ -31,7 +32,11 @@ class _TextPartItemPageState extends State<TextPartItemPage> {
   void initState() {
     super.initState();
 
-    widget.part.setItemPoints(widget.itemId, 1);
+    if (widget.editorBloc == null && !widget.part.itemVisited(widget.itemId)) {
+      var bloc = CoursePartModule.to.get<CoursePartBloc>();
+      widget.part.setItemPoints(widget.itemId, 1);
+      bloc.partSubject.add(widget.part);
+    }
   }
 
   @override

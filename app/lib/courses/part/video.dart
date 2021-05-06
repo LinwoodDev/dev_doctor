@@ -11,6 +11,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'module.dart';
+
 class VideoPartItemPage extends StatefulWidget {
   final VideoPartItem item;
   final ServerEditorBloc? editorBloc;
@@ -29,7 +31,11 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
   @override
   void initState() {
     super.initState();
-    widget.part.setItemPoints(widget.itemId, 1);
+    if (widget.editorBloc == null && !widget.part.itemVisited(widget.itemId)) {
+      var bloc = CoursePartModule.to.get<CoursePartBloc>();
+      widget.part.setItemPoints(widget.itemId, 1);
+      bloc.partSubject.add(widget.part);
+    }
   }
 
   @override

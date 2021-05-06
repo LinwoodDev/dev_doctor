@@ -19,9 +19,11 @@ import 'module.dart';
 class PartItemLayout extends StatefulWidget {
   final Widget? child;
   final ServerEditorBloc? editorBloc;
+  final CoursePart part;
   final int? itemId;
 
-  const PartItemLayout({Key? key, this.child, this.itemId, this.editorBloc}) : super(key: key);
+  const PartItemLayout({Key? key, this.child, this.itemId, this.editorBloc, required this.part})
+      : super(key: key);
 
   @override
   _PartItemLayoutState createState() => _PartItemLayoutState();
@@ -38,104 +40,92 @@ class _PartItemLayoutState extends State<PartItemLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<CoursePart>(
-        stream: bloc.partSubject,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
-            return Scaffold(body: widget.child);
-          var data = snapshot.data!;
-          var itemId = widget.itemId!;
-          if (itemId >= data.items.length) itemId = data.items.length - 1;
-          if (itemId < 0) itemId = 0;
-          return DefaultTabController(
-              length: data.items.length,
-              initialIndex: itemId,
-              child: Scaffold(
-                  drawer: CoursePartDrawer(
-                    editorBloc: widget.editorBloc,
-                    course: data.course,
-                    onChange: (int index) {
-                      Modular.to.pushReplacementNamed(Uri(
+    return DefaultTabController(
+        length: widget.part.items.length,
+        initialIndex: widget.itemId ?? 0,
+        child: Scaffold(
+            drawer: CoursePartDrawer(
+              editorBloc: widget.editorBloc,
+              course: widget.part.course,
+              onChange: (int index) {
+                Modular.to.pushReplacementNamed(Uri(
+                    pathSegments: widget.editorBloc != null
+                        ? ["", "editor", "course", "item"]
+                        : ["", "courses", "start", "item"],
+                    queryParameters: <String, String>{
+                      ...Modular.args!.queryParams,
+                      "partId": index.toString(),
+                      "itemId": 0.toString()
+                    }).toString());
+              },
+            ),
+            appBar: MyAppBar(
+              title: widget.part.name,
+              height: 125,
+              actions: [
+                if (widget.editorBloc != null) ...[
+                  if (widget.part.items.isNotEmpty)
+                    IconButton(
+                        tooltip: "course.delete.item.tooltip".tr(),
+                        icon: Icon(Icons.remove_circle_outline_outlined),
+                        onPressed: () => _showDeleteDialog(widget.part, widget.itemId ?? 0)),
+                  IconButton(
+                      tooltip: "course.add.item.tooltip".tr(),
+                      icon: Icon(Icons.add_circle_outline_outlined),
+                      onPressed: () => _showCreateDialog(widget.part)),
+                  EditorCoursePartPopupMenu(
+                      bloc: widget.editorBloc!, partBloc: EditorPartModule.to.get<CoursePartBloc>())
+                ] else
+                  IconButton(
+                    icon: Icon(Icons.share_outlined),
+                    tooltip: "share".tr(),
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(
+                          text: Uri(
+                                  scheme: Uri.base.scheme,
+                                  port: Uri.base.port,
+                                  host: Uri.base.host,
+                                  fragment: Uri(pathSegments: [
+                                    "",
+                                    "courses",
+                                    "start",
+                                    "item"
+                                  ], queryParameters: {
+                                    "server": widget.part.server!.url,
+                                    "course": bloc.course,
+                                    "part": bloc.part
+                                  }).toString())
+                              .toString()));
+                    },
+                  )
+              ],
+              bottom: TabBar(
+                  isScrollable: true,
+                  onTap: (index) => Modular.to.pushReplacementNamed(Uri(
                           pathSegments: widget.editorBloc != null
                               ? ["", "editor", "course", "item"]
                               : ["", "courses", "start", "item"],
-                          queryParameters: <String, String>{
+                          queryParameters: {
                             ...Modular.args!.queryParams,
-                            "partId": index.toString(),
-                            "itemId": 0.toString()
-                          }).toString());
-                    },
-                  ),
-                  appBar: MyAppBar(
-                    title: data.name,
-                    height: 125,
-                    actions: [
-                      if (widget.editorBloc != null) ...[
-                        if (data.items.isNotEmpty)
-                          IconButton(
-                              tooltip: "course.delete.item.tooltip".tr(),
-                              icon: Icon(Icons.remove_circle_outline_outlined),
-                              onPressed: () => _showDeleteDialog(data, widget.itemId ?? 0)),
-                        IconButton(
-                            tooltip: "course.add.item.tooltip".tr(),
-                            icon: Icon(Icons.add_circle_outline_outlined),
-                            onPressed: () => _showCreateDialog(data)),
-                        EditorCoursePartPopupMenu(
-                            bloc: widget.editorBloc!,
-                            partBloc: EditorPartModule.to.get<CoursePartBloc>())
-                      ] else
-                        IconButton(
-                          icon: Icon(Icons.share_outlined),
-                          tooltip: "share",
-                          onPressed: () {
-                            Clipboard.setData(ClipboardData(
-                                text: Uri(
-                                        scheme: Uri.base.scheme,
-                                        port: Uri.base.port,
-                                        host: Uri.base.host,
-                                        fragment: Uri(pathSegments: [
-                                          "",
-                                          "courses",
-                                          "start",
-                                          "item"
-                                        ], queryParameters: {
-                                          "server": data.server!.url,
-                                          "course": bloc.course,
-                                          "part": bloc.part
-                                        }).toString())
-                                    .toString()));
-                          },
-                        )
-                    ],
-                    bottom: TabBar(
-                        isScrollable: true,
-                        onTap: (index) => Modular.to.pushReplacementNamed(Uri(
-                                pathSegments: widget.editorBloc != null
-                                    ? ["", "editor", "course", "item"]
-                                    : ["", "courses", "start", "item"],
-                                queryParameters: {
-                                  ...Modular.args!.queryParams,
-                                  "itemId": index.toString()
-                                }).toString()),
-                        tabs: List.generate(data.items.length, (index) {
-                          var item = data.items[index];
-                          var text = Text(item.name,
-                              overflow: TextOverflow.fade,
-                              style: data.itemVisited(index)
-                                  ? null
-                                  : TextStyle(fontWeight: FontWeight.bold));
-                          if (item is TextPartItem)
-                            return Tab(icon: Icon(Icons.subject_outlined), child: text);
-                          else if (item is QuizPartItem)
-                            return Tab(icon: Icon(Icons.question_answer_outlined), child: text);
-                          else if (item is VideoPartItem)
-                            return Tab(icon: Icon(Icons.play_arrow_outlined), child: text);
-                          return Tab(
-                              icon: Icon(Icons.check_box_outline_blank_outlined), child: text);
-                        })),
-                  ),
-                  body: widget.child));
-        });
+                            "itemId": index.toString()
+                          }).toString()),
+                  tabs: List.generate(widget.part.items.length, (index) {
+                    var item = widget.part.items[index];
+                    var text = Text(item.name,
+                        overflow: TextOverflow.fade,
+                        style: widget.part.itemVisited(index)
+                            ? null
+                            : TextStyle(fontWeight: FontWeight.bold));
+                    if (item is TextPartItem)
+                      return Tab(icon: Icon(Icons.subject_outlined), child: text);
+                    else if (item is QuizPartItem)
+                      return Tab(icon: Icon(Icons.question_answer_outlined), child: text);
+                    else if (item is VideoPartItem)
+                      return Tab(icon: Icon(Icons.play_arrow_outlined), child: text);
+                    return Tab(icon: Icon(Icons.check_box_outline_blank_outlined), child: text);
+                  })),
+            ),
+            body: widget.child));
   }
 
   void _showCreateDialog(CoursePart part) {

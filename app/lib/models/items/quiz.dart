@@ -48,6 +48,14 @@ class QuizPartItem extends PartItem {
           questions: questions ?? this.questions,
           text: text ?? this.text,
           time: !timer ? null : time ?? this.time);
+
+  @override
+  int get points {
+    int points = 0;
+    questions.forEach((question) =>
+        question.answers.forEach((answer) => points += answer.correct ? answer.points : 0));
+    return points;
+  }
 }
 
 @immutable
@@ -62,7 +70,7 @@ class QuizQuestion {
       : title = json['title'] ?? '',
         description = json['description'] ?? '',
         evaluation = json['evaluation'],
-        answers = (json['answers'] as List<dynamic>)
+        answers = (json['answers'] as List<dynamic>? ?? [])
             .map((answer) => QuizAnswer.fromJson(Map<String, dynamic>.from(answer)))
             .toList();
   Map<String, dynamic> toJson() => {
