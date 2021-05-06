@@ -36,10 +36,10 @@ class AppearanceSettingsPage extends StatelessWidget {
                                         child: Text('cancel'.tr().toUpperCase()),
                                         onPressed: () => Navigator.of(context).pop()),
                                     TextButton(
-                                        child: Text('SAVE'.tr().toUpperCase()),
+                                        child: Text('save'.tr().toUpperCase()),
                                         onPressed: () async {
                                           if (selectedLocale == 'default') {
-                                            context.deleteSaveLocale();
+                                            context.resetLocale();
                                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                                 content: Text('settings.appearance.locale.restart')
                                                     .tr()));
@@ -50,30 +50,33 @@ class AppearanceSettingsPage extends StatelessWidget {
                                   ],
                                   content: StatefulBuilder(
                                     builder: (BuildContext context, StateSetter setState) {
-                                      return Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          RadioListTile<String>(
-                                            value: "default",
-                                            groupValue: selectedLocale,
-                                            title: Text('settings.appearance.locale.default').tr(),
-                                            onChanged: (value) {
-                                              setState(() => selectedLocale = value);
-                                            },
-                                          ),
-                                          ...List<Widget>.generate(locales.length, (int index) {
-                                            return RadioListTile<String>(
-                                              value: locales[index].toLanguageTag(),
+                                      return SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            RadioListTile<String>(
+                                              value: "default",
                                               groupValue: selectedLocale,
-                                              title: Text('settings.appearance.locale.' +
-                                                      locales[index].toLanguageTag())
-                                                  .tr(),
+                                              title:
+                                                  Text('settings.appearance.locale.default').tr(),
                                               onChanged: (value) {
                                                 setState(() => selectedLocale = value);
                                               },
-                                            );
-                                          })
-                                        ],
+                                            ),
+                                            ...List<Widget>.generate(locales.length, (int index) {
+                                              return RadioListTile<String>(
+                                                value: locales[index].toLanguageTag(),
+                                                groupValue: selectedLocale,
+                                                title: Text('settings.appearance.locale.' +
+                                                        locales[index].toLanguageTag())
+                                                    .tr(),
+                                                onChanged: (value) {
+                                                  setState(() => selectedLocale = value);
+                                                },
+                                              );
+                                            })
+                                          ],
+                                        ),
                                       );
                                     },
                                   ));
@@ -145,22 +148,24 @@ class AppearanceSettingsPage extends StatelessWidget {
                               ],
                               content: StatefulBuilder(
                                 builder: (BuildContext context, StateSetter setState) {
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: List<Widget>.generate(ColorTheme.values.length,
-                                        (int index) {
-                                      return RadioListTile<ColorTheme>(
-                                        value: ColorTheme.values[index],
-                                        groupValue: selectedRadio,
-                                        title: Text('settings.appearance.color.' +
-                                                EnumToString.convertToString(
-                                                    ColorTheme.values[index]))
-                                            .tr(),
-                                        onChanged: (value) {
-                                          setState(() => selectedRadio = value);
-                                        },
-                                      );
-                                    }),
+                                  return SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: List<Widget>.generate(ColorTheme.values.length,
+                                          (int index) {
+                                        return RadioListTile<ColorTheme>(
+                                          value: ColorTheme.values[index],
+                                          groupValue: selectedRadio,
+                                          title: Text('settings.appearance.color.' +
+                                                  EnumToString.convertToString(
+                                                      ColorTheme.values[index]))
+                                              .tr(),
+                                          onChanged: (value) {
+                                            setState(() => selectedRadio = value);
+                                          },
+                                        );
+                                      }),
+                                    ),
                                   );
                                 },
                               ),

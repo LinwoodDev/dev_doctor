@@ -4,7 +4,10 @@ title: Migrating
 
 ## Automatic
 
-Create a new backend by clicking on the plus. Then click on the code button in the right top corner and click on the submit button in the right bottom corner. Open the website again to copy the new code.
+Create a new backend by clicking on the plus.
+Then click on the code button in the right top corner
+and click on the submit button in the right bottom corner.
+Open the website again to copy the new code.
 Repeat this steps with the course and coursepart files.
 
 ## Manual
@@ -15,7 +18,8 @@ It's recommend to use the [automatic](#automatic) method.
 
 :::
 
-Add `"api-version": 9` to the [main](../api.md), [course](course.md) and [course part](part.md).
+Add `"api-version": 9` to the [main](../api.md),
+[course](course.md) and [course part](part.md).
 
 ## Author
 

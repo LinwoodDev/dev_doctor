@@ -119,7 +119,11 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                                 }).toString()),
                         tabs: List.generate(data.items.length, (index) {
                           var item = data.items[index];
-                          var text = Text(item.name, overflow: TextOverflow.fade, style: null);
+                          var text = Text(item.name,
+                              overflow: TextOverflow.fade,
+                              style: data.itemVisited(index)
+                                  ? null
+                                  : TextStyle(fontWeight: FontWeight.bold));
                           if (item is TextPartItem)
                             return Tab(icon: Icon(Icons.subject_outlined), child: text);
                           else if (item is QuizPartItem)

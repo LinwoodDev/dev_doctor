@@ -18,6 +18,7 @@ class AppWidget extends StatelessWidget {
         supportedLocales: [Locale('en'), Locale('de'), Locale('fr')],
         path: 'translations',
         fallbackLocale: Locale('en'),
+        useOnlyLangCode: true,
         child: ValueListenableBuilder(
             valueListenable: Hive.box('appearance').listenable(),
             builder: (context, dynamic box, widget) {

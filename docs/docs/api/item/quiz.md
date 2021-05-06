@@ -214,8 +214,9 @@ correct: true
 
 #### Options
 
-| Name    |  Type   | Required |                                                                                      Description |
-| :------ | :-----: | :------: | -----------------------------------------------------------------------------------------------: |
-| name    | String  |   true   |                                                           The text which will be shown as answer |
-| points  | Integer |  false   | This are the points which will be given if the player give this answer. Default it is `1` point. |
-| correct | Boolean |   true   |                                             This will be displayed if the user validate the form |
+| Name    |  Type   | Required |                                                                                                 Description |
+| :------ | :-----: | :------: | ----------------------------------------------------------------------------------------------------------: |
+| name    | String  |   true   |                                                                      The text which will be shown as answer |
+| minus   | Integer |  false   | This are the minus points which will be given if the player give the wrong answer. Default it is `0` point. |
+| points  | Integer |  false   |            This are the points which will be given if the player give this answer. Default it is `1` point. |
+| correct | Boolean |   true   |                                                        This will be displayed if the user validate the form |
