@@ -22,7 +22,9 @@
         "like": "Gefällt mir",
         "course": "Kurs",
         "home": "Start",
-        "statistics": "Statistiken",
+        "statistics": {
+            "title": "Statistiken"
+        },
         "back": "Zurück",
         "materials": "Materialien",
         "lang": {
@@ -184,7 +186,8 @@
                 "content": "Soll wirklich {name} #{index} gelöscht werden?",
                 "tooltip": "Element entfernen"
             }
-        }
+        },
+        "parts": "Teile"
     },
     "courses": {
         "view": "Kurse ansehen",
@@ -322,6 +325,7 @@
         "code": "Code",
         "license": "Lizenz"
     },
+    "general": "Generell",
     "clear": "Leeren",
     "delete": "Löschen",
     "edit": "Bearbeiten",

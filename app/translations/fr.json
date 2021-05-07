@@ -22,7 +22,9 @@
         "like": "J'aime",
         "course": "Cours",
         "home": "Domicile",
-        "statistics": "Statistiques",
+        "statistics": {
+            "title": "Statistiques "
+        },
         "back": "Précédent",
         "materials": "Matériaux",
         "lang": {
@@ -184,7 +186,8 @@
                 "content": "Voulez-vous vraiment supprimer {name} #{index}?",
                 "tooltip": "Supprimer l’article"
             }
-        }
+        },
+        "parts": "Chapitres"
     },
     "courses": {
         "view": "Voir les cours",
@@ -322,6 +325,7 @@
         "code": "Code",
         "license": "Licence"
     },
+    "general": "Général",
     "clear": "Nettoyer",
     "delete": "Supprimez",
     "edit": "Editer",
