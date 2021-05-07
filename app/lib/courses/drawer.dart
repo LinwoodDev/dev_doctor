@@ -69,8 +69,8 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
                   ? args['partId'] == index.toString()
                   : args['part'] == part.slug;
               return ListTile(
-                title: Text(part.name!),
-                subtitle: Text(part.description ?? ''),
+                title: Text(part.name),
+                subtitle: Text(part.description),
                 selected: selected,
                 trailing: selected && widget.editorBloc != null
                     ? IconTheme(

@@ -279,7 +279,7 @@ class _CoursesListState extends State<CoursesList> {
                         Expanded(
                             child: Column(children: [
                           Text(course.name),
-                          Text(course.description ?? '', style: Theme.of(context).textTheme.caption)
+                          Text(course.description, style: Theme.of(context).textTheme.caption)
                         ])),
                         favorite
                       ])
@@ -287,7 +287,7 @@ class _CoursesListState extends State<CoursesList> {
                   ))));
     return ListTile(
         title: Text(course.name),
-        subtitle: Text(course.description ?? ''),
+        subtitle: Text(course.description),
         onTap: onTap,
         trailing: favorite,
         leading: hero);

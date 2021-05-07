@@ -25,6 +25,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'statistics.dart';
+
 class CoursePage extends StatefulWidget {
   final Course? model;
   final ServerEditorBloc? editorBloc;
@@ -71,9 +73,9 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return widget.model != null
-        ? _buildView(widget.model)
+        ? _buildView(widget.model!)
         : widget.editorBloc != null
-            ? _buildView(widget.editorBloc?.getCourse(bloc.course!).course)
+            ? _buildView(widget.editorBloc!.getCourse(bloc.course!).course)
             : StreamBuilder<Course>(
                 stream: bloc.courseSubject,
                 builder: (context, snapshot) {
@@ -83,7 +85,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                     default:
                       if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
                       var course = snapshot.data;
-                      return _buildView(course);
+                      return _buildView(course!);
                   }
                 });
   }
@@ -176,8 +178,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  Widget _buildView(Course? course) => Builder(builder: (context) {
-        var supportUrl = course!.supportUrl ?? course.server?.supportUrl;
+  Widget _buildView(Course course) => Builder(builder: (context) {
+        var supportUrl = course.supportUrl ?? course.server?.supportUrl;
         return Scaffold(
           body: Scrollbar(
               child: NestedScrollView(
@@ -279,7 +281,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                   },
                   body: TabBarView(controller: _tabController, children: [
                     _buildGeneral(context, course),
-                    _editorBloc != null ? _buildParts(context) : _buildStatistics()
+                    _editorBloc != null ? _buildParts(context) : _buildStatistics(course)
                   ]))),
           floatingActionButton: _buildFab(),
         );
@@ -354,7 +356,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 Divider()
                               ]))),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      AuthorDisplay(author: course.author, editing: _editorBloc != null),
+                      if (course.author != null)
+                        AuthorDisplay(author: course.author!, editing: _editorBloc != null),
                       if (_editorBloc != null) ...[
                         IconButton(
                             tooltip: "edit".tr(),
@@ -439,8 +442,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
             },
             key: Key(part.slug),
             child: ListTile(
-                title: Text(part.name!),
-                subtitle: Text(part.description ?? ""),
+                title: Text(part.name),
+                subtitle: Text(part.description),
                 onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
                       "",
                       "editor",
@@ -455,7 +458,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     ));
   }
 
-  Widget _buildStatistics() => Center(child: Text("Statistics"));
+  Widget _buildStatistics(Course course) => CourseStatisticsView(course: course);
 }
 
 class EditorCoursePartPopupMenu extends StatelessWidget {

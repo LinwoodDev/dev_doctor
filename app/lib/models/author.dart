@@ -1,11 +1,11 @@
 class Author {
-  final String? name;
+  final String name;
   final String? url;
   final String? avatar;
   final String avatarType;
-  Author({this.name, this.url, this.avatar, this.avatarType = 'png'});
+  Author({this.name = "", this.url, this.avatar, this.avatarType = 'png'});
   Author.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
+      : name = json['name'] ?? "",
         url = json['url'],
         avatar = json['avatar'],
         avatarType = json['avatar-type'] ?? 'png';

@@ -10,7 +10,7 @@ class Course {
   final CoursesServer? server;
   final String slug;
   final String name;
-  final String? description;
+  final String description;
   final String? icon;
   final String? supportUrl;
   final Author? author;
@@ -23,7 +23,7 @@ class Course {
   Course(
       {required this.slug,
       this.name = '',
-      this.description,
+      this.description = '',
       this.icon,
       this.author,
       this.installed,
@@ -47,7 +47,7 @@ class Course {
         server: json['server'],
         slug: json['slug'],
         name: json['name'] ?? '',
-        description: json['description'],
+        description: json['description'] ?? '',
         icon: json['icon'],
         author: Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
         body: json['body'] ?? '',

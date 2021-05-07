@@ -212,8 +212,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                       Expanded(
                                           child: RadioListTile(
                                               groupValue: field.value,
-                                              title: Text(answer.name ?? ''),
-                                              subtitle: Text(answer.description ?? ''),
+                                              title: Text(answer.name),
+                                              subtitle: Text(answer.description),
                                               value: index,
                                               onChanged: (int? value) =>
                                                   _points == null ? field.didChange(value) : {})),
@@ -716,7 +716,7 @@ extension AnswerOptionExtension on AnswerOption {
                     ],
                     title: Text("course.quiz.option.answer.delete.title").tr(),
                     content: Text("course.quiz.option.answer.delete.content")
-                        .tr(namedArgs: {"index": answerId.toString(), "name": answer.name!})));
+                        .tr(namedArgs: {"index": answerId.toString(), "name": answer.name})));
         break;
       case AnswerOption.description:
         TextEditingController descriptionController =

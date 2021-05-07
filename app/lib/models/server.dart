@@ -103,7 +103,6 @@ class CoursesServer {
       if (index == null && url != null) {
         var current = _box.values.toList().indexOf(url);
         if (current != -1) index = _box.keyAt(current);
-        print(index);
       } else if (url == null) url = Hive.box<String>('servers').get(index);
       var loadedData = await loadFile("$url/config");
       if (loadedData == null) return null;

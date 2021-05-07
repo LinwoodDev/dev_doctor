@@ -6,21 +6,21 @@ import 'item.dart';
 
 class CoursePart {
   final Course? course;
-  final String? name;
-  final String? description;
+  final String name;
+  final String description;
   final String slug;
   final List<PartItem> items;
 
   CoursePart(
-      {this.name,
-      this.description,
+      {this.name = "",
+      this.description = "",
       required this.slug,
       List<PartItem> items = const [],
       this.course})
       : this.items = List<PartItem>.unmodifiable(items);
   CoursePart.fromJson(Map<String, dynamic> json)
       : course = json['course'],
-        description = json['description'],
+        description = json['description'] ?? "",
         name = json['name'] ?? '',
         slug = json['slug'],
         items = (json['items'] as List<dynamic>? ?? [])
@@ -31,7 +31,7 @@ class CoursePart {
         "api-version": apiVersion,
         "description": description,
         "slug": slug,
-        "name": name ?? '',
+        "name": name,
         "items": items.map((e) => e.toJson()).toList()
       };
 

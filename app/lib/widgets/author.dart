@@ -7,30 +7,30 @@ import 'image.dart';
 
 @immutable
 class AuthorDisplay extends StatelessWidget {
-  final Author? author;
+  final Author author;
   final bool editing;
 
-  const AuthorDisplay({Key? key, this.author, this.editing = false}) : super(key: key);
+  const AuthorDisplay({Key? key, required this.author, this.editing = false}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return author == null
+    return author.name.isEmpty
         ? Container()
         : GestureDetector(
             onTap: () {
-              if (author?.url != null) launch(author!.url!);
+              if (author.url != null) launch(author.url!);
             },
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              if (author?.avatar != null)
+              if (author.avatar != null)
                 Padding(
                     padding: EdgeInsets.all(8),
                     child: CircleAvatar(
                         child: ClipOval(
-                            child: UniversalImage(url: author!.avatar, type: author!.avatarType)))),
-              Text(author?.name == null
+                            child: UniversalImage(url: author.avatar, type: author.avatarType)))),
+              Text(author.name.isEmpty
                   ? editing
                       ? 'course.author.notset'.tr()
                       : ''
-                  : author!.name!),
+                  : author.name),
             ]));
   }
 }

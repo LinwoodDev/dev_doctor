@@ -115,8 +115,8 @@ class QuizMultipleChoiceQuestion extends QuizQuestion {
 @immutable
 class QuizAnswer {
   final bool correct;
-  final String? name;
-  final String? description;
+  final String name;
+  final String description;
   final int points;
   final int minusPoints;
 
