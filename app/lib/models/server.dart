@@ -51,7 +51,7 @@ class CoursesServer {
         "support_url": supportUrl
       };
 
-  bool get added => index != null;
+  bool get added => index != null || Hive.box<String>('servers').containsKey(url);
 
   Future<CoursesServer> add() async => CoursesServer(
       index: await _box.add(url!),
@@ -103,6 +103,7 @@ class CoursesServer {
       if (index == null && url != null) {
         var current = _box.values.toList().indexOf(url);
         if (current != -1) index = _box.keyAt(current);
+        print(index);
       } else if (url == null) url = Hive.box<String>('servers').get(index);
       var loadedData = await loadFile("$url/config");
       if (loadedData == null) return null;
@@ -133,7 +134,6 @@ class CoursesServer {
       if (data == null) return null;
 
       data['server'] = this;
-      data['index'] = index;
       data['slug'] = course;
       data['api-version'] = data['api-version'] ?? 0;
       return Course.fromJson(data);

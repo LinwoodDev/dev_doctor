@@ -22,7 +22,9 @@
         "like": "Like",
         "course": "Course",
         "home": "Home",
-        "statistics": "Statistics",
+        "statistics": {
+            "title": "Statistics"
+        },
         "back": "Back",
         "materials": "Materials",
         "lang": {
@@ -184,7 +186,8 @@
                 "content": "Do you really want to delete {name} #{index}?",
                 "tooltip": "Delete item"
             }
-        }
+        },
+        "parts": "Parts"
     },
     "courses": {
         "view": "View courses",
@@ -322,6 +325,7 @@
         "code": "Code",
         "license": "License"
     },
+    "general": "General",
     "clear": "Clear",
     "delete": "Delete",
     "edit": "Edit",

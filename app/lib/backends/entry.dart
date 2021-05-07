@@ -132,7 +132,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                         bottom: _editorBloc != null
                             ? TabBar(
                                 controller: _tabController,
-                                tabs: [Tab(text: "General"), Tab(text: "Courses")],
+                                tabs: [Tab(text: "general".tr()), Tab(text: "courses.title".tr())],
                                 indicatorSize: TabBarIndicatorSize.label,
                                 isScrollable: true,
                               )

@@ -89,7 +89,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   Widget? _buildFab() {
-    return _tabController.index == 0
+    return _tabController.index == 0 || _editorBloc == null
         ? null
         : FloatingActionButton(
             tooltip: "create".tr(),
@@ -246,14 +246,18 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   }),
                             if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
                           ],
-                          bottom: _editorBloc != null
-                              ? TabBar(
-                                  controller: _tabController,
-                                  tabs: [Tab(text: "General"), Tab(text: "Parts")],
-                                  indicatorSize: TabBarIndicatorSize.label,
-                                  isScrollable: true,
-                                )
-                              : null,
+                          bottom: TabBar(
+                            controller: _tabController,
+                            tabs: [
+                              Tab(text: "general".tr()),
+                              Tab(
+                                  text: _editorBloc != null
+                                      ? "course.parts".tr()
+                                      : "course.statistics.title".tr())
+                            ],
+                            indicatorSize: TabBarIndicatorSize.label,
+                            isScrollable: true,
+                          ),
                           title: Text(course.name),
                           flexibleSpace: _editorBloc != null
                               ? null
@@ -264,7 +268,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                           ? Container()
                                           : Hero(
                                               tag:
-                                                  "course-icon-${course.server?.index}-${course.index}",
+                                                  "course-icon-${course.server?.index}-${course.slug}",
                                               child: UniversalImage(
                                                 url: course.url + "/icon",
                                                 height: 500,
@@ -273,11 +277,10 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 ))
                     ];
                   },
-                  body: _editorBloc != null
-                      ? TabBarView(
-                          controller: _tabController,
-                          children: [_buildGeneral(context, course), _buildParts(context)])
-                      : _buildGeneral(context, course))),
+                  body: TabBarView(controller: _tabController, children: [
+                    _buildGeneral(context, course),
+                    _editorBloc != null ? _buildParts(context) : _buildStatistics()
+                  ]))),
           floatingActionButton: _buildFab(),
         );
       });
@@ -451,6 +454,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       },
     ));
   }
+
+  Widget _buildStatistics() => Center(child: Text("Statistics"));
 }
 
 class EditorCoursePartPopupMenu extends StatelessWidget {

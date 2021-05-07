@@ -134,11 +134,6 @@ class _BackendsListState extends State<BackendsList> {
   }
 
   @override
-  void didUpdateWidget(covariant BackendsList oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scrollbar(
         child: SingleChildScrollView(
@@ -181,7 +176,7 @@ class _BackendsListState extends State<BackendsList> {
           "/backends/entry?collectionId=${server.entry!.collection.index}&user=${server.entry!.user.name}&entry=${server.entry!.name}",
           arguments: server);
       var current = await server.entry!.fetchServer();
-      setState(() => server = current!);
+      if (current != null) setState(() => _pairList[index] = current);
     }
 
     var hero = server.icon?.isEmpty ?? true
