@@ -24,6 +24,11 @@
         "home": "Start",
         "progress": "Fortschritt",
         "points": "Punkte",
+        "certificate": {
+            "title": "Zertifikat",
+            "button": "Zertifikat herunterladen",
+            "description": "{name} hat erfolgreich {progress}% des Kurses mit einer Punktzahl von {score}/{max_score} gemacht."
+        },
         "statistics": {
             "title": "Statistiken"
         },
@@ -297,7 +302,11 @@
             }
         },
         "general": {
-            "title": "Generell"
+            "title": "Generell",
+            "name": {
+                "title": "Benutzername festlegen",
+                "label": "Name"
+            }
         },
         "downloads": {
             "title": "Downloads"
