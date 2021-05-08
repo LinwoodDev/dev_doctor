@@ -22,6 +22,8 @@
         "like": "J'aime",
         "course": "Cours",
         "home": "Domicile",
+        "progress": "Progression",
+        "points": "Points ",
         "statistics": {
             "title": "Statistiques "
         },
