@@ -22,6 +22,13 @@
         "like": "J'aime",
         "course": "Cours",
         "home": "Domicile",
+        "progress": "Progression",
+        "points": "Points",
+        "certificate": {
+            "title": "Certificat",
+            "button": "Télécharger le certificat",
+            "description": "{name} a réussi à faire {progress}% du cours avec un score de {score}/{max_score}."
+        },
         "statistics": {
             "title": "Statistiques "
         },
@@ -295,7 +302,11 @@
             }
         },
         "general": {
-            "title": "Généraux"
+            "title": "Généraux",
+            "name": {
+                "title": "Définir le nom d'utilisateur",
+                "label": "Nom"
+            }
         },
         "downloads": {
             "title": "Téléchargements"
