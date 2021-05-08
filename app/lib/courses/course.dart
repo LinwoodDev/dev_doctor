@@ -48,9 +48,9 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     super.initState();
     _editorBloc = widget.editorBloc;
-    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     if (_editorBloc != null)
       bloc = EditorModule.to.get<CourseBloc>();
     else
@@ -63,6 +63,12 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       _slugController = TextEditingController(text: courseBloc.course.slug);
       _supportController = TextEditingController(text: courseBloc.course.supportUrl ?? '');
     }
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -243,18 +249,6 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   }),
                             if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
                           ],
-                          bottom: TabBar(
-                            controller: _tabController,
-                            tabs: [
-                              Tab(text: "general".tr()),
-                              Tab(
-                                  text: _editorBloc != null
-                                      ? "course.parts".tr()
-                                      : "course.statistics.title".tr())
-                            ],
-                            indicatorSize: TabBarIndicatorSize.label,
-                            isScrollable: true,
-                          ),
                           title: Text(course.name),
                           flexibleSpace: _editorBloc != null
                               ? null
@@ -271,12 +265,28 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                                 height: 500,
                                                 type: course.icon,
                                               ))),
-                                ))
+                                )),
+                      SliverList(
+                          delegate: new SliverChildListDelegate([
+                        TabBar(
+                            controller: _tabController,
+                            tabs: [
+                              Tab(text: "general".tr()),
+                              Tab(
+                                  text: _editorBloc != null
+                                      ? "course.parts".tr()
+                                      : "course.statistics.title".tr())
+                            ],
+                            indicatorSize: TabBarIndicatorSize.label,
+                            isScrollable: false)
+                      ]))
                     ];
                   },
                   body: TabBarView(controller: _tabController, children: [
                     _buildGeneral(context, course),
-                    _editorBloc != null ? _buildParts(context) : _buildStatistics(course)
+                    _editorBloc != null
+                        ? _buildParts(context)
+                        : CourseStatisticsView(course: course)
                   ]))),
           floatingActionButton: _buildFab(),
         );
@@ -459,8 +469,6 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       },
     ));
   }
-
-  Widget _buildStatistics(Course course) => CourseStatisticsView(course: course);
 }
 
 class EditorCoursePartPopupMenu extends StatelessWidget {
