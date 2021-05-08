@@ -24,6 +24,11 @@
         "home": "Home",
         "progress": "Progress",
         "points": "Points",
+        "certificate": {
+            "title": "Certificate",
+            "button": "Download certificate",
+            "description": "{name} has successfully made {progress}% of the course with a score of {score}/{max_score}."
+        },
         "statistics": {
             "title": "Statistics"
         },
@@ -297,7 +302,11 @@
             }
         },
         "general": {
-            "title": "General"
+            "title": "General",
+            "name": {
+                "title": "Set user name",
+                "label": "Name"
+            }
         },
         "downloads": {
             "title": "Downloads"
