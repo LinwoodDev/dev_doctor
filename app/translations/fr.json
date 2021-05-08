@@ -63,7 +63,7 @@
                 "notset": "Heure non définie",
                 "title": "Régler l'heure",
                 "label": "Temps",
-                "hint": "Time in seconds"
+                "hint": "Temps en secondes"
             },
             "validation": {
                 "title": "Validation",

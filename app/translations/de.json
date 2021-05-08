@@ -61,9 +61,9 @@
             "time": {
                 "subtitle": "Sekunden übrig",
                 "notset": "Zeit nicht gesetzt",
-                "title": "Set time",
-                "label": "Time",
-                "hint": "Time in seconds"
+                "title": "Zeit festlegen",
+                "label": "Zeit",
+                "hint": "Zeit in Sekunden"
             },
             "validation": {
                 "title": "Auswertung",
