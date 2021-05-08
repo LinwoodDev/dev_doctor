@@ -41,10 +41,15 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
   Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
   ServerEditorBloc? _editorBloc;
 
+  void _handleTabChange() {
+    if (_editorBloc != null) setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController.addListener(_handleTabChange);
     _editorBloc = widget.editorBloc;
     if (_editorBloc != null) {
       _nameController = TextEditingController(text: _editorBloc!.server.name);

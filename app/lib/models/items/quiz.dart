@@ -70,12 +70,19 @@ class QuizQuestion {
   final String description;
   final String? evaluation;
   final List<QuizAnswer> answers;
+  final bool multi;
 
-  QuizQuestion({this.title = '', this.description = '', this.answers = const [], this.evaluation});
+  QuizQuestion(
+      {this.title = '',
+      this.description = '',
+      this.answers = const [],
+      this.evaluation,
+      this.multi = false});
   QuizQuestion.fromJson(Map<String, dynamic> json)
       : title = json['title'] ?? '',
         description = json['description'] ?? '',
         evaluation = json['evaluation'],
+        multi = json['multi'] ?? false,
         answers = (json['answers'] as List<dynamic>? ?? [])
             .map((answer) => QuizAnswer.fromJson(Map<String, dynamic>.from(answer)))
             .toList();
@@ -86,42 +93,23 @@ class QuizQuestion {
         "answers": answers.map((e) => e.toJson()).toList()
       };
   QuizQuestion copyWith(
-          {String? title, String? description, String? evaluation, List<QuizAnswer>? answers}) =>
+          {String? title,
+          String? description,
+          String? evaluation,
+          List<QuizAnswer>? answers,
+          bool? multi}) =>
       QuizQuestion(
           answers: answers ?? this.answers,
           description: description ?? this.description,
           evaluation: evaluation ?? this.evaluation,
-          title: title ?? this.title);
+          title: title ?? this.title,
+          multi: multi ?? this.multi);
 
   int get points {
     int points = 0;
     answers.forEach((element) => points = max(points, element.points));
     return points;
   }
-}
-
-@immutable
-class QuizMultipleChoiceQuestion extends QuizQuestion {
-  QuizMultipleChoiceQuestion(
-      {String title = '',
-      String description = '',
-      List<QuizAnswer> answers = const [],
-      String? evaluation})
-      : super(title: title, description: description, answers: answers, evaluation: evaluation);
-  QuizMultipleChoiceQuestion.fromJson(Map<String, dynamic> json) : super.fromJson(json);
-  Map<String, dynamic> toJson() => {
-        "title": title,
-        "description": description,
-        "evaluation": evaluation,
-        "answers": answers.map((e) => e.toJson()).toList()
-      };
-  QuizQuestion copyWith(
-          {String? title, String? description, String? evaluation, List<QuizAnswer>? answers}) =>
-      QuizQuestion(
-          answers: answers ?? this.answers,
-          description: description ?? this.description,
-          evaluation: evaluation ?? this.evaluation,
-          title: title ?? this.title);
 }
 
 @immutable

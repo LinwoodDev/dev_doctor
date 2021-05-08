@@ -25,7 +25,7 @@ class CourseBloc extends Disposable {
       var currentServer = editorBloc != null
           ? editorBloc.server
           : await CoursesServer.fetch(index: serverId, url: server);
-      if (!(currentServer?.added ?? false) && server != null)
+      if (editorBloc == null && !(currentServer?.added ?? false) && server != null)
         Modular.to.pushNamed(Uri(
             pathSegments: ["", "add"],
             queryParameters: {"url": server, "redirect": Modular.to.path}).toString());

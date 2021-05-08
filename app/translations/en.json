@@ -60,7 +60,10 @@
             "add": "Add question",
             "time": {
                 "subtitle": "seconds remaining",
-                "notset": "Time not set"
+                "notset": "Time not set",
+                "title": "Set time",
+                "label": "Time",
+                "hint": "Time in seconds"
             },
             "validation": {
                 "title": "Validation",

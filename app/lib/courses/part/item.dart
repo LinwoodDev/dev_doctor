@@ -67,7 +67,11 @@ class _PartItemPageState extends State<PartItemPage> {
             return Center(child: CircularProgressIndicator());
           var part = snapshot.data!;
           if (part.items.isEmpty) {
-            return Center(child: Text('course.part.empty'.tr()));
+            return PartItemLayout(
+                part: part,
+                editorBloc: widget.editorBloc,
+                itemId: widget.itemId,
+                child: Center(child: Text('course.part.empty'.tr())));
           }
           var itemId = widget.itemId;
           if (itemId < 0) itemId = 0;

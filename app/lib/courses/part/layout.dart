@@ -110,7 +110,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                     var item = widget.part.items[index];
                     var text = Text(item.name,
                         overflow: TextOverflow.fade,
-                        style: widget.part.itemVisited(index)
+                        style: widget.editorBloc != null || !widget.part.itemVisited(index)
                             ? null
                             : TextStyle(fontWeight: FontWeight.bold));
                     return Tab(icon: Icon(item.icon), child: text);

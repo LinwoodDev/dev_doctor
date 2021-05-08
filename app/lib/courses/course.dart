@@ -49,6 +49,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController.addListener(_handleTabChange);
     super.initState();
     _editorBloc = widget.editorBloc;
     if (_editorBloc != null)
@@ -63,6 +64,10 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       _slugController = TextEditingController(text: courseBloc.course.slug);
       _supportController = TextEditingController(text: courseBloc.course.supportUrl ?? '');
     }
+  }
+
+  void _handleTabChange() {
+    if (_editorBloc != null) setState(() {});
   }
 
   @override

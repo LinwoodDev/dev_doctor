@@ -90,7 +90,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.part.itemVisited(widget.itemId) && _points == null) return _buildEvaluation();
+    if (widget.editorBloc == null && widget.part.itemVisited(widget.itemId) && _points == null)
+      return _buildEvaluation();
     return Container(
         child: _timer != null || widget.item.time == null || widget.editorBloc != null
             ? Form(
@@ -175,68 +176,145 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                           ]));
                                     }).toList())
                         ]),
-                        FormField<int>(
-                            validator: (value) {
-                              if (_points == null) return null;
-                              if (value == null) return "course.quiz.choose".tr();
-                              if (!question.answers[value].correct) {
-                                _points = _points! - question.answers[value].minusPoints;
-                                return question.evaluation ?? "course.quiz.wrong".tr();
-                              }
-                              _points = _points! + question.answers[value].points;
-                            },
-                            builder: (field) => Column(children: [
-                                  ...List.generate(question.answers.length, (index) {
-                                    var answer = question.answers[index];
-                                    return Row(children: [
-                                      Expanded(
-                                          child: RadioListTile(
-                                              groupValue: field.value,
-                                              title: Text(answer.name),
-                                              subtitle: Text(answer.description),
-                                              value: index,
-                                              onChanged: (int? value) =>
-                                                  _points == null ? field.didChange(value) : {})),
-                                      if (widget.editorBloc != null)
-                                        PopupMenuButton<AnswerOption>(
-                                            onSelected: (value) => value.onSelected(
-                                                context,
-                                                widget.editorBloc!,
-                                                bloc,
-                                                widget.itemId,
-                                                questionIndex,
-                                                index),
-                                            itemBuilder: (context) => AnswerOption.values.map((e) {
-                                                  var description = e.getDescription(answer);
-                                                  return PopupMenuItem<AnswerOption>(
-                                                      value: e,
-                                                      child: Row(children: [
-                                                        Padding(
-                                                          padding: const EdgeInsets.all(8.0),
-                                                          child: Icon(e.getIcon(answer)),
-                                                        ),
-                                                        Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment.start,
-                                                            children: [
-                                                              Text(e.name!),
-                                                              if (description != null)
-                                                                Text(description,
-                                                                    style: Theme.of(context)
-                                                                        .textTheme
-                                                                        .caption)
-                                                            ])
-                                                      ]));
-                                                }).toList())
-                                    ]);
-                                  }),
-                                  field.hasError
-                                      ? Text(
-                                          field.errorText!,
-                                          style: TextStyle(color: Colors.red),
-                                        )
-                                      : Container()
-                                ]))
+                        if (question.multi) ...[
+                          FormField<List<bool>>(
+                              validator: (value) {
+                                if (_points == null) return null;
+                                if (value == null) return "course.quiz.choose".tr();
+                                var correct = false;
+                                for (var i = 0; i < value.length; i++) {
+                                  if (value[i] == question.answers[i].correct) {
+                                    _points = _points! + question.answers[i].points;
+                                  } else {
+                                    _points = _points! + question.answers[i].minusPoints;
+                                    correct = false;
+                                  }
+                                }
+                                if (!correct) {
+                                  return question.evaluation ?? "course.quiz.wrong".tr();
+                                }
+                                return null;
+                              },
+                              initialValue: new List<bool>.filled(question.answers.length, false),
+                              builder: (field) => Column(children: [
+                                    ...List.generate(question.answers.length, (index) {
+                                      var answer = question.answers[index];
+                                      return Row(children: [
+                                        Expanded(
+                                            child: CheckboxListTile(
+                                                title: Text(answer.name),
+                                                subtitle: Text(answer.description),
+                                                value: field.value![index],
+                                                onChanged: (bool? value) => _points == null
+                                                    ? field.didChange(
+                                                        new List<bool>.from(field.value!)
+                                                          ..[index] = value!)
+                                                    : {})),
+                                        if (widget.editorBloc != null)
+                                          PopupMenuButton<AnswerOption>(
+                                              onSelected: (value) => value.onSelected(
+                                                  context,
+                                                  widget.editorBloc!,
+                                                  bloc,
+                                                  widget.itemId,
+                                                  questionIndex,
+                                                  index),
+                                              itemBuilder: (context) =>
+                                                  AnswerOption.values.map((e) {
+                                                    var description = e.getDescription(answer);
+                                                    return PopupMenuItem<AnswerOption>(
+                                                        value: e,
+                                                        child: Row(children: [
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Icon(e.getIcon(answer)),
+                                                          ),
+                                                          Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment.start,
+                                                              children: [
+                                                                Text(e.name!),
+                                                                if (description != null)
+                                                                  Text(description,
+                                                                      style: Theme.of(context)
+                                                                          .textTheme
+                                                                          .caption)
+                                                              ])
+                                                        ]));
+                                                  }).toList())
+                                      ]);
+                                    }),
+                                    field.hasError
+                                        ? Text(
+                                            field.errorText!,
+                                            style: TextStyle(color: Colors.red),
+                                          )
+                                        : Container()
+                                  ])),
+                        ] else
+                          FormField<int>(
+                              validator: (value) {
+                                if (_points == null) return null;
+                                if (value == null) return "course.quiz.choose".tr();
+                                if (!question.answers[value].correct) {
+                                  _points = _points! - question.answers[value].minusPoints;
+                                  return question.evaluation ?? "course.quiz.wrong".tr();
+                                }
+                                _points = _points! + question.answers[value].points;
+                              },
+                              builder: (field) => Column(children: [
+                                    ...List.generate(question.answers.length, (index) {
+                                      var answer = question.answers[index];
+                                      return Row(children: [
+                                        Expanded(
+                                            child: RadioListTile(
+                                                groupValue: field.value,
+                                                title: Text(answer.name),
+                                                subtitle: Text(answer.description),
+                                                value: index,
+                                                onChanged: (int? value) =>
+                                                    _points == null ? field.didChange(value) : {})),
+                                        if (widget.editorBloc != null)
+                                          PopupMenuButton<AnswerOption>(
+                                              onSelected: (value) => value.onSelected(
+                                                  context,
+                                                  widget.editorBloc!,
+                                                  bloc,
+                                                  widget.itemId,
+                                                  questionIndex,
+                                                  index),
+                                              itemBuilder: (context) =>
+                                                  AnswerOption.values.map((e) {
+                                                    var description = e.getDescription(answer);
+                                                    return PopupMenuItem<AnswerOption>(
+                                                        value: e,
+                                                        child: Row(children: [
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Icon(e.getIcon(answer)),
+                                                          ),
+                                                          Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment.start,
+                                                              children: [
+                                                                Text(e.name!),
+                                                                if (description != null)
+                                                                  Text(description,
+                                                                      style: Theme.of(context)
+                                                                          .textTheme
+                                                                          .caption)
+                                                              ])
+                                                        ]));
+                                                  }).toList())
+                                      ]);
+                                    }),
+                                    field.hasError
+                                        ? Text(
+                                            field.errorText!,
+                                            style: TextStyle(color: Colors.red),
+                                          )
+                                        : Container()
+                                  ]))
                       ]);
                     }),
                     if (widget.editorBloc != null) ...[
@@ -300,7 +378,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                   icon: Icon(Icons.replay_outlined),
                   onPressed: () => setState(() {
                         _points = null;
-                        _formKey.currentState!.reset();
+                        _formKey.currentState?.reset();
+                        widget.part.removeItemPoints(widget.itemId);
                         if (widget.item.time != null) startTimer();
                       }),
                   label: Text("course.quiz.retry".tr().toUpperCase())))
@@ -348,7 +427,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   }
 }
 
-enum QuestionOption { answer, title, description, evaluation, delete }
+enum QuestionOption { answer, title, description, evaluation, delete, multi }
 
 extension QuestionOptionExtension on QuestionOption {
   String? get name {
@@ -363,6 +442,8 @@ extension QuestionOptionExtension on QuestionOption {
         return "course.quiz.option.question.delete.item".tr();
       case QuestionOption.description:
         return "course.quiz.option.question.description.item".tr();
+      case QuestionOption.multi:
+        return "course.quiz.option.question.multi.item".tr();
     }
   }
 
@@ -378,6 +459,8 @@ extension QuestionOptionExtension on QuestionOption {
         return Icons.delete_outline_outlined;
       case QuestionOption.description:
         return Icons.subject_outlined;
+      case QuestionOption.multi:
+        return Icons.done_all_outlined;
     }
   }
 
@@ -387,6 +470,8 @@ extension QuestionOptionExtension on QuestionOption {
         return question.title;
       case QuestionOption.evaluation:
         return question.evaluation;
+      case QuestionOption.multi:
+        return (question.multi ? "yes" : "no").tr();
       default:
         return null;
     }
@@ -565,6 +650,14 @@ extension QuestionOptionExtension on QuestionOption {
                           })
                     ]));
         break;
+      case QuestionOption.multi:
+        updateItem(
+            bloc,
+            partBloc,
+            itemId,
+            item.copyWith(
+                questions: List<QuizQuestion>.from(item.questions)
+                  ..[questionId] = question.copyWith(multi: !question.multi)));
     }
   }
 
