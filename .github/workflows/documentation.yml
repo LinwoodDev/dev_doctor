@@ -17,8 +17,6 @@ jobs:
           node-version: '12.x'
       - name: Test Build
         run: |
-          cp CHANGELOG.md docs/src/pages/changelog.md
-          cp SECURITY.md docs/src/pages/versions.md
           cd docs
           yarn install --frozen-lockfile
           npm run build
