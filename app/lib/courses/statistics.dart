@@ -3,6 +3,10 @@ import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:hive/hive.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 class CourseStatisticsView extends StatelessWidget {
   final Course course;
@@ -21,6 +25,8 @@ class CourseStatisticsView extends StatelessWidget {
               var parts = snapshot.data!;
               double allPoints = 0;
               double allProgress = 0;
+              var allScore = 0;
+              var allMaxScore = 0;
               return SingleChildScrollView(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                   ...List.generate(parts.length, (index) {
@@ -36,6 +42,8 @@ class CourseStatisticsView extends StatelessWidget {
                       maxPoints += part.items[i].points;
                       if (part.itemVisited(i)) points += (part.getItemPoints(i)?.toDouble() ?? 0);
                     }
+                    allScore += points.toInt();
+                    allMaxScore += maxPoints.toInt();
                     points /= part.items.length;
                     points /= maxPoints;
 
@@ -49,7 +57,10 @@ class CourseStatisticsView extends StatelessWidget {
                                 child: Column(children: [
                                   Text(part.name, style: Theme.of(context).textTheme.headline6),
                                   SizedBox(height: 50),
-                                  Text((progress * 100).round().toString() + "%"),
+                                  Text("course.progress".tr() +
+                                      " " +
+                                      (progress * 100).round().toString() +
+                                      "%"),
                                   LinearProgressIndicator(value: progress),
                                   SizedBox(height: 50),
                                   Wrap(
@@ -77,7 +88,10 @@ class CourseStatisticsView extends StatelessWidget {
                                             }).toString()));
                                   })),
                                   SizedBox(height: 50),
-                                  Text((points * 100).round().toString() + "%"),
+                                  Text("course.points".tr() +
+                                      " " +
+                                      (points * 100).round().toString() +
+                                      "%"),
                                   LinearProgressIndicator(value: points),
                                 ]))));
                   }),
@@ -91,20 +105,56 @@ class CourseStatisticsView extends StatelessWidget {
                             child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
                                 child: Column(children: [
-                                  Text((allProgress * 100).round().toString() + "%"),
+                                  Text("course.progress".tr() +
+                                      " " +
+                                      (allProgress * 100).round().toString() +
+                                      "%"),
                                   LinearProgressIndicator(value: allProgress),
                                   SizedBox(height: 50),
-                                  Text((allPoints * 100).round().toString() + "%"),
+                                  Text("course.points".tr() +
+                                      " " +
+                                      (allPoints * 100).round().toString() +
+                                      "%"),
                                   LinearProgressIndicator(value: allPoints),
                                   SizedBox(height: 50),
                                   ElevatedButton.icon(
-                                      onPressed: () {},
+                                      onPressed: () => _downloadCertificate(
+                                          context, allProgress, allScore, allMaxScore),
                                       icon: Icon(Icons.download_outlined),
-                                      label: Text("course.certificate.title".tr().toUpperCase()))
+                                      label: Text("course.certificate.button".tr().toUpperCase()))
                                 ]))));
                   })
                 ]),
               );
             }));
+  }
+
+  Future<void> _downloadCertificate(
+      BuildContext buildContext, double progress, int score, int maxScore) async {
+    final pdf = pw.Document();
+    pdf.addPage(pw.Page(
+      pageFormat: PdfPageFormat.a4,
+      build: (context) {
+        return pw.Center(
+            child: pw.Column(children: [
+          pw.Spacer(flex: 2),
+          pw.Text("course.certificate.title".tr(),
+              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24)),
+          pw.SizedBox(
+            width: 300,
+            child: pw.Divider(
+                color: PdfColor.fromInt(Theme.of(buildContext).primaryColor.value), thickness: 1.5),
+          ),
+          pw.Text("course.certificate.description".tr(namedArgs: {
+            "name": Hive.box("general").get("name") ?? "Unknown",
+            "progress": (progress * 100).round().toString(),
+            "score": score.toString(),
+            "max_score": maxScore.toString()
+          })),
+          pw.Spacer(flex: 2)
+        ]));
+      },
+    ));
+    await Printing.sharePdf(bytes: await pdf.save(), filename: 'certificate.pdf');
   }
 }

@@ -2,8 +2,8 @@
 
 ## 1.5.0
 
-* Add certificate
-* Add part page
+* Add certificates
+* Add statistics page
 * Add reset button on all part items
 * Remove coming soon in settings
 * Fix responsive scroll views

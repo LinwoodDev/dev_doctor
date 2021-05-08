@@ -26,6 +26,7 @@ void main() async {
   Hive.registerAdapter(ServerEditorBlocAdapter(apiVersion: buildNumber));
   Hive.registerAdapter(CourseEditorBlocAdapter(apiVersion: buildNumber));
   await Hive.openBox('settings');
+  await Hive.openBox('general');
   await Hive.openBox('appearance');
   await Hive.openBox<bool>('favorite');
   await Hive.openBox<ServerEditorBloc>('editor');

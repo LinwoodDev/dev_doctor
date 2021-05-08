@@ -47,11 +47,11 @@ class SettingsList extends StatelessWidget {
             child: Scrollbar(
                 child: SingleChildScrollView(
                     child: Column(mainAxisSize: MainAxisSize.max, children: [
-          // ListTile(
-          //     selected: activePage == SettingsPages.general,
-          //     leading: Icon(Icons.build_outlined),
-          //     title: Text("settings.general.title").tr(),
-          //     onTap: () => _showComingSoon(context)),
+          ListTile(
+              selected: activePage == SettingsPages.general,
+              leading: Icon(Icons.build_outlined),
+              title: Text("settings.general.title").tr(),
+              onTap: () => Modular.to.pushNamed("/settings/general")),
           ListTile(
               selected: activePage == SettingsPages.appearance,
               leading: Icon(Icons.tune_outlined),
