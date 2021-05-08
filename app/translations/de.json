@@ -60,7 +60,10 @@
             "add": "Frage hinzufügen",
             "time": {
                 "subtitle": "Sekunden übrig",
-                "notset": "Zeit nicht gesetzt"
+                "notset": "Zeit nicht gesetzt",
+                "title": "Set time",
+                "label": "Time",
+                "hint": "Time in seconds"
             },
             "validation": {
                 "title": "Auswertung",

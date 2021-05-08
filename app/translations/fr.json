@@ -60,7 +60,10 @@
             "add": "Ajouter une question",
             "time": {
                 "subtitle": "secondes restantes",
-                "notset": "Heure non définie"
+                "notset": "Heure non définie",
+                "title": "Régler l'heure",
+                "label": "Temps",
+                "hint": "Time in seconds"
             },
             "validation": {
                 "title": "Validation",
