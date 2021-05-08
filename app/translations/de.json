@@ -22,6 +22,8 @@
         "like": "Gefällt mir",
         "course": "Kurs",
         "home": "Start",
+        "progress": "Fortschritt",
+        "points": "Punkte",
         "statistics": {
             "title": "Statistiken"
         },
