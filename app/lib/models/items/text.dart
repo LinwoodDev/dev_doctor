@@ -1,4 +1,6 @@
 import 'package:dev_doctor/models/item.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/icon_data.dart';
 
 class TextPartItem extends PartItem {
   final String text;
@@ -21,4 +23,7 @@ class TextPartItem extends PartItem {
       description: description ?? this.description,
       index: index,
       name: name ?? this.name);
+
+  @override
+  IconData get icon => Icons.subject_outlined;
 }

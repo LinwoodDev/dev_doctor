@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:dev_doctor/models/item.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/icon_data.dart';
 
 class QuizPartItem extends PartItem {
   final String? text;
@@ -52,10 +56,12 @@ class QuizPartItem extends PartItem {
   @override
   int get points {
     int points = 0;
-    questions.forEach((question) =>
-        question.answers.forEach((answer) => points += answer.correct ? answer.points : 0));
+    questions.forEach((question) => points += question.points);
     return points;
   }
+
+  @override
+  IconData get icon => Icons.question_answer_outlined;
 }
 
 @immutable
@@ -86,6 +92,12 @@ class QuizQuestion {
           description: description ?? this.description,
           evaluation: evaluation ?? this.evaluation,
           title: title ?? this.title);
+
+  int get points {
+    int points = 0;
+    answers.forEach((element) => points = max(points, element.points));
+    return points;
+  }
 }
 
 @immutable

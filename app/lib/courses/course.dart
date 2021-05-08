@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-// import 'package:markdown/markdown.dart' as md;
+import 'package:markdown/markdown.dart' as md;
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -51,7 +51,6 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     super.initState();
     _editorBloc = widget.editorBloc;
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
-    _tabController.addListener(_handleTabIndex);
     if (_editorBloc != null)
       bloc = EditorModule.to.get<CourseBloc>();
     else
@@ -64,10 +63,6 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       _slugController = TextEditingController(text: courseBloc.course.slug);
       _supportController = TextEditingController(text: courseBloc.course.supportUrl ?? '');
     }
-  }
-
-  void _handleTabIndex() {
-    setState(() {});
   }
 
   @override
@@ -193,7 +188,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                             if (_editorBloc == null) ...{
                               IconButton(
                                   icon: Icon(Icons.share_outlined),
-                                  tooltip: "share",
+                                  tooltip: "share".tr(),
                                   onPressed: () {
                                     Clipboard.setData(ClipboardData(
                                         text: Uri(
@@ -404,6 +399,13 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                           child: (!course.body.isEmpty)
                               ? MarkdownBody(
                                   onTapLink: (_, url, __) => launch(url!),
+                                  extensionSet: md.ExtensionSet(
+                                    md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                                    [
+                                      md.EmojiSyntax(),
+                                      ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
+                                    ],
+                                  ),
                                   data: course.body,
                                   selectable: true,
                                 )

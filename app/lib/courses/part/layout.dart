@@ -2,9 +2,6 @@ import 'package:dev_doctor/courses/drawer.dart';
 import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
-import 'package:dev_doctor/models/items/quiz.dart';
-import 'package:dev_doctor/models/items/text.dart';
-import 'package:dev_doctor/models/items/video.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
@@ -116,13 +113,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                         style: widget.part.itemVisited(index)
                             ? null
                             : TextStyle(fontWeight: FontWeight.bold));
-                    if (item is TextPartItem)
-                      return Tab(icon: Icon(Icons.subject_outlined), child: text);
-                    else if (item is QuizPartItem)
-                      return Tab(icon: Icon(Icons.question_answer_outlined), child: text);
-                    else if (item is VideoPartItem)
-                      return Tab(icon: Icon(Icons.play_arrow_outlined), child: text);
-                    return Tab(icon: Icon(Icons.check_box_outline_blank_outlined), child: text);
+                    return Tab(icon: Icon(item.icon), child: text);
                   })),
             ),
             body: widget.child));

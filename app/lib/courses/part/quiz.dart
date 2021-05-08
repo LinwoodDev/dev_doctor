@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dev_doctor/courses/part/bloc.dart';
+import 'package:dev_doctor/courses/part/module.dart';
 import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
@@ -37,10 +38,9 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.editorBloc != null) {
-      bloc = EditorPartModule.to.get<CoursePartBloc>();
-      startTimer();
-    }
+    bloc = widget.editorBloc != null
+        ? EditorPartModule.to.get<CoursePartBloc>()
+        : CoursePartModule.to.get<CoursePartBloc>();
   }
 
   void validate() {
@@ -48,15 +48,10 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     _points = 0;
     _start = null;
     var validate = _formKey.currentState!.validate();
-    if (widget.editorBloc != null) {
-      _start = widget.item.time;
-      _points = null;
-    } else {
+    if (widget.editorBloc == null) {
       widget.part.setItemPoints(widget.itemId, _points!);
       bloc.partSubject.add(widget.part);
-    }
-    setState(() {});
-    if (widget.editorBloc == null)
+      setState(() {});
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -69,6 +64,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                       label: Text("close".tr().toUpperCase()))
                 ],
               ));
+    }
   }
 
   Timer? _timer = null;
@@ -94,6 +90,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.part.itemVisited(widget.itemId) && _points == null) return _buildEvaluation();
     return Container(
         child: _timer != null || widget.item.time == null || widget.editorBloc != null
             ? Form(
@@ -103,26 +100,9 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                       builder: (context) => Column(children: [
                             if (_points != null)
                               Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 32),
-                                  child: Column(children: [
-                                    Text(
-                                      _points.toString(),
-                                      style: Theme.of(context).textTheme.headline2,
-                                    ),
-                                    Text("course.quiz.points",
-                                            style: Theme.of(context).textTheme.subtitle2)
-                                        .tr(),
-                                    Padding(
-                                        padding: EdgeInsets.all(4),
-                                        child: ElevatedButton.icon(
-                                            icon: Icon(Icons.replay_outlined),
-                                            onPressed: () => setState(() {
-                                                  _points = null;
-                                                  _formKey.currentState!.reset();
-                                                  if (widget.item.time != null) startTimer();
-                                                }),
-                                            label: Text("course.quiz.retry".tr().toUpperCase())))
-                                  ]))
+                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 32),
+                                child: _buildEvaluation(),
+                              )
                             else
                               Container(),
                             if (_start != null || widget.editorBloc != null)
@@ -304,6 +284,27 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                     onPressed: () => setState(() => startTimer()),
                     label: Text("course.quiz.start".tr().toUpperCase()))));
   }
+
+  Widget _buildEvaluation() => Column(children: [
+        Text(
+          (_points?.toString() ?? widget.part.getItemPoints(widget.itemId).toString()) +
+              "/" +
+              widget.item.points.toString(),
+          style: Theme.of(context).textTheme.headline2,
+        ),
+        Text("course.quiz.points", style: Theme.of(context).textTheme.subtitle2).tr(),
+        if (widget.item.allowReset)
+          Padding(
+              padding: EdgeInsets.all(4),
+              child: ElevatedButton.icon(
+                  icon: Icon(Icons.replay_outlined),
+                  onPressed: () => setState(() {
+                        _points = null;
+                        _formKey.currentState!.reset();
+                        if (widget.item.time != null) startTimer();
+                      }),
+                  label: Text("course.quiz.retry".tr().toUpperCase())))
+      ]);
 
   Future<void> updateItem(QuizPartItem item) async {
     var courseBloc = widget.editorBloc!.getCourse(bloc.course!);

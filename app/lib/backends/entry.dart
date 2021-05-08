@@ -45,7 +45,6 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
-    _tabController.addListener(_handleTabIndex);
     _editorBloc = widget.editorBloc;
     if (_editorBloc != null) {
       _nameController = TextEditingController(text: _editorBloc!.server.name);
@@ -55,13 +54,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
 
   @override
   void dispose() {
-    _tabController.removeListener(_handleTabIndex);
     _tabController.dispose();
     super.dispose();
-  }
-
-  void _handleTabIndex() {
-    setState(() {});
   }
 
   Future<CoursesServer?> _buildFuture() async {

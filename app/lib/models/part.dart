@@ -38,7 +38,9 @@ class CoursePart {
   Uri getItemUri(int id) {
     Uri serverUri = server!.uri;
     return Uri(
-        host: serverUri.host, scheme: serverUri.scheme, pathSegments: ["", slug, id.toString()]);
+        host: serverUri.host,
+        scheme: serverUri.scheme,
+        pathSegments: ["", course!.slug, slug, id.toString()]);
   }
 
   int? getItemPoints(int id) => Hive.box<int>('points').get(getItemUri(id).toString());
@@ -52,7 +54,8 @@ class CoursePart {
 
   Uri get uri {
     Uri serverUri = server!.uri;
-    return Uri(host: serverUri.host, scheme: serverUri.scheme, pathSegments: ["", slug]);
+    return Uri(
+        host: serverUri.host, scheme: serverUri.scheme, pathSegments: ["", course!.slug, slug]);
   }
 
   CoursePart copyWith(

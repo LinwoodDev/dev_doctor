@@ -13,6 +13,8 @@ abstract class PartItem {
 
   int get points;
 
+  IconData get icon => Icons.check_box_outline_blank_outlined;
+
   PartItem(
       {this.allowReset = true, required this.name, required this.description, required this.index});
   PartItem.fromJson(Map<String, dynamic> json)

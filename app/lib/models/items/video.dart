@@ -1,5 +1,7 @@
 import 'package:dev_doctor/models/item.dart';
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/icon_data.dart';
 
 enum VideoSource { youtube, url }
 
@@ -51,4 +53,7 @@ class VideoPartItem extends PartItem {
           index: index,
           source: source ?? this.source,
           url: url ?? this.url);
+
+  @override
+  IconData get icon => Icons.play_arrow_outlined;
 }
