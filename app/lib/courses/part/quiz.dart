@@ -64,7 +64,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                       label: Text("close".tr().toUpperCase()))
                 ],
               ));
-    }
+    } else
+      _points = null;
   }
 
   Timer? _timer = null;
@@ -181,7 +182,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                               validator: (value) {
                                 if (_points == null) return null;
                                 if (value == null) return "course.quiz.choose".tr();
-                                var correct = false;
+                                var correct = true;
                                 for (var i = 0; i < value.length; i++) {
                                   if (value[i] == question.answers[i].correct) {
                                     _points = _points! + question.answers[i].points;
@@ -202,13 +203,14 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                       return Row(children: [
                                         Expanded(
                                             child: CheckboxListTile(
+                                                controlAffinity: ListTileControlAffinity.leading,
                                                 title: Text(answer.name),
                                                 subtitle: Text(answer.description),
                                                 value: field.value![index],
-                                                onChanged: (bool? value) => _points == null
-                                                    ? field.didChange(
-                                                        new List<bool>.from(field.value!)
-                                                          ..[index] = value!)
+                                                onChanged: (bool? value) => _points == null &&
+                                                        value != null
+                                                    ? field.didChange(List<bool>.from(field.value!)
+                                                      ..[index] = value)
                                                     : {})),
                                         if (widget.editorBloc != null)
                                           PopupMenuButton<AnswerOption>(
@@ -443,7 +445,7 @@ extension QuestionOptionExtension on QuestionOption {
       case QuestionOption.description:
         return "course.quiz.option.question.description.item".tr();
       case QuestionOption.multi:
-        return "course.quiz.option.question.multi.item".tr();
+        return "course.quiz.option.question.multi".tr();
     }
   }
 

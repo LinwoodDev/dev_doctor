@@ -79,24 +79,16 @@
             },
             "question": {
                 "answer": "Add answer",
-                "title": {
-                    "item": "Change title",
-                    "label": "Title",
-                    "hint": "The quiz title"
-                },
-                "evaluation": {
-                    "item": "Evaluation",
-                    "label": "Evaluation",
-                    "hint": "An explanation to the answer"
-                },
-                "delete": {
-                    "item": "Delete",
-                    "title": "Confirm delete question",
-                    "content": "Do you really want to delete {name} #{index}?"
-                }
+                "title": "Quiz question",
+                "one": "First answer",
+                "second": "Second answer",
+                "third": "Third answer",
+                "four": "Fourth answer",
+                "evaluation": "An evaluation to the question"
             },
             "option": {
                 "question": {
+                    "multi": "Multiple answers",
                     "answer": "Add answer",
                     "title": {
                         "item": "Change title",

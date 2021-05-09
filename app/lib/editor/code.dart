@@ -27,19 +27,17 @@ class _EditorCodeDialogPageState extends State<EditorCodeDialogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(title: 'editor.code.title'.tr()),
-        body: Scrollbar(
-            child: Center(
-                child: Container(
-                    constraints: BoxConstraints(maxWidth: 1000),
-                    child: ListView(children: [
-                      TextField(
-                          controller: codeController,
-                          decoration: InputDecoration(
-                              hintText: 'editor.code.hint'.tr(),
-                              labelText: 'editor.code.label'.tr()),
-                          minLines: 3,
-                          maxLines: null),
-                    ])))),
+        body: Center(
+            child: Container(
+                constraints: BoxConstraints(maxWidth: 1000),
+                child: ListView(children: [
+                  TextField(
+                      controller: codeController,
+                      decoration: InputDecoration(
+                          hintText: 'editor.code.hint'.tr(), labelText: 'editor.code.label'.tr()),
+                      minLines: 3,
+                      maxLines: null),
+                ]))),
         floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
               var data = json.decode(codeController.text) as Map<String, dynamic>?;
