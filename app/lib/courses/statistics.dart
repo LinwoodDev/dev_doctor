@@ -133,58 +133,62 @@ class CourseStatisticsView extends StatelessWidget {
     var progressHud = ProgressHUD.of(buildContext);
     progressHud?.show();
     await Future.delayed(Duration(seconds: 1));
-    var logoImage = await imageFromAssetBundle("images/logo.png");
-    final pdf = pw.Document();
-    pw.Widget? image = null;
-    if (course.icon != null) {
-      var url = course.url + "/icon." + course.icon;
-      switch (course.icon) {
-        case "svg":
-          var response = await http.get(Uri.parse(url));
-          image = pw.SvgImage(svg: response.body);
-          break;
-        case "png":
-        case "jpg":
-        case "jpeg":
-          image = pw.Image(await flutterImageProvider(NetworkImage(url)), height: 150);
+    try {
+      var logoImage = await imageFromAssetBundle("images/logo.png");
+      final pdf = pw.Document();
+      pw.Widget? image = null;
+      if (course.icon != null) {
+        var url = course.url + "/icon." + course.icon;
+        switch (course.icon) {
+          case "svg":
+            var response = await http.get(Uri.parse(url));
+            image = pw.SvgImage(svg: response.body);
+            break;
+          case "png":
+          case "jpg":
+          case "jpeg":
+            image = pw.Image(await flutterImageProvider(NetworkImage(url)), height: 150);
+        }
       }
+      pdf.addPage(pw.Page(
+          pageFormat: PdfPageFormat.a4,
+          build: (context) {
+            return pw.Column(children: [
+              if (image != null) image,
+              pw.Spacer(flex: 1),
+              pw.SizedBox(height: 50),
+              pw.Text("course.certificate.title".tr(),
+                  textAlign: pw.TextAlign.center,
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24)),
+              pw.Center(
+                  child: pw.SizedBox(
+                width: 300,
+                child: pw.Divider(
+                    color: PdfColor.fromInt(Theme.of(buildContext).primaryColor.value),
+                    thickness: 1.5),
+              )),
+              pw.Text("course.certificate.description".tr(namedArgs: {
+                "name": Hive.box("general").get("name") ?? "Unknown",
+                "progress": (progress * 100).round().toString(),
+                "score": score.toString(),
+                "course": course.name,
+                "max_score": maxScore.toString()
+              })),
+              pw.Spacer(flex: 2),
+              pw.Row(children: [
+                pw.Image(logoImage, height: 50),
+                pw.Expanded(
+                    child: pw.UrlLink(
+                        child: pw.Text("title".tr(), textAlign: pw.TextAlign.center),
+                        destination: "https://dev-doctor.cf")),
+                pw.UrlLink(child: pw.Text(course.name), destination: course.url)
+              ])
+            ]);
+          }));
+      await Printing.sharePdf(bytes: await pdf.save(), filename: 'certificate.pdf');
+    } catch (e) {
+      print("Error $e");
     }
-    pdf.addPage(pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: (context) {
-          return pw.Column(children: [
-            if (image != null) image,
-            pw.Spacer(flex: 1),
-            pw.SizedBox(height: 50),
-            pw.Text("course.certificate.title".tr(),
-                textAlign: pw.TextAlign.center,
-                style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24)),
-            pw.Center(
-                child: pw.SizedBox(
-              width: 300,
-              child: pw.Divider(
-                  color: PdfColor.fromInt(Theme.of(buildContext).primaryColor.value),
-                  thickness: 1.5),
-            )),
-            pw.Text("course.certificate.description".tr(namedArgs: {
-              "name": Hive.box("general").get("name") ?? "Unknown",
-              "progress": (progress * 100).round().toString(),
-              "score": score.toString(),
-              "course": course.name,
-              "max_score": maxScore.toString()
-            })),
-            pw.Spacer(flex: 2),
-            pw.Row(children: [
-              pw.Image(logoImage, height: 50),
-              pw.Expanded(
-                  child: pw.UrlLink(
-                      child: pw.Text("title".tr(), textAlign: pw.TextAlign.center),
-                      destination: "https://dev-doctor.cf")),
-              pw.UrlLink(child: pw.Text(course.name), destination: course.url)
-            ])
-          ]);
-        }));
-    await Printing.sharePdf(bytes: await pdf.save(), filename: 'certificate.pdf');
     progressHud?.dismiss();
   }
 }
