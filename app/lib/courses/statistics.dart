@@ -25,7 +25,6 @@ class CourseStatisticsView extends StatelessWidget {
                 return Center(child: CircularProgressIndicator());
               if (snapshot.hasError) return Text("Error ${snapshot.error}");
               var parts = snapshot.data!;
-              double allPoints = 0;
               double allProgress = 0;
               var allScore = 0;
               var allMaxScore = 0;
@@ -46,10 +45,7 @@ class CourseStatisticsView extends StatelessWidget {
                     }
                     allScore += points.toInt();
                     allMaxScore += maxPoints.toInt();
-                    points /= part.items.length;
-                    points /= maxPoints;
 
-                    allPoints += points;
                     return Padding(
                         padding: EdgeInsets.all(4),
                         child: Card(
@@ -92,13 +88,13 @@ class CourseStatisticsView extends StatelessWidget {
                                   SizedBox(height: 50),
                                   Text("course.points".tr() +
                                       " " +
-                                      (points * 100).round().toString() +
-                                      "%"),
-                                  LinearProgressIndicator(value: points),
+                                      points.toString() +
+                                      "/" +
+                                      maxPoints.toString()),
+                                  LinearProgressIndicator(value: points / maxPoints),
                                 ]))));
                   }),
                   Builder(builder: (context) {
-                    allPoints /= parts.length;
                     allProgress /= parts.length;
                     return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 4, vertical: 64),
@@ -115,9 +111,10 @@ class CourseStatisticsView extends StatelessWidget {
                                   SizedBox(height: 50),
                                   Text("course.points".tr() +
                                       " " +
-                                      (allPoints * 100).round().toString() +
-                                      "%"),
-                                  LinearProgressIndicator(value: allPoints),
+                                      allScore.toString() +
+                                      "/" +
+                                      allMaxScore.toString()),
+                                  LinearProgressIndicator(value: allScore / allMaxScore),
                                   SizedBox(height: 50),
                                   ElevatedButton.icon(
                                       onPressed: () => _downloadCertificate(
