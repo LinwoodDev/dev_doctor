@@ -1,11 +1,18 @@
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:http/http.dart' as http;
 import 'package:printing/printing.dart';
 
 class CourseStatisticsView extends StatelessWidget {
@@ -131,13 +138,32 @@ class CourseStatisticsView extends StatelessWidget {
 
   Future<void> _downloadCertificate(
       BuildContext buildContext, double progress, int score, int maxScore) async {
+    var progress = ProgressHUD.of(buildContext);
+    progress?.show();
     final pdf = pw.Document();
+    pw.Widget? image = null;
+    if (course.icon != null) {
+      var url = course.url + "/icon." + course.icon;
+      switch (course.icon) {
+        case "svg":
+          var response = await http.get(Uri.parse(url));
+          image = pw.SvgImage(svg: response.body);
+          break;
+        case "png":
+        case "jpg":
+        case "jpeg":
+          var sunImage = new NetworkImage(url);
+          image = pw.Image(await flutterImageProvider(sunImage), height: 150);
+      }
+    }
     pdf.addPage(pw.Page(
       pageFormat: PdfPageFormat.a4,
       build: (context) {
         return pw.Center(
             child: pw.Column(children: [
-          pw.Spacer(flex: 2),
+          pw.Spacer(flex: 1),
+          if (image != null) image,
+          pw.SizedBox(height: 50),
           pw.Text("course.certificate.title".tr(),
               style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24)),
           pw.SizedBox(
@@ -151,10 +177,11 @@ class CourseStatisticsView extends StatelessWidget {
             "score": score.toString(),
             "max_score": maxScore.toString()
           })),
-          pw.Spacer(flex: 2)
+          pw.Spacer(flex: 2),
         ]));
       },
     ));
     await Printing.sharePdf(bytes: await pdf.save(), filename: 'certificate.pdf');
+    progress?.dismiss();
   }
 }

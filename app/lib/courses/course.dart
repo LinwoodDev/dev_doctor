@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:easy_localization/easy_localization.dart';
 
@@ -78,22 +79,23 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return widget.model != null
-        ? _buildView(widget.model!)
-        : widget.editorBloc != null
-            ? _buildView(widget.editorBloc!.getCourse(bloc.course!).course)
-            : StreamBuilder<Course>(
-                stream: bloc.courseSubject,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return Center(child: CircularProgressIndicator());
-                    default:
-                      if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
-                      var course = snapshot.data;
-                      return _buildView(course!);
-                  }
-                });
+    return ProgressHUD(
+        child: widget.model != null
+            ? _buildView(widget.model!)
+            : widget.editorBloc != null
+                ? _buildView(widget.editorBloc!.getCourse(bloc.course!).course)
+                : StreamBuilder<Course>(
+                    stream: bloc.courseSubject,
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Center(child: CircularProgressIndicator());
+                        default:
+                          if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
+                          var course = snapshot.data;
+                          return _buildView(course!);
+                      }
+                    }));
   }
 
   Widget? _buildFab() {
