@@ -49,6 +49,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     _start = null;
     var validate = _formKey.currentState!.validate();
     if (widget.editorBloc == null) {
+      if (_points! < 0) _points = 0;
       widget.part.setItemPoints(widget.itemId, _points!);
       bloc.partSubject.add(widget.part);
       setState(() {});

@@ -220,5 +220,4 @@ correct: true
 | minus        | Integer |  false   | This are the minus points which will be given if the player give the wrong answer. Default it is `0` point. |
 | points       | Integer |  false   |            This are the points which will be given if the player give this answer. Default it is `1` point. |
 | correct      | Boolean |   true   |                                                        This will be displayed if the user validate the form |
-| points       | Integer |  false   |                                      The points which will be get if you choose this answer. Default is `1` |
 | minus_points | Integer |  false   |             The points which will be get if you don't choose this answer when it is correct. Default is `0` |

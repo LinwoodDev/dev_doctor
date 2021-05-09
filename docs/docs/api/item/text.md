@@ -43,4 +43,4 @@ text: >
 | Name   |       Type        | Required |                                                                  Description |
 | :----- | :---------------: | :------: | ---------------------------------------------------------------------------: |
 | text   | String (Markdown) |   true   | The current text which will be displayed as content of the current part item |
-| points |      Integer      |  false   |        The points which will be get if you visited this site. Default is `0` |
+| points |      Integer      |  false   |        The points which will be get if you visited this site. Default is `1` |

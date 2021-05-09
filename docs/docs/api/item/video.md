@@ -47,4 +47,4 @@ url: ScMzIvxBSi4
 | :----- | :-------------------: | :------: | --------------------------------------------------------------------: |
 | source | String (youtube, url) |   true   |               The source of the file. Currently there is only youtube |
 | url    |        String         |   true   |     The current url of the file. On youtube it is the id of the video |
-| points |        Integer        |  false   | The points which will be get if you visited this site. Default is `0` |
+| points |        Integer        |  false   | The points which will be get if you visited this site. Default is `1` |
