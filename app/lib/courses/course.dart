@@ -79,23 +79,22 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return ProgressHUD(
-        child: widget.model != null
-            ? _buildView(widget.model!)
-            : widget.editorBloc != null
-                ? _buildView(widget.editorBloc!.getCourse(bloc.course!).course)
-                : StreamBuilder<Course>(
-                    stream: bloc.courseSubject,
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return Center(child: CircularProgressIndicator());
-                        default:
-                          if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
-                          var course = snapshot.data;
-                          return _buildView(course!);
-                      }
-                    }));
+    return widget.model != null
+        ? _buildView(widget.model!)
+        : widget.editorBloc != null
+            ? _buildView(widget.editorBloc!.getCourse(bloc.course!).course)
+            : StreamBuilder<Course>(
+                stream: bloc.courseSubject,
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return Center(child: CircularProgressIndicator());
+                    default:
+                      if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
+                      var course = snapshot.data;
+                      return _buildView(course!);
+                  }
+                });
   }
 
   Widget? _buildFab() {
@@ -189,112 +188,113 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   Widget _buildView(Course course) => Builder(builder: (context) {
         var supportUrl = course.supportUrl ?? course.server?.supportUrl;
         return Scaffold(
-          body: Scrollbar(
-              child: NestedScrollView(
-                  headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-                    return <Widget>[
-                      SliverAppBar(
-                          expandedHeight: _editorBloc != null ? null : 400.0,
-                          floating: false,
-                          pinned: true,
-                          actions: [
-                            if (_editorBloc == null) ...{
-                              IconButton(
-                                  icon: Icon(Icons.share_outlined),
-                                  tooltip: "share".tr(),
-                                  onPressed: () {
-                                    Clipboard.setData(ClipboardData(
-                                        text: Uri(
-                                                scheme: Uri.base.scheme,
-                                                port: Uri.base.port,
-                                                host: Uri.base.host,
-                                                fragment: Uri(pathSegments: [
-                                                  "",
-                                                  "courses",
-                                                  "details"
-                                                ], queryParameters: {
-                                                  "server": course.server!.url,
-                                                  "course": bloc.course
-                                                }).toString())
-                                            .toString()));
-                                  }),
-                              if (supportUrl != null)
-                                IconButton(
-                                    icon: Icon(Icons.help_outline_outlined),
-                                    tooltip: "course.support".tr(),
-                                    onPressed: () => launch(supportUrl)),
-                              IconButton(
-                                  icon: Icon(Icons.play_circle_outline_outlined),
-                                  tooltip: "course.start".tr(),
-                                  onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
-                                        "",
-                                        "courses",
-                                        "start",
-                                        "item"
-                                      ], queryParameters: {
-                                        ...Modular.args!.queryParams,
-                                        "partId": 0.toString()
-                                      }).toString()))
-                            } else
-                              IconButton(
-                                  icon: Icon(Icons.code_outlined),
-                                  tooltip: "code".tr(),
-                                  onPressed: () async {
-                                    var packageInfo = await PackageInfo.fromPlatform();
-                                    var buildNumber = int.tryParse(packageInfo.buildNumber);
-                                    var encoder = JsonEncoder.withIndent("  ");
-                                    var data = await Modular.to.push(MaterialPageRoute(
-                                        builder: (context) => EditorCodeDialogPage(
-                                            initialValue:
-                                                encoder.convert(course.toJson(buildNumber)))));
-                                    if (data != null) {
-                                      var courseBloc = _editorBloc!.getCourse(bloc.course!);
-                                      courseBloc.course = Course.fromJson(data);
-                                      _editorBloc?.save();
-                                      setState(() {});
-                                    }
-                                  }),
-                            if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
-                          ],
-                          title: Text(course.name),
-                          flexibleSpace: _editorBloc != null
-                              ? null
-                              : FlexibleSpaceBar(
-                                  background: Container(
-                                      margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
-                                      child: _editorBloc != null
-                                          ? Container()
-                                          : Hero(
-                                              tag:
-                                                  "course-icon-${course.server?.index}-${course.slug}",
-                                              child: UniversalImage(
-                                                url: course.url + "/icon",
-                                                height: 500,
-                                                type: course.icon,
-                                              ))),
-                                )),
-                      SliverList(
-                          delegate: new SliverChildListDelegate([
-                        TabBar(
-                            controller: _tabController,
-                            tabs: [
-                              Tab(text: "general".tr()),
-                              Tab(
-                                  text: _editorBloc != null
-                                      ? "course.parts".tr()
-                                      : "course.statistics.title".tr())
-                            ],
-                            indicatorSize: TabBarIndicatorSize.label,
-                            isScrollable: false)
-                      ]))
-                    ];
-                  },
-                  body: TabBarView(controller: _tabController, children: [
-                    _buildGeneral(context, course),
-                    _editorBloc != null
-                        ? _buildParts(context)
-                        : CourseStatisticsView(course: course)
-                  ]))),
+          body: ProgressHUD(
+              child: Scrollbar(
+                  child: NestedScrollView(
+                      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                        return <Widget>[
+                          SliverAppBar(
+                              expandedHeight: _editorBloc != null ? null : 400.0,
+                              floating: false,
+                              pinned: true,
+                              actions: [
+                                if (_editorBloc == null) ...{
+                                  IconButton(
+                                      icon: Icon(Icons.share_outlined),
+                                      tooltip: "share".tr(),
+                                      onPressed: () {
+                                        Clipboard.setData(ClipboardData(
+                                            text: Uri(
+                                                    scheme: Uri.base.scheme,
+                                                    port: Uri.base.port,
+                                                    host: Uri.base.host,
+                                                    fragment: Uri(pathSegments: [
+                                                      "",
+                                                      "courses",
+                                                      "details"
+                                                    ], queryParameters: {
+                                                      "server": course.server!.url,
+                                                      "course": bloc.course
+                                                    }).toString())
+                                                .toString()));
+                                      }),
+                                  if (supportUrl != null)
+                                    IconButton(
+                                        icon: Icon(Icons.help_outline_outlined),
+                                        tooltip: "course.support".tr(),
+                                        onPressed: () => launch(supportUrl)),
+                                  IconButton(
+                                      icon: Icon(Icons.play_circle_outline_outlined),
+                                      tooltip: "course.start".tr(),
+                                      onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
+                                            "",
+                                            "courses",
+                                            "start",
+                                            "item"
+                                          ], queryParameters: {
+                                            ...Modular.args!.queryParams,
+                                            "partId": 0.toString()
+                                          }).toString()))
+                                } else
+                                  IconButton(
+                                      icon: Icon(Icons.code_outlined),
+                                      tooltip: "code".tr(),
+                                      onPressed: () async {
+                                        var packageInfo = await PackageInfo.fromPlatform();
+                                        var buildNumber = int.tryParse(packageInfo.buildNumber);
+                                        var encoder = JsonEncoder.withIndent("  ");
+                                        var data = await Modular.to.push(MaterialPageRoute(
+                                            builder: (context) => EditorCodeDialogPage(
+                                                initialValue:
+                                                    encoder.convert(course.toJson(buildNumber)))));
+                                        if (data != null) {
+                                          var courseBloc = _editorBloc!.getCourse(bloc.course!);
+                                          courseBloc.course = Course.fromJson(data);
+                                          _editorBloc?.save();
+                                          setState(() {});
+                                        }
+                                      }),
+                                if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
+                              ],
+                              title: Text(course.name),
+                              flexibleSpace: _editorBloc != null
+                                  ? null
+                                  : FlexibleSpaceBar(
+                                      background: Container(
+                                          margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
+                                          child: _editorBloc != null
+                                              ? Container()
+                                              : Hero(
+                                                  tag:
+                                                      "course-icon-${course.server?.index}-${course.slug}",
+                                                  child: UniversalImage(
+                                                    url: course.url + "/icon",
+                                                    height: 500,
+                                                    type: course.icon,
+                                                  ))),
+                                    )),
+                          SliverList(
+                              delegate: new SliverChildListDelegate([
+                            TabBar(
+                                controller: _tabController,
+                                tabs: [
+                                  Tab(text: "general".tr()),
+                                  Tab(
+                                      text: _editorBloc != null
+                                          ? "course.parts".tr()
+                                          : "course.statistics.title".tr())
+                                ],
+                                indicatorSize: TabBarIndicatorSize.label,
+                                isScrollable: false)
+                          ]))
+                        ];
+                      },
+                      body: TabBarView(controller: _tabController, children: [
+                        _buildGeneral(context, course),
+                        _editorBloc != null
+                            ? _buildParts(context)
+                            : CourseStatisticsView(course: course)
+                      ])))),
           floatingActionButton: _buildFab(),
         );
       });

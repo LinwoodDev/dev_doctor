@@ -1,14 +1,9 @@
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -138,8 +133,10 @@ class CourseStatisticsView extends StatelessWidget {
 
   Future<void> _downloadCertificate(
       BuildContext buildContext, double progress, int score, int maxScore) async {
-    var progress = ProgressHUD.of(buildContext);
-    progress?.show();
+    var progressHud = ProgressHUD.of(buildContext);
+    progressHud?.show();
+    await Future.delayed(Duration(seconds: 1));
+    var logoImage = await imageFromAssetBundle("images/logo.png");
     final pdf = pw.Document();
     pw.Widget? image = null;
     if (course.icon != null) {
@@ -152,36 +149,45 @@ class CourseStatisticsView extends StatelessWidget {
         case "png":
         case "jpg":
         case "jpeg":
-          var sunImage = new NetworkImage(url);
-          image = pw.Image(await flutterImageProvider(sunImage), height: 150);
+          image = pw.Image(await flutterImageProvider(NetworkImage(url)), height: 150);
       }
     }
     pdf.addPage(pw.Page(
-      pageFormat: PdfPageFormat.a4,
-      build: (context) {
-        return pw.Center(
-            child: pw.Column(children: [
-          pw.Spacer(flex: 1),
-          if (image != null) image,
-          pw.SizedBox(height: 50),
-          pw.Text("course.certificate.title".tr(),
-              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24)),
-          pw.SizedBox(
-            width: 300,
-            child: pw.Divider(
-                color: PdfColor.fromInt(Theme.of(buildContext).primaryColor.value), thickness: 1.5),
-          ),
-          pw.Text("course.certificate.description".tr(namedArgs: {
-            "name": Hive.box("general").get("name") ?? "Unknown",
-            "progress": (progress * 100).round().toString(),
-            "score": score.toString(),
-            "max_score": maxScore.toString()
-          })),
-          pw.Spacer(flex: 2),
-        ]));
-      },
-    ));
+        pageFormat: PdfPageFormat.a4,
+        build: (context) {
+          return pw.Column(children: [
+            if (image != null) image,
+            pw.Spacer(flex: 1),
+            pw.SizedBox(height: 50),
+            pw.Text("course.certificate.title".tr(),
+                textAlign: pw.TextAlign.center,
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24)),
+            pw.Center(
+                child: pw.SizedBox(
+              width: 300,
+              child: pw.Divider(
+                  color: PdfColor.fromInt(Theme.of(buildContext).primaryColor.value),
+                  thickness: 1.5),
+            )),
+            pw.Text("course.certificate.description".tr(namedArgs: {
+              "name": Hive.box("general").get("name") ?? "Unknown",
+              "progress": (progress * 100).round().toString(),
+              "score": score.toString(),
+              "course": course.name,
+              "max_score": maxScore.toString()
+            })),
+            pw.Spacer(flex: 2),
+            pw.Row(children: [
+              pw.Image(logoImage, height: 50),
+              pw.Expanded(
+                  child: pw.UrlLink(
+                      child: pw.Text("title".tr(), textAlign: pw.TextAlign.center),
+                      destination: "https://dev-doctor.cf")),
+              pw.UrlLink(child: pw.Text(course.name), destination: course.url)
+            ])
+          ]);
+        }));
     await Printing.sharePdf(bytes: await pdf.save(), filename: 'certificate.pdf');
-    progress?.dismiss();
+    progressHud?.dismiss();
   }
 }
