@@ -79,21 +79,12 @@
             },
             "question": {
                 "answer": "Ajouter une réponse",
-                "title": {
-                    "item": "Changer le titre",
-                    "label": "Titre de la page",
-                    "hint": "Le titre du quiz"
-                },
-                "evaluation": {
-                    "item": "Évaluation",
-                    "label": "Évaluation",
-                    "hint": "Une explication à la réponse"
-                },
-                "delete": {
-                    "item": "Supprimez",
-                    "title": "Confirmer la suppression de la question",
-                    "content": "Voulez-vous vraiment supprimer {name} #{index}?"
-                }
+                "title": "Question du quiz",
+                "one": "Première réponse",
+                "second": "Deuxième réponse",
+                "third": "Troisième réponse",
+                "four": "Quatrième réponse",
+                "evaluation": "Une évaluation de la question"
             },
             "option": {
                 "question": {
