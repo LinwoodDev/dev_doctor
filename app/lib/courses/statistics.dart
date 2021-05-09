@@ -181,7 +181,18 @@ class CourseStatisticsView extends StatelessWidget {
                     child: pw.UrlLink(
                         child: pw.Text("title".tr(), textAlign: pw.TextAlign.center),
                         destination: "https://dev-doctor.cf")),
-                pw.UrlLink(child: pw.Text(course.name), destination: course.url)
+                pw.UrlLink(
+                    child: pw.Text(course.name),
+                    destination: Uri(scheme: "https", host: "dev-doctor.cf", pathSegments: [
+                      "",
+                      "courses",
+                      "start",
+                      "item"
+                    ], queryParameters: {
+                      "server": course.server?.url,
+                      "course": course.slug,
+                      "partId": 0.toString()
+                    }).toString())
               ])
             ]);
           }));
