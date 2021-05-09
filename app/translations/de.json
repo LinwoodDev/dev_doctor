@@ -79,21 +79,12 @@
             },
             "question": {
                 "answer": "Antwort hinzufügen",
-                "title": {
-                    "item": "Titel ändern",
-                    "label": "Titel",
-                    "hint": "Der Quiztitel"
-                },
-                "evaluation": {
-                    "item": "Auswertung",
-                    "label": "Auswertung",
-                    "hint": "An Erläuterung zur Antwort"
-                },
-                "delete": {
-                    "item": "Löschen",
-                    "title": "Frage löschen bestätigen",
-                    "content": "Soll wirklich die Frage {name} #{index} gelöscht werden?"
-                }
+                "title": "Quiz Frage",
+                "one": "Erste Antwort",
+                "second": "Zweite Antwort",
+                "third": "Dritte Antwort",
+                "four": "Vierte Antwort",
+                "evaluation": "Eine Erläuterung zur Frage"
             },
             "option": {
                 "question": {
