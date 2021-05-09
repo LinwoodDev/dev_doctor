@@ -97,6 +97,7 @@
             },
             "option": {
                 "question": {
+                    "multi": "Réponses multiples",
                     "answer": "Ajouter une réponse",
                     "title": {
                         "item": "Changer le titre",
