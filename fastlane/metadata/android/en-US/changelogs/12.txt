@@ -1,0 +1,14 @@
+> No breaking changes
+* Add certificates
+* Add statistics page
+* Add reset button on all part items
+* Remove coming soon in settings
+* Fix responsive scroll views
+
+API
+
+> No breaking changes
+
+* Add new quiz type: Multiple choice
+* Add points to all part items
+* Add `allow-reset` property to control if a user can reset the current part item
