@@ -117,6 +117,11 @@
                         "label": "Points",
                         "hint": "Numéros"
                     },
+                    "minus-points": {
+                        "item": "Moins de points",
+                        "label": "Moins de points",
+                        "hint": "Numéro "
+                    },
                     "rating": "Évaluation",
                     "correct": "Corriger",
                     "wrong": "Mauvais",
