@@ -925,8 +925,8 @@ extension AnswerOptionExtension on AnswerOption {
                             controller: minusPointsController,
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
-                                labelText: 'course.quiz.option.answer.minusPoints.label'.tr(),
-                                hintText: 'course.quiz.option.answer.minusPoints.hint'.tr()),
+                                labelText: 'course.quiz.option.answer.minus-points.label'.tr(),
+                                hintText: 'course.quiz.option.answer.minus-points.hint'.tr()),
                           ),
                         )
                       ],
