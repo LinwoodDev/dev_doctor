@@ -16,13 +16,15 @@ class TextPartItem extends PartItem {
         super.fromJson(json);
 
   Map<String, dynamic> toJson() =>
-      {"type": "text", "text": text, "name": name, "description": description};
+      {"type": "text", "text": text, "name": name, "description": description, "points": points};
 
-  TextPartItem copyWith({String? text, String? name, String? description}) => TextPartItem(
-      text: text ?? this.text,
-      description: description ?? this.description,
-      index: index,
-      name: name ?? this.name);
+  TextPartItem copyWith({String? text, String? name, String? description, int? points}) =>
+      TextPartItem(
+          text: text ?? this.text,
+          description: description ?? this.description,
+          index: index,
+          name: name ?? this.name,
+          points: points ?? this.points);
 
   @override
   IconData get icon => Icons.subject_outlined;

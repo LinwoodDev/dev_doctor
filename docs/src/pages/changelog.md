@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.1
+
+* Fix editor page
+  * Add points to toJson
+  * minus-points to toJson
+  * Add minusPoints to question editor popup menu
+* Fix keyboard type on user name
+
 ## 1.5.0
 
 * Add certificates

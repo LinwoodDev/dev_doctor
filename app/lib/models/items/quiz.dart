@@ -132,12 +132,19 @@ class QuizAnswer {
         correct = json['correct'] ?? false,
         points = json['points'] ?? 1,
         minusPoints = json['minus-points'] ?? 0;
-  Map<String, dynamic> toJson() =>
-      {"correct": correct, "name": name, "description": description, "points": points};
-  QuizAnswer copyWith({String? name, String? description, bool? correct, int? points}) =>
+  Map<String, dynamic> toJson() => {
+        "correct": correct,
+        "name": name,
+        "description": description,
+        "points": points,
+        "minus-points": minusPoints
+      };
+  QuizAnswer copyWith(
+          {String? name, String? description, bool? correct, int? points, int? minusPoints}) =>
       QuizAnswer(
           correct: correct ?? this.correct,
           description: description ?? this.description,
           name: name ?? this.name,
-          points: points ?? this.points);
+          points: points ?? this.points,
+          minusPoints: minusPoints ?? this.minusPoints);
 }

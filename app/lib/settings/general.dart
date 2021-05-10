@@ -44,7 +44,6 @@ class GeneralSettingsPage extends StatelessWidget {
                                   title: Text("settings.general.name.title".tr()),
                                   content: TextField(
                                       controller: nameController,
-                                      keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                           labelText: "settings.general.name.label".tr())));
                             })),

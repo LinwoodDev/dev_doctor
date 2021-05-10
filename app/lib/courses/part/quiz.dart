@@ -675,7 +675,7 @@ extension QuestionOptionExtension on QuestionOption {
   }
 }
 
-enum AnswerOption { rating, title, description, points, delete }
+enum AnswerOption { rating, title, description, points, minusPoints, delete }
 
 extension AnswerOptionExtension on AnswerOption {
   String? get name {
@@ -690,6 +690,8 @@ extension AnswerOptionExtension on AnswerOption {
         return "course.quiz.option.answer.delete.item".tr();
       case AnswerOption.points:
         return "course.quiz.option.answer.points.item".tr();
+      case AnswerOption.minusPoints:
+        return "course.quiz.option.answer.minus-points.item".tr();
     }
   }
 
@@ -705,6 +707,8 @@ extension AnswerOptionExtension on AnswerOption {
         return Icons.subject_outlined;
       case AnswerOption.points:
         return Icons.attach_money_outlined;
+      case AnswerOption.minusPoints:
+        return Icons.money_off_csred_outlined;
     }
   }
 
@@ -720,6 +724,8 @@ extension AnswerOptionExtension on AnswerOption {
         return answer.description;
       case AnswerOption.points:
         return answer.points.toString();
+      case AnswerOption.minusPoints:
+        return answer.minusPoints.toString();
       default:
         return null;
     }
@@ -900,6 +906,50 @@ extension AnswerOptionExtension on AnswerOption {
                                     answers: List<QuizAnswer>.from(question.answers)
                                       ..[answerId] = answer.copyWith(
                                           points: int.tryParse(pointsController.text))));
+                          })
+                    ]));
+
+        break;
+      case AnswerOption.minusPoints:
+        TextEditingController minusPointsController =
+            TextEditingController(text: answer.minusPoints.toString());
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    content: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: minusPointsController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                labelText: 'course.quiz.option.answer.minusPoints.label'.tr(),
+                                hintText: 'course.quiz.option.answer.minusPoints.hint'.tr()),
+                          ),
+                        )
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('cancel'.tr().toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      TextButton(
+                          child: Text('change'.tr().toUpperCase()),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            updateQuestion(
+                                bloc,
+                                partBloc,
+                                itemId,
+                                questionId,
+                                question.copyWith(
+                                    answers: List<QuizAnswer>.from(question.answers)
+                                      ..[answerId] = answer.copyWith(
+                                          minusPoints: int.tryParse(minusPointsController.text))));
                           })
                     ]));
 

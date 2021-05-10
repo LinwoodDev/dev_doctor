@@ -231,7 +231,7 @@ packages:
       name: dartz
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0-nullsafety.1"
+    version: "0.10.0-nullsafety.2"
   easy_localization:
     dependency: "direct main"
     description:
@@ -865,7 +865,7 @@ packages:
       name: triple
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   typed_data:
     dependency: transitive
     description:
