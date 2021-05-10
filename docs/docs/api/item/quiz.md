@@ -111,7 +111,7 @@ questions:
 
 | Name      |                  Type                  | Required |                                                                               Description |
 | :-------- | :------------------------------------: | :------: | ----------------------------------------------------------------------------------------: |
-| tune      |                Integer                 |  false   | How long should the user have time to solve this quiz. If not set, there is no time limit |
+| time      |                Integer                 |  false   | How long should the user have time to solve this quiz. If not set, there is no time limit |
 | questions | Array<[Quiz question](#quiz-question)> |   true   |                                                          All questions from the part item |
 
 ## Inner classes
@@ -175,12 +175,13 @@ answers:
 
 #### Options
 
-| Name        |                Type                | Required |                                          Description |
-| :---------- | :--------------------------------: | :------: | ---------------------------------------------------: |
-| title       |               String               |   true   |             This will be displayed above the answers |
-| description |               String               |  false   |                   This will be displayed as subtitle |
-| evaluation  |               String               |  false   | This will be displayed if the user validate the form |
-| answers     | Array<[Quiz answer](#quiz-answer)> |   true   |                          All answers of the question |
+| Name        |                Type                | Required |                                                              Description |
+| :---------- | :--------------------------------: | :------: | -----------------------------------------------------------------------: |
+| title       |               String               |   true   |                                 This will be displayed above the answers |
+| description |               String               |  false   |                                       This will be displayed as subtitle |
+| evaluation  |               String               |  false   |                     This will be displayed if the user validate the form |
+| multi       |              Boolean               |  false   | Choose if the question is a multiple choice question. Default is `false` |
+| answers     | Array<[Quiz answer](#quiz-answer)> |   true   |                                              All answers of the question |
 
 ### Quiz answer
 
@@ -217,7 +218,6 @@ correct: true
 | Name         |  Type   | Required |                                                                                                 Description |
 | :----------- | :-----: | :------: | ----------------------------------------------------------------------------------------------------------: |
 | name         | String  |   true   |                                                                      The text which will be shown as answer |
-| minus        | Integer |  false   | This are the minus points which will be given if the player give the wrong answer. Default it is `0` point. |
+| minus_points | Integer |  false   | This are the minus points which will be given if the player give the wrong answer. Default it is `0` point. |
 | points       | Integer |  false   |            This are the points which will be given if the player give this answer. Default it is `1` point. |
 | correct      | Boolean |   true   |                                                        This will be displayed if the user validate the form |
-| minus_points | Integer |  false   |             The points which will be get if you don't choose this answer when it is correct. Default is `0` |

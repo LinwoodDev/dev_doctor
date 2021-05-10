@@ -111,7 +111,7 @@ questions:
 
 | Name      |                  Type                  | Required |                                                                               Description |
 | :-------- | :------------------------------------: | :------: | ----------------------------------------------------------------------------------------: |
-| tune      |                Integer                 |  false   | How long should the user have time to solve this quiz. If not set, there is no time limit |
+| time      |                Integer                 |  false   | How long should the user have time to solve this quiz. If not set, there is no time limit |
 | questions | Array<[Quiz question](#quiz-question)> |   true   |                                                          All questions from the part item |
 
 ## Inner classes
