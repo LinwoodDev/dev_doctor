@@ -1,4 +1,3 @@
-> No breaking changes
 * Add certificates
 * Add statistics page
 * Add reset button on all part items
