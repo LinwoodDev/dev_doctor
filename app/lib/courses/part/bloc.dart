@@ -35,7 +35,7 @@ class CoursePartBloc extends CourseBloc {
           return;
         }
         var current = editorBloc != null
-            ? course == null || part == null || editorBloc.hasCourse(course)
+            ? course == null || part == null || !editorBloc.hasCourse(course)
                 ? null
                 : editorBloc.getCourse(course).getCoursePart(part!)
             : await currentCourse.fetchPart(part);
@@ -48,6 +48,7 @@ class CoursePartBloc extends CourseBloc {
     }
   }
 
+  @override
   Future<void> fetchFromParams({ServerEditorBloc? editorBloc}) {
     var params = Modular.args!.queryParams;
     return fetch(
@@ -60,6 +61,7 @@ class CoursePartBloc extends CourseBloc {
         part: params['part']);
   }
 
+  @override
   void reset() {
     partSubject = BehaviorSubject<CoursePart>();
     super.reset();

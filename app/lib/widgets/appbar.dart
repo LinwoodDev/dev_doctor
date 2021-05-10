@@ -4,7 +4,6 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-const borderColor = Color(0xFF805306);
 isWindow() => !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
@@ -32,7 +31,9 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     if (isWindow())
-      return MoveWindow(child: WindowBorder(color: borderColor, width: 1, child: _buildAppBar()));
+      return MoveWindow(
+          child:
+              WindowBorder(color: Theme.of(context).primaryColor, width: 1, child: _buildAppBar()));
     return _buildAppBar();
   }
 

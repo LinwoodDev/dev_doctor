@@ -51,7 +51,7 @@ class CoursesServer {
         "support_url": supportUrl
       };
 
-  bool get added => index != null;
+  bool get added => index != null || Hive.box<String>('servers').containsKey(url);
 
   Future<CoursesServer> add() async => CoursesServer(
       index: await _box.add(url!),
@@ -133,7 +133,6 @@ class CoursesServer {
       if (data == null) return null;
 
       data['server'] = this;
-      data['index'] = index;
       data['slug'] = course;
       data['api-version'] = data['api-version'] ?? 0;
       return Course.fromJson(data);
@@ -142,6 +141,8 @@ class CoursesServer {
       return null;
     }
   }
+
+  Uri get uri => Uri.parse(url!);
 }
 
 class CoursesServerAdapter extends TypeAdapter<CoursesServer> {

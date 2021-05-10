@@ -28,7 +28,7 @@ class _ItemFetcher {
   _ItemFetcher({this.servers = const []});
 
   // This async function simulates fetching results from Internet, etc.
-  Future<List<Course>> fetch({String? query}) async {
+  Future<List<Course>> fetch({required String query}) async {
     if (entries.isEmpty) {
       await Future.wait(Hive.box<String>('servers')
           .values
@@ -44,7 +44,7 @@ class _ItemFetcher {
     for (int i = 0; i < n; i++) {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
-      if (entry.body.toUpperCase().contains(query!.toUpperCase()) ||
+      if (entry.body.toUpperCase().contains(query.toUpperCase()) ||
           entry.name.toUpperCase().contains(query.toUpperCase())) list.add(entry);
     }
     _currentPage++;
@@ -179,11 +179,12 @@ class _CoursesPageState extends State<CoursesPage> {
 
 class CoursesList extends StatefulWidget {
   final _ItemFetcher? fetcher;
-  final String? query;
+  final String query;
   final bool gridView;
   final List<String>? servers;
 
-  const CoursesList({Key? key, this.fetcher, this.query, this.servers, required this.gridView})
+  const CoursesList(
+      {Key? key, this.fetcher, required this.query, this.servers, required this.gridView})
       : super(key: key);
   @override
   _CoursesListState createState() => _CoursesListState();
@@ -261,7 +262,7 @@ class _CoursesListState extends State<CoursesList> {
     var hero = course.icon?.isEmpty ?? true
         ? null
         : Hero(
-            tag: "course-icon-${course.server?.index}-${course.index}",
+            tag: "course-icon-${course.server?.index}-${course.slug}",
             child: UniversalImage(type: course.icon, url: course.url + "/icon"));
     if (widget.gridView)
       return Card(
@@ -270,20 +271,23 @@ class _CoursesListState extends State<CoursesList> {
               child: Container(
                   constraints: BoxConstraints(maxWidth: 250),
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(children: [
-                    Container(padding: const EdgeInsets.all(8.0), child: hero),
-                    Row(children: [
-                      Expanded(
-                          child: Column(children: [
-                        Text(course.name),
-                        Text(course.description ?? '', style: Theme.of(context).textTheme.caption)
-                      ])),
-                      favorite
-                    ])
-                  ]))));
+                  child: SizedBox(
+                    height: 250,
+                    child: Column(children: [
+                      Expanded(child: Container(padding: const EdgeInsets.all(8.0), child: hero)),
+                      Row(children: [
+                        Expanded(
+                            child: Column(children: [
+                          Text(course.name),
+                          Text(course.description, style: Theme.of(context).textTheme.caption)
+                        ])),
+                        favorite
+                      ])
+                    ]),
+                  ))));
     return ListTile(
         title: Text(course.name),
-        subtitle: Text(course.description ?? ''),
+        subtitle: Text(course.description),
         onTap: onTap,
         trailing: favorite,
         leading: hero);
@@ -314,12 +318,16 @@ class _CoursesListState extends State<CoursesList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-        child: SingleChildScrollView(
-            child: widget.gridView
-                ? Wrap(children: _buildList(context))
-                : Column(
-                    // Need to display a loading tile if more items are coming
-                    children: _buildList(context))));
+    return Container(
+        child: Scrollbar(
+            child: SingleChildScrollView(
+                child: widget.gridView
+                    ? Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        child: Wrap(children: _buildList(context)))
+                    : Column(
+                        // Need to display a loading tile if more items are coming
+                        children: _buildList(context)))));
   }
 }

@@ -1,19 +1,23 @@
 import 'dart:async';
 
 import 'package:dev_doctor/courses/part/bloc.dart';
+import 'package:dev_doctor/courses/part/module.dart';
 import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
+import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class QuizPartItemPage extends StatefulWidget {
+  final CoursePart part;
   final QuizPartItem item;
   final ServerEditorBloc? editorBloc;
-  final int? itemId;
+  final int itemId;
 
-  const QuizPartItemPage({Key? key, required this.item, this.editorBloc, this.itemId})
+  const QuizPartItemPage(
+      {Key? key, required this.item, this.editorBloc, required this.itemId, required this.part})
       : super(key: key);
 
   @override
@@ -34,10 +38,9 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.editorBloc != null) {
-      bloc = EditorPartModule.to.get<CoursePartBloc>();
-      startTimer();
-    }
+    bloc = widget.editorBloc != null
+        ? EditorPartModule.to.get<CoursePartBloc>()
+        : CoursePartModule.to.get<CoursePartBloc>();
   }
 
   void validate() {
@@ -45,12 +48,11 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
     _points = 0;
     _start = null;
     var validate = _formKey.currentState!.validate();
-    if (widget.editorBloc != null) {
-      _start = widget.item.time;
-      _points = null;
-    }
-    setState(() {});
-    if (widget.editorBloc == null)
+    if (widget.editorBloc == null) {
+      if (_points! < 0) _points = 0;
+      widget.part.setItemPoints(widget.itemId, _points!);
+      bloc.partSubject.add(widget.part);
+      setState(() {});
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -63,6 +65,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                       label: Text("close".tr().toUpperCase()))
                 ],
               ));
+    } else
+      _points = null;
   }
 
   Timer? _timer = null;
@@ -88,6 +92,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.editorBloc == null && widget.part.itemVisited(widget.itemId) && _points == null)
+      return _buildEvaluation();
     return Container(
         child: _timer != null || widget.item.time == null || widget.editorBloc != null
             ? Form(
@@ -97,26 +103,9 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                       builder: (context) => Column(children: [
                             if (_points != null)
                               Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 32),
-                                  child: Column(children: [
-                                    Text(
-                                      _points.toString(),
-                                      style: Theme.of(context).textTheme.headline2,
-                                    ),
-                                    Text("course.quiz.points",
-                                            style: Theme.of(context).textTheme.subtitle2)
-                                        .tr(),
-                                    Padding(
-                                        padding: EdgeInsets.all(4),
-                                        child: ElevatedButton.icon(
-                                            icon: Icon(Icons.replay_outlined),
-                                            onPressed: () => setState(() {
-                                                  _points = null;
-                                                  _formKey.currentState!.reset();
-                                                  if (widget.item.time != null) startTimer();
-                                                }),
-                                            label: Text("course.quiz.retry".tr().toUpperCase())))
-                                  ]))
+                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 32),
+                                child: _buildEvaluation(),
+                              )
                             else
                               Container(),
                             if (_start != null || widget.editorBloc != null)
@@ -160,15 +149,15 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                           Expanded(
                               child: Column(children: [
                             Text(
-                              question.title!,
+                              question.title,
                               style: Theme.of(context).textTheme.headline6,
                             ),
-                            Text(question.description!)
+                            Text(question.description)
                           ])),
                           if (widget.editorBloc != null)
                             PopupMenuButton<QuestionOption>(
                                 onSelected: (value) => value.onSelected(context, widget.editorBloc!,
-                                    bloc, widget.itemId!, questionIndex),
+                                    bloc, widget.itemId, questionIndex),
                                 itemBuilder: (context) => QuestionOption.values.map((e) {
                                       var description = e.getDescription(question);
                                       return PopupMenuItem<QuestionOption>(
@@ -189,66 +178,146 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                           ]));
                                     }).toList())
                         ]),
-                        FormField<int>(
-                            validator: (value) {
-                              if (value == null) return "course.quiz.choose".tr();
-                              if (!question.answers![value].correct)
-                                return question.evaluation ?? "course.quiz.wrong".tr();
-                              _points = _points! + question.answers![value].points;
-                              return null;
-                            },
-                            builder: (field) => Column(children: [
-                                  ...List.generate(question.answers!.length, (index) {
-                                    var answer = question.answers![index];
-                                    return Row(children: [
-                                      Expanded(
-                                          child: RadioListTile(
-                                              groupValue: field.value,
-                                              title: Text(answer.name ?? ''),
-                                              subtitle: Text(answer.description ?? ''),
-                                              value: index,
-                                              onChanged: (int? value) =>
-                                                  _points == null ? field.didChange(value) : {})),
-                                      if (widget.editorBloc != null)
-                                        PopupMenuButton<AnswerOption>(
-                                            onSelected: (value) => value.onSelected(
-                                                context,
-                                                widget.editorBloc!,
-                                                bloc,
-                                                widget.itemId!,
-                                                questionIndex,
-                                                index),
-                                            itemBuilder: (context) => AnswerOption.values.map((e) {
-                                                  var description = e.getDescription(answer);
-                                                  return PopupMenuItem<AnswerOption>(
-                                                      value: e,
-                                                      child: Row(children: [
-                                                        Padding(
-                                                          padding: const EdgeInsets.all(8.0),
-                                                          child: Icon(e.getIcon(answer)),
-                                                        ),
-                                                        Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment.start,
-                                                            children: [
-                                                              Text(e.name!),
-                                                              if (description != null)
-                                                                Text(description,
-                                                                    style: Theme.of(context)
-                                                                        .textTheme
-                                                                        .caption)
-                                                            ])
-                                                      ]));
-                                                }).toList())
-                                    ]);
-                                  }),
-                                  field.hasError
-                                      ? Text(
-                                          field.errorText!,
-                                          style: TextStyle(color: Colors.red),
-                                        )
-                                      : Container()
-                                ]))
+                        if (question.multi) ...[
+                          FormField<List<bool>>(
+                              validator: (value) {
+                                if (_points == null) return null;
+                                if (value == null) return "course.quiz.choose".tr();
+                                var correct = true;
+                                for (var i = 0; i < value.length; i++) {
+                                  if (value[i] == question.answers[i].correct) {
+                                    _points = _points! + question.answers[i].points;
+                                  } else {
+                                    _points = _points! + question.answers[i].minusPoints;
+                                    correct = false;
+                                  }
+                                }
+                                if (!correct) {
+                                  return question.evaluation ?? "course.quiz.wrong".tr();
+                                }
+                                return null;
+                              },
+                              initialValue: new List<bool>.filled(question.answers.length, false),
+                              builder: (field) => Column(children: [
+                                    ...List.generate(question.answers.length, (index) {
+                                      var answer = question.answers[index];
+                                      return Row(children: [
+                                        Expanded(
+                                            child: CheckboxListTile(
+                                                controlAffinity: ListTileControlAffinity.leading,
+                                                title: Text(answer.name),
+                                                subtitle: Text(answer.description),
+                                                value: field.value![index],
+                                                onChanged: (bool? value) => _points == null &&
+                                                        value != null
+                                                    ? field.didChange(List<bool>.from(field.value!)
+                                                      ..[index] = value)
+                                                    : {})),
+                                        if (widget.editorBloc != null)
+                                          PopupMenuButton<AnswerOption>(
+                                              onSelected: (value) => value.onSelected(
+                                                  context,
+                                                  widget.editorBloc!,
+                                                  bloc,
+                                                  widget.itemId,
+                                                  questionIndex,
+                                                  index),
+                                              itemBuilder: (context) =>
+                                                  AnswerOption.values.map((e) {
+                                                    var description = e.getDescription(answer);
+                                                    return PopupMenuItem<AnswerOption>(
+                                                        value: e,
+                                                        child: Row(children: [
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Icon(e.getIcon(answer)),
+                                                          ),
+                                                          Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment.start,
+                                                              children: [
+                                                                Text(e.name!),
+                                                                if (description != null)
+                                                                  Text(description,
+                                                                      style: Theme.of(context)
+                                                                          .textTheme
+                                                                          .caption)
+                                                              ])
+                                                        ]));
+                                                  }).toList())
+                                      ]);
+                                    }),
+                                    field.hasError
+                                        ? Text(
+                                            field.errorText!,
+                                            style: TextStyle(color: Colors.red),
+                                          )
+                                        : Container()
+                                  ])),
+                        ] else
+                          FormField<int>(
+                              validator: (value) {
+                                if (_points == null) return null;
+                                if (value == null) return "course.quiz.choose".tr();
+                                if (!question.answers[value].correct) {
+                                  _points = _points! - question.answers[value].minusPoints;
+                                  return question.evaluation ?? "course.quiz.wrong".tr();
+                                }
+                                _points = _points! + question.answers[value].points;
+                              },
+                              builder: (field) => Column(children: [
+                                    ...List.generate(question.answers.length, (index) {
+                                      var answer = question.answers[index];
+                                      return Row(children: [
+                                        Expanded(
+                                            child: RadioListTile(
+                                                groupValue: field.value,
+                                                title: Text(answer.name),
+                                                subtitle: Text(answer.description),
+                                                value: index,
+                                                onChanged: (int? value) =>
+                                                    _points == null ? field.didChange(value) : {})),
+                                        if (widget.editorBloc != null)
+                                          PopupMenuButton<AnswerOption>(
+                                              onSelected: (value) => value.onSelected(
+                                                  context,
+                                                  widget.editorBloc!,
+                                                  bloc,
+                                                  widget.itemId,
+                                                  questionIndex,
+                                                  index),
+                                              itemBuilder: (context) =>
+                                                  AnswerOption.values.map((e) {
+                                                    var description = e.getDescription(answer);
+                                                    return PopupMenuItem<AnswerOption>(
+                                                        value: e,
+                                                        child: Row(children: [
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Icon(e.getIcon(answer)),
+                                                          ),
+                                                          Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment.start,
+                                                              children: [
+                                                                Text(e.name!),
+                                                                if (description != null)
+                                                                  Text(description,
+                                                                      style: Theme.of(context)
+                                                                          .textTheme
+                                                                          .caption)
+                                                              ])
+                                                        ]));
+                                                  }).toList())
+                                      ]);
+                                    }),
+                                    field.hasError
+                                        ? Text(
+                                            field.errorText!,
+                                            style: TextStyle(color: Colors.red),
+                                          )
+                                        : Container()
+                                  ]))
                       ]);
                     }),
                     if (widget.editorBloc != null) ...[
@@ -297,10 +366,32 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                     label: Text("course.quiz.start".tr().toUpperCase()))));
   }
 
+  Widget _buildEvaluation() => Column(children: [
+        Text(
+          (_points?.toString() ?? widget.part.getItemPoints(widget.itemId).toString()) +
+              "/" +
+              widget.item.points.toString(),
+          style: Theme.of(context).textTheme.headline2,
+        ),
+        Text("course.quiz.points", style: Theme.of(context).textTheme.subtitle2).tr(),
+        if (widget.item.allowReset)
+          Padding(
+              padding: EdgeInsets.all(4),
+              child: ElevatedButton.icon(
+                  icon: Icon(Icons.replay_outlined),
+                  onPressed: () => setState(() {
+                        _points = null;
+                        _formKey.currentState?.reset();
+                        widget.part.removeItemPoints(widget.itemId);
+                        if (widget.item.time != null) startTimer();
+                      }),
+                  label: Text("course.quiz.retry".tr().toUpperCase())))
+      ]);
+
   Future<void> updateItem(QuizPartItem item) async {
     var courseBloc = widget.editorBloc!.getCourse(bloc.course!);
     var part = courseBloc.getCoursePart(bloc.part!);
-    var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[widget.itemId!] = item);
+    var coursePart = part.copyWith(items: List<PartItem>.from(part.items)..[widget.itemId] = item);
     courseBloc.updateCoursePart(coursePart);
     await widget.editorBloc!.save();
     bloc.partSubject.add(coursePart);
@@ -339,7 +430,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   }
 }
 
-enum QuestionOption { answer, title, description, evaluation, delete }
+enum QuestionOption { answer, title, description, evaluation, delete, multi }
 
 extension QuestionOptionExtension on QuestionOption {
   String? get name {
@@ -354,6 +445,8 @@ extension QuestionOptionExtension on QuestionOption {
         return "course.quiz.option.question.delete.item".tr();
       case QuestionOption.description:
         return "course.quiz.option.question.description.item".tr();
+      case QuestionOption.multi:
+        return "course.quiz.option.question.multi".tr();
     }
   }
 
@@ -369,6 +462,8 @@ extension QuestionOptionExtension on QuestionOption {
         return Icons.delete_outline_outlined;
       case QuestionOption.description:
         return Icons.subject_outlined;
+      case QuestionOption.multi:
+        return Icons.done_all_outlined;
     }
   }
 
@@ -378,6 +473,8 @@ extension QuestionOptionExtension on QuestionOption {
         return question.title;
       case QuestionOption.evaluation:
         return question.evaluation;
+      case QuestionOption.multi:
+        return (question.multi ? "yes" : "no").tr();
       default:
         return null;
     }
@@ -398,7 +495,7 @@ extension QuestionOptionExtension on QuestionOption {
             item.copyWith(
                 questions: List<QuizQuestion>.from(item.questions)
                   ..[questionId] = question.copyWith(
-                      answers: List<QuizAnswer>.from(question.answers!)..add(QuizAnswer()))));
+                      answers: List<QuizAnswer>.from(question.answers)..add(QuizAnswer()))));
         break;
       case QuestionOption.title:
         TextEditingController titleController = TextEditingController(text: question.title);
@@ -510,7 +607,7 @@ extension QuestionOptionExtension on QuestionOption {
                     ],
                     title: Text("course.quiz.option.question.delete.title").tr(),
                     content: Text("course.quiz.option.question.delete.content")
-                        .tr(namedArgs: {"index": questionId.toString(), "name": question.title!})));
+                        .tr(namedArgs: {"index": questionId.toString(), "name": question.title})));
         break;
       case QuestionOption.description:
         TextEditingController descriptionController =
@@ -556,6 +653,14 @@ extension QuestionOptionExtension on QuestionOption {
                           })
                     ]));
         break;
+      case QuestionOption.multi:
+        updateItem(
+            bloc,
+            partBloc,
+            itemId,
+            item.copyWith(
+                questions: List<QuizQuestion>.from(item.questions)
+                  ..[questionId] = question.copyWith(multi: !question.multi)));
     }
   }
 
@@ -626,7 +731,7 @@ extension AnswerOptionExtension on AnswerOption {
     var part = course.getCoursePart(partBloc.part!);
     var item = part.items[itemId] as QuizPartItem;
     var question = item.questions[questionId];
-    var answer = question.answers![answerId];
+    var answer = question.answers[answerId];
 
     switch (this) {
       case AnswerOption.rating:
@@ -636,7 +741,7 @@ extension AnswerOptionExtension on AnswerOption {
             itemId,
             questionId,
             question.copyWith(
-                answers: List<QuizAnswer>.from(question.answers!)
+                answers: List<QuizAnswer>.from(question.answers)
                   ..[answerId] = answer.copyWith(correct: !answer.correct)));
         break;
       case AnswerOption.title:
@@ -675,7 +780,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers!)
+                                    answers: List<QuizAnswer>.from(question.answers)
                                       ..[answerId] = answer.copyWith(name: titleController.text)));
                           })
                     ]));
@@ -700,7 +805,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers!)
+                                    answers: List<QuizAnswer>.from(question.answers)
                                       ..removeAt(answerId)));
                           },
                           icon: Icon(Icons.check_outlined),
@@ -708,7 +813,7 @@ extension AnswerOptionExtension on AnswerOption {
                     ],
                     title: Text("course.quiz.option.answer.delete.title").tr(),
                     content: Text("course.quiz.option.answer.delete.content")
-                        .tr(namedArgs: {"index": answerId.toString(), "name": answer.name!})));
+                        .tr(namedArgs: {"index": answerId.toString(), "name": answer.name})));
         break;
       case AnswerOption.description:
         TextEditingController descriptionController =
@@ -749,7 +854,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers!)
+                                    answers: List<QuizAnswer>.from(question.answers)
                                       ..[answerId] = answer.copyWith(
                                           description: descriptionController.text)));
                           })
@@ -792,7 +897,7 @@ extension AnswerOptionExtension on AnswerOption {
                                 itemId,
                                 questionId,
                                 question.copyWith(
-                                    answers: List<QuizAnswer>.from(question.answers!)
+                                    answers: List<QuizAnswer>.from(question.answers)
                                       ..[answerId] = answer.copyWith(
                                           points: int.tryParse(pointsController.text))));
                           })

@@ -10,22 +10,20 @@ class Course {
   final CoursesServer? server;
   final String slug;
   final String name;
-  final String? description;
+  final String description;
   final String? icon;
   final String? supportUrl;
   final Author? author;
   final bool? installed;
   final String body;
   final String? lang;
-  final int? index;
   final List<String> parts;
   final bool? private;
 
   Course(
       {required this.slug,
       this.name = '',
-      this.index,
-      this.description,
+      this.description = '',
       this.icon,
       this.author,
       this.installed,
@@ -49,11 +47,10 @@ class Course {
         server: json['server'],
         slug: json['slug'],
         name: json['name'] ?? '',
-        description: json['description'],
+        description: json['description'] ?? '',
         icon: json['icon'],
         author: Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
         body: json['body'] ?? '',
-        index: json['index'],
         installed: json['installed'],
         lang: json['lang'],
         parts: List<String>.from(json['parts'] ?? []),
@@ -69,7 +66,6 @@ class Course {
         "icon": icon,
         "author": author?.toJson(apiVersion),
         "body": body,
-        "index": index,
         "installed": installed,
         "lang": lang,
         "parts": parts,
@@ -119,7 +115,6 @@ class Course {
           body: body ?? this.body,
           description: description ?? this.description,
           icon: icon ?? this.icon,
-          index: index,
           installed: installed ?? this.installed,
           lang: lang ?? this.lang,
           name: name ?? this.name,

@@ -21,13 +21,13 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
   TextEditingController? _urlController;
   TextEditingController? _avatarController;
   GlobalKey<FormState> _formKey = GlobalKey();
-  Author? _author;
+  late Author _author;
   @override
   void initState() {
     _author = widget.author ?? Author();
-    _nameController = TextEditingController(text: _author!.name);
-    _urlController = TextEditingController(text: _author!.url);
-    _avatarController = TextEditingController(text: _author!.avatar);
+    _nameController = TextEditingController(text: _author.name);
+    _urlController = TextEditingController(text: _author.url);
+    _avatarController = TextEditingController(text: _author.avatar);
     super.initState();
   }
 
@@ -51,7 +51,7 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
                                   labelText: "course.author.name.label".tr(),
                                   hintText: "course.author.name.hint".tr()),
                               onChanged: (value) => setState(
-                                  () => _author = _author!.copyWith(name: _nameController!.text)),
+                                  () => _author = _author.copyWith(name: _nameController!.text)),
                               controller: _nameController),
                           TextFormField(
                               decoration: InputDecoration(
@@ -59,18 +59,18 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
                                   hintText: "course.author.url.hint".tr()),
                               keyboardType: TextInputType.url,
                               onChanged: (value) => setState(
-                                  () => _author = _author!.copyWith(url: _urlController!.text)),
+                                  () => _author = _author.copyWith(url: _urlController!.text)),
                               controller: _urlController),
                           TextFormField(
                               decoration: InputDecoration(
                                   suffix: ImageTypeDropdown(
-                                      defaultValue: _author!.avatarType,
+                                      defaultValue: _author.avatarType,
                                       onChanged: (value) =>
-                                          setState(() => _author!.copyWith(avatarType: value))),
+                                          setState(() => _author.copyWith(avatarType: value))),
                                   labelText: "course.author.avatar.label".tr(),
                                   hintText: "course.author.avatar.hint".tr()),
-                              onChanged: (value) => setState(
-                                  () => _author = _author!.copyWith(avatar: _avatarController!.text)),
+                              onChanged: (value) => setState(() =>
+                                  _author = _author.copyWith(avatar: _avatarController!.text)),
                               keyboardType: TextInputType.url,
                               controller: _avatarController),
                           SizedBox(height: 10),

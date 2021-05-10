@@ -22,7 +22,16 @@
         "like": "J'aime",
         "course": "Cours",
         "home": "Domicile",
-        "statistics": "Statistiques",
+        "progress": "Progression",
+        "points": "Points",
+        "certificate": {
+            "title": "Certificat",
+            "button": "Télécharger le certificat",
+            "description": "{name} a réussi à faire {progress}% du cours avec un score de {score}/{max_score}."
+        },
+        "statistics": {
+            "title": "Statistiques "
+        },
         "back": "Précédent",
         "materials": "Matériaux",
         "lang": {
@@ -58,7 +67,10 @@
             "add": "Ajouter une question",
             "time": {
                 "subtitle": "secondes restantes",
-                "notset": "Heure non définie"
+                "notset": "Heure non définie",
+                "title": "Régler l'heure",
+                "label": "Temps",
+                "hint": "Temps en secondes"
             },
             "validation": {
                 "title": "Validation",
@@ -67,24 +79,16 @@
             },
             "question": {
                 "answer": "Ajouter une réponse",
-                "title": {
-                    "item": "Changer le titre",
-                    "label": "Titre de la page",
-                    "hint": "Le titre du quiz"
-                },
-                "evaluation": {
-                    "item": "Évaluation",
-                    "label": "Évaluation",
-                    "hint": "Une explication à la réponse"
-                },
-                "delete": {
-                    "item": "Supprimez",
-                    "title": "Confirmer la suppression de la question",
-                    "content": "Voulez-vous vraiment supprimer {name} #{index}?"
-                }
+                "title": "Question du quiz",
+                "one": "Première réponse",
+                "second": "Deuxième réponse",
+                "third": "Troisième réponse",
+                "four": "Quatrième réponse",
+                "evaluation": "Une évaluation de la question"
             },
             "option": {
                 "question": {
+                    "multi": "Réponses multiples",
                     "answer": "Ajouter une réponse",
                     "title": {
                         "item": "Changer le titre",
@@ -184,7 +188,8 @@
                 "content": "Voulez-vous vraiment supprimer {name} #{index}?",
                 "tooltip": "Supprimer l’article"
             }
-        }
+        },
+        "parts": "Chapitres"
     },
     "courses": {
         "view": "Voir les cours",
@@ -289,7 +294,11 @@
             }
         },
         "general": {
-            "title": "Généraux"
+            "title": "Généraux",
+            "name": {
+                "title": "Définir le nom d'utilisateur",
+                "label": "Nom"
+            }
         },
         "downloads": {
             "title": "Téléchargements"
@@ -322,6 +331,7 @@
         "code": "Code",
         "license": "Licence"
     },
+    "general": "Général",
     "clear": "Nettoyer",
     "delete": "Supprimez",
     "edit": "Editer",

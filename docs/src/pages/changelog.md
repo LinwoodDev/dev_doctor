@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.5.0
+
+* Add certificates
+* Add statistics page
+* Add reset button on all part items
+* Remove coming soon in settings
+* Fix responsive scroll views
+
+### API
+
+> No breaking changes
+
+* Add new quiz type: Multiple choice
+* Add points to all part items
+* Add `allow-reset` property to control if a user can reset the current part item
+
 ## 1.4.0 (April 18, 2021)
 
 * Add grid view
@@ -28,6 +44,8 @@
   * Adding code dialog page
 
 ### API
+
+Breaking changes:
 
 * Changing author to an object
 
@@ -79,7 +97,7 @@ The app is a complete flutter app now
 * Prebuilt builds, see [#8](https://github.com/LinwoodCloud/dev_doctor/issues/8)
 * New design
 
-## 0.2.3 (January 16, 2021)
+## 0.2.4 (January 16, 2021)
 
 * Fix manifest
 * Remove github deploy

@@ -3,6 +3,7 @@ import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/video.dart';
+import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -10,31 +11,52 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class VideoPartItemPage extends StatelessWidget {
-  final VideoPartItem? item;
-  final ServerEditorBloc? editorBloc;
-  final int? itemId;
+import 'module.dart';
 
-  const VideoPartItemPage({Key? key, this.item, this.editorBloc, this.itemId}) : super(key: key);
+class VideoPartItemPage extends StatefulWidget {
+  final VideoPartItem item;
+  final ServerEditorBloc? editorBloc;
+  final int itemId;
+  final CoursePart part;
+
+  const VideoPartItemPage(
+      {Key? key, required this.item, this.editorBloc, required this.itemId, required this.part})
+      : super(key: key);
+
+  @override
+  _VideoPartItemPageState createState() => _VideoPartItemPageState();
+}
+
+class _VideoPartItemPageState extends State<VideoPartItemPage> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.editorBloc == null && !widget.part.itemVisited(widget.itemId)) {
+      var bloc = CoursePartModule.to.get<CoursePartBloc>();
+      widget.part.setItemPoints(widget.itemId, 1);
+      bloc.partSubject.add(widget.part);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(children: [
       Expanded(
           child: Container(
               child: Center(
-                  child: item!.source == null || item!.url == null
+                  child: widget.item.url.isEmpty
                       ? Text('course.video.empty').tr()
                       : ElevatedButton.icon(
                           icon: Icon(Icons.play_circle_outline_outlined),
                           label: Text("course.video.open".tr().toUpperCase()),
-                          onPressed: () => launch(item!.src),
+                          onPressed: () => launch(widget.item.src),
                         )))),
-      if (editorBloc != null)
+      if (widget.editorBloc != null)
         IconButton(
             tooltip: "edit".tr(),
             onPressed: () => Modular.to.push(MaterialPageRoute(
-                builder: (context) =>
-                    VideoPartItemEditorPage(editorBloc: editorBloc, item: item, itemId: itemId))),
+                builder: (context) => VideoPartItemEditorPage(
+                    editorBloc: widget.editorBloc, item: widget.item, itemId: widget.itemId))),
             icon: Icon(Icons.edit_outlined))
     ]);
   }

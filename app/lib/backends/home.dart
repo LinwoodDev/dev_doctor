@@ -19,8 +19,8 @@ class _ItemFetcher {
     if (entries.isEmpty)
       await Future.wait(Hive.box<String>('collections').values.map((e) async {
         var collection = await BackendCollection.fetch(url: e);
-        var users = await collection!.fetchUsers();
-        entries.addAll(users.expand((e) => e.buildEntries()));
+        var users = await collection?.fetchUsers();
+        entries.addAll(users?.expand((e) => e.buildEntries()) ?? []);
       }));
     final list = <CoursesServer>[];
     var n = min(_itemsPerPage, entries.length - _currentPage * _itemsPerPage);
@@ -134,16 +134,14 @@ class _BackendsListState extends State<BackendsList> {
   }
 
   @override
-  void didUpdateWidget(covariant BackendsList oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scrollbar(
         child: SingleChildScrollView(
             child: widget.gridView
-                ? Wrap(children: _buildList(context))
+                ? Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Wrap(children: _buildList(context)))
                 : Column(
                     // Need to display a loading tile if more items are coming
                     children: _buildList(context))));
@@ -178,7 +176,7 @@ class _BackendsListState extends State<BackendsList> {
           "/backends/entry?collectionId=${server.entry!.collection.index}&user=${server.entry!.user.name}&entry=${server.entry!.name}",
           arguments: server);
       var current = await server.entry!.fetchServer();
-      setState(() => server = current!);
+      if (current != null) setState(() => _pairList[index] = current);
     }
 
     var hero = server.icon?.isEmpty ?? true

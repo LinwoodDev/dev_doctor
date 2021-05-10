@@ -22,7 +22,16 @@
         "like": "Like",
         "course": "Course",
         "home": "Home",
-        "statistics": "Statistics",
+        "progress": "Progress",
+        "points": "Points",
+        "certificate": {
+            "title": "Certificate",
+            "button": "Download certificate",
+            "description": "{name} has successfully made {progress}% of the course with a score of {score}/{max_score}."
+        },
+        "statistics": {
+            "title": "Statistics"
+        },
         "back": "Back",
         "materials": "Materials",
         "lang": {
@@ -58,7 +67,10 @@
             "add": "Add question",
             "time": {
                 "subtitle": "seconds remaining",
-                "notset": "Time not set"
+                "notset": "Time not set",
+                "title": "Set time",
+                "label": "Time",
+                "hint": "Time in seconds"
             },
             "validation": {
                 "title": "Validation",
@@ -67,24 +79,16 @@
             },
             "question": {
                 "answer": "Add answer",
-                "title": {
-                    "item": "Change title",
-                    "label": "Title",
-                    "hint": "The quiz title"
-                },
-                "evaluation": {
-                    "item": "Evaluation",
-                    "label": "Evaluation",
-                    "hint": "An explanation to the answer"
-                },
-                "delete": {
-                    "item": "Delete",
-                    "title": "Confirm delete question",
-                    "content": "Do you really want to delete {name} #{index}?"
-                }
+                "title": "Quiz question",
+                "one": "First answer",
+                "second": "Second answer",
+                "third": "Third answer",
+                "four": "Fourth answer",
+                "evaluation": "An evaluation to the question"
             },
             "option": {
                 "question": {
+                    "multi": "Multiple answers",
                     "answer": "Add answer",
                     "title": {
                         "item": "Change title",
@@ -184,7 +188,8 @@
                 "content": "Do you really want to delete {name} #{index}?",
                 "tooltip": "Delete item"
             }
-        }
+        },
+        "parts": "Parts"
     },
     "courses": {
         "view": "View courses",
@@ -289,7 +294,11 @@
             }
         },
         "general": {
-            "title": "General"
+            "title": "General",
+            "name": {
+                "title": "Set user name",
+                "label": "Name"
+            }
         },
         "downloads": {
             "title": "Downloads"
@@ -322,6 +331,7 @@
         "code": "Code",
         "license": "License"
     },
+    "general": "General",
     "clear": "Clear",
     "delete": "Delete",
     "edit": "Edit",

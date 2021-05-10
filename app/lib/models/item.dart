@@ -6,15 +6,22 @@ import 'items/video.dart';
 
 @immutable
 abstract class PartItem {
-  final String? name;
-  final String? description;
+  final String name;
+  final String description;
   final int? index;
+  final allowReset;
 
-  PartItem({required this.name, required this.description, required this.index});
+  int get points;
+
+  IconData get icon => Icons.check_box_outline_blank_outlined;
+
+  PartItem(
+      {this.allowReset = true, required this.name, required this.description, required this.index});
   PartItem.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        description = json['description'],
-        index = json['index'];
+      : name = json['name'] ?? '',
+        description = json['description'] ?? '',
+        index = json['index'],
+        allowReset = json['allow-reset'] ?? true;
   Map<String, dynamic> toJson();
 
   PartItem copyWith({String? name, String? description});
@@ -23,12 +30,12 @@ abstract class PartItem {
 enum PartItemTypes { text, video, quiz }
 
 extension PartItemTypesExtension on PartItemTypes {
-  PartItem create({required String? name, String? description = "", int? index}) {
+  PartItem create({String name = '', String description = "", int? index}) {
     switch (this) {
       case PartItemTypes.text:
         return TextPartItem(name: name, description: description, index: index);
       case PartItemTypes.video:
-        return VideoPartItem(name: name, description: description, index: index);
+        return VideoPartItem(name: name, description: description, index: index, url: '');
       case PartItemTypes.quiz:
         return QuizPartItem(name: name, description: description, index: index);
     }

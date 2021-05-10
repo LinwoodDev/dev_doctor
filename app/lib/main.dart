@@ -26,9 +26,11 @@ void main() async {
   Hive.registerAdapter(ServerEditorBlocAdapter(apiVersion: buildNumber));
   Hive.registerAdapter(CourseEditorBlocAdapter(apiVersion: buildNumber));
   await Hive.openBox('settings');
+  await Hive.openBox('general');
   await Hive.openBox('appearance');
   await Hive.openBox<bool>('favorite');
   await Hive.openBox<ServerEditorBloc>('editor');
+  await Hive.openBox<int>('points');
   var _serversBox = await Hive.openBox<String>('servers');
   var _collectionsBox = await Hive.openBox<String>('collections');
   if (_collectionsBox.isEmpty) await _collectionsBox.add('https://collection.dev-doctor.cf');

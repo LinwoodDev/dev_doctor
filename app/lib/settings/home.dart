@@ -24,20 +24,20 @@ class SettingsList extends StatelessWidget {
   final SettingsPages? activePage;
 
   const SettingsList({Key? key, this.activePage}) : super(key: key);
-  _showComingSoon(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("coming-soon").tr(),
-              actions: [
-                TextButton.icon(
-                  icon: Icon(Icons.close_outlined),
-                  label: Text("close".tr().toUpperCase()),
-                  onPressed: () => Navigator.of(context).pop(),
-                )
-              ],
-            ));
-  }
+  // _showComingSoon(BuildContext context) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //             title: Text("coming-soon").tr(),
+  //             actions: [
+  //               TextButton.icon(
+  //                 icon: Icon(Icons.close_outlined),
+  //                 label: Text("close".tr().toUpperCase()),
+  //                 onPressed: () => Navigator.of(context).pop(),
+  //               )
+  //             ],
+  //           ));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -51,17 +51,17 @@ class SettingsList extends StatelessWidget {
               selected: activePage == SettingsPages.general,
               leading: Icon(Icons.build_outlined),
               title: Text("settings.general.title").tr(),
-              onTap: () => _showComingSoon(context)),
+              onTap: () => Modular.to.pushNamed("/settings/general")),
           ListTile(
               selected: activePage == SettingsPages.appearance,
               leading: Icon(Icons.tune_outlined),
               title: Text("settings.appearance.title").tr(),
               onTap: () => Modular.to.pushNamed("/settings/appearance")),
-          ListTile(
-              selected: activePage == SettingsPages.downloads,
-              leading: Icon(Icons.download_outlined),
-              title: Text("settings.downloads.title").tr(),
-              onTap: () => _showComingSoon(context)),
+          // ListTile(
+          //     selected: activePage == SettingsPages.downloads,
+          //     leading: Icon(Icons.download_outlined),
+          //     title: Text("settings.downloads.title").tr(),
+          //     onTap: () => _showComingSoon(context)),
           ListTile(
               selected: activePage == SettingsPages.servers,
               leading: Icon(Icons.format_list_bulleted_outlined),
@@ -105,8 +105,7 @@ class SettingsList extends StatelessWidget {
               leading: Icon(Icons.info_outline),
               title: Text("settings.about").tr(),
               onTap: () => showAboutDialog(
-                  context: context,
-                  applicationIcon: Image.asset("images/logo-colored.png", height: 50))),
+                  context: context, applicationIcon: Image.asset("images/logo.png", height: 50))),
         ])))));
   }
 }
