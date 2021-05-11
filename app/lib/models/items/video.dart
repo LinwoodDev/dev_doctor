@@ -3,7 +3,9 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/icon_data.dart';
 
-enum VideoSource { youtube, url }
+import '../part.dart';
+
+enum VideoSource { youtube, url, asset }
 
 class VideoPartItem extends PartItem {
   final VideoSource source;
@@ -26,14 +28,23 @@ class VideoPartItem extends PartItem {
             ? EnumToString.fromString(VideoSource.values, json['source']) ?? VideoSource.url
             : VideoSource.url,
         super.fromJson(json);
-  get src {
-    if (source == VideoSource.youtube)
-      return Uri.https(
-        'www.youtube-nocookie.com',
-        'embed/${url}',
-      ).toString();
-    else
-      return url;
+  Uri getSource(CoursePart part) {
+    var uri = part.uri;
+    switch (source) {
+      case VideoSource.youtube:
+        return Uri.https(
+          'www.youtube-nocookie.com',
+          'embed/${url}',
+        );
+      case VideoSource.asset:
+        return Uri(
+            scheme: uri.scheme,
+            fragment: uri.fragment,
+            host: uri.host,
+            pathSegments: [...uri.pathSegments, url]);
+      default:
+        return Uri.parse(url);
+    }
   }
 
   Map<String, dynamic> toJson() {
