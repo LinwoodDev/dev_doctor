@@ -53,7 +53,8 @@ class VideoPartItem extends PartItem {
       "url": url,
       "source": EnumToString.convertToString(source),
       "name": name,
-      "description": description
+      "description": description,
+      "points": points
     };
   }
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-final mdcThemePrimary = Color(0xFF5c3070);
+final mdcThemePrimary = Color(0xFFBA26FF);
 const mdcThemeOnPrimary = Color(0xFFffffff);
-const mdcThemeSecondary = Color(0xFF304470);
+const mdcThemeSecondary = Color(0xFF6D17E8);
 const mdcThemeOnSecondary = Color(0xFF000000);
 const mdcThemeError = Color(0xFFb00020);
 const mdcThemeOnError = Color(0xFFffffff);

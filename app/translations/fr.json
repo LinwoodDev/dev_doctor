@@ -115,7 +115,12 @@
                     "points": {
                         "item": "Points",
                         "label": "Points",
-                        "hint": "Numéros"
+                        "hint": "Numéro"
+                    },
+                    "minus-points": {
+                        "item": "Moins de points",
+                        "label": "Moins de points",
+                        "hint": "Numéro"
                     },
                     "rating": "Évaluation",
                     "correct": "Corriger",

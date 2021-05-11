@@ -37,11 +37,11 @@ class CourseStatisticsView extends StatelessWidget {
                       if (part.itemVisited(i)) progress += 1;
                     progress /= part.items.length;
                     allProgress += progress;
-                    double points = 0;
-                    double maxPoints = 0;
+                    int points = 0;
+                    int maxPoints = 0;
                     for (var i = 0; i < part.items.length; i++) {
                       maxPoints += part.items[i].points;
-                      if (part.itemVisited(i)) points += (part.getItemPoints(i)?.toDouble() ?? 0);
+                      if (part.itemVisited(i)) points += part.getItemPoints(i) ?? 0;
                     }
                     allScore += points.toInt();
                     allMaxScore += maxPoints.toInt();
