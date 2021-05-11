@@ -1,6 +1,5 @@
 import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/items/text.dart';
-import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 
 import 'items/video.dart';

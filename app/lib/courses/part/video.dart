@@ -49,7 +49,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                       : ElevatedButton.icon(
                           icon: Icon(Icons.play_circle_outline_outlined),
                           label: Text("course.video.open".tr().toUpperCase()),
-                          onPressed: () => launch(widget.item.src),
+                          onPressed: () => launch(widget.item.getSource(widget.part).toString()),
                         )))),
       if (widget.editorBloc != null)
         IconButton(

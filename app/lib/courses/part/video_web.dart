@@ -40,7 +40,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
       _iframeElement.height = '500';
       _iframeElement.width = '500';
 
-      _iframeElement.src = widget.item.src;
+      _iframeElement.src = widget.item.getSource(widget.part).toString();
       //_iframeElement.allowFullscreen = true;
       _iframeElement.style.border = 'none';
 

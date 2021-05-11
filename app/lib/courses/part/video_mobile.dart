@@ -50,11 +50,11 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                         child: AspectRatio(
                             aspectRatio: 16 / 9,
                             child: InAppWebView(
-                              onWebViewCreated: (InAppWebViewController controller) {
-                                webView = controller;
-                              },
-                              initialUrlRequest: URLRequest(url: Uri.parse(widget.item.src)),
-                            ))))),
+                                onWebViewCreated: (InAppWebViewController controller) {
+                                  webView = controller;
+                                },
+                                initialUrlRequest:
+                                    URLRequest(url: widget.item.getSource(widget.part))))))),
         if (widget.editorBloc != null)
           IconButton(
               tooltip: "edit".tr(),
