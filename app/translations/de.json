@@ -88,7 +88,7 @@
             },
             "option": {
                 "question": {
-                    "multi": "Mehrfachfragen",
+                    "multi": "Mehrfache Antworten",
                     "answer": "Antwort hinzufügen",
                     "title": {
                         "item": "Titel ändern",
