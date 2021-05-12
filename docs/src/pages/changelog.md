@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.2 (May 12, 2021)
+
+* Add asset to video source
+* Fix translation
+* Update classic theme
+
 ## 1.5.1 (May 10, 2021)
 
 * Fix editor page
