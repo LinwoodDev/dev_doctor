@@ -18,16 +18,16 @@
     "prettier:diff": "prettier --config .prettierrc --list-different \"**/*.{js,jsx,ts,tsx,md,mdx}\""
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-alpha.75",
-    "@docusaurus/plugin-pwa": "2.0.0-alpha.75",
-    "@docusaurus/preset-classic": "2.0.0-alpha.75",
+    "@docusaurus/core": "2.0.0-beta.0",
+    "@docusaurus/plugin-pwa": "2.0.0-beta.0",
+    "@docusaurus/preset-classic": "2.0.0-beta.0",
     "@mdx-js/react": "^1.6.22",
     "clsx": "^1.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.13.14",
+    "@babel/eslint-parser": "^7.14.2",
     "eslint": "^7.26.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
