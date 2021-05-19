@@ -15,7 +15,7 @@ class _ItemFetcher {
   List<BackendEntry> entries = <BackendEntry>[];
 
   // This async function simulates fetching results from Internet, etc.
-  Future<List<CoursesServer>> fetch({String? query}) async {
+  Future<List<CoursesServer>> fetch(String query) async {
     if (entries.isEmpty)
       await Future.wait(Hive.box<String>('collections').values.map((e) async {
         var collection = await BackendCollection.fetch(url: e);
@@ -28,8 +28,8 @@ class _ItemFetcher {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
       var server = await entry.fetchServer();
-      if ((server!.body != null && server.body!.toUpperCase().contains(query!.toUpperCase())) ||
-          server.name.toUpperCase().contains(query!.toUpperCase())) list.add(server);
+      if ((server!.body.isNotEmpty && server.body.toUpperCase().contains(query.toUpperCase())) ||
+          server.name.toUpperCase().contains(query.toUpperCase())) list.add(server);
     }
     _currentPage++;
     return list;
@@ -93,10 +93,10 @@ class CustomSearchDelegate extends SearchDelegate {
 
 class BackendsList extends StatefulWidget {
   final _ItemFetcher? fetcher;
-  final String? query;
+  final String query;
   final bool gridView;
 
-  const BackendsList({Key? key, this.fetcher, this.query, required this.gridView})
+  const BackendsList({Key? key, this.fetcher, this.query = "", required this.gridView})
       : super(key: key);
   @override
   _BackendsListState createState() => _BackendsListState();
@@ -118,7 +118,7 @@ class _BackendsListState extends State<BackendsList> {
   // Triggers fecth() and then add new items or change _hasMore flag
   void _loadMore() {
     _isLoading = true;
-    widget.fetcher!.fetch(query: widget.query).then((List<CoursesServer> fetchedList) {
+    widget.fetcher!.fetch(widget.query).then((List<CoursesServer> fetchedList) {
       if (fetchedList.isEmpty) {
         setState(() {
           _isLoading = false;
@@ -179,12 +179,12 @@ class _BackendsListState extends State<BackendsList> {
       if (current != null) setState(() => _pairList[index] = current);
     }
 
-    var hero = server.icon?.isEmpty ?? true
+    var hero = server.icon.isEmpty
         ? null
         : Hero(
             tag:
                 "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
-            child: UniversalImage(type: server.icon, url: server.url! + "/icon"));
+            child: UniversalImage(type: server.icon, url: server.url + "/icon"));
 
     if (widget.gridView)
       return Card(
@@ -199,7 +199,7 @@ class _BackendsListState extends State<BackendsList> {
                     Expanded(
                         child: Column(children: [
                       Text(server.name),
-                      Text(server.url ?? '', style: Theme.of(context).textTheme.caption)
+                      Text(server.url, style: Theme.of(context).textTheme.caption)
                     ])),
                     AddBackendButton(server: server)
                   ])
@@ -208,7 +208,7 @@ class _BackendsListState extends State<BackendsList> {
 
     return ListTile(
         title: Text(server.name),
-        subtitle: Text(server.url ?? ''),
+        subtitle: Text(server.url),
         onTap: onTap,
         leading: hero,
         trailing: AddBackendButton(server: server));

@@ -9,10 +9,10 @@ import 'package:markdown/markdown.dart' as md;
 typedef EditorCallback = void Function(String markdown);
 
 class MarkdownEditor extends StatefulWidget {
-  final String? markdown;
-  final EditorCallback? onSubmit;
+  final String markdown;
+  final EditorCallback onSubmit;
 
-  const MarkdownEditor({Key? key, this.markdown, this.onSubmit}) : super(key: key);
+  const MarkdownEditor({Key? key, this.markdown = "", required this.onSubmit}) : super(key: key);
   @override
   _MarkdownEditorState createState() => _MarkdownEditorState();
 }
@@ -55,7 +55,7 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
         IconButton(
             tooltip: "save".tr(),
             icon: Icon(Icons.save_outlined),
-            onPressed: () => widget.onSubmit!(_markdownController!.text))
+            onPressed: () => widget.onSubmit(_markdownController!.text))
       ]),
       body: child);
 
@@ -72,11 +72,11 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
 }
 
 class _MarkdownEditorPreview extends StatelessWidget {
-  final String? markdown;
+  final String markdown;
   final bool isMobile;
   final ScrollController _scrollController = ScrollController();
 
-  _MarkdownEditorPreview({Key? key, this.markdown, this.isMobile = true}) : super(key: key);
+  _MarkdownEditorPreview({Key? key, this.markdown = "", this.isMobile = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +99,6 @@ class _MarkdownEditorPreview extends StatelessWidget {
                 md.ExtensionSet.gitHubFlavored.blockSyntaxes,
                 [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
               ),
-              data: markdown!,
+              data: markdown,
               selectable: true)));
 }

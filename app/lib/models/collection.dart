@@ -8,14 +8,14 @@ import 'server.dart';
 
 class BackendCollection {
   final String name;
-  final String? icon;
+  final String icon;
   final String url;
   final String type;
   final int? index;
 
   static Box<String> get _box => Hive.box<String>('collections');
   BackendCollection(
-      {required this.name, this.icon, required this.url, this.index, required this.type});
+      {required this.name, this.icon = "", required this.url, this.index, required this.type});
   BackendCollection.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         url = json['url'],

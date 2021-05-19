@@ -1,3 +1,4 @@
+import 'package:dev_doctor/articles/home.dart';
 import 'package:dev_doctor/backends/home.dart';
 import 'package:dev_doctor/backends/module.dart';
 import 'package:dev_doctor/settings/home.dart';
@@ -24,7 +25,7 @@ class AppModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => MyHomePage(), children: [
       ...HomeRoutes.values.map((e) =>
-          ChildRoute(e.route!, child: (_, __) => e.widget!, transition: TransitionType.fadeIn)),
+          ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
       WildcardRoute(child: (_, __) => ErrorDisplay())
     ]),
     WildcardRoute(child: (_, __) => ErrorDisplay()),
@@ -37,15 +38,17 @@ class AppModule extends Module {
   ];
 }
 
-enum HomeRoutes { home, backends, courses, editor, settings }
+enum HomeRoutes { home, backends, articles, courses, editor, settings }
 
 extension HomeRoutesExtension on HomeRoutes {
-  String? get route {
+  String get route {
     switch (this) {
       case HomeRoutes.home:
         return '/';
       case HomeRoutes.backends:
         return '/backends';
+      case HomeRoutes.articles:
+        return '/articles';
       case HomeRoutes.courses:
         return '/courses';
       case HomeRoutes.editor:
@@ -55,12 +58,14 @@ extension HomeRoutesExtension on HomeRoutes {
     }
   }
 
-  Widget? get widget {
+  Widget get widget {
     switch (this) {
       case HomeRoutes.home:
         return HomePage();
       case HomeRoutes.backends:
         return BackendsPage();
+      case HomeRoutes.articles:
+        return ArticlesPage();
       case HomeRoutes.courses:
         return CoursesPage();
       case HomeRoutes.editor:

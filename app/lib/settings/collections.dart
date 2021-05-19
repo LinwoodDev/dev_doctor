@@ -52,7 +52,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                                       key: Key(_box.getAt(index)!),
                                       onDismissed: (direction) => _deleteCollection(index),
                                       child: ListTile(
-                                          leading: current?.icon?.isEmpty ?? current == null
+                                          leading: current?.icon.isEmpty ?? current == null
                                               ? null
                                               : UniversalImage(
                                                   type: current!.icon, url: current.url + "/icon"),

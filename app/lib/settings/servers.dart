@@ -57,10 +57,10 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                                       key: Key(box.getAt(index)!),
                                       onDismissed: (direction) => _deleteServer(index),
                                       child: ListTile(
-                                          leading: current?.icon?.isEmpty ?? current == null
+                                          leading: current?.icon.isEmpty ?? current == null
                                               ? null
                                               : UniversalImage(
-                                                  type: current!.icon, url: current.url! + "/icon"),
+                                                  type: current!.icon, url: current.url + "/icon"),
                                           title:
                                               Text(current?.name ?? "settings.servers.error".tr()),
                                           subtitle: Text(current?.url ?? "")));
