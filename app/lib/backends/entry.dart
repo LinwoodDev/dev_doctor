@@ -149,7 +149,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                         child: _editorBloc != null
                                             ? Container()
                                             : UniversalImage(
-                                                url: server.url! + "/icon",
+                                                url: server.url + "/icon",
                                                 height: 500,
                                                 type: server.icon,
                                               )))))
@@ -262,7 +262,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                 ]))),
                       Row(children: [
                         Expanded(
-                            child: (server.body != null)
+                            child: (server.body.isNotEmpty)
                                 ? MarkdownBody(
                                     styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
                                     onTapLink: (_, url, __) => launch(url!),
@@ -273,7 +273,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                         ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
                                       ],
                                     ),
-                                    data: server.body!,
+                                    data: server.body,
                                     selectable: true,
                                   )
                                 : Container()),

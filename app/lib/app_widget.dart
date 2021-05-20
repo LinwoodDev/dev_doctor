@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onItemTapped(int index) {
-    Modular.to.pushReplacementNamed(HomeRoutes.values[index].route!);
+    Modular.to.pushReplacementNamed(HomeRoutes.values[index].route);
     setState(() => _selectedIndex = index);
   }
 
@@ -122,6 +122,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 activeIcon: Icon(Icons.store),
                 icon: Icon(Icons.store_outlined),
                 label: 'backends.title'.tr()),
+            BottomNavigationBarItem(
+                backgroundColor: Theme.of(context).primaryColor,
+                activeIcon: Icon(Icons.article),
+                icon: Icon(Icons.article_outlined),
+                label: 'articles.title'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
                 activeIcon: Icon(Icons.school),

@@ -8,37 +8,37 @@ import 'course.dart';
 @immutable
 class CoursesServer {
   final String name;
-  final String? url;
-  final String? type;
-  final String? icon;
-  final String? supportUrl;
+  final String url;
+  final String type;
+  final String icon;
+  final String supportUrl;
   final int? index;
   final BackendEntry? entry;
   final List<String> courses;
-  final String? body;
+  final String body;
 
   static Box<String> get _box => Hive.box<String>('servers');
 
   CoursesServer(
-      {this.body,
-      this.icon,
+      {this.body = "",
+      this.icon = "",
       this.index,
       required this.name,
-      this.url,
+      this.url = "",
       required this.courses,
-      this.type,
+      this.type = "",
       this.entry,
-      this.supportUrl});
+      this.supportUrl = ""});
   CoursesServer.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         url = json['url'],
         index = (json['index'] != -1) ? json['index'] : null,
         type = json['type'],
         courses = List<String>.from(json['courses'] ?? []),
-        icon = json['icon'],
+        icon = json['icon'] ?? "",
         entry = json['entry'],
-        body = json['body'],
-        supportUrl = json['support_url'];
+        body = json['body'] ?? "",
+        supportUrl = json['support_url'] ?? "";
 
   Map<String, dynamic> toJson() => {
         "name": name,
@@ -54,7 +54,7 @@ class CoursesServer {
   bool get added => index != null || Hive.box<String>('servers').containsKey(url);
 
   Future<CoursesServer> add() async => CoursesServer(
-      index: await _box.add(url!),
+      index: await _box.add(url),
       courses: courses,
       name: name,
       type: type,
@@ -142,7 +142,7 @@ class CoursesServer {
     }
   }
 
-  Uri get uri => Uri.parse(url!);
+  Uri get uri => Uri.parse(url);
 }
 
 class CoursesServerAdapter extends TypeAdapter<CoursesServer> {

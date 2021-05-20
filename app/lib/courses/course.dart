@@ -63,7 +63,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       _nameController = TextEditingController(text: courseBloc.course.name);
       _descriptionController = TextEditingController(text: courseBloc.course.description);
       _slugController = TextEditingController(text: courseBloc.course.slug);
-      _supportController = TextEditingController(text: courseBloc.course.supportUrl ?? '');
+      _supportController = TextEditingController(text: courseBloc.course.supportUrl);
     }
   }
 
@@ -186,7 +186,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   Widget _buildView(Course course) => Builder(builder: (context) {
-        var supportUrl = course.supportUrl ?? course.server?.supportUrl;
+        var supportUrl = course.supportUrl.isEmpty ? course.server?.supportUrl : course.supportUrl;
         return Scaffold(
           body: ProgressHUD(
               child: Scrollbar(
@@ -368,8 +368,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 Divider()
                               ]))),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      if (course.author != null)
-                        AuthorDisplay(author: course.author!, editing: _editorBloc != null),
+                      if (course.author.name.isNotEmpty)
+                        AuthorDisplay(author: course.author, editing: _editorBloc != null),
                       if (_editorBloc != null) ...[
                         IconButton(
                             tooltip: "edit".tr(),
@@ -383,7 +383,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   "serverId": _editorBloc!.key.toString(),
                                   "course": bloc.course!
                                 }).toString())),
-                        if (course.author?.name != null)
+                        if (course.author.name.isNotEmpty)
                           IconButton(
                               tooltip: "delete".tr(),
                               icon: Icon(Icons.delete_outline_outlined),
@@ -396,14 +396,14 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               })
                       ]
                     ]),
-                    if (course.lang != null || _editorBloc != null)
+                    if (course.lang.isNotEmpty || _editorBloc != null)
                       Padding(
                           padding: EdgeInsets.all(8),
                           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                             Padding(
                                 padding: EdgeInsets.all(4), child: Icon(Icons.language_outlined)),
-                            Text(course.lang != null
-                                ? LocaleNames.of(context)!.nameOf(course.lang!) ?? course.lang!
+                            Text(course.lang.isNotEmpty
+                                ? LocaleNames.of(context)!.nameOf(course.lang) ?? course.lang
                                 : 'course.lang.notset'.tr()),
                             if (_editorBloc != null)
                               IconButton(

@@ -11,28 +11,28 @@ class Course {
   final String slug;
   final String name;
   final String description;
-  final String? icon;
-  final String? supportUrl;
-  final Author? author;
-  final bool? installed;
+  final String icon;
+  final String supportUrl;
+  final Author author;
+  final bool installed;
   final String body;
-  final String? lang;
+  final String lang;
   final List<String> parts;
-  final bool? private;
+  final bool private;
 
   Course(
       {required this.slug,
       this.name = '',
       this.description = '',
-      this.icon,
-      this.author,
-      this.installed,
+      this.icon = '',
+      this.author = const Author(),
+      this.installed = false,
       this.body = '',
-      this.supportUrl,
-      this.lang,
+      this.supportUrl = '',
+      this.lang = '',
       required this.parts,
       this.server,
-      this.private});
+      this.private = false});
   factory Course.fromJson(Map<String, dynamic> json) {
     var apiVersion = json['api-version'];
     if (apiVersion != null) {
@@ -48,14 +48,14 @@ class Course {
         slug: json['slug'],
         name: json['name'] ?? '',
         description: json['description'] ?? '',
-        icon: json['icon'],
+        icon: json['icon'] ?? '',
         author: Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
         body: json['body'] ?? '',
-        installed: json['installed'],
-        lang: json['lang'],
+        installed: json['installed'] ?? false,
+        lang: json['lang'] ?? '',
         parts: List<String>.from(json['parts'] ?? []),
-        private: json['private'],
-        supportUrl: json['support_url']);
+        private: json['private'] ?? false,
+        supportUrl: json['support_url'] ?? '');
   }
   Map<String, dynamic> toJson(int? apiVersion) => {
         "api-version": apiVersion,
@@ -64,7 +64,7 @@ class Course {
         "name": name,
         "description": description,
         "icon": icon,
-        "author": author?.toJson(apiVersion),
+        "author": author.toJson(apiVersion),
         "body": body,
         "installed": installed,
         "lang": lang,
@@ -73,7 +73,7 @@ class Course {
         "support_url": supportUrl
       };
 
-  get url => server!.url! + "/" + slug;
+  get url => server!.url + "/" + slug;
 
   Future<List<CoursePart>> fetchParts() =>
       Future.wait(parts.map((course) => fetchPart(course))).then((value) async {

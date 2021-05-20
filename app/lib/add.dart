@@ -39,9 +39,9 @@ class _AddServerPageState extends State<AddServerPage> {
                           onPressed: () => Navigator.of(context).pop(true))
                     ],
                     title: Text("settings.servers.add.title")
-                        .tr(namedArgs: {"name": server.name, "url": server.url!}),
+                        .tr(namedArgs: {"name": server.name, "url": server.url}),
                     content: Text("settings.servers.add.body")
-                        .tr(namedArgs: {"name": server.name, "url": server.url!}))));
+                        .tr(namedArgs: {"name": server.name, "url": server.url}))));
         if (shouldAdd!) {
           await _serversBox.add(url);
           var params = Modular.args?.queryParams ?? {};

@@ -137,7 +137,7 @@ class CourseStatisticsView extends StatelessWidget {
       var logoImage = await imageFromAssetBundle("images/logo.png");
       final pdf = pw.Document();
       pw.Widget? image = null;
-      if (course.icon != null) {
+      if (course.icon.isNotEmpty) {
         var url = course.url + "/icon." + course.icon;
         switch (course.icon) {
           case "svg":

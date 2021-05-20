@@ -35,7 +35,7 @@ class _ItemFetcher {
           .where((element) => servers.contains(element))
           .map((e) async {
         var server = await CoursesServer.fetch(url: e);
-        entries.addAll((await server?.fetchCourses())?.where((element) => !element.private!) ?? []);
+        entries.addAll((await server?.fetchCourses())?.where((element) => !element.private) ?? []);
       }));
       entries.sort((a, b) => _favoriteBox.get(b.url, defaultValue: false)! ? 1 : -1);
     }
@@ -244,7 +244,7 @@ class _CoursesListState extends State<CoursesList> {
             "",
             "courses",
             "details"
-          ], queryParameters: <String, String?>{
+          ], queryParameters: {
             "serverId": course.server!.index.toString(),
             "course": course.slug
           }).toString(),
@@ -259,7 +259,7 @@ class _CoursesListState extends State<CoursesList> {
           _favoriteBox.put(course.url, !isFavorite);
           setState(() {});
         });
-    var hero = course.icon?.isEmpty ?? true
+    var hero = course.icon.isEmpty
         ? null
         : Hero(
             tag: "course-icon-${course.server?.index}-${course.slug}",

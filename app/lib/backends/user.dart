@@ -79,7 +79,7 @@ class _BackendUserPageState extends State<BackendUserPage> {
     var hero = Hero(
         tag:
             "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
-        child: UniversalImage(url: server.url! + "/icon", type: server.icon));
+        child: UniversalImage(url: server.url + "/icon", type: server.icon));
     void tileTap() => Modular.to.pushNamed(
         "/backends/entry?collectionId=${widget.collectionId}&user=${widget.user}&entry=${entries[index].name}",
         arguments: server);
@@ -93,13 +93,10 @@ class _BackendUserPageState extends State<BackendUserPage> {
                     child: Column(children: [
                       hero,
                       Text(server.name),
-                      if (server.url != null)
-                        Text(server.url!, style: Theme.of(context).textTheme.caption)
+                      if (server.url.isNotEmpty)
+                        Text(server.url, style: Theme.of(context).textTheme.caption)
                     ]))))
         : ListTile(
-            leading: hero,
-            title: Text(server.name),
-            subtitle: Text(server.url ?? ''),
-            onTap: tileTap);
+            leading: hero, title: Text(server.name), subtitle: Text(server.url), onTap: tileTap);
   }
 }
