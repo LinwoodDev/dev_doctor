@@ -43,6 +43,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
       _iframeElement.src = widget.item.getSource(widget.part).toString();
       //_iframeElement.allowFullscreen = true;
       _iframeElement.style.border = 'none';
+      _iframeElement.allowFullscreen = true;
 
       // ignore: undefined_prefixed_name
       ui.platformViewRegistry.registerViewFactory('iframeElement', (int viewId) => _iframeElement);
