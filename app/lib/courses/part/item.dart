@@ -16,6 +16,7 @@ import 'package:dev_doctor/courses/part/video.dart'
     if (dart.library.html) 'package:dev_doctor/courses/part/video_web.dart'
     if (dart.library.io) 'package:dev_doctor/courses/part/video_mobile.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'bloc.dart';
 import 'layout.dart';
@@ -131,7 +132,7 @@ class _PartItemPageState extends State<PartItemPage> {
                                   if (widget.editorBloc != null)
                                     IconButton(
                                       tooltip: "edit".tr(),
-                                      icon: Icon(Icons.edit_outlined),
+                                      icon: Icon(PhosphorIcons.pencilLight),
                                       onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
                                         '',
                                         'editor',
@@ -145,7 +146,7 @@ class _PartItemPageState extends State<PartItemPage> {
                                   else if (item.allowReset)
                                     IconButton(
                                         tooltip: "reset".tr(),
-                                        icon: Icon(Icons.restore_sharp),
+                                        icon: Icon(PhosphorIcons.clockCounterClockwiseLight),
                                         onPressed: () {
                                           part.removeItemPoints(itemId);
                                           bloc.partSubject.add(part);

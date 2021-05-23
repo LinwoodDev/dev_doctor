@@ -1,13 +1,16 @@
+import 'dart:async';
+
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:flash/flash.dart';
 import 'package:hive/hive.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:http/http.dart' as http;
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:printing/printing.dart';
 
 class CourseStatisticsView extends StatelessWidget {
@@ -119,7 +122,7 @@ class CourseStatisticsView extends StatelessWidget {
                                   ElevatedButton.icon(
                                       onPressed: () => _downloadCertificate(
                                           context, allProgress, allScore, allMaxScore),
-                                      icon: Icon(Icons.download_outlined),
+                                      icon: Icon(PhosphorIcons.downloadLight),
                                       label: Text("course.certificate.button".tr().toUpperCase()))
                                 ]))));
                   })
@@ -130,8 +133,10 @@ class CourseStatisticsView extends StatelessWidget {
 
   Future<void> _downloadCertificate(
       BuildContext buildContext, double progress, int score, int maxScore) async {
-    var progressHud = ProgressHUD.of(buildContext);
-    progressHud?.show();
+    var completer = Completer();
+    buildContext.showBlockDialog(
+      dismissCompleter: completer,
+    );
     await Future.delayed(Duration(seconds: 1));
     try {
       var logoImage = await imageFromAssetBundle("images/logo.png");
@@ -204,6 +209,6 @@ class CourseStatisticsView extends StatelessWidget {
     } catch (e) {
       print("Error $e");
     }
-    progressHud?.dismiss();
+    completer.complete();
   }
 }

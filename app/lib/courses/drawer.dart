@@ -7,6 +7,7 @@ import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 typedef NavigateCallback = void Function(int part);
@@ -41,7 +42,7 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
             child: ListView(children: [
       ListTile(
         title: Text('course.back').tr(),
-        leading: Icon(Icons.keyboard_backspace_outlined),
+        leading: Icon(PhosphorIcons.arrowArcLeftLight),
         onTap: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
@@ -51,7 +52,7 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
         ListTile(
           title: Text('course.support').tr(),
           onTap: () => launch(supportUrl),
-          leading: Icon(Icons.help_outline_outlined),
+          leading: Icon(PhosphorIcons.questionLight),
         ),
       Divider(),
       FutureBuilder<List<CoursePart>>(

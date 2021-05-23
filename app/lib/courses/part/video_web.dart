@@ -1,6 +1,7 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 import 'package:dev_doctor/models/part.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../platform_view_stub.dart' if (dart.library.html) 'dart:ui' as ui;
 
@@ -89,7 +90,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
             onPressed: () => Modular.to.push(MaterialPageRoute(
                 builder: (context) => defaultVideo.VideoPartItemEditorPage(
                     editorBloc: widget.editorBloc, item: widget.item, itemId: widget.itemId))),
-            icon: Icon(Icons.edit_outlined))
+            icon: Icon(PhosphorIcons.pencilLight))
     ]);
   }
 }

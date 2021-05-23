@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class CoursesPage extends StatefulWidget {
   @override
@@ -63,7 +64,7 @@ class CustomSearchDelegate extends SearchDelegate {
     return [
       IconButton(
         tooltip: "clear".tr(),
-        icon: Icon(Icons.clear),
+        icon: Icon(PhosphorIcons.xLight),
         onPressed: () {
           query = '';
         },
@@ -75,7 +76,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildLeading(BuildContext context) {
     return IconButton(
       tooltip: "back".tr(),
-      icon: Icon(Icons.arrow_back),
+      icon: Icon(PhosphorIcons.arrowArcLeftLight),
       onPressed: () {
         close(context, null);
       },
@@ -125,7 +126,7 @@ class _CoursesPageState extends State<CoursesPage> {
     return Scaffold(
         appBar: MyAppBar(title: "courses.title".tr(), actions: [
           IconButton(
-              icon: Icon(Icons.search_outlined),
+              icon: Icon(PhosphorIcons.magnifyingGlassLight),
               tooltip: "search".tr(),
               onPressed: () {
                 showSearch(
@@ -134,7 +135,7 @@ class _CoursesPageState extends State<CoursesPage> {
                 );
               }),
           IconButton(
-              icon: Icon(Icons.filter_alt_outlined),
+              icon: Icon(PhosphorIcons.funnelLight),
               tooltip: "courses.filter".tr(),
               onPressed: () async {
                 await showDialog(
@@ -143,7 +144,7 @@ class _CoursesPageState extends State<CoursesPage> {
                         title: Text("courses.filter").tr(),
                         actions: [
                           TextButton.icon(
-                              icon: Icon(Icons.close_outlined),
+                              icon: Icon(PhosphorIcons.xLight),
                               label: Text("close".tr().toUpperCase()),
                               onPressed: () => Navigator.of(context).pop())
                         ],
@@ -168,7 +169,7 @@ class _CoursesPageState extends State<CoursesPage> {
               }),
           IconButton(
               tooltip: "grid-view".tr(),
-              icon: Icon(gridView ? Icons.view_list_outlined : Icons.grid_view),
+              icon: Icon(gridView ? PhosphorIcons.listLight : PhosphorIcons.squaresFourLight),
               onPressed: () {
                 setState(() => gridView = !gridView);
               })
@@ -254,7 +255,7 @@ class _CoursesListState extends State<CoursesList> {
     var isFavorite = _favoriteBox.get(course.url, defaultValue: false)!;
     var favorite = IconButton(
         tooltip: "course.like".tr(),
-        icon: Icon(isFavorite ? Icons.favorite_outlined : Icons.favorite_border_outlined),
+        icon: Icon(isFavorite ? PhosphorIcons.heartFill : PhosphorIcons.heartLight),
         onPressed: () {
           _favoriteBox.put(course.url, !isFavorite);
           setState(() {});

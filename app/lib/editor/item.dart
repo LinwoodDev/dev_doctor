@@ -7,6 +7,7 @@ import 'package:dev_doctor/models/part.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class PartItemEditorPage extends StatefulWidget {
   final ServerEditorBloc? editorBloc;
@@ -75,7 +76,7 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
                           ],
                         ))))),
         floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.save_outlined),
+            child: Icon(PhosphorIcons.floppyDiskLight),
             tooltip: "save".tr(),
             onPressed: () async {
               var coursePart = part.copyWith(

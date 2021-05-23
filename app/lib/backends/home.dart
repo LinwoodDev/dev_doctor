@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class _ItemFetcher {
   final _itemsPerPage = 5;
@@ -46,7 +47,7 @@ class CustomSearchDelegate extends SearchDelegate {
     return [
       IconButton(
         tooltip: "clear".tr(),
-        icon: Icon(Icons.clear),
+        icon: Icon(PhosphorIcons.xLight),
         onPressed: () {
           query = '';
         },
@@ -58,7 +59,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildLeading(BuildContext context) {
     return IconButton(
       tooltip: "back".tr(),
-      icon: Icon(Icons.arrow_back),
+      icon: Icon(PhosphorIcons.arrowArcLeftLight),
       onPressed: () {
         close(context, null);
       },
@@ -229,14 +230,14 @@ class _BackendsPageState extends State<BackendsPage> with TickerProviderStateMix
         appBar: MyAppBar(title: "backends.title".tr(), actions: [
           IconButton(
               tooltip: "search".tr(),
-              icon: Icon(Icons.search),
+              icon: Icon(PhosphorIcons.magnifyingGlassLight),
               onPressed: () {
                 showSearch(
                     context: context, delegate: CustomSearchDelegate(_itemFetcher, gridView));
               }),
           IconButton(
               tooltip: "grid-view".tr(),
-              icon: Icon(gridView ? Icons.view_list_outlined : Icons.grid_view),
+              icon: Icon(gridView ? PhosphorIcons.listLight : PhosphorIcons.squaresFourLight),
               onPressed: () {
                 setState(() => gridView = !gridView);
               })
@@ -288,7 +289,7 @@ class _AddBackendButtonState extends State<AddBackendButton> with SingleTickerPr
         turns: _animation,
         child: IconButton(
           tooltip: (_server.added ? "backends.uninstall" : "backends.install").tr(),
-          icon: Icon(_server.added ? Icons.remove_outlined : Icons.add_outlined),
+          icon: Icon(_server.added ? PhosphorIcons.minusLight : PhosphorIcons.plusLight),
           onPressed: () async {
             var toggledServer = await _server.toggle();
             (_server.added ? _controller.reverse() : _controller.forward())

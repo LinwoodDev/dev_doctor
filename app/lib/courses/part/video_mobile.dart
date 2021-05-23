@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'bloc.dart';
 import 'module.dart';
 import 'video.dart' as defaultVideo;
@@ -61,7 +62,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
               onPressed: () => Modular.to.push(MaterialPageRoute(
                   builder: (context) => defaultVideo.VideoPartItemEditorPage(
                       editorBloc: widget.editorBloc, item: widget.item, itemId: widget.itemId))),
-              icon: Icon(Icons.edit_outlined))
+              icon: Icon(PhosphorIcons.pencilLight))
       ]);
     else
       return defaultVideo.VideoPartItemPage(

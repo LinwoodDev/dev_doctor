@@ -7,6 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class EditorPage extends StatefulWidget {
   @override
@@ -45,7 +46,7 @@ class _EditorPageState extends State<EditorPage> {
             closedShape: CircleBorder(),
             closedBuilder: (context, openContainer) => FloatingActionButton(
                 onPressed: openContainer,
-                child: Icon(Icons.add_outlined),
+                child: Icon(PhosphorIcons.plusLight),
                 tooltip: "editor.create.fab".tr())));
   }
 }

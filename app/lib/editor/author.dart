@@ -4,6 +4,7 @@ import 'package:dev_doctor/widgets/author.dart';
 import 'package:dev_doctor/widgets/image_type.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 typedef EditorCallback = void Function(Author? author);
 
@@ -78,7 +79,7 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
                           SizedBox(height: 10)
                         ]))))),
         floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.check_outlined),
+            child: Icon(PhosphorIcons.checkLight),
             tooltip: "editor.create.submit".tr(),
             onPressed: () => widget.onSubmit!(_author)));
   }

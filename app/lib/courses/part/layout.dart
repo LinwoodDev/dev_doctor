@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../course.dart';
 import 'bloc.dart';
@@ -64,17 +65,17 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                   if (widget.part.items.isNotEmpty)
                     IconButton(
                         tooltip: "course.delete.item.tooltip".tr(),
-                        icon: Icon(Icons.remove_circle_outline_outlined),
+                        icon: Icon(PhosphorIcons.minusCircleLight),
                         onPressed: () => _showDeleteDialog(widget.part, widget.itemId ?? 0)),
                   IconButton(
                       tooltip: "course.add.item.tooltip".tr(),
-                      icon: Icon(Icons.add_circle_outline_outlined),
+                      icon: Icon(PhosphorIcons.plusCircleLight),
                       onPressed: () => _showCreateDialog(widget.part)),
                   EditorCoursePartPopupMenu(
                       bloc: widget.editorBloc!, partBloc: EditorPartModule.to.get<CoursePartBloc>())
                 ] else
                   IconButton(
-                    icon: Icon(Icons.share_outlined),
+                    icon: Icon(PhosphorIcons.shareNetworkLight),
                     tooltip: "share".tr(),
                     onPressed: () {
                       Clipboard.setData(ClipboardData(

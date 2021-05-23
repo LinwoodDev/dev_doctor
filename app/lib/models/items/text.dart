@@ -1,6 +1,7 @@
 import 'package:dev_doctor/models/item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/icon_data.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class TextPartItem extends PartItem {
   final String text;
@@ -27,5 +28,5 @@ class TextPartItem extends PartItem {
           points: points ?? this.points);
 
   @override
-  IconData get icon => Icons.subject_outlined;
+  IconData get icon => PhosphorIcons.articleLight;
 }

@@ -13,6 +13,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -110,7 +111,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                             AddBackendButton(server: server)
                           else
                             IconButton(
-                                icon: Icon(Icons.code_outlined),
+                                icon: Icon(PhosphorIcons.codeLight),
                                 tooltip: "code".tr(),
                                 onPressed: () async {
                                   var encoder = JsonEncoder.withIndent("  ");
@@ -196,7 +197,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
         : FloatingActionButton(
             tooltip: "create".tr(),
             onPressed: _showCreateCourseDialog,
-            child: Icon(Icons.add_outlined),
+            child: Icon(PhosphorIcons.plusLight),
           );
   }
 
@@ -219,7 +220,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                 onPressed: () async => await Modular.to.pushNamed(
                                     "/backends/user?collectionId=${widget.collectionId}&user=${widget.user}",
                                     arguments: {"user": server.entry!.user, "server": server}),
-                                icon: Icon(Icons.account_circle_outlined),
+                                icon: Icon(PhosphorIcons.userLight),
                                 label: Text(widget.user!))),
                       ] else
                         Form(
@@ -255,7 +256,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                           await _editorBloc?.save();
                                           setState(() {});
                                         },
-                                        icon: Icon(Icons.save_outlined),
+                                        icon: Icon(PhosphorIcons.floppyDiskLight),
                                         label: Text("save".tr().toUpperCase())),
                                   ),
                                   Divider()
@@ -279,7 +280,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                 : Container()),
                         IconButton(
                             tooltip: "edit".tr(),
-                            icon: Icon(Icons.edit_outlined),
+                            icon: Icon(PhosphorIcons.pencilLight),
                             onPressed: () => Modular.to
                                 .pushNamed('/editor/edit?serverId=${_editorBloc!.key.toString()}'))
                       ])
@@ -331,7 +332,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                   content: Text("course.add.exist.content").tr(),
                   actions: [
                     TextButton.icon(
-                        icon: Icon(Icons.close_outlined),
+                        icon: Icon(PhosphorIcons.xLight),
                         onPressed: () => Navigator.of(context).pop(),
                         label: Text("close".tr().toUpperCase()))
                   ]));

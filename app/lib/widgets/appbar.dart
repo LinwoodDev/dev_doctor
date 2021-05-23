@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 isWindow() => !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
 
@@ -75,15 +76,15 @@ class WindowButtons extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              icon: Icon(Icons.minimize_outlined, size: 16),
+              icon: Icon(PhosphorIcons.arrowsInLight, size: 16),
               onPressed: () => appWindow.minimize(),
             ),
             IconButton(
-              icon: Icon(Icons.check_box_outline_blank_outlined, size: 16),
+              icon: Icon(PhosphorIcons.squareLight, size: 16),
               onPressed: () => appWindow.maximizeOrRestore(),
             ),
             IconButton(
-              icon: Icon(Icons.close_outlined, size: 16),
+              icon: Icon(PhosphorIcons.xLight, size: 16),
               onPressed: () => appWindow.close(),
             )
           ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:markdown/markdown.dart' as md;
 
@@ -48,13 +49,13 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
         if (isMobile)
           IconButton(
               tooltip: "editor.markdown.preview.button".tr(),
-              icon: Icon(Icons.play_arrow_outlined),
+              icon: Icon(PhosphorIcons.playLight),
               onPressed: () => Modular.to.push(MaterialPageRoute(
                   builder: (context) =>
                       _MarkdownEditorPreview(markdown: _markdownController!.text)))),
         IconButton(
             tooltip: "save".tr(),
-            icon: Icon(Icons.save_outlined),
+            icon: Icon(PhosphorIcons.floppyDiskLight),
             onPressed: () => widget.onSubmit(_markdownController!.text))
       ]),
       body: child);

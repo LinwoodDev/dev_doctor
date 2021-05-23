@@ -3,6 +3,7 @@ import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hive/hive.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class CreateServerPage extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _CreateServerPageState extends State<CreateServerPage> {
                               controller: _noteController)
                         ]))))),
         floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.check_outlined),
+            child: Icon(PhosphorIcons.checkLight),
             tooltip: "editor.create.submit".tr(),
             onPressed: () async {
               if (_formKey.currentState!.validate()) {

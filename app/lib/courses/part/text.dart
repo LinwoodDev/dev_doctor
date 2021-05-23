@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -57,7 +58,7 @@ class _TextPartItemPageState extends State<TextPartItemPage> {
       if (widget.editorBloc != null)
         IconButton(
             tooltip: "edit".tr(),
-            icon: Icon(Icons.edit_outlined),
+            icon: Icon(PhosphorIcons.pencilLight),
             onPressed: () {
               Modular.to.push(MaterialPageRoute(
                   builder: (context) => MarkdownEditor(

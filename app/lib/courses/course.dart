@@ -18,12 +18,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'statistics.dart';
@@ -103,7 +103,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
         : FloatingActionButton(
             tooltip: "create".tr(),
             onPressed: _showCreatePartDialog,
-            child: Icon(Icons.add_outlined),
+            child: Icon(PhosphorIcons.plusLight),
           );
   }
 
@@ -188,113 +188,112 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   Widget _buildView(Course course) => Builder(builder: (context) {
         var supportUrl = course.supportUrl.isEmpty ? course.server?.supportUrl : course.supportUrl;
         return Scaffold(
-          body: ProgressHUD(
-              child: Scrollbar(
-                  child: NestedScrollView(
-                      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-                        return <Widget>[
-                          SliverAppBar(
-                              expandedHeight: _editorBloc != null ? null : 400.0,
-                              floating: false,
-                              pinned: true,
-                              actions: [
-                                if (_editorBloc == null) ...{
-                                  IconButton(
-                                      icon: Icon(Icons.share_outlined),
-                                      tooltip: "share".tr(),
-                                      onPressed: () {
-                                        Clipboard.setData(ClipboardData(
-                                            text: Uri(
-                                                    scheme: Uri.base.scheme,
-                                                    port: Uri.base.port,
-                                                    host: Uri.base.host,
-                                                    fragment: Uri(pathSegments: [
-                                                      "",
-                                                      "courses",
-                                                      "details"
-                                                    ], queryParameters: {
-                                                      "server": course.server!.url,
-                                                      "course": bloc.course
-                                                    }).toString())
-                                                .toString()));
-                                      }),
-                                  if (supportUrl != null)
-                                    IconButton(
-                                        icon: Icon(Icons.help_outline_outlined),
-                                        tooltip: "course.support".tr(),
-                                        onPressed: () => launch(supportUrl)),
-                                  IconButton(
-                                      icon: Icon(Icons.play_circle_outline_outlined),
-                                      tooltip: "course.start".tr(),
-                                      onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
-                                            "",
-                                            "courses",
-                                            "start",
-                                            "item"
-                                          ], queryParameters: {
-                                            ...Modular.args!.queryParams,
-                                            "partId": 0.toString()
-                                          }).toString()))
-                                } else
-                                  IconButton(
-                                      icon: Icon(Icons.code_outlined),
-                                      tooltip: "code".tr(),
-                                      onPressed: () async {
-                                        var packageInfo = await PackageInfo.fromPlatform();
-                                        var buildNumber = int.tryParse(packageInfo.buildNumber);
-                                        var encoder = JsonEncoder.withIndent("  ");
-                                        var data = await Modular.to.push(MaterialPageRoute(
-                                            builder: (context) => EditorCodeDialogPage(
-                                                initialValue:
-                                                    encoder.convert(course.toJson(buildNumber)))));
-                                        if (data != null) {
-                                          var courseBloc = _editorBloc!.getCourse(bloc.course!);
-                                          courseBloc.course = Course.fromJson(data);
-                                          _editorBloc?.save();
-                                          setState(() {});
-                                        }
-                                      }),
-                                if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
-                              ],
-                              title: Text(course.name),
-                              flexibleSpace: _editorBloc != null
-                                  ? null
-                                  : FlexibleSpaceBar(
-                                      background: Container(
-                                          margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
-                                          child: _editorBloc != null
-                                              ? Container()
-                                              : Hero(
-                                                  tag:
-                                                      "course-icon-${course.server?.index}-${course.slug}",
-                                                  child: UniversalImage(
-                                                    url: course.url + "/icon",
-                                                    height: 500,
-                                                    type: course.icon,
-                                                  ))),
-                                    )),
-                          SliverList(
-                              delegate: new SliverChildListDelegate([
-                            TabBar(
-                                controller: _tabController,
-                                tabs: [
-                                  Tab(text: "general".tr()),
-                                  Tab(
-                                      text: _editorBloc != null
-                                          ? "course.parts".tr()
-                                          : "course.statistics.title".tr())
-                                ],
-                                indicatorSize: TabBarIndicatorSize.label,
-                                isScrollable: false)
-                          ]))
-                        ];
-                      },
-                      body: TabBarView(controller: _tabController, children: [
-                        _buildGeneral(context, course),
-                        _editorBloc != null
-                            ? _buildParts(context)
-                            : CourseStatisticsView(course: course)
-                      ])))),
+          body: Scrollbar(
+              child: NestedScrollView(
+                  headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                    return <Widget>[
+                      SliverAppBar(
+                          expandedHeight: _editorBloc != null ? null : 400.0,
+                          floating: false,
+                          pinned: true,
+                          actions: [
+                            if (_editorBloc == null) ...{
+                              IconButton(
+                                  icon: Icon(PhosphorIcons.shareNetworkLight),
+                                  tooltip: "share".tr(),
+                                  onPressed: () {
+                                    Clipboard.setData(ClipboardData(
+                                        text: Uri(
+                                                scheme: Uri.base.scheme,
+                                                port: Uri.base.port,
+                                                host: Uri.base.host,
+                                                fragment: Uri(pathSegments: [
+                                                  "",
+                                                  "courses",
+                                                  "details"
+                                                ], queryParameters: {
+                                                  "server": course.server!.url,
+                                                  "course": bloc.course
+                                                }).toString())
+                                            .toString()));
+                                  }),
+                              if (supportUrl != null)
+                                IconButton(
+                                    icon: Icon(PhosphorIcons.questionLight),
+                                    tooltip: "course.support".tr(),
+                                    onPressed: () => launch(supportUrl)),
+                              IconButton(
+                                  icon: Icon(PhosphorIcons.playLight),
+                                  tooltip: "course.start".tr(),
+                                  onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
+                                        "",
+                                        "courses",
+                                        "start",
+                                        "item"
+                                      ], queryParameters: {
+                                        ...Modular.args!.queryParams,
+                                        "partId": 0.toString()
+                                      }).toString()))
+                            } else
+                              IconButton(
+                                  icon: Icon(PhosphorIcons.codeLight),
+                                  tooltip: "code".tr(),
+                                  onPressed: () async {
+                                    var packageInfo = await PackageInfo.fromPlatform();
+                                    var buildNumber = int.tryParse(packageInfo.buildNumber);
+                                    var encoder = JsonEncoder.withIndent("  ");
+                                    var data = await Modular.to.push(MaterialPageRoute(
+                                        builder: (context) => EditorCodeDialogPage(
+                                            initialValue:
+                                                encoder.convert(course.toJson(buildNumber)))));
+                                    if (data != null) {
+                                      var courseBloc = _editorBloc!.getCourse(bloc.course!);
+                                      courseBloc.course = Course.fromJson(data);
+                                      _editorBloc?.save();
+                                      setState(() {});
+                                    }
+                                  }),
+                            if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
+                          ],
+                          title: Text(course.name),
+                          flexibleSpace: _editorBloc != null
+                              ? null
+                              : FlexibleSpaceBar(
+                                  background: Container(
+                                      margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
+                                      child: _editorBloc != null
+                                          ? Container()
+                                          : Hero(
+                                              tag:
+                                                  "course-icon-${course.server?.index}-${course.slug}",
+                                              child: UniversalImage(
+                                                url: course.url + "/icon",
+                                                height: 500,
+                                                type: course.icon,
+                                              ))),
+                                )),
+                      SliverList(
+                          delegate: new SliverChildListDelegate([
+                        TabBar(
+                            controller: _tabController,
+                            tabs: [
+                              Tab(text: "general".tr()),
+                              Tab(
+                                  text: _editorBloc != null
+                                      ? "course.parts".tr()
+                                      : "course.statistics.title".tr())
+                            ],
+                            indicatorSize: TabBarIndicatorSize.label,
+                            isScrollable: false)
+                      ]))
+                    ];
+                  },
+                  body: TabBarView(controller: _tabController, children: [
+                    _buildGeneral(context, course),
+                    _editorBloc != null
+                        ? _buildParts(context)
+                        : CourseStatisticsView(course: course)
+                  ]))),
           floatingActionButton: _buildFab(),
         );
       });
@@ -362,7 +361,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                         _editorBloc?.save();
                                         setState(() {});
                                       },
-                                      icon: Icon(Icons.save_outlined),
+                                      icon: Icon(PhosphorIcons.floppyDiskLight),
                                       label: Text("save".tr().toUpperCase())),
                                 ),
                                 Divider()
@@ -373,7 +372,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       if (_editorBloc != null) ...[
                         IconButton(
                             tooltip: "edit".tr(),
-                            icon: Icon(Icons.edit_outlined),
+                            icon: Icon(PhosphorIcons.pencilLight),
                             onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
                                   '',
                                   'editor',
@@ -386,7 +385,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                         if (course.author.name.isNotEmpty)
                           IconButton(
                               tooltip: "delete".tr(),
-                              icon: Icon(Icons.delete_outline_outlined),
+                              icon: Icon(PhosphorIcons.trashLight),
                               onPressed: () async {
                                 var courseBloc = _editorBloc!.getCourse(bloc.course!);
                                 course = courseBloc.course.copyWith(author: Author());
@@ -401,14 +400,14 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                           padding: EdgeInsets.all(8),
                           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                             Padding(
-                                padding: EdgeInsets.all(4), child: Icon(Icons.language_outlined)),
+                                padding: EdgeInsets.all(4), child: Icon(PhosphorIcons.globeLight)),
                             Text(course.lang.isNotEmpty
                                 ? LocaleNames.of(context)!.nameOf(course.lang) ?? course.lang
                                 : 'course.lang.notset'.tr()),
                             if (_editorBloc != null)
                               IconButton(
                                   tooltip: "edit".tr(),
-                                  icon: Icon(Icons.edit_outlined),
+                                  icon: Icon(PhosphorIcons.pencilLight),
                                   onPressed: () => _showLanguageDialog())
                           ])),
                     Row(children: [
@@ -430,7 +429,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       if (_editorBloc != null)
                         IconButton(
                             tooltip: "edit".tr(),
-                            icon: Icon(Icons.edit_outlined),
+                            icon: Icon(PhosphorIcons.pencilLight),
                             onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
                                   "",
                                   "editor",
@@ -533,13 +532,13 @@ extension PartOptionsExtension on PartOptions {
   IconData? get icon {
     switch (this) {
       case PartOptions.rename:
-        return Icons.edit_outlined;
+        return PhosphorIcons.pencilLight;
       case PartOptions.description:
-        return Icons.text_snippet_outlined;
+        return PhosphorIcons.articleLight;
       case PartOptions.slug:
-        return Icons.link_outlined;
+        return PhosphorIcons.linkLight;
       case PartOptions.code:
-        return Icons.code_outlined;
+        return PhosphorIcons.codeLight;
     }
   }
 

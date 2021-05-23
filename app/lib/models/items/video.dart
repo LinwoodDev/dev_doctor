@@ -2,6 +2,7 @@ import 'package:dev_doctor/models/item.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/icon_data.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../part.dart';
 
@@ -67,5 +68,5 @@ class VideoPartItem extends PartItem {
           url: url ?? this.url);
 
   @override
-  IconData get icon => Icons.play_arrow_outlined;
+  IconData get icon => PhosphorIcons.playLight;
 }

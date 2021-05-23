@@ -2,6 +2,7 @@ import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/text_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -31,7 +32,7 @@ class SettingsList extends StatelessWidget {
   //             title: Text("coming-soon").tr(),
   //             actions: [
   //               TextButton.icon(
-  //                 icon: Icon(Icons.close_outlined),
+  //                 icon: Icon(PhosphorIcons.xLight),
   //                 label: Text("close".tr().toUpperCase()),
   //                 onPressed: () => Navigator.of(context).pop(),
   //               )
@@ -49,12 +50,12 @@ class SettingsList extends StatelessWidget {
                     child: Column(mainAxisSize: MainAxisSize.max, children: [
           ListTile(
               selected: activePage == SettingsPages.general,
-              leading: Icon(Icons.build_outlined),
+              leading: Icon(PhosphorIcons.wrench),
               title: Text("settings.general.title").tr(),
               onTap: () => Modular.to.pushNamed("/settings/general")),
           ListTile(
               selected: activePage == SettingsPages.appearance,
-              leading: Icon(Icons.tune_outlined),
+              leading: Icon(PhosphorIcons.fadersLight),
               title: Text("settings.appearance.title").tr(),
               onTap: () => Modular.to.pushNamed("/settings/appearance")),
           // ListTile(
@@ -64,45 +65,45 @@ class SettingsList extends StatelessWidget {
           //     onTap: () => _showComingSoon(context)),
           ListTile(
               selected: activePage == SettingsPages.servers,
-              leading: Icon(Icons.format_list_bulleted_outlined),
+              leading: Icon(PhosphorIcons.cardsLight),
               title: Text("settings.servers.title").tr(),
               onTap: () => Modular.to.pushNamed("/settings/servers")),
           ListTile(
               selected: activePage == SettingsPages.collections,
-              leading: Icon(Icons.library_books_outlined),
+              leading: Icon(PhosphorIcons.treeStructureLight),
               title: Text("settings.collections.title").tr(),
               onTap: () => Modular.to.pushNamed("/settings/collections")),
           TextDivider(text: 'settings.information'.tr().toUpperCase()),
           ListTile(
-              leading: Icon(Icons.text_snippet_outlined),
+              leading: Icon(PhosphorIcons.stackLight),
               title: Text("settings.license").tr(),
               onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor/blob/main/LICENSE")),
           ListTile(
-              leading: Icon(Icons.code_outlined),
+              leading: Icon(PhosphorIcons.codeLight),
               title: Text("settings.code").tr(),
               onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor")),
           ListTile(
-              leading: Icon(Icons.supervisor_account_outlined),
+              leading: Icon(PhosphorIcons.usersLight),
               title: Text("discord").tr(),
               onTap: () => launch("https://discord.linwood.tk")),
           ListTile(
-              leading: Icon(Icons.description_outlined),
+              leading: Icon(PhosphorIcons.articleLight),
               title: Text("docs").tr(),
               onTap: () => launch("https://docs.dev-doctor.cf/backend/overview")),
           ListTile(
-              leading: Icon(Icons.history_outlined),
+              leading: Icon(PhosphorIcons.arrowCounterClockwiseLight),
               title: Text("settings.changelog").tr(),
               onTap: () => launch("https://docs.dev-doctor.cf/changelog")),
           ListTile(
-              leading: Icon(Icons.construction_outlined),
+              leading: Icon(PhosphorIcons.identificationCardLight),
               title: Text("settings.imprint").tr(),
               onTap: () => launch("https://codedoctor.tk/impress")),
           ListTile(
-              leading: Icon(Icons.privacy_tip_outlined),
+              leading: Icon(PhosphorIcons.shieldLight),
               title: Text("settings.privacypolicy").tr(),
               onTap: () => launch("https://docs.dev-doctor.cf/privacypolicy")),
           ListTile(
-              leading: Icon(Icons.info_outline),
+              leading: Icon(PhosphorIcons.infoLight),
               title: Text("settings.about").tr(),
               onTap: () => showAboutDialog(
                   context: context, applicationIcon: Image.asset("images/logo.png", height: 50))),

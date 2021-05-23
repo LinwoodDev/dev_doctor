@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/icon_data.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class QuizPartItem extends PartItem {
   final String? text;
@@ -61,7 +62,7 @@ class QuizPartItem extends PartItem {
   }
 
   @override
-  IconData get icon => Icons.question_answer_outlined;
+  IconData get icon => PhosphorIcons.chatsLight;
 }
 
 @immutable

@@ -1,6 +1,7 @@
 import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/items/text.dart';
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'items/video.dart';
 
@@ -13,7 +14,7 @@ abstract class PartItem {
 
   int get points;
 
-  IconData get icon => Icons.check_box_outline_blank_outlined;
+  IconData get icon => PhosphorIcons.squareLight;
 
   PartItem(
       {this.allowReset = true, required this.name, required this.description, required this.index});

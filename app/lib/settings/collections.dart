@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'layout.dart';
 
@@ -64,7 +65,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                   }))),
       floatingActionButton: FloatingActionButton.extended(
         label: Text("settings.collections.add.fab").tr(),
-        icon: Icon(Icons.add_outlined),
+        icon: Icon(PhosphorIcons.plusLight),
         onPressed: () => _showDialog(),
       ),
     );
@@ -84,7 +85,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                 actions: [
                   TextButton.icon(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.close_outlined),
+                      icon: Icon(PhosphorIcons.xLight),
                       label: Text("close".tr().toUpperCase()))
                 ],
               ));

@@ -5,6 +5,7 @@ import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
@@ -28,13 +29,13 @@ class HomePage extends StatelessWidget {
                   child: Wrap(alignment: WrapAlignment.center, children: [
                     ElevatedButton.icon(
                         onPressed: () => launch("https://docs.dev-doctor.cf/backend/own"),
-                        icon: Icon(Icons.description_outlined,
+                        icon: Icon(PhosphorIcons.articleLight,
                             color: Theme.of(context).primaryIconTheme.color),
                         label: Text("docs".tr().toUpperCase(),
                             style: Theme.of(context).primaryTextTheme.button)),
                     OutlinedButton.icon(
                         onPressed: () => launch("https://discord.linwood.tk"),
-                        icon: Icon(Icons.supervisor_account_outlined),
+                        icon: Icon(PhosphorIcons.usersLight),
                         label: Text("discord".tr().toUpperCase()))
                   ])),
               if (kIsWeb)
@@ -61,7 +62,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.all(20),
             child: ElevatedButton.icon(
               onPressed: () => launch("https://linwood.tk/blog"),
-              icon: Icon(Icons.open_in_new_outlined),
+              icon: Icon(PhosphorIcons.arrowSquareOutLight),
               label: Text("browser".tr().toUpperCase()),
             )),
         Padding(

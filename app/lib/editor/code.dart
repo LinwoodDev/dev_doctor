@@ -4,6 +4,7 @@ import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class EditorCodeDialogPage extends StatefulWidget {
   final String initialValue;
@@ -45,7 +46,7 @@ class _EditorCodeDialogPageState extends State<EditorCodeDialogPage> {
                 Modular.to.pop(data);
               }
             },
-            icon: Icon(Icons.check_outlined),
+            icon: Icon(PhosphorIcons.checkLight),
             label: Text('editor.code.submit'.tr())));
   }
 }

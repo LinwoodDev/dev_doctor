@@ -8,6 +8,7 @@ import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -47,7 +48,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                   child: widget.item.url.isEmpty
                       ? Text('course.video.empty').tr()
                       : ElevatedButton.icon(
-                          icon: Icon(Icons.play_circle_outline_outlined),
+                          icon: Icon(PhosphorIcons.playLight),
                           label: Text("course.video.open".tr().toUpperCase()),
                           onPressed: () => launch(widget.item.getSource(widget.part).toString()),
                         )))),
@@ -57,7 +58,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
             onPressed: () => Modular.to.push(MaterialPageRoute(
                 builder: (context) => VideoPartItemEditorPage(
                     editorBloc: widget.editorBloc, item: widget.item, itemId: widget.itemId))),
-            icon: Icon(Icons.edit_outlined))
+            icon: Icon(PhosphorIcons.pencilLight))
     ]);
   }
 }
@@ -117,7 +118,7 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
                     ])))),
         floatingActionButton: FloatingActionButton(
             tooltip: "save".tr(),
-            child: Icon(Icons.save_outlined),
+            child: Icon(PhosphorIcons.floppyDiskLight),
             onPressed: () async {
               var bloc = EditorPartModule.to.get<CoursePartBloc>();
               var courseBloc = widget.editorBloc!.getCourse(bloc.course!);

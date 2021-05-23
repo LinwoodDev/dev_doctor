@@ -9,6 +9,7 @@ import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class QuizPartItemPage extends StatefulWidget {
   final CoursePart part;
@@ -61,7 +62,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                 actions: [
                   TextButton.icon(
                       onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.close_outlined),
+                      icon: Icon(PhosphorIcons.xLight),
                       label: Text("close".tr().toUpperCase()))
                 ],
               ));
@@ -128,12 +129,12 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                     if (widget.editorBloc != null) ...[
                                       IconButton(
                                           tooltip: "edit".tr(),
-                                          icon: Icon(Icons.edit_outlined),
+                                          icon: Icon(PhosphorIcons.pencilLight),
                                           onPressed: () => _showTimerDialog()),
                                       if (_start != null)
                                         IconButton(
                                             tooltip: "delete".tr(),
-                                            icon: Icon(Icons.delete_outline_outlined),
+                                            icon: Icon(PhosphorIcons.trashLight),
                                             onPressed: () async {
                                               updateItem(
                                                   widget.item.copyWith(time: null, timer: false));
@@ -349,19 +350,19 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                       evaluation: "course.quiz.question.evaluation".tr()))));
                           },
                           label: Text("course.quiz.add".tr()),
-                          icon: Icon(Icons.add_outlined)),
+                          icon: Icon(PhosphorIcons.plusLight)),
                       SizedBox(height: 20)
                     ]
                   ]),
                   if (_points == null)
                     ElevatedButton.icon(
                         onPressed: () => validate(),
-                        icon: Icon(Icons.check_outlined),
+                        icon: Icon(PhosphorIcons.checkLight),
                         label: Text("course.quiz.check".tr().toUpperCase()))
                 ]))
             : Center(
                 child: ElevatedButton.icon(
-                    icon: Icon(Icons.check_box_outlined),
+                    icon: Icon(PhosphorIcons.playLight),
                     onPressed: () => setState(() => startTimer()),
                     label: Text("course.quiz.start".tr().toUpperCase()))));
   }
@@ -378,7 +379,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
           Padding(
               padding: EdgeInsets.all(4),
               child: ElevatedButton.icon(
-                  icon: Icon(Icons.replay_outlined),
+                  icon: Icon(PhosphorIcons.arrowCounterClockwiseLight),
                   onPressed: () => setState(() {
                         _points = null;
                         _formKey.currentState?.reset();
@@ -453,17 +454,17 @@ extension QuestionOptionExtension on QuestionOption {
   IconData? get icon {
     switch (this) {
       case QuestionOption.answer:
-        return Icons.add_outlined;
+        return PhosphorIcons.plusLight;
       case QuestionOption.title:
-        return Icons.edit_outlined;
+        return PhosphorIcons.pencilLight;
       case QuestionOption.evaluation:
-        return Icons.verified_outlined;
+        return PhosphorIcons.circleWavyCheckLight;
       case QuestionOption.delete:
-        return Icons.delete_outline_outlined;
+        return PhosphorIcons.trashLight;
       case QuestionOption.description:
-        return Icons.subject_outlined;
+        return PhosphorIcons.articleLight;
       case QuestionOption.multi:
-        return Icons.done_all_outlined;
+        return PhosphorIcons.checksLight;
     }
   }
 
@@ -589,7 +590,7 @@ extension QuestionOptionExtension on QuestionOption {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          icon: Icon(Icons.close_outlined),
+                          icon: Icon(PhosphorIcons.xLight),
                           label: Text("no".tr().toUpperCase())),
                       TextButton.icon(
                           onPressed: () {
@@ -602,7 +603,7 @@ extension QuestionOptionExtension on QuestionOption {
                                     questions: List<QuizQuestion>.from(item.questions)
                                       ..removeAt(questionId)));
                           },
-                          icon: Icon(Icons.check_outlined),
+                          icon: Icon(PhosphorIcons.checkLight),
                           label: Text("yes".tr().toUpperCase()))
                     ],
                     title: Text("course.quiz.option.question.delete.title").tr(),
@@ -698,17 +699,17 @@ extension AnswerOptionExtension on AnswerOption {
   IconData? getIcon(QuizAnswer answer) {
     switch (this) {
       case AnswerOption.rating:
-        return answer.correct ? Icons.check_outlined : Icons.clear_outlined;
+        return answer.correct ? PhosphorIcons.checkLight : PhosphorIcons.xLight;
       case AnswerOption.title:
-        return Icons.edit_outlined;
+        return PhosphorIcons.pencilLight;
       case AnswerOption.delete:
-        return Icons.delete_outline_outlined;
+        return PhosphorIcons.trashLight;
       case AnswerOption.description:
-        return Icons.subject_outlined;
+        return PhosphorIcons.articleLight;
       case AnswerOption.points:
-        return Icons.attach_money_outlined;
+        return PhosphorIcons.coinLight;
       case AnswerOption.minusPoints:
-        return Icons.money_off_csred_outlined;
+        return PhosphorIcons.minusCircleLight;
     }
   }
 
@@ -800,7 +801,7 @@ extension AnswerOptionExtension on AnswerOption {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          icon: Icon(Icons.close_outlined),
+                          icon: Icon(PhosphorIcons.xLight),
                           label: Text("no".tr().toUpperCase())),
                       TextButton.icon(
                           onPressed: () {
@@ -814,7 +815,7 @@ extension AnswerOptionExtension on AnswerOption {
                                     answers: List<QuizAnswer>.from(question.answers)
                                       ..removeAt(answerId)));
                           },
-                          icon: Icon(Icons.check_outlined),
+                          icon: Icon(PhosphorIcons.checkLight),
                           label: Text("yes".tr().toUpperCase()))
                     ],
                     title: Text("course.quiz.option.answer.delete.title").tr(),

@@ -6,6 +6,7 @@ import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'themes/theme.dart';
 
 class AppWidget extends StatelessWidget {
@@ -114,33 +115,33 @@ class _MyHomePageState extends State<MyHomePage> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(Icons.home),
-                icon: Icon(Icons.home_outlined),
+                activeIcon: Icon(PhosphorIcons.houseFill),
+                icon: Icon(PhosphorIcons.houseLight),
                 label: 'home'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(Icons.store),
-                icon: Icon(Icons.store_outlined),
+                activeIcon: Icon(PhosphorIcons.storefrontFill),
+                icon: Icon(PhosphorIcons.storefrontLight),
                 label: 'backends.title'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(Icons.article),
-                icon: Icon(Icons.article_outlined),
+                activeIcon: Icon(PhosphorIcons.articleFill),
+                icon: Icon(PhosphorIcons.articleLight),
                 label: 'articles.title'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(Icons.school),
-                icon: Icon(Icons.school_outlined),
+                activeIcon: Icon(PhosphorIcons.graduationCapFill),
+                icon: Icon(PhosphorIcons.graduationCapLight),
                 label: 'courses.title'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(Icons.create),
-                icon: Icon(Icons.create_outlined),
+                activeIcon: Icon(PhosphorIcons.pencilFill),
+                icon: Icon(PhosphorIcons.pencilLight),
                 label: 'editor.title'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(Icons.settings),
-                icon: Icon(Icons.settings_outlined),
+                activeIcon: Icon(PhosphorIcons.gearFill),
+                icon: Icon(PhosphorIcons.gearLight),
                 label: 'settings.title'.tr())
           ],
           unselectedItemColor: Theme.of(context).unselectedWidgetColor,
