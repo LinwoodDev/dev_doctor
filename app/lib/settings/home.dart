@@ -50,7 +50,7 @@ class SettingsList extends StatelessWidget {
                     child: Column(mainAxisSize: MainAxisSize.max, children: [
           ListTile(
               selected: activePage == SettingsPages.general,
-              leading: Icon(PhosphorIcons.wrench),
+              leading: Icon(PhosphorIcons.wrenchLight),
               title: Text("settings.general.title").tr(),
               onTap: () => Modular.to.pushNamed("/settings/general")),
           ListTile(
