@@ -18,7 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  await Hive.initFlutter();
+  await Hive.initFlutter('Dev-Doctor');
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   var buildNumber = int.tryParse(packageInfo.buildNumber);
   Hive.registerAdapter(CoursesServerAdapter());
