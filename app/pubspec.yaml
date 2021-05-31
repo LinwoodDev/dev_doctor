@@ -35,7 +35,7 @@ dependencies:
   flutter_svg: ^0.22.0
   flutter_inappwebview: ^5.3.2
   xml: ^5.1.1
-  flutter_localized_locales: ^2.0.1
+  flutter_localized_locales: ^2.0.2
   bitsdojo_window: ^0.1.0+1
   share_plus: ^2.1.2
   phosphor_flutter: ^1.2.0
@@ -376,9 +376,8 @@ msix_config:
   display_name: Dev-Doctor
   publisher_display_name: Linwood
   identity_name: com.github.linwoodcloud.dev-doctor
-  #certificate_path: C:\<PathToCertificate>\<MyCertificate.pfx>
-  #certificate_password: 1234 (require if using .pfx certificate)
-  #publisher: CN=My Company, O=My Company, L=Berlin, S=Berlin, C=DE
+  publisher: E=admin@linwood.tk, CN=CodeDoctorDE, OU=Linwood, O=Linwood, L=Dormagen, S=Nordrhein-Westfalen, C=DE
+  msix_version: 1.5.2.0
   logo_path: images/logo.png
   start_menu_icon_path: images/logo.png
   tile_icon_path: images/logo.png

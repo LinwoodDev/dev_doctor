@@ -2,6 +2,8 @@
 title: Downloads
 ---
 
+# Downloads
+
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/LinwoodCloud/dev_doctor?style=for-the-badge)
 
 <div className="row margin-bottom--lg">
