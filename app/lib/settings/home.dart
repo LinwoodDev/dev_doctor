@@ -77,11 +77,11 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: Icon(PhosphorIcons.stackLight),
               title: Text("settings.license").tr(),
-              onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor/blob/main/LICENSE")),
+              onTap: () => launch("https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE")),
           ListTile(
               leading: Icon(PhosphorIcons.codeLight),
               title: Text("settings.code").tr(),
-              onTap: () => launch("https://github.com/LinwoodCloud/dev-doctor")),
+              onTap: () => launch("https://github.com/LinwoodCloud/dev_doctor")),
           ListTile(
               leading: Icon(PhosphorIcons.usersLight),
               title: Text("discord").tr(),
