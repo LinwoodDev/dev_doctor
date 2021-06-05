@@ -1,3 +1,4 @@
+import 'package:dev_doctor/articles/bloc.dart';
 import 'package:dev_doctor/articles/details.dart';
 import 'package:dev_doctor/backends/entry.dart';
 import 'package:dev_doctor/courses/bloc.dart';
@@ -52,8 +53,7 @@ class EditorModule extends Module {
         ChildRoute('/article/author', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
-          var course = args.queryParams['course'];
-          var article = bloc.getArticle(course!);
+          var article = bloc.getArticle(args.queryParams['article']!);
           return AuthorEditingPage(
               author: article.author,
               onSubmit: (value) {
@@ -93,5 +93,6 @@ class EditorModule extends Module {
         ModuleRoute('/course/item', module: EditorPartModule())
       ];
   @override
-  List<Bind<Object>> get binds => [Bind.singleton((i) => CourseBloc())];
+  List<Bind<Object>> get binds =>
+      [Bind.singleton((i) => CourseBloc()), Bind.singleton((i) => ArticleBloc())];
 }

@@ -39,32 +39,31 @@ class _ArticlePageState extends State<ArticlePage> {
       bloc = EditorModule.to.get<ArticleBloc>();
     else
       bloc = ArticlesModule.to.get<ArticleBloc>();
-    bloc.fetchFromParams(editorBloc: _editorBloc);
+    if (widget.model != null)
+      bloc.articleSubject.add(widget.model!);
+    else
+      bloc.fetchFromParams(editorBloc: _editorBloc);
     if (_editorBloc != null) {
-      var courseBloc = _editorBloc!.getCourse(bloc.article!);
-      _titleController = TextEditingController(text: courseBloc.course.name);
-      _slugController = TextEditingController(text: courseBloc.course.slug);
+      var article = _editorBloc!.getArticle(bloc.article!);
+      _titleController = TextEditingController(text: article.title);
+      _slugController = TextEditingController(text: article.slug);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.model != null
-        ? _buildView(widget.model!)
-        : widget.editorBloc != null
-            ? _buildView(widget.editorBloc!.getArticle(bloc.article!))
-            : StreamBuilder<Article>(
-                stream: bloc.articleSubject,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return Center(child: CircularProgressIndicator());
-                    default:
-                      if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
-                      var course = snapshot.data;
-                      return _buildView(course!);
-                  }
-                });
+    return StreamBuilder<Article>(
+        stream: bloc.articleSubject,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+            default:
+              if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
+              var article = snapshot.data;
+              return _buildView(article!);
+          }
+        });
   }
 
   Widget _buildView(Article article) {
@@ -101,7 +100,7 @@ class _ArticlePageState extends State<ArticlePage> {
                                         validator: (value) {
                                           if (value!.isEmpty) return "article.slug.empty".tr();
                                           if (_slugs!.contains(value) && value != article.slug)
-                                            return "course.slug.exist".tr();
+                                            return "article.slug.exist".tr();
                                           return null;
                                         },
                                         controller: _slugController),
@@ -136,7 +135,7 @@ class _ArticlePageState extends State<ArticlePage> {
                                       'author'
                                     ], queryParameters: {
                                       "serverId": _editorBloc!.key.toString(),
-                                      "course": bloc.article!
+                                      "article": bloc.article!
                                     }).toString())),
                             if (article.author.name.isNotEmpty)
                               IconButton(
@@ -146,6 +145,7 @@ class _ArticlePageState extends State<ArticlePage> {
                                     var articleBloc = _editorBloc!.getArticle(bloc.article!);
                                     article = articleBloc.copyWith(author: Author());
                                     _editorBloc?.updateArticle(article);
+                                    bloc.articleSubject.add(article);
                                     await _editorBloc?.save();
                                     setState(() {});
                                   })
@@ -174,11 +174,11 @@ class _ArticlePageState extends State<ArticlePage> {
                                 onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
                                       "",
                                       "editor",
-                                      "course",
+                                      "article",
                                       "edit"
                                     ], queryParameters: {
                                       "serverId": _editorBloc!.key.toString(),
-                                      "course": bloc.article!
+                                      "article": bloc.article!
                                     }).toString()))
                         ])
                       ]))))

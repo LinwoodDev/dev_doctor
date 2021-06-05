@@ -8,6 +8,7 @@ class Article {
   final String icon;
   final List<String> keywords;
   final String body;
+  final String description;
   final CoursesServer? server;
   final Author author;
 
@@ -16,6 +17,7 @@ class Article {
       this.title = "",
       this.keywords = const [],
       this.body = "",
+      this.description = "",
       this.time,
       this.author = const Author(),
       this.server,
@@ -25,6 +27,7 @@ class Article {
       : title = json['title'] ?? '',
         slug = json['slug'],
         body = json['body'] ?? "",
+        description = json['description'] ?? "",
         keywords = json['keywords'] ?? [],
         time = DateTime.tryParse(json['time'] ?? ""),
         author = Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),

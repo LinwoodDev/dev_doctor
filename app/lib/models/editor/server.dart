@@ -10,6 +10,7 @@ class ServerEditorBloc extends HiveObject {
   String? note;
   final List<CourseEditorBloc> _courses;
   final List<Article> _articles;
+  List<Article> get articles => List.unmodifiable(_articles);
 
   CoursesServer get server =>
       _server.copyWith(courses: _courses.map((e) => e.course.slug).toList());

@@ -49,7 +49,7 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabChange);
     _editorBloc = widget.editorBloc;
     if (_editorBloc != null) {
@@ -132,7 +132,11 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                         bottom: _editorBloc != null
                             ? TabBar(
                                 controller: _tabController,
-                                tabs: [Tab(text: "general".tr()), Tab(text: "courses.title".tr())],
+                                tabs: [
+                                  Tab(text: "general".tr()),
+                                  Tab(text: "courses.title".tr()),
+                                  Tab(text: "articles.title".tr())
+                                ],
                                 indicatorSize: TabBarIndicatorSize.label,
                                 isScrollable: true,
                               )
@@ -157,9 +161,11 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                   ];
                 },
                 body: _editorBloc != null
-                    ? TabBarView(
-                        controller: _tabController,
-                        children: [_buildGeneral(context, server), _buildCourses(context)])
+                    ? TabBarView(controller: _tabController, children: [
+                        _buildGeneral(context, server),
+                        _buildCourses(context),
+                        _buildArticles(context)
+                      ])
                     : _buildGeneral(context, server)),
             floatingActionButton: _buildFab(),
           ));
@@ -191,12 +197,42 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
         },
       ));
 
+  Widget _buildArticles(BuildContext context) => Scrollbar(
+          child: ListView.builder(
+        itemCount: _editorBloc!.articles.length,
+        itemBuilder: (context, index) {
+          var article = _editorBloc!.articles[index];
+          return Dismissible(
+              background: Container(color: Colors.red),
+              onDismissed: (direction) async {
+                _editorBloc!.deleteArticle(article.slug);
+                await _editorBloc?.save();
+                setState(() {});
+              },
+              key: Key(article.slug),
+              child: ListTile(
+                  title: Text(article.title),
+                  subtitle: Text(article.body),
+                  onTap: () => Modular.to.pushNamed(
+                      Uri(pathSegments: [
+                        "",
+                        "editor",
+                        "article"
+                      ], queryParameters: {
+                        "serverId": _editorBloc!.key.toString(),
+                        "article": article.slug
+                      }).toString(),
+                      arguments: article)));
+        },
+      ));
+
   Widget? _buildFab() {
     return _tabController.index == 0
         ? null
         : FloatingActionButton(
             tooltip: "create".tr(),
-            onPressed: _showCreateCourseDialog,
+            onPressed:
+                _tabController.index == 1 ? _showCreateCourseDialog : _showCreateArticleDialog,
             child: Icon(PhosphorIcons.plusLight),
           );
   }
@@ -323,6 +359,40 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                 ]));
   }
 
+  void _showCreateArticleDialog() {
+    var name = '';
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+                contentPadding: const EdgeInsets.all(16.0),
+                content: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        autofocus: true,
+                        onChanged: (value) => name = value,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                            labelText: 'article.add.name'.tr(), hintText: 'article.add.hint'.tr()),
+                      ),
+                    )
+                  ],
+                ),
+                actions: <Widget>[
+                  TextButton(
+                      child: Text('cancel'.tr().toUpperCase()),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  TextButton(
+                      child: Text('create'.tr().toUpperCase()),
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        _createArticle(name);
+                      })
+                ]));
+  }
+
   Future<void> _createCourse(String name) async {
     if (_editorBloc!.courses.map((e) => e.course.slug).contains(name))
       showDialog(
@@ -338,6 +408,26 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                   ]));
     else {
       _editorBloc!.createCourse(name);
+      _editorBloc?.save();
+      setState(() {});
+    }
+  }
+
+  Future<void> _createArticle(String name) async {
+    if (_editorBloc!.getCourseSlugs().contains(name))
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                  title: Text("article.add.exist.title").tr(),
+                  content: Text("article.add.exist.content").tr(),
+                  actions: [
+                    TextButton.icon(
+                        icon: Icon(PhosphorIcons.xLight),
+                        onPressed: () => Navigator.of(context).pop(),
+                        label: Text("close".tr().toUpperCase()))
+                  ]));
+    else {
+      _editorBloc!.createArticle(name);
       _editorBloc?.save();
       setState(() {});
     }
