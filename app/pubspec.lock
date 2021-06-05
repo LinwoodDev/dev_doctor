@@ -963,7 +963,7 @@ packages:
       name: xml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.1"
+    version: "5.1.2"
   yaml:
     dependency: "direct main"
     description:

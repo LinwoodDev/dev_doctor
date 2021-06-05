@@ -34,7 +34,7 @@ dependencies:
   #universal_html: ^1.2.4
   flutter_svg: ^0.22.0
   flutter_inappwebview: ^5.3.2
-  xml: ^5.1.1
+  xml: ^5.1.2
   flutter_localized_locales: ^2.0.2
   bitsdojo_window: ^0.1.0+1
   share_plus: ^2.1.2
