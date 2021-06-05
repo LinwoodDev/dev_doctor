@@ -1,17 +1,57 @@
+import 'author.dart';
+import 'server.dart';
+
 class Article {
   final DateTime? time;
-  final String name;
+  final String title;
+  final String slug;
+  final String icon;
   final List<String> keywords;
-  final String description;
+  final String body;
+  final CoursesServer? server;
+  final Author author;
 
-  Article({required this.name, this.keywords = const [], this.description = "", this.time});
+  Article(
+      {required this.slug,
+      this.title = "",
+      this.keywords = const [],
+      this.body = "",
+      this.time,
+      this.author = const Author(),
+      this.server,
+      this.icon = ""});
 
   Article.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        description = json['description'] ?? "",
+      : title = json['title'] ?? '',
+        slug = json['slug'],
+        body = json['body'] ?? "",
         keywords = json['keywords'] ?? [],
-        time = DateTime.tryParse(json['time']);
+        time = DateTime.tryParse(json['time'] ?? ""),
+        author = Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
+        server = json['server'],
+        icon = json['icon'] ?? "";
 
   Map<String, dynamic> toJson() =>
-      {"name": name, "description": description, "keywords": keywords, "time": time?.toString()};
+      {"title": title, "body": body, "keywords": keywords, "time": time?.toString()};
+
+  Article copyWith(
+          {DateTime? time,
+          String? title,
+          String? slug,
+          String? icon,
+          List<String>? keywords,
+          String? body,
+          Author? author,
+          bool clearTime = false}) =>
+      Article(
+          slug: slug ?? this.slug,
+          author: author ?? this.author,
+          body: body ?? this.body,
+          icon: icon ?? this.icon,
+          keywords: keywords ?? this.keywords,
+          server: server,
+          time: clearTime ? null : time ?? this.time,
+          title: title ?? this.title);
+
+  get url => server!.url + "/" + slug + (server?.type ?? "");
 }

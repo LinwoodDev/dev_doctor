@@ -1,3 +1,4 @@
+import 'package:dev_doctor/articles/details.dart';
 import 'package:dev_doctor/backends/entry.dart';
 import 'package:dev_doctor/courses/bloc.dart';
 import 'package:dev_doctor/courses/course.dart';
@@ -21,11 +22,6 @@ class EditorModule extends Module {
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
           return BackendPage(editorBloc: bloc);
         }),
-        ChildRoute('/course', child: (_, args) {
-          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
-          return CoursePage(editorBloc: bloc);
-        }),
         ChildRoute('/edit', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
@@ -35,6 +31,40 @@ class EditorModule extends Module {
                 bloc.server = bloc.server.copyWith(body: value);
                 bloc.save();
               });
+        }),
+        ChildRoute('/article', child: (_, args) {
+          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          return ArticlePage(editorBloc: bloc);
+        }),
+        ChildRoute('/article/edit', child: (_, args) {
+          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          var course = args.queryParams['course'];
+          var article = bloc.getArticle(course!);
+          return MarkdownEditor(
+              markdown: article.body,
+              onSubmit: (value) {
+                bloc.updateArticle(article.copyWith(body: value));
+                bloc.save();
+              });
+        }),
+        ChildRoute('/article/author', child: (_, args) {
+          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          var course = args.queryParams['course'];
+          var article = bloc.getArticle(course!);
+          return AuthorEditingPage(
+              author: article.author,
+              onSubmit: (value) {
+                bloc.updateArticle(article.copyWith(author: value));
+                bloc.save();
+              });
+        }),
+        ChildRoute('/course', child: (_, args) {
+          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          return CoursePage(editorBloc: bloc);
         }),
         ChildRoute('/course/edit', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();

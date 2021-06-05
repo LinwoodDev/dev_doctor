@@ -1,3 +1,4 @@
+import 'package:dev_doctor/models/article.dart';
 import 'package:dev_doctor/models/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
@@ -15,6 +16,7 @@ class CoursesServer {
   final int? index;
   final BackendEntry? entry;
   final List<String> courses;
+  final List<String> articles;
   final String body;
 
   static Box<String> get _box => Hive.box<String>('servers');
@@ -25,7 +27,8 @@ class CoursesServer {
       this.index,
       required this.name,
       this.url = "",
-      required this.courses,
+      this.courses = const [],
+      this.articles = const [],
       this.type = "",
       this.entry,
       this.supportUrl = ""});
@@ -35,6 +38,7 @@ class CoursesServer {
         index = (json['index'] != -1) ? json['index'] : null,
         type = json['type'],
         courses = List<String>.from(json['courses'] ?? []),
+        articles = List<String>.from(json['articles'] ?? []),
         icon = json['icon'] ?? "",
         entry = json['entry'],
         body = json['body'] ?? "",
@@ -48,7 +52,8 @@ class CoursesServer {
         "icon": icon,
         "entry": entry,
         "body": body,
-        "support_url": supportUrl
+        "support_url": supportUrl,
+        "articles": articles
       };
 
   bool get added => index != null || Hive.box<String>('servers').containsKey(url);
@@ -136,6 +141,30 @@ class CoursesServer {
       data['slug'] = course;
       data['api-version'] = data['api-version'] ?? 0;
       return Course.fromJson(data);
+    } catch (e) {
+      print("Error $e");
+      return null;
+    }
+  }
+
+  Future<List<Article>> fetchArticles() =>
+      Future.wait(articles.map((article) => fetchArticle(article))).then((value) async {
+        var list = <Article>[];
+        value.forEach((element) {
+          if (element != null) list.add(element);
+        });
+        return list;
+      });
+
+  Future<Article?> fetchArticle(String article) async {
+    try {
+      var data = await loadFile("$url/$article");
+      if (data == null) return null;
+
+      data['server'] = this;
+      data['slug'] = article;
+      data['api-version'] = data['api-version'] ?? 0;
+      return Article.fromJson(data);
     } catch (e) {
       print("Error $e");
       return null;

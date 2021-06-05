@@ -8,12 +8,12 @@ import 'part.dart';
 @immutable
 class Course {
   final CoursesServer? server;
+  final Author author;
   final String slug;
   final String name;
   final String description;
   final String icon;
   final String supportUrl;
-  final Author author;
   final bool installed;
   final String body;
   final String lang;

@@ -45,7 +45,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   late TextEditingController _descriptionController;
   late TextEditingController _supportController;
   late TextEditingController _slugController;
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   void initState() {
@@ -274,17 +274,20 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 )),
                       SliverList(
                           delegate: new SliverChildListDelegate([
-                        TabBar(
-                            controller: _tabController,
-                            tabs: [
-                              Tab(text: "general".tr()),
-                              Tab(
-                                  text: _editorBloc != null
-                                      ? "course.parts".tr()
-                                      : "course.statistics.title".tr())
-                            ],
-                            indicatorSize: TabBarIndicatorSize.label,
-                            isScrollable: false)
+                        Material(
+                            color: Theme.of(context).appBarTheme.backgroundColor ??
+                                Theme.of(context).primaryColor,
+                            child: TabBar(
+                                controller: _tabController,
+                                tabs: [
+                                  Tab(text: "general".tr()),
+                                  Tab(
+                                      text: _editorBloc != null
+                                          ? "course.parts".tr()
+                                          : "course.statistics.title".tr())
+                                ],
+                                indicatorSize: TabBarIndicatorSize.label,
+                                isScrollable: false))
                       ]))
                     ];
                   },

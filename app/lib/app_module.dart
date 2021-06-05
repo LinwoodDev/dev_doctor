@@ -1,4 +1,5 @@
 import 'package:dev_doctor/articles/home.dart';
+import 'package:dev_doctor/articles/module.dart';
 import 'package:dev_doctor/backends/home.dart';
 import 'package:dev_doctor/backends/module.dart';
 import 'package:dev_doctor/settings/home.dart';
@@ -31,6 +32,7 @@ class AppModule extends Module {
     WildcardRoute(child: (_, __) => ErrorDisplay()),
     ModuleRoute('/editor', module: EditorModule()),
     ModuleRoute('/backends', module: BackendsModule()),
+    ModuleRoute('/articles', module: ArticlesModule()),
     ModuleRoute('/settings', module: SettingsModule()),
     ModuleRoute('/courses', module: CourseModule()),
     ChildRoute('/error', child: (_, args) => ErrorDisplay()),

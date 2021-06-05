@@ -32,8 +32,8 @@ class CourseEditorBloc {
     _parts.add(part);
     return part;
   }
-  bool hasCoursePart(String slug) =>
-      parts.where((element) => element.slug == slug).isNotEmpty;
+
+  bool hasCoursePart(String slug) => parts.where((element) => element.slug == slug).isNotEmpty;
 
   void deleteCoursePart(String? slug) => _parts.removeWhere((element) => element.slug == slug);
 
