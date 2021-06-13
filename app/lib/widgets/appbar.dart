@@ -76,7 +76,7 @@ class WindowButtons extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              icon: Icon(PhosphorIcons.arrowsInLight, size: 16),
+              icon: Icon(PhosphorIcons.minusLight, size: 16),
               onPressed: () => appWindow.minimize(),
             ),
             IconButton(
