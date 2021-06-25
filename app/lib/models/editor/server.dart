@@ -40,7 +40,8 @@ class ServerEditorBloc extends HiveObject {
   Map<String, dynamic> toJson(int? apiVersion) => {
         "server": server.toJson(),
         "note": note,
-        "courses": _courses.map((e) => e.toJson(apiVersion)).toList()
+        "courses": _courses.map((e) => e.toJson(apiVersion)).toList(),
+        "articles": _articles.map((e) => e.toJson()).toList()
       };
 
   List<String> getCourseSlugs() => _courses.map((e) => e.course.slug).toList();

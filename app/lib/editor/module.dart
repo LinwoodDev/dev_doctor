@@ -46,7 +46,9 @@ class EditorModule extends Module {
           return MarkdownEditor(
               markdown: article.body,
               onSubmit: (value) {
-                bloc.updateArticle(article.copyWith(body: value));
+                article = article.copyWith(body: value);
+                bloc.updateArticle(article);
+                to.get<ArticleBloc>().articleSubject.add(article);
                 bloc.save();
               });
         }),
