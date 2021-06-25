@@ -10,7 +10,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import '../course.dart';
+import '../details.dart';
 import 'bloc.dart';
 import 'module.dart';
 

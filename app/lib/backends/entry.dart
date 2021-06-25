@@ -213,16 +213,14 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
               child: ListTile(
                   title: Text(article.title),
                   subtitle: Text(article.body),
-                  onTap: () => Modular.to.pushNamed(
-                      Uri(pathSegments: [
+                  onTap: () => Modular.to.pushNamed(Uri(pathSegments: [
                         "",
                         "editor",
                         "article"
                       ], queryParameters: {
                         "serverId": _editorBloc!.key.toString(),
                         "article": article.slug
-                      }).toString(),
-                      arguments: article)));
+                      }).toString())));
         },
       ));
 

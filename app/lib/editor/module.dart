@@ -2,7 +2,7 @@ import 'package:dev_doctor/articles/bloc.dart';
 import 'package:dev_doctor/articles/details.dart';
 import 'package:dev_doctor/backends/entry.dart';
 import 'package:dev_doctor/courses/bloc.dart';
-import 'package:dev_doctor/courses/course.dart';
+import 'package:dev_doctor/courses/details.dart';
 import 'package:dev_doctor/editor/author.dart';
 import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
@@ -41,8 +41,8 @@ class EditorModule extends Module {
         ChildRoute('/article/edit', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
           var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
-          var course = args.queryParams['course'];
-          var article = bloc.getArticle(course!);
+          var articleName = args.queryParams['article'];
+          var article = bloc.getArticle(articleName!);
           return MarkdownEditor(
               markdown: article.body,
               onSubmit: (value) {
@@ -57,7 +57,9 @@ class EditorModule extends Module {
           return AuthorEditingPage(
               author: article.author,
               onSubmit: (value) {
-                bloc.updateArticle(article.copyWith(author: value));
+                article = article.copyWith(author: value);
+                bloc.updateArticle(article);
+                to.get<ArticleBloc>().articleSubject.add(article);
                 bloc.save();
               });
         }),

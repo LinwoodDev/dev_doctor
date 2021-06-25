@@ -1,5 +1,5 @@
 import 'package:dev_doctor/courses/bloc.dart';
-import 'package:dev_doctor/courses/course.dart';
+import 'package:dev_doctor/courses/details.dart';
 import 'package:dev_doctor/courses/part/module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 

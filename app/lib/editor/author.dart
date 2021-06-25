@@ -9,10 +9,10 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 typedef EditorCallback = void Function(Author? author);
 
 class AuthorEditingPage extends StatefulWidget {
-  final EditorCallback? onSubmit;
+  final EditorCallback onSubmit;
   final Author? author;
 
-  const AuthorEditingPage({Key? key, this.onSubmit, this.author}) : super(key: key);
+  const AuthorEditingPage({Key? key, required this.onSubmit, this.author}) : super(key: key);
   @override
   _AuthorEditingPageState createState() => _AuthorEditingPageState();
 }
@@ -81,6 +81,6 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
         floatingActionButton: FloatingActionButton(
             child: Icon(PhosphorIcons.checkLight),
             tooltip: "editor.create.submit".tr(),
-            onPressed: () => widget.onSubmit!(_author)));
+            onPressed: () => widget.onSubmit(_author)));
   }
 }

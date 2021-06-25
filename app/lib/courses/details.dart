@@ -86,14 +86,11 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
             : StreamBuilder<Course>(
                 stream: bloc.courseSubject,
                 builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return Center(child: CircularProgressIndicator());
-                    default:
-                      if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
-                      var course = snapshot.data;
-                      return _buildView(course!);
-                  }
+                  if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
+                    return Center(child: CircularProgressIndicator());
+                  if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
+                  var course = snapshot.data;
+                  return _buildView(course!);
                 });
   }
 

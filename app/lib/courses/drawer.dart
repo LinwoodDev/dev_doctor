@@ -1,4 +1,4 @@
-import 'package:dev_doctor/courses/course.dart';
+import 'package:dev_doctor/courses/details.dart';
 import 'package:dev_doctor/courses/part/bloc.dart';
 import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/course.dart';

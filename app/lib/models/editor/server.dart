@@ -12,8 +12,9 @@ class ServerEditorBloc extends HiveObject {
   final List<Article> _articles;
   List<Article> get articles => List.unmodifiable(_articles);
 
-  CoursesServer get server =>
-      _server.copyWith(courses: _courses.map((e) => e.course.slug).toList());
+  CoursesServer get server => _server.copyWith(
+      courses: _courses.map((e) => e.course.slug).toList(),
+      articles: _articles.map((e) => e.slug).toList());
   set server(CoursesServer value) => _server = value;
 
   List<CourseEditorBloc> get courses => List.unmodifiable(_courses);
@@ -43,6 +44,7 @@ class ServerEditorBloc extends HiveObject {
       };
 
   List<String> getCourseSlugs() => _courses.map((e) => e.course.slug).toList();
+
   CourseEditorBloc? createCourse(String slug) {
     if (getCourseSlugs().contains(slug)) return null;
     var courseBloc = CourseEditorBloc(Course(name: slug, slug: slug, parts: []));

@@ -39,10 +39,7 @@ class _ArticlePageState extends State<ArticlePage> {
       bloc = EditorModule.to.get<ArticleBloc>();
     else
       bloc = ArticlesModule.to.get<ArticleBloc>();
-    if (widget.model != null)
-      bloc.articleSubject.add(widget.model!);
-    else
-      bloc.fetchFromParams(editorBloc: _editorBloc);
+    bloc.fetchFromParams(editorBloc: _editorBloc);
     if (_editorBloc != null) {
       var article = _editorBloc!.getArticle(bloc.article!);
       _titleController = TextEditingController(text: article.title);
@@ -55,14 +52,11 @@ class _ArticlePageState extends State<ArticlePage> {
     return StreamBuilder<Article>(
         stream: bloc.articleSubject,
         builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
-            default:
-              if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
-              var article = snapshot.data;
-              return _buildView(article!);
-          }
+          if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
+            return Center(child: CircularProgressIndicator());
+          if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
+          var article = snapshot.data!;
+          return _buildView(article);
         });
   }
 

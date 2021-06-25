@@ -36,7 +36,7 @@ class CoursesServer {
       : name = json['name'],
         url = json['url'],
         index = (json['index'] != -1) ? json['index'] : null,
-        type = json['type'],
+        type = json['type'] ?? '',
         courses = List<String>.from(json['courses'] ?? []),
         articles = List<String>.from(json['articles'] ?? []),
         icon = json['icon'] ?? "",
@@ -90,10 +90,12 @@ class CoursesServer {
           String? icon,
           String? supportUrl,
           List<String>? courses,
+          List<String>? articles,
           String? body}) =>
       CoursesServer(
           name: name ?? this.name,
           body: body ?? this.body,
+          articles: articles ?? this.articles,
           courses: courses ?? this.courses,
           entry: entry,
           icon: icon ?? this.icon,

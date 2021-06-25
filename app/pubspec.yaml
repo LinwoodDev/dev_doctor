@@ -29,7 +29,7 @@ dependencies:
   hive: ^2.0.4
   hive_flutter: ^1.1.0
   flutter_modular: ^3.2.2+1
-  url_launcher: ^6.0.6
+  url_launcher: ^6.0.7
   flutter_markdown: ^0.6.2
   #universal_html: ^1.2.4
   flutter_svg: ^0.22.0
