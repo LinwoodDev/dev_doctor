@@ -1,13 +1,19 @@
+import 'dart:convert';
+
 import 'package:dev_doctor/articles/bloc.dart';
 import 'package:dev_doctor/articles/module.dart';
+import 'package:dev_doctor/editor/code.dart';
 import 'package:dev_doctor/editor/module.dart';
 import 'package:dev_doctor/models/article.dart';
 import 'package:dev_doctor/models/author.dart';
 import 'package:dev_doctor/models/editor/server.dart';
+import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/author.dart';
 import 'package:dev_doctor/widgets/error.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -63,7 +69,46 @@ class _ArticlePageState extends State<ArticlePage> {
   Widget _buildView(Article article) {
     var _slugs = _editorBloc?.getArticlesSlug();
     return Scaffold(
-        appBar: AppBar(title: Text(article.title)),
+        appBar: AppBar(title: Text(article.title), actions: [
+          if (_editorBloc == null) ...[
+            IconButton(
+                icon: Icon(PhosphorIcons.shareNetworkLight),
+                tooltip: "share".tr(),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(
+                      text: Uri(
+                              scheme: Uri.base.scheme,
+                              port: Uri.base.port,
+                              host: Uri.base.host,
+                              fragment: Uri(pathSegments: [
+                                "",
+                                "courses",
+                                "details"
+                              ], queryParameters: {
+                                "server": article.server!.url,
+                                "course": bloc.article
+                              }).toString())
+                          .toString()));
+                })
+          ] else
+            IconButton(
+                icon: Icon(PhosphorIcons.codeLight),
+                tooltip: "code".tr(),
+                onPressed: () async {
+                  //var packageInfo = await PackageInfo.fromPlatform();
+                  //var buildNumber = int.tryParse(packageInfo.buildNumber);
+                  var encoder = JsonEncoder.withIndent("  ");
+                  var data = await Modular.to.push(MaterialPageRoute(
+                      builder: (context) =>
+                          EditorCodeDialogPage(initialValue: encoder.convert(article.toJson()))));
+                  if (data != null) {
+                    _editorBloc?.updateArticle(Article.fromJson(data));
+                    _editorBloc?.save();
+                    setState(() {});
+                  }
+                }),
+          if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
+        ]),
         body: ListView(children: <Widget>[
           Padding(
               padding: EdgeInsets.all(4),

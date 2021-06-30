@@ -1,6 +1,13 @@
 {
     "title": "Dev-Doctor.cf",
     "subtitle": "A free, opensource, serverless learning platform. A linwood project",
+    "articles": {
+        "title": "Articles",
+        "add": {
+            "title": "Name of the article",
+            "hint": "Sample article"
+        }
+    },
     "course": {
         "add": {
             "name": "Name",

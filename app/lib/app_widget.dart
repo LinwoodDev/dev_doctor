@@ -57,9 +57,10 @@ class AppWidget extends StatelessWidget {
             iconTheme: IconThemeData(color: Colors.black87),
             textTheme: Theme.of(context).textTheme.merge(Typography.material2018().black).apply()), */
                     primarySwatch: colorTheme.mdcPrimarySwatch,
-                    primaryColor: colorTheme.mdcThemePrimary,
-                    accentColor: colorTheme.mdcThemeSecondary,
-                    errorColor: colorTheme.mdcThemeError,
+                    colorScheme: ColorScheme.light(
+                        primary: colorTheme.mdcThemePrimary,
+                        secondary: colorTheme.mdcThemeSecondary,
+                        error: colorTheme.mdcThemeError),
                     //canvasColor: colorTheme.mdcThemeSurface,
                     fontFamily: colorTheme.mdcTypographyFontFamily,
                     // This makes the visual density adapt to the platform that you run
@@ -69,9 +70,10 @@ class AppWidget extends StatelessWidget {
                 darkTheme: ThemeData(
                     brightness: Brightness.dark,
                     primarySwatch: colorTheme.mdcPrimarySwatch,
-                    primaryColor: colorTheme.mdcThemePrimary,
-                    accentColor: colorTheme.mdcThemeSecondary,
-                    errorColor: colorTheme.mdcThemeError,
+                    colorScheme: ColorScheme.dark(
+                        primary: colorTheme.mdcThemePrimary,
+                        secondary: colorTheme.mdcThemeSecondary,
+                        error: colorTheme.mdcThemeError),
                     //canvasColor: colorTheme.mdcThemeSurface.,
                     fontFamily: colorTheme.mdcTypographyFontFamily,
                     // This makes the visual density adapt to the platform that you run
