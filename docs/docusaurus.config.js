@@ -11,7 +11,7 @@
 module.exports = {
   title: 'Dev-Doctor Docs',
   tagline: 'The documentation to the dev-doctor app',
-  url: 'https://docs.dev-doctor.cf',
+  url: 'https://docs.dev-doctor.linwood.tk',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
