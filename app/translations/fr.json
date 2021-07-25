@@ -1,6 +1,13 @@
 {
     "title": "Dev-Doctor",
     "subtitle": "Une plateforme d'apprentissage gratuite, opensource, sans serveur. Un projet en bois de ligne",
+    "articles": {
+        "title": "Articles",
+        "add": {
+            "title": "Name of the article",
+            "hint": "Sample article"
+        }
+    },
     "course": {
         "add": {
             "name": "Nom",
