@@ -1,6 +1,13 @@
 {
     "title": "Dev-Doctor",
     "subtitle": "Kostenlose, quelloffene, serverfreie Lernplattform. Ein Linwood Projekt",
+    "articles": {
+        "title": "Articles",
+        "add": {
+            "title": "Name of the article",
+            "hint": "Sample article"
+        }
+    },
     "course": {
         "add": {
             "name": "Name",
