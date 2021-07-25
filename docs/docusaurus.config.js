@@ -11,7 +11,7 @@
 module.exports = {
   title: 'Dev-Doctor Docs',
   tagline: 'The documentation to the dev-doctor app',
-  url: 'https://docs.dev-doctor.cf',
+  url: 'https://docs.dev-doctor.linwood.dev',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -43,7 +43,7 @@ module.exports = {
           label: 'Downloads',
           position: 'left'
         },
-        {href: 'https://linwood.tk/blog', label: 'Blog', position: 'left'},
+        {href: 'https://linwood.dev/blog', label: 'Blog', position: 'left'},
         {
           type: 'docsVersionDropdown',
 
@@ -71,7 +71,7 @@ module.exports = {
           items: [
             {
               label: 'Discord',
-              href: 'https://discord.linwood.tk',
+              href: 'https://discord.linwood.dev',
             },
             {
               label: 'Twitter',

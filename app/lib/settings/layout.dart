@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class SettingsLayout extends StatefulWidget {
   final Widget? child;
+  final SettingsPages? activePage;
 
-  const SettingsLayout({Key? key, this.child}) : super(key: key);
+  const SettingsLayout({Key? key, this.child, this.activePage}) : super(key: key);
 
   @override
   _SettingsLayoutState createState() => _SettingsLayoutState();
@@ -22,7 +23,9 @@ class _SettingsLayoutState extends State<SettingsLayout> {
             Expanded(flex: 3, child: widget.child!),
             if (!mobile)
               Expanded(
-                  child: Container(color: Theme.of(context).canvasColor, child: SettingsList())),
+                  child: Container(
+                      color: Theme.of(context).canvasColor,
+                      child: SettingsList(activePage: widget.activePage))),
           ]);
     });
   }

@@ -28,14 +28,14 @@ class Article {
         slug = json['slug'],
         body = json['body'] ?? "",
         description = json['description'] ?? "",
-        keywords = json['keywords'] ?? [],
+        keywords = List<String>.from(json['keywords'] ?? []),
         time = DateTime.tryParse(json['time'] ?? ""),
         author = Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
         server = json['server'],
         icon = json['icon'] ?? "";
 
   Map<String, dynamic> toJson() =>
-      {"title": title, "body": body, "keywords": keywords, "time": time?.toString()};
+      {"title": title, "body": body, "keywords": keywords, "time": time?.toString(), 'slug': slug};
 
   Article copyWith(
           {DateTime? time,

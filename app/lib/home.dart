@@ -28,13 +28,13 @@ class HomePage extends StatelessWidget {
                   padding: EdgeInsets.all(5),
                   child: Wrap(alignment: WrapAlignment.center, children: [
                     ElevatedButton.icon(
-                        onPressed: () => launch("https://docs.dev-doctor.cf/backend/own"),
+                        onPressed: () => launch("https://docs.dev-doctor.linwood.dev/backend/own"),
                         icon: Icon(PhosphorIcons.articleLight,
                             color: Theme.of(context).primaryIconTheme.color),
                         label: Text("docs".tr().toUpperCase(),
                             style: Theme.of(context).primaryTextTheme.button)),
                     OutlinedButton.icon(
-                        onPressed: () => launch("https://discord.linwood.tk"),
+                        onPressed: () => launch("https://discord.linwood.dev"),
                         icon: Icon(PhosphorIcons.usersLight),
                         label: Text("discord".tr().toUpperCase()))
                   ])),
@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
         Padding(
             padding: EdgeInsets.all(20),
             child: ElevatedButton.icon(
-              onPressed: () => launch("https://linwood.tk/blog"),
+              onPressed: () => launch("https://linwood.dev/blog"),
               icon: Icon(PhosphorIcons.arrowSquareOutLight),
               label: Text("browser".tr().toUpperCase()),
             )),
@@ -69,11 +69,11 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.all(20),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [])),
         FutureBuilder<http.Response>(
-            future: http.get(Uri.https('linwood.tk', '/blog/atom.xml')),
+            future: http.get(Uri.https('linwood.dev', '/blog/atom.xml')),
             builder: (context, snapshot) {
+              if (snapshot.hasError) return Text("Error: ${snapshot.error}");
               if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
                 return Center(child: CircularProgressIndicator());
-              if (snapshot.hasError) return Text("Error ${snapshot.error}");
               var data = utf8.decode(snapshot.data!.bodyBytes);
               var document = XmlDocument.parse(data);
               var feed = document.getElement("feed")!;

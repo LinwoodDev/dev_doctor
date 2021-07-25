@@ -38,7 +38,7 @@ class _PartDetailsPageState extends State<PartDetailsPage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
             return Center(child: CircularProgressIndicator());
-          if (snapshot.hasError) return Text("Error ${snapshot.error}");
+          if (snapshot.hasError) return Text("Error: ${snapshot.error}");
           var part = snapshot.data;
           if (part != null)
             return Scaffold(

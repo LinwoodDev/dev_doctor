@@ -11,10 +11,10 @@ title: Downloads
   <button class="button button--outline button--primary">Web</button>
   <ul class="dropdown__menu">
     <li>
-      <a class="dropdown__link" href="https://dev-doctor.cf">
+      <a class="dropdown__link" href="https://dev-doctor.linwood.dev">
         Release
       </a>
-      <a class="dropdown__link" href="https://preview.dev-doctor.cf">
+      <a class="dropdown__link" href="https://preview.dev-doctor.linwood.dev">
         Preview
       </a>
     </li>
@@ -75,4 +75,4 @@ title: Downloads
 - [Changelog](changelog)
 - [Older releases](https://github.com/LinwoodCloud/dev_doctor/releases)
 - [Latest release](https://github.com/LinwoodCloud/dev_doctor/releases/latest)
-- [Support](https://discord.linwood.tk)
+- [Support](https://discord.linwood.dev)

@@ -52,12 +52,16 @@ class SettingsList extends StatelessWidget {
               selected: activePage == SettingsPages.general,
               leading: Icon(PhosphorIcons.wrenchLight),
               title: Text("settings.general.title").tr(),
-              onTap: () => Modular.to.pushNamed("/settings/general")),
+              onTap: () => activePage != null
+                  ? Modular.to.pushReplacementNamed('/settings/general')
+                  : Modular.to.pushNamed("/settings/general")),
           ListTile(
               selected: activePage == SettingsPages.appearance,
               leading: Icon(PhosphorIcons.fadersLight),
               title: Text("settings.appearance.title").tr(),
-              onTap: () => Modular.to.pushNamed("/settings/appearance")),
+              onTap: () => activePage != null
+                  ? Modular.to.pushReplacementNamed('/settings/appearance')
+                  : Modular.to.pushNamed("/settings/appearance")),
           // ListTile(
           //     selected: activePage == SettingsPages.downloads,
           //     leading: Icon(Icons.download_outlined),
@@ -67,12 +71,16 @@ class SettingsList extends StatelessWidget {
               selected: activePage == SettingsPages.servers,
               leading: Icon(PhosphorIcons.cardsLight),
               title: Text("settings.servers.title").tr(),
-              onTap: () => Modular.to.pushNamed("/settings/servers")),
+              onTap: () => activePage != null
+                  ? Modular.to.pushReplacementNamed('/settings/servers')
+                  : Modular.to.pushNamed("/settings/servers")),
           ListTile(
               selected: activePage == SettingsPages.collections,
               leading: Icon(PhosphorIcons.treeStructureLight),
               title: Text("settings.collections.title").tr(),
-              onTap: () => Modular.to.pushNamed("/settings/collections")),
+              onTap: () => activePage != null
+                  ? Modular.to.pushReplacementNamed('/settings/collections')
+                  : Modular.to.pushNamed("/settings/collections")),
           TextDivider(text: 'settings.information'.tr().toUpperCase()),
           ListTile(
               leading: Icon(PhosphorIcons.stackLight),
@@ -85,15 +93,15 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: Icon(PhosphorIcons.usersLight),
               title: Text("discord").tr(),
-              onTap: () => launch("https://discord.linwood.tk")),
+              onTap: () => launch("https://discord.linwood.dev")),
           ListTile(
               leading: Icon(PhosphorIcons.articleLight),
               title: Text("docs").tr(),
-              onTap: () => launch("https://docs.dev-doctor.cf/backend/overview")),
+              onTap: () => launch("https://docs.dev-doctor.linwood.dev/backend/overview")),
           ListTile(
               leading: Icon(PhosphorIcons.arrowCounterClockwiseLight),
               title: Text("settings.changelog").tr(),
-              onTap: () => launch("https://docs.dev-doctor.cf/changelog")),
+              onTap: () => launch("https://docs.dev-doctor.linwood.dev/changelog")),
           ListTile(
               leading: Icon(PhosphorIcons.identificationCardLight),
               title: Text("settings.imprint").tr(),
@@ -101,7 +109,7 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: Icon(PhosphorIcons.shieldLight),
               title: Text("settings.privacypolicy").tr(),
-              onTap: () => launch("https://docs.dev-doctor.cf/privacypolicy")),
+              onTap: () => launch("https://docs.dev-doctor.linwood.dev/privacypolicy")),
           ListTile(
               leading: Icon(PhosphorIcons.infoLight),
               title: Text("settings.about").tr(),

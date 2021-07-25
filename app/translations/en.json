@@ -1,5 +1,5 @@
 {
-    "title": "Dev-Doctor.cf",
+    "title": "Dev-Doctor",
     "subtitle": "A free, opensource, serverless learning platform. A linwood project",
     "articles": {
         "title": "Articles",
@@ -321,7 +321,7 @@
             "add": {
                 "fab": "Add server",
                 "url": "URL",
-                "hint": "eg. https://backend.dev-doctor.cf",
+                "hint": "eg. https://backend.dev-doctor.linwood.dev",
                 "title": "Do you want to add the server {name}?",
                 "body": "The server {name} with the url {url} will displayed on the courses page."
             },
@@ -332,7 +332,7 @@
             "add": {
                 "fab": "Add collection",
                 "url": "URL",
-                "hint": "eg. https://collection.dev-doctor.cf",
+                "hint": "eg. https://collection.dev-doctor.linwood.dev",
                 "title": "Do you want to add the collection {name}?",
                 "body": "The collection {name} with the url {url} will displayed on the collection page."
             },

@@ -1,3 +1,4 @@
+import 'package:dev_doctor/settings/home.dart';
 import 'package:dev_doctor/settings/layout.dart';
 import 'package:dev_doctor/themes/theme.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
@@ -14,6 +15,7 @@ class AppearanceSettingsPage extends StatelessWidget {
     return Scaffold(
         appBar: MyAppBar(title: 'settings.appearance.title'.tr()),
         body: SettingsLayout(
+            activePage: SettingsPages.appearance,
             child: ValueListenableBuilder(
                 valueListenable: _appearanceBox.listenable(),
                 builder: (context, Box<dynamic> box, _) {

@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'home.dart';
 import 'layout.dart';
 
 class GeneralSettingsPage extends StatelessWidget {
@@ -13,6 +14,7 @@ class GeneralSettingsPage extends StatelessWidget {
     return Scaffold(
         appBar: MyAppBar(title: 'settings.appearance.title'.tr()),
         body: SettingsLayout(
+            activePage: SettingsPages.general,
             child: ValueListenableBuilder(
                 valueListenable: _generalBox.listenable(),
                 builder: (context, Box<dynamic> box, _) {

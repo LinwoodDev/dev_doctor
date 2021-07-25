@@ -7,6 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import 'home.dart';
 import 'layout.dart';
 
 class CollectionsSettingsPage extends StatefulWidget {
@@ -26,6 +27,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
     return Scaffold(
       appBar: MyAppBar(title: "settings.collections.title".tr()),
       body: SettingsLayout(
+          activePage: SettingsPages.collections,
           child: ValueListenableBuilder(
               valueListenable: _box.listenable(),
               builder: (context, Box<String> box, _) => FutureBuilder<List<BackendCollection?>>(

@@ -376,7 +376,7 @@ msix_config:
   display_name: Dev-Doctor
   publisher_display_name: Linwood
   identity_name: com.github.linwoodcloud.dev-doctor
-  publisher: E=admin@linwood.tk, CN=CodeDoctorDE, OU=Linwood, O=Linwood, L=Dormagen, S=Nordrhein-Westfalen, C=DE
+  publisher: E=admin@linwood.dev, CN=CodeDoctorDE, OU=Linwood, O=Linwood, L=Dormagen, S=Nordrhein-Westfalen, C=DE
   msix_version: 1.5.2.0
   logo_path: images/logo.png
   start_menu_icon_path: images/logo.png

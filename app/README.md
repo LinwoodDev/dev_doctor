@@ -7,13 +7,13 @@
 > A free, opensource, serverless learning platform. A linwood project.
 
 [![GitHub License badge](https://img.shields.io/github/license/LinwoodCloud/dev_doctor?style=for-the-badge)](https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE)
-[![Discord badge](https://img.shields.io/discord/735424757142519848?style=for-the-badge)](https://discord.linwood.tk)
+[![Discord badge](https://img.shields.io/discord/735424757142519848?style=for-the-badge)](https://discord.linwood.dev)
 
 ## Introduction
 
 ### Learn everything
 
-Everyone can create their own backend. See [here](https://docs.dev-doctor.cf/backend/own) and everyone can add it to the server list in the settings.
+Everyone can create their own backend. See [here](https://docs.dev-doctor.linwood.dev/backend/own) and everyone can add it to the server list in the settings.
 
 ### Learn everywhere
 
@@ -21,7 +21,7 @@ You don't need to login. Everything is saved on the local device. In the future 
 
 ### Try it
 
-Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
+Click [here](https://dev-doctor.linwood.dev) and try it. You have nothing to lose!
 
 ## Installation
 
@@ -48,8 +48,8 @@ Click [here](https://dev-doctor.cf) and try it. You have nothing to lose!
 
 ### Web
 
-- [Stable](https://dev-doctor.cf)
-- [Preview](https://preview.dev-doctor.cf)
+- [Stable](https://dev-doctor.linwood.dev)
+- [Preview](https://preview.dev-doctor.linwood.dev)
 
 ### Desktop
 

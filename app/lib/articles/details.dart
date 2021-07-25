@@ -33,8 +33,8 @@ class ArticlePage extends StatefulWidget {
 class _ArticlePageState extends State<ArticlePage> {
   ServerEditorBloc? _editorBloc;
   late ArticleBloc bloc;
-  late TextEditingController _titleController;
-  late TextEditingController _slugController;
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _slugController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
@@ -47,10 +47,14 @@ class _ArticlePageState extends State<ArticlePage> {
       bloc = ArticlesModule.to.get<ArticleBloc>();
     bloc.fetchFromParams(editorBloc: _editorBloc);
     if (_editorBloc != null) {
-      var article = _editorBloc!.getArticle(bloc.article!);
-      _titleController = TextEditingController(text: article.title);
-      _slugController = TextEditingController(text: article.slug);
+      initEditor();
     }
+  }
+
+  void initEditor() {
+    var article = _editorBloc!.getArticle(bloc.article!);
+    _titleController.text = article.title;
+    _slugController.text = article.slug;
   }
 
   @override
@@ -58,9 +62,9 @@ class _ArticlePageState extends State<ArticlePage> {
     return StreamBuilder<Article>(
         stream: bloc.articleSubject,
         builder: (context, snapshot) {
+          if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
           if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
             return Center(child: CircularProgressIndicator());
-          if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
           var article = snapshot.data!;
           return _buildView(article);
         });
@@ -102,9 +106,11 @@ class _ArticlePageState extends State<ArticlePage> {
                       builder: (context) =>
                           EditorCodeDialogPage(initialValue: encoder.convert(article.toJson()))));
                   if (data != null) {
-                    _editorBloc?.updateArticle(Article.fromJson(data));
+                    var article = Article.fromJson(data);
+                    _editorBloc?.updateArticle(article);
+                    bloc.articleSubject.add(article);
                     _editorBloc?.save();
-                    setState(() {});
+                    initEditor();
                   }
                 }),
           if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
@@ -153,6 +159,7 @@ class _ArticlePageState extends State<ArticlePage> {
                                                 article.copyWith(title: _titleController.text);
                                             _editorBloc?.updateArticle(article);
                                             _editorBloc?.save();
+                                            bloc.articleSubject.add(article);
                                             setState(() {});
                                           },
                                           icon: Icon(PhosphorIcons.floppyDiskLight),

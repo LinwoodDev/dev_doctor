@@ -7,6 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import 'home.dart';
 import 'layout.dart';
 
 class ServersSettingsPage extends StatefulWidget {
@@ -21,12 +22,12 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
     super.initState();
   }
 
-  Future<List<CoursesServer>> _buildFuture() async {
+  Future<List<CoursesServer?>> _buildFuture() async {
     var urls = _serversBox.values.toList().asMap();
-    var servers = <CoursesServer>[];
+    var servers = <CoursesServer?>[];
     for (var key in urls.keys) {
       var value = urls[key];
-      servers.add((await CoursesServer.fetch(url: value, index: key))!);
+      servers.add((await CoursesServer.fetch(url: value, index: key)));
     }
     return servers;
   }
@@ -36,9 +37,10 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
     return Scaffold(
       appBar: MyAppBar(title: "settings.servers.title".tr()),
       body: SettingsLayout(
+          activePage: SettingsPages.servers,
           child: ValueListenableBuilder(
               valueListenable: _serversBox.listenable(),
-              builder: (context, Box<String> box, _) => FutureBuilder<List<CoursesServer>>(
+              builder: (context, Box<String> box, _) => FutureBuilder<List<CoursesServer?>>(
                   future: _buildFuture(),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {

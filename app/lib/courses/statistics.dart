@@ -26,7 +26,7 @@ class CourseStatisticsView extends StatelessWidget {
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
                 return Center(child: CircularProgressIndicator());
-              if (snapshot.hasError) return Text("Error ${snapshot.error}");
+              if (snapshot.hasError) return Text("Error: ${snapshot.error}");
               var parts = snapshot.data!;
               double allProgress = 0;
               var allScore = 0;
@@ -185,12 +185,12 @@ class CourseStatisticsView extends StatelessWidget {
                 pw.Expanded(
                     child: pw.UrlLink(
                         child: pw.Text("title".tr(), textAlign: pw.TextAlign.center),
-                        destination: "https://dev-doctor.cf")),
+                        destination: "https://dev-doctor.linwood.dev")),
                 pw.UrlLink(
                     child: pw.Text(course.name),
                     destination: Uri(
                             scheme: "https",
-                            host: "dev-doctor.cf",
+                            host: "dev-doctor.linwood.dev",
                             fragment: Uri(pathSegments: [
                               "",
                               "courses",
