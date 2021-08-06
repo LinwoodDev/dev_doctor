@@ -321,7 +321,7 @@
             "add": {
                 "fab": "Server hinzufügen",
                 "url": "URL",
-                "hint": "zB. https://backend.dev-doctor.linwood.dev",
+                "hint": "eg. https://backend.dev-doctor.linwood.dev",
                 "title": "Möchten Sie den Server {name} hinzufügen?",
                 "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt."
             },
@@ -332,7 +332,7 @@
             "add": {
                 "fab": "Kollektion hinzufügen",
                 "url": "URL",
-                "hint": "zB. https://collection.dev-doctor.linwood.dev",
+                "hint": "eg. https://collection.dev-doctor.linwood.dev",
                 "title": "Möchten Sie den Kollektion {name} hinzufügen?",
                 "body": "Die Sammlung {name} mit der URL {url} wird auf der Sammlungsseite angezeigt."
             },
