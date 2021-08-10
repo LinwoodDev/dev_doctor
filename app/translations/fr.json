@@ -1,11 +1,11 @@
 {
-    "title": "Dev-Doctor",
+    "title": "Dev-Docteur",
     "subtitle": "Une plateforme d'apprentissage gratuite, opensource, sans serveur. Un projet en bois de ligne",
     "articles": {
         "title": "Articles",
         "add": {
-            "title": "Name of the article",
-            "hint": "Sample article"
+            "title": "Nom de l'article",
+            "hint": "Exemple d'article"
         }
     },
     "course": {
@@ -321,7 +321,7 @@
             "add": {
                 "fab": "Ajouter un serveur",
                 "url": "URL",
-                "hint": "eg. https://backend.dev-doctor.linwood.dev",
+                "hint": "par exemple. https://backend.dev-doctor.linwood.dev",
                 "title": "Voulez-vous ajouter le serveur {name}?",
                 "body": "Le serveur {name} avec l'url {url} sera affiché sur la page du cours."
             },
@@ -332,7 +332,7 @@
             "add": {
                 "fab": "Ajouter une collection",
                 "url": "URL",
-                "hint": "eg. https://collection.dev-doctor.linwood.dev",
+                "hint": "par exemple. https://collection.dev-doctor.linwood.dev",
                 "title": "Voulez-vous ajouter la collection {name}?",
                 "body": "La collection {name} avec l'url {url} sera affichée sur la page de la collection."
             },
