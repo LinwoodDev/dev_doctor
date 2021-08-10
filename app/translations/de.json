@@ -2,10 +2,10 @@
     "title": "Dev-Doctor",
     "subtitle": "Kostenlose, quelloffene, serverfreie Lernplattform. Ein Linwood Projekt",
     "articles": {
-        "title": "Articles",
+        "title": "Artikel",
         "add": {
-            "title": "Name of the article",
-            "hint": "Sample article"
+            "title": "Name des Artikels",
+            "hint": "Beispielartikel"
         }
     },
     "course": {
@@ -321,7 +321,7 @@
             "add": {
                 "fab": "Server hinzufügen",
                 "url": "URL",
-                "hint": "eg. https://backend.dev-doctor.linwood.dev",
+                "hint": "zB. https://backend.dev-doctor.linwood.dev",
                 "title": "Möchten Sie den Server {name} hinzufügen?",
                 "body": "Der Server {name} mit der URL {url} wird auf der Kursseite angezeigt."
             },
@@ -332,7 +332,7 @@
             "add": {
                 "fab": "Kollektion hinzufügen",
                 "url": "URL",
-                "hint": "eg. https://collection.dev-doctor.linwood.dev",
+                "hint": "zB. https://collection.dev-doctor.linwood.dev",
                 "title": "Möchten Sie den Kollektion {name} hinzufügen?",
                 "body": "Die Sammlung {name} mit der URL {url} wird auf der Sammlungsseite angezeigt."
             },
