@@ -1,0 +1,82 @@
+{
+  "version-1.6/docs": [
+    {
+      "type": "doc",
+      "id": "version-1.6/introduction"
+    },
+    {
+      "type": "category",
+      "label": "Backend",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.6/backend/overview"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.6/backend/own"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.6/backend/collection"
+        }
+      ],
+      "collapsible": true,
+      "collapsed": true
+    },
+    {
+      "type": "doc",
+      "id": "version-1.6/privacypolicy"
+    }
+  ],
+  "version-1.6/api": [
+    {
+      "type": "doc",
+      "id": "version-1.6/api/migrating"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.6/api"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.6/api/course"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.6/api/article"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.6/api/part"
+    },
+    {
+      "type": "doc",
+      "id": "version-1.6/api/author"
+    },
+    {
+      "type": "category",
+      "label": "Item",
+      "collapsed": false,
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.6/api/item/overview"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.6/api/item/text"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.6/api/item/video"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.6/api/item/quiz"
+        }
+      ],
+      "collapsible": true
+    }
+  ]
+}
