@@ -1,10 +1,10 @@
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/text_divider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -14,8 +14,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: MyAppBar(title: "settings.title".tr()), body: Container(child: SettingsList()));
+    return Scaffold(appBar: MyAppBar(title: "settings.title".tr()), body: Container(child: SettingsList()));
   }
 }
 
@@ -109,12 +108,12 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: Icon(PhosphorIcons.shieldLight),
               title: Text("settings.privacypolicy").tr(),
-              onTap: () => launch("https://docs.dev-doctor.linwood.dev/privacypolicy")),
+              onTap: () => launch("https://docs.dev-doctor.linwood.dev/docs/privacypolicy")),
           ListTile(
               leading: Icon(PhosphorIcons.infoLight),
               title: Text("settings.about").tr(),
-              onTap: () => showAboutDialog(
-                  context: context, applicationIcon: Image.asset("images/logo.png", height: 50))),
+              onTap: () =>
+                  showAboutDialog(context: context, applicationIcon: Image.asset("images/logo.png", height: 50))),
         ])))));
   }
 }

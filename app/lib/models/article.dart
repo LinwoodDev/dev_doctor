@@ -34,8 +34,16 @@ class Article {
         server = json['server'],
         icon = json['icon'] ?? "";
 
-  Map<String, dynamic> toJson() =>
-      {"title": title, "body": body, "keywords": keywords, "time": time?.toString(), 'slug': slug};
+  Map<String, dynamic> toJson({int? apiVersion}) => {
+        "icon": icon,
+        "title": title,
+        "body": body,
+        "author": author.toJson(apiVersion),
+        "keywords": keywords,
+        "time": time?.toString(),
+        'slug': slug,
+        "description": description
+      };
 
   Article copyWith(
           {DateTime? time,

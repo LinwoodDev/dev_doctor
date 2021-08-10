@@ -2,6 +2,11 @@
 
 ## 1.5.2 (May 12, 2021)
 
+* Add articles
+* Update website links
+
+## 1.5.2 (May 12, 2021)
+
 * Add asset to video source
 * Fix translation
 * Update classic theme
