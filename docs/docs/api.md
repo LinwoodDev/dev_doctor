@@ -21,6 +21,9 @@ import TabItem from '@theme/TabItem';
     "courses": [
         "example",
         "example2"
+    ],
+    "articles": [
+        "example-article"
     ]
 }
 ```
@@ -40,6 +43,9 @@ icon: null
 courses:
 - example
 - example2
+# Articles
+courses:
+- example-article
 ```
 
 </TabItem>
@@ -53,4 +59,5 @@ courses:
 | description |             String             |  false   |                                                   The description of the current backend. It will show up in the backend store after the title. |
 | icon        | String (png, jpg, svg) or null |  false   | The icon will show up in the backend store in the list left to the title, on the details page of the backend store and in the servers settings. |
 | courses     |         Array<String\>         |   true   |                                                        The folder names of the courses. With this option the app will iterate above the courses |
+| articles    |         Array<String\>         |   true   |                                                      The folder names of the articles. With this option the app will iterate above the articles |
 | support_url |             String             |  false   |                                                                                                          The current url where you can get help |

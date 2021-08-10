@@ -25,6 +25,7 @@ module.exports = {
     'api/migrating',
     'api',
     'api/course',
+    'api/article',
     'api/part',
     'api/author',
 
