@@ -66,7 +66,7 @@ jobs:
         with:
           name: windows-setup
           path: |
-            app/build/windows/setup
+            app/build/windows/Dev-Doctor-1.6-Setup.exe
   build-linux:
     runs-on: ubuntu-18.04
     steps:
@@ -133,6 +133,9 @@ jobs:
           name: apk-build
       - uses: actions/download-artifact@v2
         with:
+          name: windows-setup
+      - uses: actions/download-artifact@v2
+        with:
           name: windows-build
           path: windows-build/
       - uses: actions/download-artifact@v2
@@ -150,6 +153,7 @@ jobs:
           tag: release
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
+            Dev-Doctor-1.6-Setup.exe
             app-release.apk
             windows.zip
             linux.zip
@@ -161,6 +165,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           rm: true
           files: |
+            Dev-Doctor-1.6-Setup.exe
             app-release.apk
             windows.zip
             linux.zip
@@ -169,6 +174,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           files: |
+            Dev-Doctor-1.6-Setup.exe
             app-release.apk
             windows.zip
             linux.zip
