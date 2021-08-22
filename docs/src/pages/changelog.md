@@ -4,6 +4,7 @@
 
 * Add articles
 * Update website links
+* Add windows installer
 
 ## 1.5.2 (May 12, 2021)
 
