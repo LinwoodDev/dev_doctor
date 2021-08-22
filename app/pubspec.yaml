@@ -28,7 +28,7 @@ dependencies:
   http: ^0.13.3
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  flutter_modular: ^3.4.0
+  flutter_modular: ^3.4.1+1
   url_launcher: ^6.0.9
   flutter_markdown: ^0.6.4
   rxdart: ^0.27.1

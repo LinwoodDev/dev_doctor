@@ -69,7 +69,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.all(20),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [])),
         FutureBuilder<http.Response>(
-            future: http.get(Uri.https('linwood.dev', '/blog/atom.xml')),
+            future: http.get(Uri.https('www.linwood.dev', '/blog/atom.xml')),
             builder: (context, snapshot) {
               if (snapshot.hasError) return Text("Error: ${snapshot.error}");
               if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
