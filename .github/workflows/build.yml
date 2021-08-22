@@ -47,18 +47,26 @@ jobs:
           cd app
           flutter pub get
       - name: 🏭 Build
+        shell: bash
         run: |
           cd app
           flutter clean
           flutter doctor -v
           flutter build windows -v --release
           flutter pub run msix:create
+          "/c/Program Files (x86)/Inno Setup 6/ISCC.exe" -DMyAppVersion=${version}_${buildnumber} DevDoctorSetup.iss
       - name: Archive
         uses: actions/upload-artifact@v2
         with:
           name: windows-build
           path: |
             app/build/windows/runner/Release/**
+      - name: Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-setup
+          path: |
+            app/build/windows/setup
   build-linux:
     runs-on: ubuntu-18.04
     steps:
