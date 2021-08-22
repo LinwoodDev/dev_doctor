@@ -6,7 +6,7 @@ title: Downloads
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/LinwoodCloud/dev_doctor?style=for-the-badge)
 
-<div className="row margin-bottom--lg">
+<div class="row margin-bottom--lg">
 <div class="dropdown dropdown--hoverable">
   <button class="button button--outline button--primary">Web</button>
   <ul class="dropdown__menu">
@@ -21,7 +21,20 @@ title: Downloads
   </ul>
 </div>
 <div class="dropdown dropdown--hoverable">
-  <button class="button button--outline button--info">Windows</button>
+  <button class="button button--outline button--info">Windows Setup</button>
+  <ul class="dropdown__menu">
+    <li>
+      <a class="dropdown__link" href="https://github.com/LinwoodCloud/dev_doctor/releases/download/release/Dev-Doctor-1.6-Setup.exe">
+        Release
+      </a>
+      <a class="dropdown__link" href="https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/Dev-Doctor-1.6-Setup.exe">
+        Preview
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="dropdown dropdown--hoverable">
+  <button class="button button--outline button--info">Windows Portable</button>
   <ul class="dropdown__menu">
     <li>
       <a class="dropdown__link" href="https://github.com/LinwoodCloud/dev_doctor/releases/download/release/windows.zip">
@@ -34,7 +47,7 @@ title: Downloads
   </ul>
 </div>
 <div class="dropdown dropdown--hoverable">
-  <button class="button button--outline button--info">Linux</button>
+  <button class="button button--outline button--danger">Linux</button>
   <ul class="dropdown__menu">
     <li>
       <a class="dropdown__link" href="https://github.com/LinwoodCloud/dev_doctor/releases/download/release/linux.zip">
