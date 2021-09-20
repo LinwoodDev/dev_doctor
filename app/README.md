@@ -1,13 +1,18 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/LinwoodCloud/dev_doctor/develop/app/images/logo.png" width="350px">
-</p>
+<div align="center">
+  
+<img src="https://raw.githubusercontent.com/LinwoodCloud/dev_doctor/develop/app/images/logo.png" width="350px" />
 
-# Dev-Doctor
+  # Dev-Doctor
 
 > A free, opensource, serverless learning platform. A linwood project.
 
-[![GitHub License badge](https://img.shields.io/github/license/LinwoodCloud/dev_doctor?style=for-the-badge)](https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE)
-[![Discord badge](https://img.shields.io/discord/735424757142519848?style=for-the-badge)](https://discord.linwood.dev)
+[![Latest release)](https://img.shields.io/github/v/release/LinwoodCloud/dev_doctor?color=5c3070&include_prereleases&style=for-the-badge&logo=github&logoColor=5c3070)](https://github.com/LinwoodCloud/dev_doctor/releases)
+[![GitHub License badge](https://img.shields.io/github/license/LinwoodCloud/dev_doctor?color=5c3070&style=for-the-badge)](https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE)
+[![Discord badge](https://img.shields.io/discord/735424757142519848?style=for-the-badge&color=5c3070)](https://discord.linwood.dev)
+  
+</div>
+
+---
 
 ## Introduction
 
