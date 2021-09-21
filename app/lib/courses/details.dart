@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:dev_doctor/courses/bloc.dart';
-import 'package:dev_doctor/courses/module.dart';
 import 'package:dev_doctor/courses/part/bloc.dart';
 import 'package:dev_doctor/editor/code.dart';
-import 'package:dev_doctor/editor/module.dart';
 import 'package:dev_doctor/models/author.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
@@ -53,10 +51,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     _tabController.addListener(_handleTabChange);
     super.initState();
     _editorBloc = widget.editorBloc;
-    if (_editorBloc != null)
-      bloc = EditorModule.to.get<CourseBloc>();
-    else
-      bloc = CourseModule.to.get<CourseBloc>();
+    bloc = Modular.get<CourseBloc>();
     bloc.fetchFromParams(editorBloc: _editorBloc);
     if (_editorBloc != null) {
       var courseBloc = _editorBloc!.getCourse(bloc.course!);
@@ -228,7 +223,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                         "start",
                                         "item"
                                       ], queryParameters: {
-                                        ...Modular.args!.queryParams,
+                                        ...Modular.args.queryParams,
                                         "partId": 0.toString()
                                       }).toString()))
                             } else
@@ -673,9 +668,9 @@ extension PartOptionsExtension on PartOptions {
                             await bloc.save();
                             Modular.to.pushReplacementNamed(Uri(pathSegments: [
                               '',
-                              ...Modular.args!.uri!.pathSegments
+                              ...Modular.args.uri.pathSegments
                             ], queryParameters: {
-                              ...Modular.args!.queryParams,
+                              ...Modular.args.queryParams,
                               'part': slugController.text
                             }).toString());
                           })

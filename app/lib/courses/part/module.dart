@@ -4,7 +4,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'bloc.dart';
 
 class CoursePartModule extends Module {
-  static Inject get to => Inject<CoursePartModule>();
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/item',

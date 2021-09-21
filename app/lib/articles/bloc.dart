@@ -45,7 +45,7 @@ class ArticleBloc extends Disposable {
   }
 
   Future<void> fetchFromParams({ServerEditorBloc? editorBloc}) {
-    var params = Modular.args!.queryParams;
+    var params = Modular.args.queryParams;
     return fetch(
         editorBloc: editorBloc,
         server: params['server'],

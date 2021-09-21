@@ -6,7 +6,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'item.dart';
 
 class EditorPartModule extends Module {
-  static Inject get to => Inject<EditorPartModule>();
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', transition: TransitionType.defaultTransition, child: (_, args) {
@@ -17,7 +16,7 @@ class EditorPartModule extends Module {
               itemId: int.parse(args.queryParams['itemId'] ?? '0'));
         }),
         ChildRoute('/edit', child: (_, args) {
-          var params = Modular.args!.queryParams;
+          var params = Modular.args.queryParams;
           var bloc = ServerEditorBloc.fromKey(int.parse(params['serverId']!));
           return PartItemEditorPage(
             editorBloc: bloc,

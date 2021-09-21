@@ -13,7 +13,6 @@ import 'home.dart';
 import 'markdown.dart';
 
 class EditorModule extends Module {
-  static Inject get to => Inject<EditorModule>();
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (_, args) => EditorPage()),
@@ -48,7 +47,7 @@ class EditorModule extends Module {
               onSubmit: (value) {
                 article = article.copyWith(body: value);
                 bloc.updateArticle(article);
-                to.get<ArticleBloc>().articleSubject.add(article);
+                Modular.get<ArticleBloc>().articleSubject.add(article);
                 bloc.save();
               });
         }),
@@ -61,7 +60,7 @@ class EditorModule extends Module {
               onSubmit: (value) {
                 article = article.copyWith(author: value);
                 bloc.updateArticle(article);
-                to.get<ArticleBloc>().articleSubject.add(article);
+                Modular.get<ArticleBloc>().articleSubject.add(article);
                 bloc.save();
               });
         }),

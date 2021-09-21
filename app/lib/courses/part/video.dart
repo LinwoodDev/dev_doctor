@@ -1,5 +1,4 @@
 import 'package:dev_doctor/courses/part/bloc.dart';
-import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/video.dart';
@@ -11,8 +10,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
-
-import 'module.dart';
 
 class VideoPartItemPage extends StatefulWidget {
   final VideoPartItem item;
@@ -33,7 +30,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
   void initState() {
     super.initState();
     if (widget.editorBloc == null && !widget.part.itemVisited(widget.itemId)) {
-      var bloc = CoursePartModule.to.get<CoursePartBloc>();
+      var bloc = Modular.get<CoursePartBloc>();
       widget.part.setItemPoints(widget.itemId, 1);
       bloc.partSubject.add(widget.part);
     }
@@ -81,7 +78,7 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
   late CoursePartBloc bloc;
   @override
   void initState() {
-    bloc = EditorPartModule.to.get<CoursePartBloc>();
+    bloc = Modular.get<CoursePartBloc>();
     _urlController = TextEditingController(text: widget.item!.url);
     source = widget.item!.source;
     super.initState();
@@ -120,7 +117,7 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
             tooltip: "save".tr(),
             child: Icon(PhosphorIcons.floppyDiskLight),
             onPressed: () async {
-              var bloc = EditorPartModule.to.get<CoursePartBloc>();
+              var bloc = Modular.get<CoursePartBloc>();
               var courseBloc = widget.editorBloc!.getCourse(bloc.course!);
               var coursePart = courseBloc.getCoursePart(bloc.part!);
               var part = coursePart.copyWith(

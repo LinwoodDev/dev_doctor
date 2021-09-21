@@ -12,6 +12,5 @@ class CourseModule extends Module {
         ChildRoute('/details', child: (_, args) => CoursePage(model: args.data)),
         ModuleRoute('/start', module: CoursePartModule()),
       ];
-  static Inject get to => Inject<CourseModule>();
   List<Bind<Object>> get binds => [Bind.singleton((i) => CourseBloc())];
 }

@@ -44,7 +44,7 @@ class _AddServerPageState extends State<AddServerPage> {
                         .tr(namedArgs: {"name": server.name, "url": server.url}))));
         if (shouldAdd!) {
           await _serversBox.add(url);
-          var params = Modular.args?.queryParams ?? {};
+          var params = Modular.args.queryParams;
           if (params.containsKey("redirect")) {
             Modular.to.pushReplacementNamed(params['redirect']!);
             return;

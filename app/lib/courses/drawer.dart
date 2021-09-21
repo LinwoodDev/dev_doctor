@@ -1,6 +1,5 @@
 import 'package:dev_doctor/courses/details.dart';
 import 'package:dev_doctor/courses/part/bloc.dart';
-import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/part.dart';
@@ -62,7 +61,7 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
               return Center(child: CircularProgressIndicator());
             if (snapshot.hasError) return Text("Error: ${snapshot.error}");
             var parts = snapshot.data!;
-            var args = Modular.args!.queryParams;
+            var args = Modular.args.queryParams;
             return Column(
                 children: List.generate(parts.length, (index) {
               var part = parts[index];
@@ -78,7 +77,7 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
                         data: Theme.of(context).iconTheme,
                         child: EditorCoursePartPopupMenu(
                             bloc: widget.editorBloc!,
-                            partBloc: EditorPartModule.to.get<CoursePartBloc>()))
+                            partBloc: Modular.get<CoursePartBloc>()))
                     : null,
                 onTap: () {
                   setState(() => partId = index);

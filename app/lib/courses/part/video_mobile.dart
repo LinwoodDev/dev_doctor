@@ -9,7 +9,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'bloc.dart';
-import 'module.dart';
 import 'video.dart' as defaultVideo;
 
 class VideoPartItemPage extends StatefulWidget {
@@ -33,7 +32,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
     isEmpty = widget.item.url.isEmpty;
     super.initState();
     if (widget.editorBloc == null && !widget.part.itemVisited(widget.itemId)) {
-      var bloc = CoursePartModule.to.get<CoursePartBloc>();
+      var bloc = Modular.get<CoursePartBloc>();
       widget.part.setItemPoints(widget.itemId, 1);
       bloc.partSubject.add(widget.part);
     }
