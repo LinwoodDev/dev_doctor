@@ -1,8 +1,7 @@
 <!--suppress HtmlDeprecatedAttribute -->
 <div align="center">
 
-    <img alt=""Dev-Doctor Logo" src="https://raw.githubusercontent.com/LinwoodCloud/dev_doctor/develop/app/images/logo.png" width="350px" />
-
+<img alt="Dev-Doctor Logo" src="https://raw.githubusercontent.com/LinwoodCloud/dev_doctor/develop/app/images/logo.png" width="350px"/>
 
   # Dev-Doctor
 
