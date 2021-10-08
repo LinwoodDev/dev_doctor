@@ -59,7 +59,8 @@ Name: "portable"; Description: "Portable mode"
 Name: "full"; Description: "full"; Types: full
 
 [Icons]
-Name: "{group}\Uninstall Dev-Doctor"; Filename: "{uninstallexe}"
+.
+Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 
 Name: "{group}\Visit Website"; Filename: "http://www.linwood.dev/"
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

@@ -135,6 +135,17 @@ module.exports = {
   
   plugins: [
     [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            to: '/docs/backend/own', // string
+            from: ['/backend/own'], // string | string[]
+          },
+        ],
+      },
+    ],
+    [
       '@docusaurus/plugin-pwa',
       {
         offlineModeActivationStrategies: [

@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.5.2 (May 12, 2021)
+## 1.6.0 (August 22, 2021)
 
 * Add articles
 * Update website links
