@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:dev_doctor/courses/part/bloc.dart';
-import 'package:dev_doctor/courses/part/module.dart';
-import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
 import 'package:dev_doctor/models/part.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class QuizPartItemPage extends StatefulWidget {
@@ -39,9 +38,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
   @override
   void initState() {
     super.initState();
-    bloc = widget.editorBloc != null
-        ? EditorPartModule.to.get<CoursePartBloc>()
-        : CoursePartModule.to.get<CoursePartBloc>();
+    bloc = Modular.get<CoursePartBloc>();
   }
 
   void validate() {

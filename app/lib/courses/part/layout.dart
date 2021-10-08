@@ -1,5 +1,4 @@
 import 'package:dev_doctor/courses/drawer.dart';
-import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/part.dart';
@@ -12,7 +11,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../details.dart';
 import 'bloc.dart';
-import 'module.dart';
 
 class PartItemLayout extends StatefulWidget {
   final Widget? child;
@@ -32,7 +30,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
 
   @override
   void initState() {
-    bloc = CoursePartModule.to.get<CoursePartBloc>();
+    bloc = Modular.get<CoursePartBloc>();
     super.initState();
   }
 
@@ -51,7 +49,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                         ? ["", "editor", "course", "item"]
                         : ["", "courses", "start", "item"],
                     queryParameters: <String, String>{
-                      ...Modular.args!.queryParams,
+                      ...Modular.args.queryParams,
                       "partId": index.toString(),
                       "itemId": 0.toString()
                     }).toString());
@@ -72,7 +70,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                       icon: Icon(PhosphorIcons.plusCircleLight),
                       onPressed: () => _showCreateDialog(widget.part)),
                   EditorCoursePartPopupMenu(
-                      bloc: widget.editorBloc!, partBloc: EditorPartModule.to.get<CoursePartBloc>())
+                      bloc: widget.editorBloc!, partBloc: Modular.get<CoursePartBloc>())
                 ] else
                   IconButton(
                     icon: Icon(PhosphorIcons.shareNetworkLight),
@@ -104,7 +102,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                               ? ["", "editor", "course", "item"]
                               : ["", "courses", "start", "item"],
                           queryParameters: {
-                            ...Modular.args!.queryParams,
+                            ...Modular.args.queryParams,
                             "itemId": index.toString()
                           }).toString()),
                   tabs: List.generate(widget.part.items.length, (index) {
@@ -173,7 +171,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
 
   Future<void> _createItem(CoursePart part,
       {required String name, required String description, required PartItemTypes type}) async {
-    var params = Modular.args!.queryParams;
+    var params = Modular.args.queryParams;
     var courseBloc = widget.editorBloc!.getCourse(
         params['course'] ?? widget.editorBloc!.server.courses[int.parse(params['courseId']!)]);
     var value = type.create(name: name, description: description);
@@ -209,7 +207,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
   }
 
   Future<void> _deleteItem(CoursePart part, int index) async {
-    var params = Modular.args!.queryParams;
+    var params = Modular.args.queryParams;
     var courseBloc = widget.editorBloc!.getCourse(
         params['course'] ?? widget.editorBloc!.server.courses[int.parse(params['courseId']!)]);
     var items = List<PartItem>.from(part.items);

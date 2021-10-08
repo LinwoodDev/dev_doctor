@@ -1,7 +1,5 @@
 import 'package:dev_doctor/courses/part/bloc.dart';
-import 'package:dev_doctor/courses/part/module.dart';
 import 'package:dev_doctor/editor/markdown.dart';
-import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/text.dart';
@@ -34,7 +32,7 @@ class _TextPartItemPageState extends State<TextPartItemPage> {
     super.initState();
 
     if (widget.editorBloc == null && !widget.part.itemVisited(widget.itemId)) {
-      var bloc = CoursePartModule.to.get<CoursePartBloc>();
+      var bloc = Modular.get<CoursePartBloc>();
       widget.part.setItemPoints(widget.itemId, 1);
       bloc.partSubject.add(widget.part);
     }
@@ -64,7 +62,7 @@ class _TextPartItemPageState extends State<TextPartItemPage> {
                   builder: (context) => MarkdownEditor(
                       markdown: widget.item.text,
                       onSubmit: (value) {
-                        var bloc = EditorPartModule.to.get<CoursePartBloc>();
+                        var bloc = Modular.get<CoursePartBloc>();
                         var courseBloc = widget.editorBloc!.getCourse(bloc.course!);
                         var coursePart = courseBloc.getCoursePart(bloc.part!);
                         var part = coursePart.copyWith(

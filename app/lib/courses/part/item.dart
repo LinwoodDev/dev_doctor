@@ -1,7 +1,6 @@
 import 'package:dev_doctor/courses/part/bloc.dart';
 import 'package:dev_doctor/courses/part/quiz.dart';
 import 'package:dev_doctor/courses/part/text.dart';
-import 'package:dev_doctor/editor/part.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/item.dart';
 import 'package:dev_doctor/models/items/quiz.dart';
@@ -20,7 +19,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'bloc.dart';
 import 'layout.dart';
-import 'module.dart';
 
 class PartItemPage extends StatefulWidget {
   final PartItem? model;
@@ -53,8 +51,7 @@ class _PartItemPageState extends State<PartItemPage> {
   }
 
   Future<void> _buildBloc() async {
-    if (widget.editorBloc != null) bloc = EditorPartModule.to.get<CoursePartBloc>();
-    bloc = CoursePartModule.to.get<CoursePartBloc>();
+    bloc = Modular.get<CoursePartBloc>();
     await bloc.fetchFromParams(editorBloc: widget.editorBloc);
   }
 
@@ -140,7 +137,7 @@ class _PartItemPageState extends State<PartItemPage> {
                                         'item',
                                         'edit'
                                       ], queryParameters: {
-                                        ...Modular.args!.queryParams
+                                        ...Modular.args.queryParams
                                       }).toString()),
                                     )
                                   else if (item.allowReset)

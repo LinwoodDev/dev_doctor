@@ -10,6 +10,5 @@ class ArticlesModule extends Module {
         ChildRoute('/', child: (_, args) => ArticlesPage()),
         ChildRoute('/details', child: (_, args) => ArticlePage(model: args.data))
       ];
-  static Inject get to => Inject<ArticlesModule>();
   List<Bind<Object>> get binds => [Bind.singleton((i) => ArticleBloc())];
 }

@@ -1,24 +1,22 @@
 import 'dart:convert';
 
 import 'package:dev_doctor/articles/bloc.dart';
-import 'package:dev_doctor/articles/module.dart';
 import 'package:dev_doctor/editor/code.dart';
-import 'package:dev_doctor/editor/module.dart';
 import 'package:dev_doctor/models/article.dart';
 import 'package:dev_doctor/models/author.dart';
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/widgets/appbar.dart';
 import 'package:dev_doctor/widgets/author.dart';
 import 'package:dev_doctor/widgets/error.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:markdown/markdown.dart' as md;
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:markdown/markdown.dart' as md;
 
 class ArticlePage extends StatefulWidget {
   final Article? model;
@@ -41,10 +39,7 @@ class _ArticlePageState extends State<ArticlePage> {
   void initState() {
     super.initState();
     _editorBloc = widget.editorBloc;
-    if (_editorBloc != null)
-      bloc = EditorModule.to.get<ArticleBloc>();
-    else
-      bloc = ArticlesModule.to.get<ArticleBloc>();
+    bloc = Modular.get<ArticleBloc>();
     bloc.fetchFromParams(editorBloc: _editorBloc);
     if (_editorBloc != null) {
       initEditor();
