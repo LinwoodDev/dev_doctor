@@ -4,7 +4,6 @@ import 'package:dev_doctor/models/server.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:package_info_plus/package_info_plus.dart';
