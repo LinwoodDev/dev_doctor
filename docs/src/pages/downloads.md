@@ -24,10 +24,10 @@ title: Downloads
   <button class="button button--outline button--info">Windows Setup</button>
   <ul class="dropdown__menu">
     <li>
-      <a class="dropdown__link" href="https://github.com/LinwoodCloud/dev_doctor/releases/download/release/Butterfly-Setup.exe">
+      <a class="dropdown__link" href="https://github.com/LinwoodCloud/dev_doctor/releases/download/release/DevDoctor-Setup.exe">
         Release
       </a>
-      <a class="dropdown__link" href="https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/Butterfly-Setup.exe">
+      <a class="dropdown__link" href="https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/DevDoctor-Setup.exe">
         Preview
       </a>
     </li>
