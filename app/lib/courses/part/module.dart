@@ -9,7 +9,8 @@ class CoursePartModule extends Module {
         ChildRoute('/item',
             transition: TransitionType.defaultTransition,
             child: (_, args) => PartItemPage(
-                model: args.data, itemId: int.parse(args.queryParams['itemId'] ?? '0')))
+                model: args.data,
+                itemId: int.parse(args.queryParams['itemId'] ?? '0')))
       ];
 
   @override

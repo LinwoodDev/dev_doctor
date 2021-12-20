@@ -17,7 +17,8 @@ class CoursePartDrawer extends StatefulWidget {
   final NavigateCallback? onChange;
   final ServerEditorBloc? editorBloc;
 
-  const CoursePartDrawer({Key? key, this.course, this.partId, this.onChange, this.editorBloc})
+  const CoursePartDrawer(
+      {Key? key, this.course, this.partId, this.onChange, this.editorBloc})
       : super(key: key);
   @override
   _CoursePartDrawerState createState() => _CoursePartDrawerState();
@@ -27,7 +28,8 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
   int? partId;
 
   Future<List<CoursePart>> _buildFuture() async {
-    if (widget.editorBloc != null) return widget.editorBloc!.getCourse(widget.course!.slug).parts;
+    if (widget.editorBloc != null)
+      return widget.editorBloc!.getCourse(widget.course!.slug).parts;
     return await widget.course!.fetchParts();
   }
 
@@ -57,7 +59,8 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
       FutureBuilder<List<CoursePart>>(
           future: _buildFuture(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
+            if (!snapshot.hasData ||
+                snapshot.connectionState == ConnectionState.waiting)
               return Center(child: CircularProgressIndicator());
             if (snapshot.hasError) return Text("Error: ${snapshot.error}");
             var parts = snapshot.data!;

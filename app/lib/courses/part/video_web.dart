@@ -20,7 +20,11 @@ class VideoPartItemPage extends StatefulWidget {
   final int itemId;
 
   const VideoPartItemPage(
-      {Key? key, required this.item, this.editorBloc, required this.itemId, required this.part})
+      {Key? key,
+      required this.item,
+      this.editorBloc,
+      required this.itemId,
+      required this.part})
       : super(key: key);
   @override
   _VideoPartItemPageState createState() => _VideoPartItemPageState();
@@ -46,7 +50,8 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
       _iframeElement.allowFullscreen = true;
 
       // ignore: undefined_prefixed_name
-      ui.platformViewRegistry.registerViewFactory('iframeElement', (int viewId) => _iframeElement);
+      ui.platformViewRegistry
+          .registerViewFactory('iframeElement', (int viewId) => _iframeElement);
 
       _iframeWidget = HtmlElementView(
         key: UniqueKey(),
@@ -88,7 +93,9 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
             tooltip: "edit".tr(),
             onPressed: () => Modular.to.push(MaterialPageRoute(
                 builder: (context) => defaultVideo.VideoPartItemEditorPage(
-                    editorBloc: widget.editorBloc, item: widget.item, itemId: widget.itemId))),
+                    editorBloc: widget.editorBloc,
+                    item: widget.item,
+                    itemId: widget.itemId))),
             icon: Icon(PhosphorIcons.pencilLight))
     ]);
   }

@@ -18,7 +18,13 @@ class PartItemEditorPage extends StatefulWidget {
   final int? itemId;
 
   const PartItemEditorPage(
-      {Key? key, this.editorBloc, this.itemId, this.part, this.course, this.courseId, this.partId})
+      {Key? key,
+      this.editorBloc,
+      this.itemId,
+      this.part,
+      this.course,
+      this.courseId,
+      this.partId})
       : super(key: key);
 
   @override
@@ -36,8 +42,8 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
   @override
   void initState() {
     partBloc = Modular.get<CoursePartBloc>();
-    bloc = widget.editorBloc!
-        .getCourse(widget.course ?? widget.editorBloc!.courses[widget.courseId!] as String);
+    bloc = widget.editorBloc!.getCourse(widget.course ??
+        widget.editorBloc!.courses[widget.courseId!] as String);
     part = bloc.getCoursePart(widget.part ?? bloc.course.parts[widget.partId!]);
     var item = part.items[widget.itemId!];
     _nameController = TextEditingController(text: item.name);
@@ -60,7 +66,8 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
                             TextFormField(
                               controller: _nameController,
                               validator: (value) {
-                                if (value!.isEmpty) return 'editor.item.name.empty'.tr();
+                                if (value!.isEmpty)
+                                  return 'editor.item.name.empty'.tr();
                                 return null;
                               },
                               decoration: InputDecoration(
@@ -71,7 +78,8 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
                               controller: _descriptionController,
                               decoration: InputDecoration(
                                   hintText: 'editor.item.description.hint'.tr(),
-                                  labelText: 'editor.item.description.label'.tr()),
+                                  labelText:
+                                      'editor.item.description.label'.tr()),
                             )
                           ],
                         ))))),
@@ -82,7 +90,8 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
               var coursePart = part.copyWith(
                   items: List<PartItem>.from(part.items)
                     ..[widget.itemId!] = part.items[widget.itemId!].copyWith(
-                        name: _nameController!.text, description: _descriptionController!.text));
+                        name: _nameController!.text,
+                        description: _descriptionController!.text));
               bloc.updateCoursePart(coursePart);
               await widget.editorBloc!.save();
               partBloc.partSubject.add(coursePart);

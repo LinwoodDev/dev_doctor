@@ -7,7 +7,8 @@ class UniversalImage extends StatelessWidget {
   final double? height;
   final double? width;
 
-  const UniversalImage({Key? key, this.type, this.url, this.height, this.width}) : super(key: key);
+  const UniversalImage({Key? key, this.type, this.url, this.height, this.width})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     var imageURL = "$url.$type";

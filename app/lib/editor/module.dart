@@ -19,12 +19,14 @@ class EditorModule extends Module {
         WildcardRoute(child: (_, __) => ErrorDisplay()),
         ChildRoute('/details', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          var bloc = ServerEditorBloc.fromKey(
+              int.parse(args.queryParams['serverId']!));
           return BackendPage(editorBloc: bloc);
         }),
         ChildRoute('/edit', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          var bloc = ServerEditorBloc.fromKey(
+              int.parse(args.queryParams['serverId']!));
           return MarkdownEditor(
               markdown: bloc.server.body,
               onSubmit: (value) {
@@ -34,12 +36,14 @@ class EditorModule extends Module {
         }),
         ChildRoute('/article', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          var bloc = ServerEditorBloc.fromKey(
+              int.parse(args.queryParams['serverId']!));
           return ArticlePage(editorBloc: bloc);
         }),
         ChildRoute('/article/edit', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          var bloc = ServerEditorBloc.fromKey(
+              int.parse(args.queryParams['serverId']!));
           var articleName = args.queryParams['article'];
           var article = bloc.getArticle(articleName!);
           return MarkdownEditor(
@@ -53,7 +57,8 @@ class EditorModule extends Module {
         }),
         ChildRoute('/article/author', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          var bloc = ServerEditorBloc.fromKey(
+              int.parse(args.queryParams['serverId']!));
           var article = bloc.getArticle(args.queryParams['article']!);
           return AuthorEditingPage(
               author: article.author,
@@ -66,12 +71,14 @@ class EditorModule extends Module {
         }),
         ChildRoute('/course', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          var bloc = ServerEditorBloc.fromKey(
+              int.parse(args.queryParams['serverId']!));
           return CoursePage(editorBloc: bloc);
         }),
         ChildRoute('/course/edit', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          var bloc = ServerEditorBloc.fromKey(
+              int.parse(args.queryParams['serverId']!));
           var course = args.queryParams['course'];
           var courseBloc = bloc.getCourse(course!);
           return MarkdownEditor(
@@ -83,7 +90,8 @@ class EditorModule extends Module {
         }),
         ChildRoute('/course/author', child: (_, args) {
           if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+          var bloc = ServerEditorBloc.fromKey(
+              int.parse(args.queryParams['serverId']!));
           var course = args.queryParams['course'];
           var courseBloc = bloc.getCourse(course!);
           return AuthorEditingPage(
@@ -96,6 +104,8 @@ class EditorModule extends Module {
         ModuleRoute('/course/item', module: EditorPartModule())
       ];
   @override
-  List<Bind<Object>> get binds =>
-      [Bind.singleton((i) => CourseBloc()), Bind.singleton((i) => ArticleBloc())];
+  List<Bind<Object>> get binds => [
+        Bind.singleton((i) => CourseBloc()),
+        Bind.singleton((i) => ArticleBloc())
+      ];
 }

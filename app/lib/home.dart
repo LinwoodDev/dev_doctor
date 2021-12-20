@@ -23,12 +23,14 @@ class HomePage extends StatelessWidget {
         Text("subtitle", style: Theme.of(context).textTheme.subtitle1).tr(),
         Padding(
             padding: EdgeInsets.all(20),
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                   padding: EdgeInsets.all(5),
                   child: Wrap(alignment: WrapAlignment.center, children: [
                     ElevatedButton.icon(
-                        onPressed: () => launch("https://docs.dev-doctor.linwood.dev/backend/own"),
+                        onPressed: () => launch(
+                            "https://docs.dev-doctor.linwood.dev/backend/own"),
                         icon: Icon(PhosphorIcons.articleLight,
                             color: Theme.of(context).primaryIconTheme.color),
                         label: Text("docs".tr().toUpperCase(),
@@ -42,14 +44,17 @@ class HomePage extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.all(5),
                     child: RawMaterialButton(
-                        onPressed: () =>
-                            launch("https://vercel.com?utm_source=Linwood&utm_campaign=oss"),
+                        onPressed: () => launch(
+                            "https://vercel.com?utm_source=Linwood&utm_campaign=oss"),
                         child: SizedBox(
                             height: 50,
-                            child: SvgPicture.asset("images/powered-by-vercel.svg",
-                                placeholderBuilder: (BuildContext context) => Container(
-                                    padding: const EdgeInsets.all(30.0),
-                                    child: const CircularProgressIndicator()),
+                            child: SvgPicture.asset(
+                                "images/powered-by-vercel.svg",
+                                placeholderBuilder: (BuildContext context) =>
+                                    Container(
+                                        padding: const EdgeInsets.all(30.0),
+                                        child:
+                                            const CircularProgressIndicator()),
                                 semanticsLabel: 'Powered by Vercel'))))
             ]))
       ]),
@@ -67,12 +72,14 @@ class HomePage extends StatelessWidget {
             )),
         Padding(
             padding: EdgeInsets.all(20),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [])),
+            child:
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [])),
         FutureBuilder<http.Response>(
             future: http.get(Uri.https('www.linwood.dev', '/blog/atom.xml')),
             builder: (context, snapshot) {
               if (snapshot.hasError) return Text("Error: ${snapshot.error}");
-              if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
+              if (!snapshot.hasData ||
+                  snapshot.connectionState == ConnectionState.waiting)
                 return Center(child: CircularProgressIndicator());
               var data = utf8.decode(snapshot.data!.bodyBytes);
               var document = XmlDocument.parse(data);
@@ -83,8 +90,10 @@ class HomePage extends StatelessWidget {
                   var entry = items[index];
                   return ListTile(
                     title: Text(entry.getElement("title")?.innerText ?? ''),
-                    subtitle: Text(entry.getElement("summary")?.innerText ?? ''),
-                    onTap: () => launch(entry.getElement("link")?.getAttribute("href") ?? ''),
+                    subtitle:
+                        Text(entry.getElement("summary")?.innerText ?? ''),
+                    onTap: () => launch(
+                        entry.getElement("link")?.getAttribute("href") ?? ''),
                     isThreeLine: true,
                   );
                 }),
@@ -103,7 +112,8 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(top: 100),
             itemBuilder: (context, index) => Material(
                 elevation: 2,
-                child: Container(padding: EdgeInsets.all(10), child: _sections[index])),
+                child: Container(
+                    padding: EdgeInsets.all(10), child: _sections[index])),
           ),
         ));
   }

@@ -14,7 +14,9 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: MyAppBar(title: "settings.title".tr()), body: Container(child: SettingsList()));
+    return Scaffold(
+        appBar: MyAppBar(title: "settings.title".tr()),
+        body: Container(child: SettingsList()));
   }
 }
 
@@ -84,11 +86,13 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: Icon(PhosphorIcons.stackLight),
               title: Text("settings.license").tr(),
-              onTap: () => launch("https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE")),
+              onTap: () => launch(
+                  "https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE")),
           ListTile(
               leading: Icon(PhosphorIcons.codeLight),
               title: Text("settings.code").tr(),
-              onTap: () => launch("https://github.com/LinwoodCloud/dev_doctor")),
+              onTap: () =>
+                  launch("https://github.com/LinwoodCloud/dev_doctor")),
           ListTile(
               leading: Icon(PhosphorIcons.usersLight),
               title: Text("discord").tr(),
@@ -96,11 +100,13 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: Icon(PhosphorIcons.articleLight),
               title: Text("docs").tr(),
-              onTap: () => launch("https://docs.dev-doctor.linwood.dev/backend/overview")),
+              onTap: () => launch(
+                  "https://docs.dev-doctor.linwood.dev/backend/overview")),
           ListTile(
               leading: Icon(PhosphorIcons.arrowCounterClockwiseLight),
               title: Text("settings.changelog").tr(),
-              onTap: () => launch("https://docs.dev-doctor.linwood.dev/changelog")),
+              onTap: () =>
+                  launch("https://docs.dev-doctor.linwood.dev/changelog")),
           ListTile(
               leading: Icon(PhosphorIcons.identificationCardLight),
               title: Text("settings.imprint").tr(),
@@ -108,12 +114,14 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: Icon(PhosphorIcons.shieldLight),
               title: Text("settings.privacypolicy").tr(),
-              onTap: () => launch("https://docs.dev-doctor.linwood.dev/docs/privacypolicy")),
+              onTap: () => launch(
+                  "https://docs.dev-doctor.linwood.dev/docs/privacypolicy")),
           ListTile(
               leading: Icon(PhosphorIcons.infoLight),
               title: Text("settings.about").tr(),
-              onTap: () =>
-                  showAboutDialog(context: context, applicationIcon: Image.asset("images/logo.png", height: 50))),
+              onTap: () => showAboutDialog(
+                  context: context,
+                  applicationIcon: Image.asset("images/logo.png", height: 50))),
         ])))));
   }
 }

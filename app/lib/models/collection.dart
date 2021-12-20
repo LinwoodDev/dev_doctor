@@ -15,7 +15,11 @@ class BackendCollection {
 
   static Box<String> get _box => Hive.box<String>('collections');
   BackendCollection(
-      {required this.name, this.icon = "", required this.url, this.index, required this.type});
+      {required this.name,
+      this.icon = "",
+      required this.url,
+      this.index,
+      required this.type});
   BackendCollection.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         url = json['url'],
@@ -43,13 +47,14 @@ class BackendCollection {
   }
 
   Future<List<String>> fetchUserStrings() async => List<String>.from(
-      json.decode((await http.get(Uri.parse("$url/metadata/data.json"))).body) as List<dynamic>);
-  Future<List<BackendUser>> fetchUsers() =>
-      fetchUserStrings().then((value) => Future.wait(value.map((e) => fetchUser(e)).toList()));
-  Future<BackendUser> fetchUser(String? user) async => BackendUser.fromJson(
-      json.decode((await http.get(Uri.parse("$url/metadata/$user/data.json"))).body)
-        ..['collection'] = this
-        ..['name'] = user);
+      json.decode((await http.get(Uri.parse("$url/metadata/data.json"))).body)
+          as List<dynamic>);
+  Future<List<BackendUser>> fetchUsers() => fetchUserStrings()
+      .then((value) => Future.wait(value.map((e) => fetchUser(e)).toList()));
+  Future<BackendUser> fetchUser(String? user) async => BackendUser.fromJson(json
+      .decode((await http.get(Uri.parse("$url/metadata/$user/data.json"))).body)
+    ..['collection'] = this
+    ..['name'] = user);
 }
 
 class BackendUser {
@@ -57,7 +62,8 @@ class BackendUser {
   final String name;
   final Map<String, String> entries;
 
-  BackendUser({required this.name, required this.entries, required this.collection});
+  BackendUser(
+      {required this.name, required this.entries, required this.collection});
   BackendUser.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         collection = json['collection'],
@@ -69,8 +75,8 @@ class BackendUser {
     return backendEntries;
   }
 
-  BackendEntry buildEntry(String entry) =>
-      BackendEntry(collection: collection, name: entry, url: entries[entry]!, user: this);
+  BackendEntry buildEntry(String entry) => BackendEntry(
+      collection: collection, name: entry, url: entries[entry]!, user: this);
 }
 
 class BackendEntry {
@@ -80,12 +86,16 @@ class BackendEntry {
   final String url;
 
   BackendEntry(
-      {required this.collection, required this.user, required this.name, required this.url});
+      {required this.collection,
+      required this.user,
+      required this.name,
+      required this.url});
   BackendEntry.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         user = json['user'],
         url = json['url'],
         collection = json['collection'];
 
-  Future<CoursesServer?> fetchServer() => CoursesServer.fetch(url: url, entry: this);
+  Future<CoursesServer?> fetchServer() =>
+      CoursesServer.fetch(url: url, entry: this);
 }

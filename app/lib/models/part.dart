@@ -43,11 +43,14 @@ class CoursePart {
         pathSegments: ["", course!.slug, slug, id.toString()]);
   }
 
-  int? getItemPoints(int id) => Hive.box<int>('points').get(getItemUri(id).toString());
-  void removeItemPoints(int id) => Hive.box<int>('points').delete(getItemUri(id).toString());
+  int? getItemPoints(int id) =>
+      Hive.box<int>('points').get(getItemUri(id).toString());
+  void removeItemPoints(int id) =>
+      Hive.box<int>('points').delete(getItemUri(id).toString());
   void setItemPoints(int id, int points) =>
       Hive.box<int>('points').put(getItemUri(id).toString(), points);
-  bool itemVisited(int id) => Hive.box<int>('points').containsKey(getItemUri(id).toString());
+  bool itemVisited(int id) =>
+      Hive.box<int>('points').containsKey(getItemUri(id).toString());
   void setItemVisited(int id) => setItemPoints(id, items[id].points);
 
   CoursesServer? get server => course?.server;
@@ -55,7 +58,9 @@ class CoursePart {
   Uri get uri {
     Uri serverUri = server!.uri;
     return Uri(
-        host: serverUri.host, scheme: serverUri.scheme, pathSegments: ["", course!.slug, slug]);
+        host: serverUri.host,
+        scheme: serverUri.scheme,
+        pathSegments: ["", course!.slug, slug]);
   }
 
   CoursePart copyWith(

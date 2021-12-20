@@ -56,7 +56,8 @@ class CoursesServer {
         "articles": articles
       };
 
-  bool get added => index != null || Hive.box<String>('servers').containsKey(url);
+  bool get added =>
+      index != null || Hive.box<String>('servers').containsKey(url);
 
   Future<CoursesServer> add() async => CoursesServer(
       index: await _box.add(url),
@@ -104,7 +105,8 @@ class CoursesServer {
           type: type ?? this.type,
           url: url ?? this.url);
 
-  static Future<CoursesServer?> fetch({String? url, int? index, BackendEntry? entry}) async {
+  static Future<CoursesServer?> fetch(
+      {String? url, int? index, BackendEntry? entry}) async {
     var data = <String, dynamic>{};
     try {
       if (index == null && url != null) {
@@ -126,7 +128,8 @@ class CoursesServer {
   }
 
   Future<List<Course>> fetchCourses() =>
-      Future.wait(courses.map((course) => fetchCourse(course))).then((value) async {
+      Future.wait(courses.map((course) => fetchCourse(course)))
+          .then((value) async {
         var list = <Course>[];
         value.forEach((element) {
           if (element != null) list.add(element);
@@ -150,7 +153,8 @@ class CoursesServer {
   }
 
   Future<List<Article>> fetchArticles() =>
-      Future.wait(articles.map((article) => fetchArticle(article))).then((value) async {
+      Future.wait(articles.map((article) => fetchArticle(article)))
+          .then((value) async {
         var list = <Article>[];
         value.forEach((element) {
           if (element != null) list.add(element);
@@ -185,5 +189,6 @@ class CoursesServerAdapter extends TypeAdapter<CoursesServer> {
   final typeId = 0;
 
   @override
-  void write(BinaryWriter writer, CoursesServer obj) => writer.write(obj.toJson());
+  void write(BinaryWriter writer, CoursesServer obj) =>
+      writer.write(obj.toJson());
 }

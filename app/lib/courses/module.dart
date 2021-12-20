@@ -9,7 +9,8 @@ class CourseModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (_, args) => CoursesPage()),
-        ChildRoute('/details', child: (_, args) => CoursePage(model: args.data)),
+        ChildRoute('/details',
+            child: (_, args) => CoursePage(model: args.data)),
         ModuleRoute('/start', module: CoursePartModule()),
       ];
   List<Bind<Object>> get binds => [Bind.singleton((i) => CourseBloc())];

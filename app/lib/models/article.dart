@@ -30,7 +30,8 @@ class Article {
         description = json['description'] ?? "",
         keywords = List<String>.from(json['keywords'] ?? []),
         time = DateTime.tryParse(json['time'] ?? ""),
-        author = Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
+        author =
+            Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
         server = json['server'],
         icon = json['icon'] ?? "";
 

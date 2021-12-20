@@ -8,7 +8,11 @@ class TextPartItem extends PartItem {
   final int points;
 
   TextPartItem(
-      {this.points = 1, this.text = "", String name = '', String description = '', int? index})
+      {this.points = 1,
+      this.text = "",
+      String name = '',
+      String description = '',
+      int? index})
       : super(name: name, description: description, index: index);
   @override
   TextPartItem.fromJson(Map<String, dynamic> json)
@@ -16,10 +20,16 @@ class TextPartItem extends PartItem {
         points = json['points'] ?? 1,
         super.fromJson(json);
 
-  Map<String, dynamic> toJson() =>
-      {"type": "text", "text": text, "name": name, "description": description, "points": points};
+  Map<String, dynamic> toJson() => {
+        "type": "text",
+        "text": text,
+        "name": name,
+        "description": description,
+        "points": points
+      };
 
-  TextPartItem copyWith({String? text, String? name, String? description, int? points}) =>
+  TextPartItem copyWith(
+          {String? text, String? name, String? description, int? points}) =>
       TextPartItem(
           text: text ?? this.text,
           description: description ?? this.description,

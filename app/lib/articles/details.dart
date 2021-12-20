@@ -58,7 +58,8 @@ class _ArticlePageState extends State<ArticlePage> {
         stream: bloc.articleSubject,
         builder: (context, snapshot) {
           if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
-          if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
+          if (snapshot.connectionState == ConnectionState.waiting ||
+              !snapshot.hasData)
             return Center(child: CircularProgressIndicator());
           var article = snapshot.data!;
           return _buildView(article);
@@ -98,8 +99,8 @@ class _ArticlePageState extends State<ArticlePage> {
                   //var buildNumber = int.tryParse(packageInfo.buildNumber);
                   var encoder = JsonEncoder.withIndent("  ");
                   var data = await Modular.to.push(MaterialPageRoute(
-                      builder: (context) =>
-                          EditorCodeDialogPage(initialValue: encoder.convert(article.toJson()))));
+                      builder: (context) => EditorCodeDialogPage(
+                          initialValue: encoder.convert(article.toJson()))));
                   if (data != null) {
                     var article = Article.fromJson(data);
                     _editorBloc?.updateArticle(article);
@@ -114,7 +115,8 @@ class _ArticlePageState extends State<ArticlePage> {
           Padding(
               padding: EdgeInsets.all(4),
               child: Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: Column(children: [
@@ -126,20 +128,26 @@ class _ArticlePageState extends State<ArticlePage> {
                                   child: Column(children: [
                                     TextFormField(
                                         decoration: InputDecoration(
-                                            labelText: "article.title.label".tr(),
-                                            hintText: "article.title.hint".tr()),
+                                            labelText:
+                                                "article.title.label".tr(),
+                                            hintText:
+                                                "article.title.hint".tr()),
                                         validator: (value) {
-                                          if (value!.isEmpty) return "article.title.empty".tr();
+                                          if (value!.isEmpty)
+                                            return "article.title.empty".tr();
                                           return null;
                                         },
                                         controller: _titleController),
                                     TextFormField(
                                         decoration: InputDecoration(
-                                            labelText: "article.slug.label".tr(),
+                                            labelText:
+                                                "article.slug.label".tr(),
                                             hintText: "article.slug.hint".tr()),
                                         validator: (value) {
-                                          if (value!.isEmpty) return "article.slug.empty".tr();
-                                          if (_slugs!.contains(value) && value != article.slug)
+                                          if (value!.isEmpty)
+                                            return "article.slug.empty".tr();
+                                          if (_slugs!.contains(value) &&
+                                              value != article.slug)
                                             return "article.slug.exist".tr();
                                           return null;
                                         },
@@ -148,60 +156,75 @@ class _ArticlePageState extends State<ArticlePage> {
                                       padding: const EdgeInsets.all(16.0),
                                       child: ElevatedButton.icon(
                                           onPressed: () async {
-                                            var article = _editorBloc!.changeArticleSlug(
-                                                bloc.article!, _slugController.text);
-                                            article =
-                                                article.copyWith(title: _titleController.text);
+                                            var article = _editorBloc!
+                                                .changeArticleSlug(
+                                                    bloc.article!,
+                                                    _slugController.text);
+                                            article = article.copyWith(
+                                                title: _titleController.text);
                                             _editorBloc?.updateArticle(article);
                                             _editorBloc?.save();
                                             bloc.articleSubject.add(article);
                                             setState(() {});
                                           },
-                                          icon: Icon(PhosphorIcons.floppyDiskLight),
-                                          label: Text("save".tr().toUpperCase())),
+                                          icon: Icon(
+                                              PhosphorIcons.floppyDiskLight),
+                                          label:
+                                              Text("save".tr().toUpperCase())),
                                     ),
                                     Divider()
                                   ]))),
-                        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          if (article.author.name.isNotEmpty)
-                            AuthorDisplay(author: article.author, editing: _editorBloc != null),
-                          if (_editorBloc != null) ...[
-                            IconButton(
-                                tooltip: "edit".tr(),
-                                icon: Icon(PhosphorIcons.pencilLight),
-                                onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
-                                      '',
-                                      'editor',
-                                      'article',
-                                      'author'
-                                    ], queryParameters: {
-                                      "serverId": _editorBloc!.key.toString(),
-                                      "article": bloc.article!
-                                    }).toString())),
-                            if (article.author.name.isNotEmpty)
-                              IconButton(
-                                  tooltip: "delete".tr(),
-                                  icon: Icon(PhosphorIcons.trashLight),
-                                  onPressed: () async {
-                                    var articleBloc = _editorBloc!.getArticle(bloc.article!);
-                                    article = articleBloc.copyWith(author: Author());
-                                    _editorBloc?.updateArticle(article);
-                                    bloc.articleSubject.add(article);
-                                    await _editorBloc?.save();
-                                    setState(() {});
-                                  })
-                          ]
-                        ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (article.author.name.isNotEmpty)
+                                AuthorDisplay(
+                                    author: article.author,
+                                    editing: _editorBloc != null),
+                              if (_editorBloc != null) ...[
+                                IconButton(
+                                    tooltip: "edit".tr(),
+                                    icon: Icon(PhosphorIcons.pencilLight),
+                                    onPressed: () => Modular.to.pushNamed(Uri(
+                                            pathSegments: [
+                                              '',
+                                              'editor',
+                                              'article',
+                                              'author'
+                                            ],
+                                            queryParameters: {
+                                              "serverId":
+                                                  _editorBloc!.key.toString(),
+                                              "article": bloc.article!
+                                            }).toString())),
+                                if (article.author.name.isNotEmpty)
+                                  IconButton(
+                                      tooltip: "delete".tr(),
+                                      icon: Icon(PhosphorIcons.trashLight),
+                                      onPressed: () async {
+                                        var articleBloc = _editorBloc!
+                                            .getArticle(bloc.article!);
+                                        article = articleBloc.copyWith(
+                                            author: Author());
+                                        _editorBloc?.updateArticle(article);
+                                        bloc.articleSubject.add(article);
+                                        await _editorBloc?.save();
+                                        setState(() {});
+                                      })
+                              ]
+                            ]),
                         Row(children: [
                           Expanded(
                               child: (!article.body.isEmpty)
                                   ? MarkdownBody(
                                       onTapLink: (_, url, __) => launch(url!),
                                       extensionSet: md.ExtensionSet(
-                                        md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                                        md.ExtensionSet.gitHubFlavored
+                                            .blockSyntaxes,
                                         [
                                           md.EmojiSyntax(),
-                                          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
+                                          ...md.ExtensionSet.gitHubFlavored
+                                              .inlineSyntaxes
                                         ],
                                       ),
                                       data: article.body,
@@ -212,7 +235,8 @@ class _ArticlePageState extends State<ArticlePage> {
                             IconButton(
                                 tooltip: "edit".tr(),
                                 icon: Icon(PhosphorIcons.pencilLight),
-                                onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
+                                onPressed: () => Modular.to.pushNamed(
+                                        Uri(pathSegments: [
                                       "",
                                       "editor",
                                       "article",

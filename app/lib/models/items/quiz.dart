@@ -25,7 +25,8 @@ class QuizPartItem extends PartItem {
       : text = json['text'],
         time = json['time'],
         questions = (json['questions'] as List<dynamic>? ?? [])
-            .map((question) => QuizQuestion.fromJson(Map<String, dynamic>.from(question)))
+            .map((question) =>
+                QuizQuestion.fromJson(Map<String, dynamic>.from(question)))
             .toList(),
         super.fromJson(json);
 
@@ -85,7 +86,8 @@ class QuizQuestion {
         evaluation = json['evaluation'],
         multi = json['multi'] ?? false,
         answers = (json['answers'] as List<dynamic>? ?? [])
-            .map((answer) => QuizAnswer.fromJson(Map<String, dynamic>.from(answer)))
+            .map((answer) =>
+                QuizAnswer.fromJson(Map<String, dynamic>.from(answer)))
             .toList();
   Map<String, dynamic> toJson() => {
         "title": title,
@@ -142,7 +144,11 @@ class QuizAnswer {
         "minus-points": minusPoints
       };
   QuizAnswer copyWith(
-          {String? name, String? description, bool? correct, int? points, int? minusPoints}) =>
+          {String? name,
+          String? description,
+          bool? correct,
+          int? points,
+          int? minusPoints}) =>
       QuizAnswer(
           correct: correct ?? this.correct,
           description: description ?? this.description,

@@ -10,7 +10,8 @@ class BackendsModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => BackendsPage()),
     ChildRoute("/user", child: (_, args) {
-      if (args.queryParams.containsKey('collectionId') && args.queryParams.containsKey('user'))
+      if (args.queryParams.containsKey('collectionId') &&
+          args.queryParams.containsKey('user'))
         return BackendUserPage(
             model: args.data,
             collectionId: int.parse(args.queryParams['collectionId']!),

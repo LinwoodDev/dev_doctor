@@ -12,7 +12,8 @@ class AuthorEditingPage extends StatefulWidget {
   final EditorCallback onSubmit;
   final Author? author;
 
-  const AuthorEditingPage({Key? key, required this.onSubmit, this.author}) : super(key: key);
+  const AuthorEditingPage({Key? key, required this.onSubmit, this.author})
+      : super(key: key);
   @override
   _AuthorEditingPageState createState() => _AuthorEditingPageState();
 }
@@ -45,33 +46,36 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
                         child: ListView(children: [
                           TextFormField(
                               validator: (value) {
-                                if (value!.isEmpty) return "course.author.name.empty".tr();
+                                if (value!.isEmpty)
+                                  return "course.author.name.empty".tr();
                                 return null;
                               },
                               decoration: InputDecoration(
                                   labelText: "course.author.name.label".tr(),
                                   hintText: "course.author.name.hint".tr()),
-                              onChanged: (value) => setState(
-                                  () => _author = _author.copyWith(name: _nameController!.text)),
+                              onChanged: (value) => setState(() => _author =
+                                  _author.copyWith(
+                                      name: _nameController!.text)),
                               controller: _nameController),
                           TextFormField(
                               decoration: InputDecoration(
                                   labelText: "course.author.url.label".tr(),
                                   hintText: "course.author.url.hint".tr()),
                               keyboardType: TextInputType.url,
-                              onChanged: (value) => setState(
-                                  () => _author = _author.copyWith(url: _urlController!.text)),
+                              onChanged: (value) => setState(() => _author =
+                                  _author.copyWith(url: _urlController!.text)),
                               controller: _urlController),
                           TextFormField(
                               decoration: InputDecoration(
                                   suffix: ImageTypeDropdown(
                                       defaultValue: _author.avatarType,
-                                      onChanged: (value) =>
-                                          setState(() => _author.copyWith(avatarType: value))),
+                                      onChanged: (value) => setState(() =>
+                                          _author.copyWith(avatarType: value))),
                                   labelText: "course.author.avatar.label".tr(),
                                   hintText: "course.author.avatar.hint".tr()),
-                              onChanged: (value) => setState(() =>
-                                  _author = _author.copyWith(avatar: _avatarController!.text)),
+                              onChanged: (value) => setState(() => _author =
+                                  _author.copyWith(
+                                      avatar: _avatarController!.text)),
                               keyboardType: TextInputType.url,
                               controller: _avatarController),
                           SizedBox(height: 10),

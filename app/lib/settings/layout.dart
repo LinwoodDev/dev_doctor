@@ -5,7 +5,8 @@ class SettingsLayout extends StatefulWidget {
   final Widget? child;
   final SettingsPages? activePage;
 
-  const SettingsLayout({Key? key, this.child, this.activePage}) : super(key: key);
+  const SettingsLayout({Key? key, this.child, this.activePage})
+      : super(key: key);
 
   @override
   _SettingsLayoutState createState() => _SettingsLayoutState();

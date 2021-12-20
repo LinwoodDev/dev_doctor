@@ -13,7 +13,8 @@ class MarkdownEditor extends StatefulWidget {
   final String markdown;
   final EditorCallback onSubmit;
 
-  const MarkdownEditor({Key? key, this.markdown = "", required this.onSubmit}) : super(key: key);
+  const MarkdownEditor({Key? key, this.markdown = "", required this.onSubmit})
+      : super(key: key);
   @override
   _MarkdownEditorState createState() => _MarkdownEditorState();
 }
@@ -37,8 +38,8 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
             Row(children: [
               Expanded(child: textEditor, flex: 2),
               Expanded(
-                  child:
-                      _MarkdownEditorPreview(markdown: _markdownController!.text, isMobile: false))
+                  child: _MarkdownEditorPreview(
+                      markdown: _markdownController!.text, isMobile: false))
             ]));
       return _buildAppBar(isMobile, textEditor);
     });
@@ -51,8 +52,8 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
               tooltip: "editor.markdown.preview.button".tr(),
               icon: Icon(PhosphorIcons.playLight),
               onPressed: () => Modular.to.push(MaterialPageRoute(
-                  builder: (context) =>
-                      _MarkdownEditorPreview(markdown: _markdownController!.text)))),
+                  builder: (context) => _MarkdownEditorPreview(
+                      markdown: _markdownController!.text)))),
         IconButton(
             tooltip: "save".tr(),
             icon: Icon(PhosphorIcons.floppyDiskLight),
@@ -77,14 +78,16 @@ class _MarkdownEditorPreview extends StatelessWidget {
   final bool isMobile;
   final ScrollController _scrollController = ScrollController();
 
-  _MarkdownEditorPreview({Key? key, this.markdown = "", this.isMobile = true}) : super(key: key);
+  _MarkdownEditorPreview({Key? key, this.markdown = "", this.isMobile = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return isMobile
         ? Scaffold(
             appBar: MyAppBar(
-                title: "editor.markdown.preview.title".tr(), automaticallyImplyLeading: isMobile),
+                title: "editor.markdown.preview.title".tr(),
+                automaticallyImplyLeading: isMobile),
             body: _buildContent(context))
         : Container(child: _buildContent(context));
   }
@@ -98,7 +101,10 @@ class _MarkdownEditorPreview extends StatelessWidget {
               onTapLink: (_, url, __) => launch(url!),
               extensionSet: md.ExtensionSet(
                 md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
+                [
+                  md.EmojiSyntax(),
+                  ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
+                ],
               ),
               data: markdown,
               selectable: true)));

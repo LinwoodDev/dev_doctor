@@ -8,8 +8,10 @@ import 'item.dart';
 class EditorPartModule extends Module {
   @override
   List<ModularRoute> get routes => [
-        ChildRoute('/', transition: TransitionType.defaultTransition, child: (_, args) {
-          var bloc = ServerEditorBloc.fromKey(int.parse(args.queryParams['serverId']!));
+        ChildRoute('/', transition: TransitionType.defaultTransition,
+            child: (_, args) {
+          var bloc = ServerEditorBloc.fromKey(
+              int.parse(args.queryParams['serverId']!));
           return PartItemPage(
               model: args.data,
               editorBloc: bloc,

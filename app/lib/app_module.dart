@@ -25,8 +25,8 @@ class AppModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => MyHomePage(), children: [
-      ...HomeRoutes.values.map((e) =>
-          ChildRoute(e.route, child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
+      ...HomeRoutes.values.map((e) => ChildRoute(e.route,
+          child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
       WildcardRoute(child: (_, __) => ErrorDisplay())
     ]),
     WildcardRoute(child: (_, __) => ErrorDisplay()),
@@ -36,7 +36,8 @@ class AppModule extends Module {
     ModuleRoute('/settings', module: SettingsModule()),
     ModuleRoute('/courses', module: CourseModule()),
     ChildRoute('/error', child: (_, args) => ErrorDisplay()),
-    ChildRoute('/add', child: (_, args) => AddServerPage(url: args.queryParams['url']!)),
+    ChildRoute('/add',
+        child: (_, args) => AddServerPage(url: args.queryParams['url']!)),
   ];
 }
 

@@ -29,8 +29,10 @@ class _ItemFetcher {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
       var server = await entry.fetchServer();
-      if ((server!.body.isNotEmpty && server.body.toUpperCase().contains(query.toUpperCase())) ||
-          server.name.toUpperCase().contains(query.toUpperCase())) list.add(server);
+      if ((server!.body.isNotEmpty &&
+              server.body.toUpperCase().contains(query.toUpperCase())) ||
+          server.name.toUpperCase().contains(query.toUpperCase()))
+        list.add(server);
     }
     _currentPage++;
     return list;
@@ -81,7 +83,8 @@ class CustomSearchDelegate extends SearchDelegate {
       );
     }
     _itemFetcher = _ItemFetcher();
-    return BackendsList(fetcher: _itemFetcher, query: query, gridView: gridView);
+    return BackendsList(
+        fetcher: _itemFetcher, query: query, gridView: gridView);
   }
 
   @override
@@ -97,7 +100,8 @@ class BackendsList extends StatefulWidget {
   final String query;
   final bool gridView;
 
-  const BackendsList({Key? key, this.fetcher, this.query = "", required this.gridView})
+  const BackendsList(
+      {Key? key, this.fetcher, this.query = "", required this.gridView})
       : super(key: key);
   @override
   _BackendsListState createState() => _BackendsListState();
@@ -185,7 +189,8 @@ class _BackendsListState extends State<BackendsList> {
         : Hero(
             tag:
                 "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
-            child: UniversalImage(type: server.icon, url: server.url + "/icon"));
+            child:
+                UniversalImage(type: server.icon, url: server.url + "/icon"));
 
     if (widget.gridView)
       return Card(
@@ -200,7 +205,8 @@ class _BackendsListState extends State<BackendsList> {
                     Expanded(
                         child: Column(children: [
                       Text(server.name),
-                      Text(server.url, style: Theme.of(context).textTheme.caption)
+                      Text(server.url,
+                          style: Theme.of(context).textTheme.caption)
                     ])),
                     AddBackendButton(server: server)
                   ])
@@ -221,7 +227,8 @@ class BackendsPage extends StatefulWidget {
   _BackendsPageState createState() => _BackendsPageState();
 }
 
-class _BackendsPageState extends State<BackendsPage> with TickerProviderStateMixin {
+class _BackendsPageState extends State<BackendsPage>
+    with TickerProviderStateMixin {
   final _itemFetcher = _ItemFetcher();
   bool gridView = false;
   @override
@@ -233,16 +240,20 @@ class _BackendsPageState extends State<BackendsPage> with TickerProviderStateMix
               icon: Icon(PhosphorIcons.magnifyingGlassLight),
               onPressed: () {
                 showSearch(
-                    context: context, delegate: CustomSearchDelegate(_itemFetcher, gridView));
+                    context: context,
+                    delegate: CustomSearchDelegate(_itemFetcher, gridView));
               }),
           IconButton(
               tooltip: "grid-view".tr(),
-              icon: Icon(gridView ? PhosphorIcons.listLight : PhosphorIcons.squaresFourLight),
+              icon: Icon(gridView
+                  ? PhosphorIcons.listLight
+                  : PhosphorIcons.squaresFourLight),
               onPressed: () {
                 setState(() => gridView = !gridView);
               })
         ]),
-        body: BackendsList(fetcher: _itemFetcher, query: "", gridView: gridView));
+        body:
+            BackendsList(fetcher: _itemFetcher, query: "", gridView: gridView));
   }
 }
 
@@ -252,12 +263,14 @@ class AddBackendButton extends StatefulWidget {
   final CoursesServer server;
   final OnBackendChanged? onChange;
 
-  const AddBackendButton({Key? key, required this.server, this.onChange}) : super(key: key);
+  const AddBackendButton({Key? key, required this.server, this.onChange})
+      : super(key: key);
   @override
   _AddBackendButtonState createState() => _AddBackendButtonState();
 }
 
-class _AddBackendButtonState extends State<AddBackendButton> with SingleTickerProviderStateMixin {
+class _AddBackendButtonState extends State<AddBackendButton>
+    with SingleTickerProviderStateMixin {
   late CoursesServer _server;
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -267,7 +280,9 @@ class _AddBackendButtonState extends State<AddBackendButton> with SingleTickerPr
     super.initState();
     _server = widget.server;
     _controller = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 100), value: _server.added ? 1 : 0);
+        vsync: this,
+        duration: Duration(milliseconds: 100),
+        value: _server.added ? 1 : 0);
     _animation = Tween<double>(begin: -0.25, end: 0).animate(_controller);
   }
 
@@ -288,8 +303,11 @@ class _AddBackendButtonState extends State<AddBackendButton> with SingleTickerPr
     return RotationTransition(
         turns: _animation,
         child: IconButton(
-          tooltip: (_server.added ? "backends.uninstall" : "backends.install").tr(),
-          icon: Icon(_server.added ? PhosphorIcons.minusLight : PhosphorIcons.plusLight),
+          tooltip:
+              (_server.added ? "backends.uninstall" : "backends.install").tr(),
+          icon: Icon(_server.added
+              ? PhosphorIcons.minusLight
+              : PhosphorIcons.plusLight),
           onPressed: () async {
             var toggledServer = await _server.toggle();
             (_server.added ? _controller.reverse() : _controller.forward())

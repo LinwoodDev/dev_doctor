@@ -28,15 +28,18 @@ class ServerEditorBloc extends HiveObject {
         _courses = List<CourseEditorBloc>.from(courses),
         _articles = List<Article>.from(articles);
   ServerEditorBloc.fromJson(Map<String, dynamic> json)
-      : _server = CoursesServer.fromJson(Map<String, dynamic>.from(json['server'] ?? {})),
+      : _server = CoursesServer.fromJson(
+            Map<String, dynamic>.from(json['server'] ?? {})),
         note = json['note'],
         _courses = List<CourseEditorBloc>.from((json['courses'] ?? [])
             .map((e) => CourseEditorBloc.fromJson(Map<String, dynamic>.from(e)))
             .toList()),
-        _articles = List<Article>.from((json['articles'] as List<dynamic>? ?? [])
-            .map((e) => Article.fromJson(Map<String, dynamic>.from(e)))
-            .toList());
-  factory ServerEditorBloc.fromKey(int? key) => Hive.box<ServerEditorBloc>('editor').get(key)!;
+        _articles = List<Article>.from(
+            (json['articles'] as List<dynamic>? ?? [])
+                .map((e) => Article.fromJson(Map<String, dynamic>.from(e)))
+                .toList());
+  factory ServerEditorBloc.fromKey(int? key) =>
+      Hive.box<ServerEditorBloc>('editor').get(key)!;
   Map<String, dynamic> toJson(int? apiVersion) => {
         "server": server.toJson(),
         "note": note,
@@ -48,12 +51,14 @@ class ServerEditorBloc extends HiveObject {
 
   CourseEditorBloc? createCourse(String slug) {
     if (getCourseSlugs().contains(slug)) return null;
-    var courseBloc = CourseEditorBloc(Course(name: slug, slug: slug, parts: []));
+    var courseBloc =
+        CourseEditorBloc(Course(name: slug, slug: slug, parts: []));
     _courses.add(courseBloc);
     return courseBloc;
   }
 
-  void deleteCourse(String slug) => _courses.removeWhere((element) => element.course.slug == slug);
+  void deleteCourse(String slug) =>
+      _courses.removeWhere((element) => element.course.slug == slug);
 
   CourseEditorBloc getCourse(String slug) =>
       _courses.firstWhere((element) => element.course.slug == slug);
@@ -75,9 +80,11 @@ class ServerEditorBloc extends HiveObject {
     return part;
   }
 
-  bool hasArticle(String slug) => _articles.where((element) => element.slug == slug).isNotEmpty;
+  bool hasArticle(String slug) =>
+      _articles.where((element) => element.slug == slug).isNotEmpty;
 
-  void deleteArticle(String? slug) => _articles.removeWhere((element) => element.slug == slug);
+  void deleteArticle(String? slug) =>
+      _articles.removeWhere((element) => element.slug == slug);
 
   void updateArticle(Article article) {
     var index = _articles.indexWhere((element) => article.slug == element.slug);
@@ -87,11 +94,13 @@ class ServerEditorBloc extends HiveObject {
   Article changeArticleSlug(String oldSlug, String newSlug) {
     var part = getArticle(oldSlug);
     var newBloc = part.copyWith(slug: newSlug);
-    _articles[_articles.indexWhere((element) => element.slug == oldSlug)] = newBloc;
+    _articles[_articles.indexWhere((element) => element.slug == oldSlug)] =
+        newBloc;
     return newBloc;
   }
 
-  Article getArticle(String slug) => _articles.firstWhere((element) => element.slug == slug);
+  Article getArticle(String slug) =>
+      _articles.firstWhere((element) => element.slug == slug);
 }
 
 class ServerEditorBlocAdapter extends TypeAdapter<ServerEditorBloc> {

@@ -18,7 +18,11 @@ class VideoPartItemPage extends StatefulWidget {
   final int itemId;
 
   const VideoPartItemPage(
-      {Key? key, required this.item, required this.part, this.editorBloc, required this.itemId})
+      {Key? key,
+      required this.item,
+      required this.part,
+      this.editorBloc,
+      required this.itemId})
       : super(key: key);
   @override
   _VideoPartItemPageState createState() => _VideoPartItemPageState();
@@ -50,17 +54,21 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                         child: AspectRatio(
                             aspectRatio: 16 / 9,
                             child: InAppWebView(
-                                onWebViewCreated: (InAppWebViewController controller) {
+                                onWebViewCreated:
+                                    (InAppWebViewController controller) {
                                   webView = controller;
                                 },
-                                initialUrlRequest:
-                                    URLRequest(url: widget.item.getSource(widget.part))))))),
+                                initialUrlRequest: URLRequest(
+                                    url: widget.item
+                                        .getSource(widget.part))))))),
         if (widget.editorBloc != null)
           IconButton(
               tooltip: "edit".tr(),
               onPressed: () => Modular.to.push(MaterialPageRoute(
                   builder: (context) => defaultVideo.VideoPartItemEditorPage(
-                      editorBloc: widget.editorBloc, item: widget.item, itemId: widget.itemId))),
+                      editorBloc: widget.editorBloc,
+                      item: widget.item,
+                      itemId: widget.itemId))),
               icon: Icon(PhosphorIcons.pencilLight))
       ]);
     else

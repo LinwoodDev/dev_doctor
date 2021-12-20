@@ -3,7 +3,11 @@ class Author {
   final String url;
   final String avatar;
   final String avatarType;
-  const Author({this.name = "", this.url = "", this.avatar = "", this.avatarType = 'png'});
+  const Author(
+      {this.name = "",
+      this.url = "",
+      this.avatar = "",
+      this.avatarType = 'png'});
   Author.fromJson(Map<String, dynamic> json)
       : name = json['name'] ?? "",
         url = json['url'] ?? "",
@@ -12,9 +16,11 @@ class Author {
   Map<String, dynamic> toJson(int? apiVersion) =>
       {"api-version": apiVersion, "name": name, "url": url, "avatar": avatar};
 
-  Author copyWith({String? avatar, String? name, String? url, String? avatarType}) => Author(
-      avatar: avatar ?? this.avatar,
-      name: name ?? this.name,
-      url: url ?? this.url,
-      avatarType: avatarType ?? this.avatarType);
+  Author copyWith(
+          {String? avatar, String? name, String? url, String? avatarType}) =>
+      Author(
+          avatar: avatar ?? this.avatar,
+          name: name ?? this.name,
+          url: url ?? this.url,
+          avatarType: avatarType ?? this.avatarType);
 }

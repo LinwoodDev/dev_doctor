@@ -26,7 +26,8 @@ class VideoPartItem extends PartItem {
       : url = json['url'],
         points = json['points'] ?? 1,
         source = json['source'] != null
-            ? EnumToString.fromString(VideoSource.values, json['source']) ?? VideoSource.url
+            ? EnumToString.fromString(VideoSource.values, json['source']) ??
+                VideoSource.url
             : VideoSource.url,
         super.fromJson(json);
   Uri getSource(CoursePart part) {
@@ -59,7 +60,11 @@ class VideoPartItem extends PartItem {
     };
   }
 
-  VideoPartItem copyWith({String? name, String? description, VideoSource? source, String? url}) =>
+  VideoPartItem copyWith(
+          {String? name,
+          String? description,
+          VideoSource? source,
+          String? url}) =>
       VideoPartItem(
           name: name ?? this.name,
           description: description ?? this.description,

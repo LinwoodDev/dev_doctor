@@ -15,7 +15,13 @@ class PartDetailsPage extends StatefulWidget {
   final ServerEditorBloc? editorBloc;
 
   const PartDetailsPage(
-      {Key? key, this.model, this.partId, this.course, this.serverId, this.editorBloc, this.part})
+      {Key? key,
+      this.model,
+      this.partId,
+      this.course,
+      this.serverId,
+      this.editorBloc,
+      this.part})
       : super(key: key);
   @override
   _PartDetailsPageState createState() => _PartDetailsPageState();
@@ -28,7 +34,8 @@ class _PartDetailsPageState extends State<PartDetailsPage> {
       return widget.editorBloc!.getCourse(widget.course!).parts[widget.partId!];
     var server = await CoursesServer.fetch(index: widget.serverId);
     var course = await server?.fetchCourse(widget.course!);
-    return course?.fetchPart(widget.partId != null ? course.parts[widget.partId!] : widget.part);
+    return course?.fetchPart(
+        widget.partId != null ? course.parts[widget.partId!] : widget.part);
   }
 
   @override
@@ -36,7 +43,8 @@ class _PartDetailsPageState extends State<PartDetailsPage> {
     return FutureBuilder<CoursePart?>(
         future: _buildFuture(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
+          if (snapshot.connectionState == ConnectionState.waiting ||
+              !snapshot.hasData)
             return Center(child: CircularProgressIndicator());
           if (snapshot.hasError) return Text("Error: ${snapshot.error}");
           var part = snapshot.data;

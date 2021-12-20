@@ -18,7 +18,8 @@ class PartItemLayout extends StatefulWidget {
   final CoursePart part;
   final int? itemId;
 
-  const PartItemLayout({Key? key, this.child, this.itemId, this.editorBloc, required this.part})
+  const PartItemLayout(
+      {Key? key, this.child, this.itemId, this.editorBloc, required this.part})
       : super(key: key);
 
   @override
@@ -64,13 +65,15 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                     IconButton(
                         tooltip: "course.delete.item.tooltip".tr(),
                         icon: Icon(PhosphorIcons.minusCircleLight),
-                        onPressed: () => _showDeleteDialog(widget.part, widget.itemId ?? 0)),
+                        onPressed: () =>
+                            _showDeleteDialog(widget.part, widget.itemId ?? 0)),
                   IconButton(
                       tooltip: "course.add.item.tooltip".tr(),
                       icon: Icon(PhosphorIcons.plusCircleLight),
                       onPressed: () => _showCreateDialog(widget.part)),
                   EditorCoursePartPopupMenu(
-                      bloc: widget.editorBloc!, partBloc: Modular.get<CoursePartBloc>())
+                      bloc: widget.editorBloc!,
+                      partBloc: Modular.get<CoursePartBloc>())
                 ] else
                   IconButton(
                     icon: Icon(PhosphorIcons.shareNetworkLight),
@@ -109,7 +112,8 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                     var item = widget.part.items[index];
                     var text = Text(item.name,
                         overflow: TextOverflow.fade,
-                        style: widget.editorBloc == null && !widget.part.itemVisited(index)
+                        style: widget.editorBloc == null &&
+                                !widget.part.itemVisited(index)
                             ? TextStyle(fontWeight: FontWeight.bold)
                             : null);
                     return Tab(icon: Icon(item.icon), child: text);
@@ -145,37 +149,45 @@ class _PartItemLayoutState extends State<PartItemLayout> {
             title: Text("course.add.item.title".tr()),
             content: Container(
                 child: Form(
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              TextFormField(
-                  controller: nameController,
-                  decoration: InputDecoration(
-                      labelText: "course.add.item.name.label".tr(),
-                      hintText: "course.add.item.name.hint".tr())),
-              TextFormField(
-                  controller: descriptionController,
-                  maxLines: null,
-                  minLines: 3,
-                  decoration: InputDecoration(
-                      labelText: "course.add.item.description.label".tr(),
-                      hintText: "course.add.item.description.hint".tr())),
-              DropdownButtonFormField<PartItemTypes>(
-                  decoration: InputDecoration(labelText: "course.add.item.type".tr()),
-                  value: type,
-                  onChanged: (value) => setState(() => type = value ?? PartItemTypes.text),
-                  items: PartItemTypes.values
-                      .map((e) => DropdownMenuItem<PartItemTypes>(
-                          child: Text("course.type.${e.name}".tr()), value: e))
-                      .toList())
-            ])))));
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                  TextFormField(
+                      controller: nameController,
+                      decoration: InputDecoration(
+                          labelText: "course.add.item.name.label".tr(),
+                          hintText: "course.add.item.name.hint".tr())),
+                  TextFormField(
+                      controller: descriptionController,
+                      maxLines: null,
+                      minLines: 3,
+                      decoration: InputDecoration(
+                          labelText: "course.add.item.description.label".tr(),
+                          hintText: "course.add.item.description.hint".tr())),
+                  DropdownButtonFormField<PartItemTypes>(
+                      decoration: InputDecoration(
+                          labelText: "course.add.item.type".tr()),
+                      value: type,
+                      onChanged: (value) =>
+                          setState(() => type = value ?? PartItemTypes.text),
+                      items: PartItemTypes.values
+                          .map((e) => DropdownMenuItem<PartItemTypes>(
+                              child: Text("course.type.${e.name}".tr()),
+                              value: e))
+                          .toList())
+                ])))));
   }
 
   Future<void> _createItem(CoursePart part,
-      {required String name, required String description, required PartItemTypes type}) async {
+      {required String name,
+      required String description,
+      required PartItemTypes type}) async {
     var params = Modular.args.queryParams;
-    var courseBloc = widget.editorBloc!.getCourse(
-        params['course'] ?? widget.editorBloc!.server.courses[int.parse(params['courseId']!)]);
+    var courseBloc = widget.editorBloc!.getCourse(params['course'] ??
+        widget.editorBloc!.server.courses[int.parse(params['courseId']!)]);
     var value = type.create(name: name, description: description);
-    var current = part.copyWith(items: List<PartItem>.from(part.items)..add(value));
+    var current =
+        part.copyWith(items: List<PartItem>.from(part.items)..add(value));
     courseBloc.updateCoursePart(current);
     await widget.editorBloc!.save();
     setState(() {
@@ -202,14 +214,16 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                   child: Text("yes".tr().toUpperCase()))
             ],
             title: Text("course.delete.item.title".tr()),
-            content: Text("course.delete.item.content"
-                .tr(namedArgs: {'index': index.toString(), 'name': part.items[index].name}))));
+            content: Text("course.delete.item.content".tr(namedArgs: {
+              'index': index.toString(),
+              'name': part.items[index].name
+            }))));
   }
 
   Future<void> _deleteItem(CoursePart part, int index) async {
     var params = Modular.args.queryParams;
-    var courseBloc = widget.editorBloc!.getCourse(
-        params['course'] ?? widget.editorBloc!.server.courses[int.parse(params['courseId']!)]);
+    var courseBloc = widget.editorBloc!.getCourse(params['course'] ??
+        widget.editorBloc!.server.courses[int.parse(params['courseId']!)]);
     var items = List<PartItem>.from(part.items);
     items.removeAt(index);
     var current = part.copyWith(items: items);

@@ -5,7 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-isWindow() => !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
+isWindow() =>
+    !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   final String? title;
@@ -33,8 +34,10 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     if (isWindow())
       return MoveWindow(
-          child:
-              WindowBorder(color: Theme.of(context).primaryColor, width: 1, child: _buildAppBar()));
+          child: WindowBorder(
+              color: Theme.of(context).primaryColor,
+              width: 1,
+              child: _buildAppBar()));
     return _buildAppBar();
   }
 
@@ -42,7 +45,9 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         leading: this.leading,
         elevation: 5.0,
         automaticallyImplyLeading: automaticallyImplyLeading,
-        title: isWindow() ? WindowTitleBarBox(child: Text(title ?? '')) : Text(title ?? ''),
+        title: isWindow()
+            ? WindowTitleBarBox(child: Text(title ?? ''))
+            : Text(title ?? ''),
         bottom: bottom,
         actions: [
           ...actions,

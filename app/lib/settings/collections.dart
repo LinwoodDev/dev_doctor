@@ -12,7 +12,8 @@ import 'layout.dart';
 
 class CollectionsSettingsPage extends StatefulWidget {
   @override
-  _CollectionsSettingsPageState createState() => _CollectionsSettingsPageState();
+  _CollectionsSettingsPageState createState() =>
+      _CollectionsSettingsPageState();
 }
 
 class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
@@ -30,19 +31,21 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
           activePage: SettingsPages.collections,
           child: ValueListenableBuilder(
               valueListenable: _box.listenable(),
-              builder: (context, Box<String> box, _) => FutureBuilder<List<BackendCollection?>>(
+              builder: (context, Box<String> box, _) => FutureBuilder<
+                      List<BackendCollection?>>(
                   future: Future.wait(_box.values
                       .toList()
                       .asMap()
-                      .map((index, e) =>
-                          MapEntry(index, BackendCollection.fetch(url: e, index: index)))
+                      .map((index, e) => MapEntry(
+                          index, BackendCollection.fetch(url: e, index: index)))
                       .values),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
                         return Center(child: CircularProgressIndicator());
                       default:
-                        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                        if (snapshot.hasError)
+                          return Text('Error: ${snapshot.error}');
                         var data = snapshot.data;
                         return Scrollbar(
                             child: ListView.builder(
@@ -53,14 +56,18 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                                       // Show a red background as the item is swiped away.
                                       background: Container(color: Colors.red),
                                       key: Key(_box.getAt(index)!),
-                                      onDismissed: (direction) => _deleteCollection(index),
+                                      onDismissed: (direction) =>
+                                          _deleteCollection(index),
                                       child: ListTile(
-                                          leading: current?.icon.isEmpty ?? current == null
+                                          leading: current?.icon.isEmpty ??
+                                                  current == null
                                               ? null
                                               : UniversalImage(
-                                                  type: current!.icon, url: current.url + "/icon"),
-                                          title: Text(
-                                              current?.name ?? "settings.collections.error".tr()),
+                                                  type: current!.icon,
+                                                  url: current.url + "/icon"),
+                                          title: Text(current?.name ??
+                                              "settings.collections.error"
+                                                  .tr()),
                                           subtitle: Text(current?.url ?? "")));
                                 }));
                     }

@@ -29,8 +29,10 @@ class _CreateServerPageState extends State<CreateServerPage> {
                         child: ListView(children: [
                           TextFormField(
                               validator: (value) {
-                                if (value!.isEmpty) return "editor.create.name.empty".tr();
-                                if (_names.contains(value)) return "editor.create.name.exist".tr();
+                                if (value!.isEmpty)
+                                  return "editor.create.name.empty".tr();
+                                if (_names.contains(value))
+                                  return "editor.create.name.exist".tr();
                                 return null;
                               },
                               decoration: InputDecoration(
@@ -48,7 +50,8 @@ class _CreateServerPageState extends State<CreateServerPage> {
             tooltip: "editor.create.submit".tr(),
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                _box.add(ServerEditorBloc(name: _nameController.text, note: _noteController.text));
+                _box.add(ServerEditorBloc(
+                    name: _nameController.text, note: _noteController.text));
                 Navigator.of(context).pop();
               }
             }));

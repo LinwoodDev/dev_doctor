@@ -18,10 +18,10 @@
     "prettier:diff": "prettier --config .prettierrc --list-different \"**/*.{js,jsx,ts,tsx,md,mdx}\""
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-beta.6",
-    "@docusaurus/plugin-client-redirects": "^2.0.0-beta.6",
-    "@docusaurus/plugin-pwa": "2.0.0-beta.6",
-    "@docusaurus/preset-classic": "2.0.0-beta.6",
+    "@docusaurus/core": "2.0.0-beta.13",
+    "@docusaurus/plugin-client-redirects": "2.0.0-beta.13",
+    "@docusaurus/plugin-pwa": "2.0.0-beta.13",
+    "@docusaurus/preset-classic": "2.0.0-beta.13",
     "@mdx-js/react": "^1.6.22",
     "clsx": "^1.1.1",
     "react": "^17.0.2",
@@ -29,17 +29,17 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.15.8",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb": "^18.2.1",
+    "eslint": "^8.5.0",
+    "eslint-config-airbnb": "^19.0.2",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-header": "^3.1.1",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.26.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "pnp-webpack-plugin": "^1.7.0",
-    "prettier": "^2.4.1",
-    "stylelint": "^13.13.1"
+    "prettier": "^2.5.1",
+    "stylelint": "^14.1.0"
   },
   "browserslist": {
     "production": [

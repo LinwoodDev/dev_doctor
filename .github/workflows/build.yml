@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: ⬆️ Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: 🔧 Setup java
         uses: actions/setup-java@v1
         with:
@@ -36,7 +36,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: ⬆️ Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
         with:
           channel: "beta" # or: 'stable' or 'dev'
@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: ⬆️ Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Get dependencies
         run: |
           sudo apt-get update
@@ -101,7 +101,7 @@ jobs:
   #  runs-on: macos-latest
   #  steps:
   #    - name: ⬆️ Checkout
-  #      uses: actions/checkout@v1
+  #      uses: actions/checkout@v2
   #    - uses: subosito/flutter-action@v1
   #      with:
   #        channel: "dev" # or: 'stable' or 'dev'

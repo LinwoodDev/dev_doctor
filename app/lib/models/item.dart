@@ -17,7 +17,10 @@ abstract class PartItem {
   IconData get icon => PhosphorIcons.squareLight;
 
   PartItem(
-      {this.allowReset = true, required this.name, required this.description, required this.index});
+      {this.allowReset = true,
+      required this.name,
+      required this.description,
+      required this.index});
   PartItem.fromJson(Map<String, dynamic> json)
       : name = json['name'] ?? '',
         description = json['description'] ?? '',
@@ -36,7 +39,8 @@ extension PartItemTypesExtension on PartItemTypes {
       case PartItemTypes.text:
         return TextPartItem(name: name, description: description, index: index);
       case PartItemTypes.video:
-        return VideoPartItem(name: name, description: description, index: index, url: '');
+        return VideoPartItem(
+            name: name, description: description, index: index, url: '');
       case PartItemTypes.quiz:
         return QuizPartItem(name: name, description: description, index: index);
     }

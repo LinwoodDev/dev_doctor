@@ -37,7 +37,8 @@ class _ItemFetcher {
         var server = await CoursesServer.fetch(url: e);
         entries.addAll(await server?.fetchArticles() ?? []);
       }));
-      entries.sort((a, b) => b.time != null ? a.time?.compareTo(b.time!) ?? -1 : 1);
+      entries.sort(
+          (a, b) => b.time != null ? a.time?.compareTo(b.time!) ?? -1 : 1);
     }
     final list = <Article>[];
     var n = min(_itemsPerPage, entries.length - _currentPage * _itemsPerPage);
@@ -45,7 +46,8 @@ class _ItemFetcher {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
       if (entry.body.toUpperCase().contains(query.toUpperCase()) ||
-          entry.title.toUpperCase().contains(query.toUpperCase())) list.add(entry);
+          entry.title.toUpperCase().contains(query.toUpperCase()))
+        list.add(entry);
     }
     _currentPage++;
     return list;
@@ -96,7 +98,11 @@ class CustomSearchDelegate extends SearchDelegate {
         ],
       );
     }
-    return ArticlesList(fetcher: _itemFetcher, query: query, servers: servers, gridView: gridView);
+    return ArticlesList(
+        fetcher: _itemFetcher,
+        query: query,
+        servers: servers,
+        gridView: gridView);
   }
 
   @override
@@ -148,32 +154,42 @@ class _ArticlesPageState extends State<ArticlesPage> {
                               onPressed: () => Navigator.of(context).pop())
                         ],
                         content: StatefulBuilder(
-                            builder: (context, setInnerState) => SingleChildScrollView(
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: List.generate(_box.length, (index) {
-                                      var url = _box.getAt(index)!;
-                                      return CheckboxListTile(
-                                          title: Text(url),
-                                          value: _filteredServers.contains(url),
-                                          onChanged: (newValue) {
-                                            setInnerState(() {
-                                              newValue!
-                                                  ? _filteredServers.add(url)
-                                                  : _filteredServers.remove(url);
-                                            });
-                                          });
-                                    }))))));
-                setState(() => _itemFetcher = _ItemFetcher(servers: _filteredServers));
+                            builder: (context, setInnerState) =>
+                                SingleChildScrollView(
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children:
+                                            List.generate(_box.length, (index) {
+                                          var url = _box.getAt(index)!;
+                                          return CheckboxListTile(
+                                              title: Text(url),
+                                              value: _filteredServers
+                                                  .contains(url),
+                                              onChanged: (newValue) {
+                                                setInnerState(() {
+                                                  newValue!
+                                                      ? _filteredServers
+                                                          .add(url)
+                                                      : _filteredServers
+                                                          .remove(url);
+                                                });
+                                              });
+                                        }))))));
+                setState(() =>
+                    _itemFetcher = _ItemFetcher(servers: _filteredServers));
               }),
           IconButton(
               tooltip: "grid-view".tr(),
-              icon: Icon(gridView ? PhosphorIcons.listLight : PhosphorIcons.squaresFourLight),
+              icon: Icon(gridView
+                  ? PhosphorIcons.listLight
+                  : PhosphorIcons.squaresFourLight),
               onPressed: () {
                 setState(() => gridView = !gridView);
               })
         ]),
-        body: ArticlesList(fetcher: _itemFetcher, query: "", gridView: gridView));
+        body:
+            ArticlesList(fetcher: _itemFetcher, query: "", gridView: gridView));
   }
 }
 
@@ -184,7 +200,11 @@ class ArticlesList extends StatefulWidget {
   final List<String>? servers;
 
   const ArticlesList(
-      {Key? key, this.fetcher, required this.query, this.servers, required this.gridView})
+      {Key? key,
+      this.fetcher,
+      required this.query,
+      this.servers,
+      required this.gridView})
       : super(key: key);
   @override
   _ArticlesListState createState() => _ArticlesListState();
@@ -207,7 +227,9 @@ class _ArticlesListState extends State<ArticlesList> {
   // Triggers fecth() and then add new items or change _hasMore flag
   void _loadMore() {
     _isLoading = true;
-    widget.fetcher!.fetch(query: widget.query).then((List<Article> fetchedList) {
+    widget.fetcher!
+        .fetch(query: widget.query)
+        .then((List<Article> fetchedList) {
       if (fetchedList.isEmpty) {
         setState(() {
           _isLoading = false;
@@ -254,7 +276,8 @@ class _ArticlesListState extends State<ArticlesList> {
     var isFavorite = _favoriteBox.get(article.url, defaultValue: false)!;
     var favorite = IconButton(
         tooltip: "article.like".tr(),
-        icon: Icon(isFavorite ? PhosphorIcons.heartFill : PhosphorIcons.heartLight),
+        icon: Icon(
+            isFavorite ? PhosphorIcons.heartFill : PhosphorIcons.heartLight),
         onPressed: () {
           _favoriteBox.put(article.url, !isFavorite);
           setState(() {});
@@ -263,7 +286,8 @@ class _ArticlesListState extends State<ArticlesList> {
         ? null
         : Hero(
             tag: "Article-icon-${article.server?.index}-${article.slug}",
-            child: UniversalImage(type: article.icon, url: article.url + "/icon"));
+            child:
+                UniversalImage(type: article.icon, url: article.url + "/icon"));
     if (widget.gridView)
       return Card(
           child: InkWell(
@@ -274,12 +298,15 @@ class _ArticlesListState extends State<ArticlesList> {
                   child: SizedBox(
                     height: 250,
                     child: Column(children: [
-                      Expanded(child: Container(padding: const EdgeInsets.all(8.0), child: hero)),
+                      Expanded(
+                          child: Container(
+                              padding: const EdgeInsets.all(8.0), child: hero)),
                       Row(children: [
                         Expanded(
                             child: Column(children: [
                           Text(article.title),
-                          Text(article.body, style: Theme.of(context).textTheme.caption)
+                          Text(article.body,
+                              style: Theme.of(context).textTheme.caption)
                         ])),
                         favorite
                       ])

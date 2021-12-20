@@ -11,11 +11,13 @@ class CourseEditorBloc {
       : _parts = List<CoursePart>.from(parts);
 
   CourseEditorBloc.fromJson(Map<String, dynamic> json)
-      : _course = Course.fromJson(Map<String, dynamic>.from(json['course'] ?? {})),
+      : _course =
+            Course.fromJson(Map<String, dynamic>.from(json['course'] ?? {})),
         _parts = List<CoursePart>.from((json['parts'] as List<dynamic>? ?? [])
             .map((e) => CoursePart.fromJson(Map<String, dynamic>.from(e)))
             .toList());
-  Course get course => _course.copyWith(parts: parts.map((e) => e.slug).toList());
+  Course get course =>
+      _course.copyWith(parts: parts.map((e) => e.slug).toList());
   set course(Course value) {
     if (_course.slug == value.slug) _course = value;
   }
@@ -33,9 +35,11 @@ class CourseEditorBloc {
     return part;
   }
 
-  bool hasCoursePart(String slug) => parts.where((element) => element.slug == slug).isNotEmpty;
+  bool hasCoursePart(String slug) =>
+      parts.where((element) => element.slug == slug).isNotEmpty;
 
-  void deleteCoursePart(String? slug) => _parts.removeWhere((element) => element.slug == slug);
+  void deleteCoursePart(String? slug) =>
+      _parts.removeWhere((element) => element.slug == slug);
 
   void updateCoursePart(CoursePart part) {
     var index = _parts.indexWhere((element) => part.slug == element.slug);
@@ -49,8 +53,9 @@ class CourseEditorBloc {
     return newBloc;
   }
 
-  CoursePart getCoursePart(String slug) =>
-      _parts.firstWhere((element) => element.slug == slug).copyWith(course: _course);
+  CoursePart getCoursePart(String slug) => _parts
+      .firstWhere((element) => element.slug == slug)
+      .copyWith(course: _course);
 }
 
 class CourseEditorBlocAdapter extends TypeAdapter<CourseEditorBloc> {

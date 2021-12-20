@@ -49,7 +49,8 @@ class Course {
         name: json['name'] ?? '',
         description: json['description'] ?? '',
         icon: json['icon'] ?? '',
-        author: Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
+        author:
+            Author.fromJson(Map<String, dynamic>.from(json['author'] ?? {})),
         body: json['body'] ?? '',
         installed: json['installed'] ?? false,
         lang: json['lang'] ?? '',
@@ -86,7 +87,8 @@ class Course {
 
   Future<CoursePart?> fetchPart(String? part) async {
     try {
-      var data = await loadFile("${server!.url}/$slug/$part/config", type: server!.type);
+      var data = await loadFile("${server!.url}/$slug/$part/config",
+          type: server!.type);
       if (data == null) return null;
       //data['items'] = yamlListToJson(data['items']).toList();
       data['course'] = this;
@@ -131,7 +133,8 @@ class CourseAdapter extends TypeAdapter<Course> {
   CourseAdapter({this.apiVersion});
 
   @override
-  Course read(BinaryReader reader) => Course.fromJson(Map<String, dynamic>.from(reader.read()));
+  Course read(BinaryReader reader) =>
+      Course.fromJson(Map<String, dynamic>.from(reader.read()));
 
   @override
   final typeId = 1;

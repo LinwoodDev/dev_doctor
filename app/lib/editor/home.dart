@@ -37,7 +37,8 @@ class _EditorPageState extends State<EditorPage> {
                           child: ListTile(
                               title: Text(bloc.server.name),
                               subtitle: Text(bloc.note!),
-                              onTap: () => Modular.to.pushNamed("/editor/details?serverId=$key")));
+                              onTap: () => Modular.to
+                                  .pushNamed("/editor/details?serverId=$key")));
                     }))),
         floatingActionButton: OpenContainer(
             transitionType: ContainerTransitionType.fadeThrough,

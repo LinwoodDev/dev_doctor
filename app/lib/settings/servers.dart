@@ -40,14 +40,16 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
           activePage: SettingsPages.servers,
           child: ValueListenableBuilder(
               valueListenable: _serversBox.listenable(),
-              builder: (context, Box<String> box, _) => FutureBuilder<List<CoursesServer?>>(
+              builder: (context, Box<String> box, _) => FutureBuilder<
+                      List<CoursesServer?>>(
                   future: _buildFuture(),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
                         return Center(child: CircularProgressIndicator());
                       default:
-                        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                        if (snapshot.hasError)
+                          return Text('Error: ${snapshot.error}');
                         var data = snapshot.data;
                         return Scrollbar(
                             child: ListView.builder(
@@ -58,14 +60,17 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                                       // Show a red background as the item is swiped away.
                                       background: Container(color: Colors.red),
                                       key: Key(box.getAt(index)!),
-                                      onDismissed: (direction) => _deleteServer(index),
+                                      onDismissed: (direction) =>
+                                          _deleteServer(index),
                                       child: ListTile(
-                                          leading: current?.icon.isEmpty ?? current == null
+                                          leading: current?.icon.isEmpty ??
+                                                  current == null
                                               ? null
                                               : UniversalImage(
-                                                  type: current!.icon, url: current.url + "/icon"),
-                                          title:
-                                              Text(current?.name ?? "settings.servers.error".tr()),
+                                                  type: current!.icon,
+                                                  url: current.url + "/icon"),
+                                          title: Text(current?.name ??
+                                              "settings.servers.error".tr()),
                                           subtitle: Text(current?.url ?? "")));
                                 }));
                     }

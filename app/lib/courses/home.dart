@@ -36,9 +36,12 @@ class _ItemFetcher {
           .where((element) => servers.contains(element))
           .map((e) async {
         var server = await CoursesServer.fetch(url: e);
-        entries.addAll((await server?.fetchCourses())?.where((element) => !element.private) ?? []);
+        entries.addAll((await server?.fetchCourses())
+                ?.where((element) => !element.private) ??
+            []);
       }));
-      entries.sort((a, b) => _favoriteBox.get(b.url, defaultValue: false)! ? 1 : -1);
+      entries.sort(
+          (a, b) => _favoriteBox.get(b.url, defaultValue: false)! ? 1 : -1);
     }
     final list = <Course>[];
     var n = min(_itemsPerPage, entries.length - _currentPage * _itemsPerPage);
@@ -46,7 +49,8 @@ class _ItemFetcher {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
       if (entry.body.toUpperCase().contains(query.toUpperCase()) ||
-          entry.name.toUpperCase().contains(query.toUpperCase())) list.add(entry);
+          entry.name.toUpperCase().contains(query.toUpperCase()))
+        list.add(entry);
     }
     _currentPage++;
     return list;
@@ -97,7 +101,11 @@ class CustomSearchDelegate extends SearchDelegate {
         ],
       );
     }
-    return CoursesList(fetcher: _itemFetcher, query: query, servers: servers, gridView: gridView);
+    return CoursesList(
+        fetcher: _itemFetcher,
+        query: query,
+        servers: servers,
+        gridView: gridView);
   }
 
   @override
@@ -149,32 +157,42 @@ class _CoursesPageState extends State<CoursesPage> {
                               onPressed: () => Navigator.of(context).pop())
                         ],
                         content: StatefulBuilder(
-                            builder: (context, setInnerState) => SingleChildScrollView(
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: List.generate(_box.length, (index) {
-                                      var url = _box.getAt(index)!;
-                                      return CheckboxListTile(
-                                          title: Text(url),
-                                          value: _filteredServers.contains(url),
-                                          onChanged: (newValue) {
-                                            setInnerState(() {
-                                              newValue!
-                                                  ? _filteredServers.add(url)
-                                                  : _filteredServers.remove(url);
-                                            });
-                                          });
-                                    }))))));
-                setState(() => _itemFetcher = _ItemFetcher(servers: _filteredServers));
+                            builder: (context, setInnerState) =>
+                                SingleChildScrollView(
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children:
+                                            List.generate(_box.length, (index) {
+                                          var url = _box.getAt(index)!;
+                                          return CheckboxListTile(
+                                              title: Text(url),
+                                              value: _filteredServers
+                                                  .contains(url),
+                                              onChanged: (newValue) {
+                                                setInnerState(() {
+                                                  newValue!
+                                                      ? _filteredServers
+                                                          .add(url)
+                                                      : _filteredServers
+                                                          .remove(url);
+                                                });
+                                              });
+                                        }))))));
+                setState(() =>
+                    _itemFetcher = _ItemFetcher(servers: _filteredServers));
               }),
           IconButton(
               tooltip: "grid-view".tr(),
-              icon: Icon(gridView ? PhosphorIcons.listLight : PhosphorIcons.squaresFourLight),
+              icon: Icon(gridView
+                  ? PhosphorIcons.listLight
+                  : PhosphorIcons.squaresFourLight),
               onPressed: () {
                 setState(() => gridView = !gridView);
               })
         ]),
-        body: CoursesList(fetcher: _itemFetcher, query: "", gridView: gridView));
+        body:
+            CoursesList(fetcher: _itemFetcher, query: "", gridView: gridView));
   }
 }
 
@@ -185,7 +203,11 @@ class CoursesList extends StatefulWidget {
   final List<String>? servers;
 
   const CoursesList(
-      {Key? key, this.fetcher, required this.query, this.servers, required this.gridView})
+      {Key? key,
+      this.fetcher,
+      required this.query,
+      this.servers,
+      required this.gridView})
       : super(key: key);
   @override
   _CoursesListState createState() => _CoursesListState();
@@ -255,7 +277,8 @@ class _CoursesListState extends State<CoursesList> {
     var isFavorite = _favoriteBox.get(course.url, defaultValue: false)!;
     var favorite = IconButton(
         tooltip: "course.like".tr(),
-        icon: Icon(isFavorite ? PhosphorIcons.heartFill : PhosphorIcons.heartLight),
+        icon: Icon(
+            isFavorite ? PhosphorIcons.heartFill : PhosphorIcons.heartLight),
         onPressed: () {
           _favoriteBox.put(course.url, !isFavorite);
           setState(() {});
@@ -264,7 +287,8 @@ class _CoursesListState extends State<CoursesList> {
         ? null
         : Hero(
             tag: "course-icon-${course.server?.index}-${course.slug}",
-            child: UniversalImage(type: course.icon, url: course.url + "/icon"));
+            child:
+                UniversalImage(type: course.icon, url: course.url + "/icon"));
     if (widget.gridView)
       return Card(
           child: InkWell(
@@ -275,12 +299,15 @@ class _CoursesListState extends State<CoursesList> {
                   child: SizedBox(
                     height: 250,
                     child: Column(children: [
-                      Expanded(child: Container(padding: const EdgeInsets.all(8.0), child: hero)),
+                      Expanded(
+                          child: Container(
+                              padding: const EdgeInsets.all(8.0), child: hero)),
                       Row(children: [
                         Expanded(
                             child: Column(children: [
                           Text(course.name),
-                          Text(course.description, style: Theme.of(context).textTheme.caption)
+                          Text(course.description,
+                              style: Theme.of(context).textTheme.caption)
                         ])),
                         favorite
                       ])

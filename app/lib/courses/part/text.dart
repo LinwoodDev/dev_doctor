@@ -19,7 +19,11 @@ class TextPartItemPage extends StatefulWidget {
   final int itemId;
 
   const TextPartItemPage(
-      {Key? key, required this.item, required this.part, this.editorBloc, required this.itemId})
+      {Key? key,
+      required this.item,
+      required this.part,
+      this.editorBloc,
+      required this.itemId})
       : super(key: key);
 
   @override
@@ -63,11 +67,13 @@ class _TextPartItemPageState extends State<TextPartItemPage> {
                       markdown: widget.item.text,
                       onSubmit: (value) {
                         var bloc = Modular.get<CoursePartBloc>();
-                        var courseBloc = widget.editorBloc!.getCourse(bloc.course!);
+                        var courseBloc =
+                            widget.editorBloc!.getCourse(bloc.course!);
                         var coursePart = courseBloc.getCoursePart(bloc.part!);
                         var part = coursePart.copyWith(
                             items: List<PartItem>.from(coursePart.items)
-                              ..[widget.itemId] = widget.item.copyWith(text: value));
+                              ..[widget.itemId] =
+                                  widget.item.copyWith(text: value));
                         courseBloc.updateCoursePart(part);
                         bloc.partSubject.add(part);
                         widget.editorBloc!.save();

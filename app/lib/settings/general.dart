@@ -35,19 +35,25 @@ class GeneralSettingsPage extends StatelessWidget {
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text("cancel".tr().toUpperCase())),
+                                        child:
+                                            Text("cancel".tr().toUpperCase())),
                                     TextButton(
                                         onPressed: () async {
                                           Navigator.of(context).pop();
-                                          _generalBox.put("name", nameController.text);
+                                          _generalBox.put(
+                                              "name", nameController.text);
                                         },
-                                        child: Text("change".tr().toUpperCase()))
+                                        child:
+                                            Text("change".tr().toUpperCase()))
                                   ],
-                                  title: Text("settings.general.name.title".tr()),
+                                  title:
+                                      Text("settings.general.name.title".tr()),
                                   content: TextField(
                                       controller: nameController,
                                       decoration: InputDecoration(
-                                          labelText: "settings.general.name.label".tr())));
+                                          labelText:
+                                              "settings.general.name.label"
+                                                  .tr())));
                             })),
                   ]));
                 })));

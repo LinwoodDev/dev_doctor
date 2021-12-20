@@ -25,7 +25,8 @@ class PartItemPage extends StatefulWidget {
   final int itemId;
   final ServerEditorBloc? editorBloc;
 
-  const PartItemPage({Key? key, this.model, required this.itemId, this.editorBloc})
+  const PartItemPage(
+      {Key? key, this.model, required this.itemId, this.editorBloc})
       : super(key: key);
 
   @override
@@ -61,7 +62,8 @@ class _PartItemPageState extends State<PartItemPage> {
         stream: bloc.partSubject,
         builder: (context, snapshot) {
           if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
-          if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
+          if (!snapshot.hasData ||
+              snapshot.connectionState == ConnectionState.waiting)
             return Center(child: CircularProgressIndicator());
           var part = snapshot.data!;
           if (part.items.isEmpty) {
@@ -102,48 +104,58 @@ class _PartItemPageState extends State<PartItemPage> {
               part: part,
               editorBloc: widget.editorBloc,
               itemId: widget.itemId,
-              child: Container(child: LayoutBuilder(builder: (context, constraints) {
+              child: Container(
+                  child: LayoutBuilder(builder: (context, constraints) {
                 var itemCard = Scrollbar(
                     controller: _detailsScrollController,
                     child: SingleChildScrollView(
                         controller: _detailsScrollController,
                         child: Card(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
                             child: Container(
                                 child: Padding(
-                                    padding: const EdgeInsets.all(64.0), child: itemBuilder)))));
+                                    padding: const EdgeInsets.all(64.0),
+                                    child: itemBuilder)))));
                 var detailsCard = Scrollbar(
                     controller: _itemScrollController,
                     child: SingleChildScrollView(
                         controller: _itemScrollController,
                         child: Card(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
                             child: Padding(
                                 padding: const EdgeInsets.all(64.0),
                                 child: Row(children: [
                                   Expanded(
                                       child: Column(children: [
-                                    Text(item.name, style: Theme.of(context).textTheme.headline5),
+                                    Text(item.name,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline5),
                                     Text(item.description)
                                   ])),
                                   if (widget.editorBloc != null)
                                     IconButton(
                                       tooltip: "edit".tr(),
                                       icon: Icon(PhosphorIcons.pencilLight),
-                                      onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
-                                        '',
-                                        'editor',
-                                        'course',
-                                        'item',
-                                        'edit'
-                                      ], queryParameters: {
-                                        ...Modular.args.queryParams
-                                      }).toString()),
+                                      onPressed: () => Modular.to.pushNamed(Uri(
+                                          pathSegments: [
+                                            '',
+                                            'editor',
+                                            'course',
+                                            'item',
+                                            'edit'
+                                          ],
+                                          queryParameters: {
+                                            ...Modular.args.queryParams
+                                          }).toString()),
                                     )
                                   else if (item.allowReset)
                                     IconButton(
                                         tooltip: "reset".tr(),
-                                        icon: Icon(PhosphorIcons.clockCounterClockwiseLight),
+                                        icon: Icon(PhosphorIcons
+                                            .clockCounterClockwiseLight),
                                         onPressed: () {
                                           part.removeItemPoints(itemId);
                                           bloc.partSubject.add(part);
@@ -152,7 +164,10 @@ class _PartItemPageState extends State<PartItemPage> {
                 if (MediaQuery.of(context).size.width > 1000)
                   return Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [Expanded(child: detailsCard), Expanded(flex: 3, child: itemCard)]);
+                      children: [
+                        Expanded(child: detailsCard),
+                        Expanded(flex: 3, child: itemCard)
+                      ]);
                 else
                   return Scrollbar(
                       child: SingleChildScrollView(

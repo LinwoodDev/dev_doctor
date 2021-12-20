@@ -9,7 +9,8 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 class EditorCodeDialogPage extends StatefulWidget {
   final String initialValue;
 
-  const EditorCodeDialogPage({Key? key, required this.initialValue}) : super(key: key);
+  const EditorCodeDialogPage({Key? key, required this.initialValue})
+      : super(key: key);
 
   @override
   _EditorCodeDialogPageState createState() => _EditorCodeDialogPageState();
@@ -35,13 +36,15 @@ class _EditorCodeDialogPageState extends State<EditorCodeDialogPage> {
                   TextField(
                       controller: codeController,
                       decoration: InputDecoration(
-                          hintText: 'editor.code.hint'.tr(), labelText: 'editor.code.label'.tr()),
+                          hintText: 'editor.code.hint'.tr(),
+                          labelText: 'editor.code.label'.tr()),
                       minLines: 3,
                       maxLines: null),
                 ]))),
         floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
-              var data = json.decode(codeController.text) as Map<String, dynamic>?;
+              var data =
+                  json.decode(codeController.text) as Map<String, dynamic>?;
               if (data != null) {
                 Modular.to.pop(data);
               }

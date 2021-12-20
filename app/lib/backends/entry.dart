@@ -27,14 +27,20 @@ class BackendPage extends StatefulWidget {
   final ServerEditorBloc? editorBloc;
 
   const BackendPage(
-      {Key? key, this.user, this.entry, this.collectionId, this.model, this.editorBloc})
+      {Key? key,
+      this.user,
+      this.entry,
+      this.collectionId,
+      this.model,
+      this.editorBloc})
       : super(key: key);
 
   @override
   _BackendPageState createState() => _BackendPageState();
 }
 
-class _BackendPageState extends State<BackendPage> with SingleTickerProviderStateMixin {
+class _BackendPageState extends State<BackendPage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late TextEditingController _nameController;
   late TextEditingController _noteController;
@@ -89,7 +95,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                     case ConnectionState.waiting:
                       return Center(child: CircularProgressIndicator());
                     default:
-                      if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                      if (snapshot.hasError)
+                        return Text('Error: ${snapshot.error}');
                       var server = snapshot.data;
                       if (server == null) return ErrorDisplay();
                       return _buildView(server);
@@ -100,7 +107,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
   Widget _buildView(CoursesServer server) => Builder(
       builder: (context) => Scaffold(
             body: NestedScrollView(
-                headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
                         expandedHeight: _editorBloc != null ? null : 400.0,
@@ -115,9 +123,12 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                 tooltip: "code".tr(),
                                 onPressed: () async {
                                   var encoder = JsonEncoder.withIndent("  ");
-                                  var data = await Modular.to.push(MaterialPageRoute(
-                                      builder: (context) => EditorCodeDialogPage(
-                                          initialValue: encoder.convert(server.toJson()))));
+                                  var data = await Modular.to.push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditorCodeDialogPage(
+                                                  initialValue: encoder.convert(
+                                                      server.toJson()))));
                                   if (data != null) {
                                     var server = CoursesServer.fromJson(data);
                                     _editorBloc!.server = server;
@@ -127,7 +138,10 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                                     });
                                   }
                                 }),
-                          if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
+                          if (!kIsWeb && isWindow()) ...[
+                            VerticalDivider(),
+                            WindowButtons()
+                          ]
                         ],
                         bottom: _editorBloc != null
                             ? TabBar(
@@ -229,8 +243,9 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
         ? null
         : FloatingActionButton(
             tooltip: "create".tr(),
-            onPressed:
-                _tabController.index == 1 ? _showCreateCourseDialog : _showCreateArticleDialog,
+            onPressed: _tabController.index == 1
+                ? _showCreateCourseDialog
+                : _showCreateArticleDialog,
             child: Icon(PhosphorIcons.plusLight),
           );
   }
@@ -243,82 +258,111 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
         Padding(
             padding: EdgeInsets.all(16),
             child: Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
                 child: Padding(
                     padding: const EdgeInsets.all(64.0),
-                    child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      if (_editorBloc == null) ...[
-                        Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: TextButton.icon(
-                                onPressed: () async => await Modular.to.pushNamed(
-                                    "/backends/user?collectionId=${widget.collectionId}&user=${widget.user}",
-                                    arguments: {"user": server.entry!.user, "server": server}),
-                                icon: Icon(PhosphorIcons.userLight),
-                                label: Text(widget.user!))),
-                      ] else
-                        Form(
-                            key: _formKey,
-                            child: Container(
-                                constraints: BoxConstraints(maxWidth: 1000),
-                                child: Column(children: [
-                                  TextFormField(
-                                      decoration: InputDecoration(
-                                          labelText: "editor.create.name.label".tr(),
-                                          hintText: "editor.create.name.hint".tr()),
-                                      validator: (value) {
-                                        if (value!.isEmpty) return "editor.create.name.empty".tr();
-                                        if (_names.contains(value) &&
-                                            value != _editorBloc!.server.name)
-                                          return "editor.create.name.exist".tr();
-                                        return null;
-                                      },
-                                      controller: _nameController),
-                                  TextFormField(
-                                      decoration: InputDecoration(
-                                          labelText: "editor.create.note.label".tr(),
-                                          hintText: "editor.create.note.hint".tr()),
-                                      controller: _noteController),
-                                  Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: ElevatedButton.icon(
-                                        onPressed: () async {
-                                          if (!_formKey.currentState!.validate()) return;
-                                          _editorBloc!.server =
-                                              server.copyWith(name: _nameController.text);
-                                          _editorBloc!.note = _noteController.text;
-                                          await _editorBloc?.save();
-                                          setState(() {});
-                                        },
-                                        icon: Icon(PhosphorIcons.floppyDiskLight),
-                                        label: Text("save".tr().toUpperCase())),
-                                  ),
-                                  Divider()
-                                ]))),
-                      Row(children: [
-                        Expanded(
-                            child: (server.body.isNotEmpty)
-                                ? MarkdownBody(
-                                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-                                    onTapLink: (_, url, __) => launch(url!),
-                                    extensionSet: md.ExtensionSet(
-                                      md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                                      [
-                                        md.EmojiSyntax(),
-                                        ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
-                                      ],
-                                    ),
-                                    data: server.body,
-                                    selectable: true,
-                                  )
-                                : Container()),
-                        IconButton(
-                            tooltip: "edit".tr(),
-                            icon: Icon(PhosphorIcons.pencilLight),
-                            onPressed: () => Modular.to
-                                .pushNamed('/editor/edit?serverId=${_editorBloc!.key.toString()}'))
-                      ])
-                    ]))))
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (_editorBloc == null) ...[
+                            Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: TextButton.icon(
+                                    onPressed: () async => await Modular.to
+                                            .pushNamed(
+                                                "/backends/user?collectionId=${widget.collectionId}&user=${widget.user}",
+                                                arguments: {
+                                              "user": server.entry!.user,
+                                              "server": server
+                                            }),
+                                    icon: Icon(PhosphorIcons.userLight),
+                                    label: Text(widget.user!))),
+                          ] else
+                            Form(
+                                key: _formKey,
+                                child: Container(
+                                    constraints: BoxConstraints(maxWidth: 1000),
+                                    child: Column(children: [
+                                      TextFormField(
+                                          decoration: InputDecoration(
+                                              labelText:
+                                                  "editor.create.name.label"
+                                                      .tr(),
+                                              hintText:
+                                                  "editor.create.name.hint"
+                                                      .tr()),
+                                          validator: (value) {
+                                            if (value!.isEmpty)
+                                              return "editor.create.name.empty"
+                                                  .tr();
+                                            if (_names.contains(value) &&
+                                                value !=
+                                                    _editorBloc!.server.name)
+                                              return "editor.create.name.exist"
+                                                  .tr();
+                                            return null;
+                                          },
+                                          controller: _nameController),
+                                      TextFormField(
+                                          decoration: InputDecoration(
+                                              labelText:
+                                                  "editor.create.note.label"
+                                                      .tr(),
+                                              hintText:
+                                                  "editor.create.note.hint"
+                                                      .tr()),
+                                          controller: _noteController),
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: ElevatedButton.icon(
+                                            onPressed: () async {
+                                              if (!_formKey.currentState!
+                                                  .validate()) return;
+                                              _editorBloc!.server =
+                                                  server.copyWith(
+                                                      name:
+                                                          _nameController.text);
+                                              _editorBloc!.note =
+                                                  _noteController.text;
+                                              await _editorBloc?.save();
+                                              setState(() {});
+                                            },
+                                            icon: Icon(
+                                                PhosphorIcons.floppyDiskLight),
+                                            label: Text(
+                                                "save".tr().toUpperCase())),
+                                      ),
+                                      Divider()
+                                    ]))),
+                          Row(children: [
+                            Expanded(
+                                child: (server.body.isNotEmpty)
+                                    ? MarkdownBody(
+                                        styleSheet:
+                                            MarkdownStyleSheet.fromTheme(
+                                                Theme.of(context)),
+                                        onTapLink: (_, url, __) => launch(url!),
+                                        extensionSet: md.ExtensionSet(
+                                          md.ExtensionSet.gitHubFlavored
+                                              .blockSyntaxes,
+                                          [
+                                            md.EmojiSyntax(),
+                                            ...md.ExtensionSet.gitHubFlavored
+                                                .inlineSyntaxes
+                                          ],
+                                        ),
+                                        data: server.body,
+                                        selectable: true,
+                                      )
+                                    : Container()),
+                            IconButton(
+                                tooltip: "edit".tr(),
+                                icon: Icon(PhosphorIcons.pencilLight),
+                                onPressed: () => Modular.to.pushNamed(
+                                    '/editor/edit?serverId=${_editorBloc!.key.toString()}'))
+                          ])
+                        ]))))
       ],
     ));
   }
@@ -337,7 +381,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                         onChanged: (value) => name = value,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                            labelText: 'course.add.name'.tr(), hintText: 'course.add.hint'.tr()),
+                            labelText: 'course.add.name'.tr(),
+                            hintText: 'course.add.hint'.tr()),
                       ),
                     )
                   ],
@@ -371,7 +416,8 @@ class _BackendPageState extends State<BackendPage> with SingleTickerProviderStat
                         onChanged: (value) => name = value,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                            labelText: 'article.add.name'.tr(), hintText: 'article.add.hint'.tr()),
+                            labelText: 'article.add.name'.tr(),
+                            hintText: 'article.add.hint'.tr()),
                       ),
                     )
                   ],

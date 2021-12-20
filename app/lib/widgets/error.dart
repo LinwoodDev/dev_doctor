@@ -10,8 +10,11 @@ class ErrorDisplay extends StatelessWidget {
         child: Column(children: [
           Text("error".tr(), style: Theme.of(context).textTheme.headline1),
           if (Modular.to.canPop())
-            TextButton(onPressed: () => Modular.to.pop(), child: Text("back").tr()),
-          TextButton(onPressed: () => Modular.to.navigate("/"), child: Text("back-to-home".tr()))
+            TextButton(
+                onPressed: () => Modular.to.pop(), child: Text("back").tr()),
+          TextButton(
+              onPressed: () => Modular.to.navigate("/"),
+              child: Text("back-to-home".tr()))
         ]));
   }
 }

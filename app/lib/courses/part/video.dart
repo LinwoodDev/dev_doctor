@@ -18,7 +18,11 @@ class VideoPartItemPage extends StatefulWidget {
   final CoursePart part;
 
   const VideoPartItemPage(
-      {Key? key, required this.item, this.editorBloc, required this.itemId, required this.part})
+      {Key? key,
+      required this.item,
+      this.editorBloc,
+      required this.itemId,
+      required this.part})
       : super(key: key);
 
   @override
@@ -47,14 +51,17 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                       : ElevatedButton.icon(
                           icon: Icon(PhosphorIcons.playLight),
                           label: Text("course.video.open".tr().toUpperCase()),
-                          onPressed: () => launch(widget.item.getSource(widget.part).toString()),
+                          onPressed: () => launch(
+                              widget.item.getSource(widget.part).toString()),
                         )))),
       if (widget.editorBloc != null)
         IconButton(
             tooltip: "edit".tr(),
             onPressed: () => Modular.to.push(MaterialPageRoute(
                 builder: (context) => VideoPartItemEditorPage(
-                    editorBloc: widget.editorBloc, item: widget.item, itemId: widget.itemId))),
+                    editorBloc: widget.editorBloc,
+                    item: widget.item,
+                    itemId: widget.itemId))),
             icon: Icon(PhosphorIcons.pencilLight))
     ]);
   }
@@ -65,11 +72,13 @@ class VideoPartItemEditorPage extends StatefulWidget {
   final ServerEditorBloc? editorBloc;
   final int? itemId;
 
-  const VideoPartItemEditorPage({Key? key, this.item, this.editorBloc, this.itemId})
+  const VideoPartItemEditorPage(
+      {Key? key, this.item, this.editorBloc, this.itemId})
       : super(key: key);
 
   @override
-  _VideoPartItemEditorPageState createState() => _VideoPartItemEditorPageState();
+  _VideoPartItemEditorPageState createState() =>
+      _VideoPartItemEditorPageState();
 }
 
 class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
@@ -106,7 +115,8 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
                                     });
                                   },
                                   items: VideoSource.values
-                                      .map<DropdownMenuItem<VideoSource>>((VideoSource value) {
+                                      .map<DropdownMenuItem<VideoSource>>(
+                                          (VideoSource value) {
                                     return DropdownMenuItem<VideoSource>(
                                         value: value,
                                         child: Text(
@@ -122,8 +132,8 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
               var coursePart = courseBloc.getCoursePart(bloc.part!);
               var part = coursePart.copyWith(
                   items: List<PartItem>.from(coursePart.items)
-                    ..[widget.itemId!] =
-                        widget.item!.copyWith(source: source, url: _urlController!.text));
+                    ..[widget.itemId!] = widget.item!
+                        .copyWith(source: source, url: _urlController!.text));
               courseBloc.updateCoursePart(part);
               bloc.partSubject.add(part);
               widget.editorBloc!.save();

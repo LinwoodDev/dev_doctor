@@ -4,7 +4,9 @@ class ImageTypeDropdown extends StatefulWidget {
   final String? defaultValue;
   final ValueChanged<String> onChanged;
 
-  const ImageTypeDropdown({Key? key, this.defaultValue, required this.onChanged}) : super(key: key);
+  const ImageTypeDropdown(
+      {Key? key, this.defaultValue, required this.onChanged})
+      : super(key: key);
   @override
   _ImageTypeDropdownState createState() => _ImageTypeDropdownState();
 }
@@ -28,7 +30,8 @@ class _ImageTypeDropdownState extends State<ImageTypeDropdown> {
             dropdownValue = newValue;
           });
       },
-      items: <String>['svg', 'png', 'jpg', 'jpeg'].map<DropdownMenuItem<String>>((String value) {
+      items: <String>['svg', 'png', 'jpg', 'jpeg']
+          .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

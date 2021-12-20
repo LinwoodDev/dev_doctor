@@ -56,9 +56,11 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     if (_editorBloc != null) {
       var courseBloc = _editorBloc!.getCourse(bloc.course!);
       _nameController = TextEditingController(text: courseBloc.course.name);
-      _descriptionController = TextEditingController(text: courseBloc.course.description);
+      _descriptionController =
+          TextEditingController(text: courseBloc.course.description);
       _slugController = TextEditingController(text: courseBloc.course.slug);
-      _supportController = TextEditingController(text: courseBloc.course.supportUrl);
+      _supportController =
+          TextEditingController(text: courseBloc.course.supportUrl);
     }
   }
 
@@ -81,7 +83,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
             : StreamBuilder<Course>(
                 stream: bloc.courseSubject,
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
+                  if (snapshot.connectionState == ConnectionState.waiting ||
+                      !snapshot.hasData)
                     return Center(child: CircularProgressIndicator());
                   if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
                   var course = snapshot.data;
@@ -114,7 +117,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                         onChanged: (value) => language = value,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                            labelText: 'course.lang.label'.tr(), hintText: 'course.lang.hint'.tr()),
+                            labelText: 'course.lang.label'.tr(),
+                            hintText: 'course.lang.hint'.tr()),
                       ),
                     )
                   ],
@@ -128,7 +132,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                   TextButton(
                       child: Text('create'.tr().toUpperCase()),
                       onPressed: () async {
-                        courseBloc.course = courseBloc.course.copyWith(lang: language);
+                        courseBloc.course =
+                            courseBloc.course.copyWith(lang: language);
                         _editorBloc?.save();
                         Navigator.pop(context);
                         setState(() {});
@@ -178,11 +183,14 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
   }
 
   Widget _buildView(Course course) => Builder(builder: (context) {
-        var supportUrl = course.supportUrl.isEmpty ? course.server?.supportUrl : course.supportUrl;
+        var supportUrl = course.supportUrl.isEmpty
+            ? course.server?.supportUrl
+            : course.supportUrl;
         return Scaffold(
           body: Scrollbar(
               child: NestedScrollView(
-                  headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) {
                     return <Widget>[
                       SliverAppBar(
                           expandedHeight: _editorBloc != null ? null : 400.0,
@@ -217,42 +225,54 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               IconButton(
                                   icon: Icon(PhosphorIcons.playLight),
                                   tooltip: "course.start".tr(),
-                                  onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
-                                        "",
-                                        "courses",
-                                        "start",
-                                        "item"
-                                      ], queryParameters: {
-                                        ...Modular.args.queryParams,
-                                        "partId": 0.toString()
-                                      }).toString()))
+                                  onPressed: () => Modular.to.pushNamed(Uri(
+                                          pathSegments: [
+                                            "",
+                                            "courses",
+                                            "start",
+                                            "item"
+                                          ],
+                                          queryParameters: {
+                                            ...Modular.args.queryParams,
+                                            "partId": 0.toString()
+                                          }).toString()))
                             } else
                               IconButton(
                                   icon: Icon(PhosphorIcons.codeLight),
                                   tooltip: "code".tr(),
                                   onPressed: () async {
-                                    var packageInfo = await PackageInfo.fromPlatform();
-                                    var buildNumber = int.tryParse(packageInfo.buildNumber);
+                                    var packageInfo =
+                                        await PackageInfo.fromPlatform();
+                                    var buildNumber =
+                                        int.tryParse(packageInfo.buildNumber);
                                     var encoder = JsonEncoder.withIndent("  ");
-                                    var data = await Modular.to.push(MaterialPageRoute(
-                                        builder: (context) => EditorCodeDialogPage(
-                                            initialValue:
-                                                encoder.convert(course.toJson(buildNumber)))));
+                                    var data = await Modular.to.push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditorCodeDialogPage(
+                                                    initialValue: encoder
+                                                        .convert(course.toJson(
+                                                            buildNumber)))));
                                     if (data != null) {
-                                      var courseBloc = _editorBloc!.getCourse(bloc.course!);
+                                      var courseBloc =
+                                          _editorBloc!.getCourse(bloc.course!);
                                       courseBloc.course = Course.fromJson(data);
                                       _editorBloc?.save();
                                       setState(() {});
                                     }
                                   }),
-                            if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
+                            if (!kIsWeb && isWindow()) ...[
+                              VerticalDivider(),
+                              WindowButtons()
+                            ]
                           ],
                           title: Text(course.name),
                           flexibleSpace: _editorBloc != null
                               ? null
                               : FlexibleSpaceBar(
                                   background: Container(
-                                      margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
+                                      margin:
+                                          EdgeInsets.fromLTRB(10, 20, 10, 84),
                                       child: _editorBloc != null
                                           ? Container()
                                           : Hero(
@@ -267,8 +287,9 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       SliverList(
                           delegate: new SliverChildListDelegate([
                         Material(
-                            color: Theme.of(context).appBarTheme.backgroundColor ??
-                                Theme.of(context).primaryColor,
+                            color:
+                                Theme.of(context).appBarTheme.backgroundColor ??
+                                    Theme.of(context).primaryColor,
                             child: TabBar(
                                 controller: _tabController,
                                 tabs: [
@@ -299,7 +320,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       Padding(
           padding: EdgeInsets.all(4),
           child: Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
               child: Padding(
                   padding: EdgeInsets.all(16),
                   child: Column(children: [
@@ -314,7 +336,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                         labelText: "course.name.label".tr(),
                                         hintText: "course.name.hint".tr()),
                                     validator: (value) {
-                                      if (value!.isEmpty) return "course.name.empty".tr();
+                                      if (value!.isEmpty)
+                                        return "course.name.empty".tr();
                                       return null;
                                     },
                                     controller: _nameController),
@@ -323,8 +346,10 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                         labelText: "course.slug.label".tr(),
                                         hintText: "course.slug.hint".tr()),
                                     validator: (value) {
-                                      if (value!.isEmpty) return "course.slug.empty".tr();
-                                      if (_slugs!.contains(value) && value != course.slug)
+                                      if (value!.isEmpty)
+                                        return "course.slug.empty".tr();
+                                      if (_slugs!.contains(value) &&
+                                          value != course.slug)
                                         return "course.slug.exist".tr();
                                       return null;
                                     },
@@ -337,22 +362,29 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                     controller: _supportController),
                                 TextFormField(
                                     decoration: InputDecoration(
-                                        labelText: "course.description.label".tr(),
-                                        hintText: "course.description.hint".tr()),
+                                        labelText:
+                                            "course.description.label".tr(),
+                                        hintText:
+                                            "course.description.hint".tr()),
                                     controller: _descriptionController),
                                 Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: ElevatedButton.icon(
                                       onPressed: () async {
                                         var courseBloc = _editorBloc!
-                                            .changeCourseSlug(bloc.course!, _slugController.text);
-                                        courseBloc.course = courseBloc.course.copyWith(
-                                            name: _nameController.text,
-                                            slug: _slugController.text,
-                                            supportUrl: _supportController.text.isEmpty
-                                                ? null
-                                                : _supportController.text,
-                                            description: _descriptionController.text);
+                                            .changeCourseSlug(bloc.course!,
+                                                _slugController.text);
+                                        courseBloc.course = courseBloc.course
+                                            .copyWith(
+                                                name: _nameController.text,
+                                                slug: _slugController.text,
+                                                supportUrl: _supportController
+                                                        .text.isEmpty
+                                                    ? null
+                                                    : _supportController.text,
+                                                description:
+                                                    _descriptionController
+                                                        .text);
                                         _editorBloc?.save();
                                         setState(() {});
                                       },
@@ -363,27 +395,33 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               ]))),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       if (course.author.name.isNotEmpty)
-                        AuthorDisplay(author: course.author, editing: _editorBloc != null),
+                        AuthorDisplay(
+                            author: course.author,
+                            editing: _editorBloc != null),
                       if (_editorBloc != null) ...[
                         IconButton(
                             tooltip: "edit".tr(),
                             icon: Icon(PhosphorIcons.pencilLight),
-                            onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
-                                  '',
-                                  'editor',
-                                  'course',
-                                  'author'
-                                ], queryParameters: {
-                                  "serverId": _editorBloc!.key.toString(),
-                                  "course": bloc.course!
-                                }).toString())),
+                            onPressed: () => Modular.to.pushNamed(Uri(
+                                    pathSegments: [
+                                      '',
+                                      'editor',
+                                      'course',
+                                      'author'
+                                    ],
+                                    queryParameters: {
+                                      "serverId": _editorBloc!.key.toString(),
+                                      "course": bloc.course!
+                                    }).toString())),
                         if (course.author.name.isNotEmpty)
                           IconButton(
                               tooltip: "delete".tr(),
                               icon: Icon(PhosphorIcons.trashLight),
                               onPressed: () async {
-                                var courseBloc = _editorBloc!.getCourse(bloc.course!);
-                                course = courseBloc.course.copyWith(author: Author());
+                                var courseBloc =
+                                    _editorBloc!.getCourse(bloc.course!);
+                                course = courseBloc.course
+                                    .copyWith(author: Author());
                                 courseBloc.course = course;
                                 await _editorBloc?.save();
                                 setState(() {});
@@ -393,28 +431,35 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                     if (course.lang.isNotEmpty || _editorBloc != null)
                       Padding(
                           padding: EdgeInsets.all(8),
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Padding(
-                                padding: EdgeInsets.all(4), child: Icon(PhosphorIcons.globeLight)),
-                            Text(course.lang.isNotEmpty
-                                ? LocaleNames.of(context)!.nameOf(course.lang) ?? course.lang
-                                : 'course.lang.notset'.tr()),
-                            if (_editorBloc != null)
-                              IconButton(
-                                  tooltip: "edit".tr(),
-                                  icon: Icon(PhosphorIcons.pencilLight),
-                                  onPressed: () => _showLanguageDialog())
-                          ])),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.all(4),
+                                    child: Icon(PhosphorIcons.globeLight)),
+                                Text(course.lang.isNotEmpty
+                                    ? LocaleNames.of(context)!
+                                            .nameOf(course.lang) ??
+                                        course.lang
+                                    : 'course.lang.notset'.tr()),
+                                if (_editorBloc != null)
+                                  IconButton(
+                                      tooltip: "edit".tr(),
+                                      icon: Icon(PhosphorIcons.pencilLight),
+                                      onPressed: () => _showLanguageDialog())
+                              ])),
                     Row(children: [
                       Expanded(
                           child: (!course.body.isEmpty)
                               ? MarkdownBody(
                                   onTapLink: (_, url, __) => launch(url!),
                                   extensionSet: md.ExtensionSet(
-                                    md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                                    md.ExtensionSet.gitHubFlavored
+                                        .blockSyntaxes,
                                     [
                                       md.EmojiSyntax(),
-                                      ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
+                                      ...md.ExtensionSet.gitHubFlavored
+                                          .inlineSyntaxes
                                     ],
                                   ),
                                   data: course.body,
@@ -425,15 +470,17 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                         IconButton(
                             tooltip: "edit".tr(),
                             icon: Icon(PhosphorIcons.pencilLight),
-                            onPressed: () => Modular.to.pushNamed(Uri(pathSegments: [
-                                  "",
-                                  "editor",
-                                  "course",
-                                  "edit"
-                                ], queryParameters: {
-                                  "serverId": _editorBloc!.key.toString(),
-                                  "course": bloc.course!
-                                }).toString()))
+                            onPressed: () => Modular.to.pushNamed(Uri(
+                                    pathSegments: [
+                                      "",
+                                      "editor",
+                                      "course",
+                                      "edit"
+                                    ],
+                                    queryParameters: {
+                                      "serverId": _editorBloc!.key.toString(),
+                                      "course": bloc.course!
+                                    }).toString()))
                     ])
                   ]))))
     ]);
@@ -476,7 +523,8 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
   final CoursePartBloc partBloc;
   final ServerEditorBloc bloc;
 
-  const EditorCoursePartPopupMenu({Key? key, required this.bloc, required this.partBloc})
+  const EditorCoursePartPopupMenu(
+      {Key? key, required this.bloc, required this.partBloc})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -486,8 +534,8 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
       },
       itemBuilder: (context) {
         return PartOptions.values.map<PopupMenuEntry<PartOptions>>((e) {
-          var description =
-              e.getDescription(bloc.getCourse(partBloc.course!).getCoursePart(partBloc.part!));
+          var description = e.getDescription(
+              bloc.getCourse(partBloc.course!).getCoursePart(partBloc.part!));
           return PopupMenuItem<PartOptions>(
               child: Row(children: [
                 Padding(
@@ -497,7 +545,8 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(e.title!),
                   if (description != null)
-                    Text(description, style: Theme.of(context).textTheme.caption)
+                    Text(description,
+                        style: Theme.of(context).textTheme.caption)
                 ])
               ]),
               value: e);
@@ -550,8 +599,8 @@ extension PartOptionsExtension on PartOptions {
     }
   }
 
-  Future<void> onSelected(
-      BuildContext context, ServerEditorBloc bloc, CoursePartBloc partBloc) async {
+  Future<void> onSelected(BuildContext context, ServerEditorBloc bloc,
+      CoursePartBloc partBloc) async {
     var courseBloc = bloc.getCourse(partBloc.course!);
     var coursePart = courseBloc.getCoursePart(partBloc.part!);
     switch (this) {
@@ -586,7 +635,8 @@ extension PartOptionsExtension on PartOptions {
                           onPressed: () async {
                             Navigator.pop(context);
                             var courseBloc = bloc.getCourse(partBloc.course!);
-                            coursePart = coursePart.copyWith(name: nameController.text);
+                            coursePart =
+                                coursePart.copyWith(name: nameController.text);
                             courseBloc.updateCoursePart(coursePart);
                             await bloc.save();
                             partBloc.partSubject.add(coursePart);
@@ -594,7 +644,8 @@ extension PartOptionsExtension on PartOptions {
                     ]));
         break;
       case PartOptions.description:
-        var descriptionController = TextEditingController(text: coursePart.description);
+        var descriptionController =
+            TextEditingController(text: coursePart.description);
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
@@ -625,8 +676,8 @@ extension PartOptionsExtension on PartOptions {
                           onPressed: () async {
                             Navigator.pop(context);
                             var courseBloc = bloc.getCourse(partBloc.course!);
-                            coursePart =
-                                coursePart.copyWith(description: descriptionController.text);
+                            coursePart = coursePart.copyWith(
+                                description: descriptionController.text);
                             courseBloc.updateCoursePart(coursePart);
                             await bloc.save();
                             partBloc.partSubject.add(coursePart);
@@ -664,7 +715,8 @@ extension PartOptionsExtension on PartOptions {
                           onPressed: () async {
                             Navigator.pop(context);
                             var courseBloc = bloc.getCourse(partBloc.course!);
-                            courseBloc.changeCoursePartSlug(coursePart.slug, slugController.text);
+                            courseBloc.changeCoursePartSlug(
+                                coursePart.slug, slugController.text);
                             await bloc.save();
                             Modular.to.pushReplacementNamed(Uri(pathSegments: [
                               '',
@@ -682,7 +734,8 @@ extension PartOptionsExtension on PartOptions {
         var buildNumber = int.tryParse(packageInfo.buildNumber);
         var data = await Modular.to.push(MaterialPageRoute(
             builder: (context) => EditorCodeDialogPage(
-                initialValue: encoder.convert(coursePart.toJson(buildNumber)))));
+                initialValue:
+                    encoder.convert(coursePart.toJson(buildNumber)))));
         if (data != null) {
           var part = CoursePart.fromJson(data..['course'] = courseBloc.course);
           partBloc.partSubject.add(part);

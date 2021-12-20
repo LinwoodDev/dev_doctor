@@ -12,7 +12,8 @@ class BackendUserPage extends StatefulWidget {
   final int? collectionId;
   final Map? model;
 
-  const BackendUserPage({Key? key, this.user, this.collectionId, this.model}) : super(key: key);
+  const BackendUserPage({Key? key, this.user, this.collectionId, this.model})
+      : super(key: key);
 
   @override
   _BackendUserPageState createState() => _BackendUserPageState();
@@ -36,9 +37,11 @@ class _BackendUserPageState extends State<BackendUserPage> {
             : FutureBuilder<BackendUser?>(
                 future: _buildFuture(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData)
+                  if (snapshot.connectionState == ConnectionState.waiting ||
+                      !snapshot.hasData)
                     return Center(child: CircularProgressIndicator());
-                  if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                  if (snapshot.hasError)
+                    return Text('Error: ${snapshot.error}');
                   var backendUser = snapshot.data!;
                   return _buildView(backendUser);
                 }));
@@ -50,7 +53,9 @@ class _BackendUserPageState extends State<BackendUserPage> {
         appBar: MyAppBar(title: backendUser.name, actions: [
           IconButton(
               tooltip: "grid-view".tr(),
-              icon: Icon(gridView ? PhosphorIcons.listLight : PhosphorIcons.squaresFourLight),
+              icon: Icon(gridView
+                  ? PhosphorIcons.listLight
+                  : PhosphorIcons.squaresFourLight),
               onPressed: () {
                 setState(() => gridView = !gridView);
               })
@@ -62,21 +67,26 @@ class _BackendUserPageState extends State<BackendUserPage> {
                     : Column(children: _buildList(entries, server: server)))));
   }
 
-  List<Widget> _buildList(List<BackendEntry> entries, {CoursesServer? server}) => List.generate(
-      entries.length,
-      (index) => server != null && server.url == entries[index].url
-          ? _buildTile(server, entries, index)
-          : FutureBuilder<CoursesServer?>(
-              future: entries[index].fetchServer(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting)
-                  return Center(child: CircularProgressIndicator());
-                if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-                var server = snapshot.data!;
-                return _buildTile(server, entries, index);
-              }));
+  List<Widget> _buildList(List<BackendEntry> entries,
+          {CoursesServer? server}) =>
+      List.generate(
+          entries.length,
+          (index) => server != null && server.url == entries[index].url
+              ? _buildTile(server, entries, index)
+              : FutureBuilder<CoursesServer?>(
+                  future: entries[index].fetchServer(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData ||
+                        snapshot.connectionState == ConnectionState.waiting)
+                      return Center(child: CircularProgressIndicator());
+                    if (snapshot.hasError)
+                      return Text('Error: ${snapshot.error}');
+                    var server = snapshot.data!;
+                    return _buildTile(server, entries, index);
+                  }));
 
-  Widget _buildTile(CoursesServer server, List<BackendEntry> entries, int index) {
+  Widget _buildTile(
+      CoursesServer server, List<BackendEntry> entries, int index) {
     var hero = Hero(
         tag:
             "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
@@ -95,9 +105,13 @@ class _BackendUserPageState extends State<BackendUserPage> {
                       hero,
                       Text(server.name),
                       if (server.url.isNotEmpty)
-                        Text(server.url, style: Theme.of(context).textTheme.caption)
+                        Text(server.url,
+                            style: Theme.of(context).textTheme.caption)
                     ]))))
         : ListTile(
-            leading: hero, title: Text(server.name), subtitle: Text(server.url), onTap: tileTap);
+            leading: hero,
+            title: Text(server.name),
+            subtitle: Text(server.url),
+            onTap: tileTap);
   }
 }
