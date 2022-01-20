@@ -11,7 +11,7 @@ class TextDivider extends StatelessWidget {
       Expanded(
           child: Container(
               margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              child: Divider())),
+              child: const Divider())),
       Text(
         text!,
         style: Theme.of(context).textTheme.overline,
@@ -19,7 +19,7 @@ class TextDivider extends StatelessWidget {
       Expanded(
           child: Container(
               margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              child: Divider())),
+              child: const Divider())),
     ]);
   }
 }

@@ -8,6 +8,9 @@ import 'layout.dart';
 
 class GeneralSettingsPage extends StatelessWidget {
   final Box _generalBox = Hive.box("general");
+
+  GeneralSettingsPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +24,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   return Scrollbar(
                       child: ListView(children: [
                     ListTile(
-                        title: Text('settings.general.name.title').tr(),
+                        title: const Text('settings.general.name.title').tr(),
                         subtitle: Text(name),
                         onTap: () => showDialog(
                             context: context,

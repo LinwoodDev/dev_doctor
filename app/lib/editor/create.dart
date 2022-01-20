@@ -6,15 +6,17 @@ import 'package:hive/hive.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class CreateServerPage extends StatefulWidget {
+  const CreateServerPage({Key? key}) : super(key: key);
+
   @override
   _CreateServerPageState createState() => _CreateServerPageState();
 }
 
 class _CreateServerPageState extends State<CreateServerPage> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _noteController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey();
-  Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
   @override
   Widget build(BuildContext context) {
     var _names = _box.values.map((e) => e.server.name);
@@ -25,14 +27,16 @@ class _CreateServerPageState extends State<CreateServerPage> {
             child: Scrollbar(
                 child: Center(
                     child: Container(
-                        constraints: BoxConstraints(maxWidth: 1000),
+                        constraints: const BoxConstraints(maxWidth: 1000),
                         child: ListView(children: [
                           TextFormField(
                               validator: (value) {
-                                if (value!.isEmpty)
+                                if (value!.isEmpty) {
                                   return "editor.create.name.empty".tr();
-                                if (_names.contains(value))
+                                }
+                                if (_names.contains(value)) {
                                   return "editor.create.name.exist".tr();
+                                }
                                 return null;
                               },
                               decoration: InputDecoration(
@@ -46,7 +50,7 @@ class _CreateServerPageState extends State<CreateServerPage> {
                               controller: _noteController)
                         ]))))),
         floatingActionButton: FloatingActionButton(
-            child: Icon(PhosphorIcons.checkLight),
+            child: const Icon(PhosphorIcons.checkLight),
             tooltip: "editor.create.submit".tr(),
             onPressed: () async {
               if (_formKey.currentState!.validate()) {

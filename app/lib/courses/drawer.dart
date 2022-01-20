@@ -28,8 +28,9 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
   int? partId;
 
   Future<List<CoursePart>> _buildFuture() async {
-    if (widget.editorBloc != null)
+    if (widget.editorBloc != null) {
       return widget.editorBloc!.getCourse(widget.course!.slug).parts;
+    }
     return await widget.course!.fetchParts();
   }
 
@@ -42,8 +43,8 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
         child: Scrollbar(
             child: ListView(children: [
       ListTile(
-        title: Text('course.back').tr(),
-        leading: Icon(PhosphorIcons.arrowArcLeftLight),
+        title: const Text('course.back').tr(),
+        leading: const Icon(PhosphorIcons.arrowArcLeftLight),
         onTap: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
@@ -51,17 +52,18 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
       ),
       if (supportUrl != null)
         ListTile(
-          title: Text('course.support').tr(),
+          title: const Text('course.support').tr(),
           onTap: () => launch(supportUrl),
-          leading: Icon(PhosphorIcons.questionLight),
+          leading: const Icon(PhosphorIcons.questionLight),
         ),
-      Divider(),
+      const Divider(),
       FutureBuilder<List<CoursePart>>(
           future: _buildFuture(),
           builder: (context, snapshot) {
             if (!snapshot.hasData ||
-                snapshot.connectionState == ConnectionState.waiting)
-              return Center(child: CircularProgressIndicator());
+                snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
             if (snapshot.hasError) return Text("Error: ${snapshot.error}");
             var parts = snapshot.data!;
             var args = Modular.args.queryParams;

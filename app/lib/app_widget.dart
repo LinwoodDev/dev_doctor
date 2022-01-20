@@ -9,15 +9,17 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'themes/theme.dart';
 
 class AppWidget extends StatelessWidget {
+  const AppWidget({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     // var locale = Hive.box('appearance').get('locale', defaultValue: 'default');
     //if (locale != 'default') context.locale = Locale.fromSubtags(scriptCode: locale);
     return EasyLocalization(
-        supportedLocales: [Locale('en'), Locale('de'), Locale('fr')],
+        supportedLocales: const [Locale('en'), Locale('de'), Locale('fr')],
         path: 'translations',
-        fallbackLocale: Locale('en'),
+        fallbackLocale: const Locale('en'),
         useOnlyLangCode: true,
         child: ValueListenableBuilder(
             valueListenable: Hive.box('appearance').listenable(),
@@ -28,7 +30,7 @@ class AppWidget extends StatelessWidget {
                 title: 'Dev-Doctor',
                 localizationsDelegates: [
                   ...context.localizationDelegates,
-                  LocaleNamesLocalizationsDelegate()
+                  const LocaleNamesLocalizationsDelegate()
                 ],
                 supportedLocales: context.supportedLocales,
                 locale: context.locale,
@@ -36,10 +38,10 @@ class AppWidget extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 builder: (context, widget) {
                   ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
-                    return ErrorDisplay();
+                    return const ErrorDisplay();
                   };
 
-                  return widget ?? ErrorDisplay();
+                  return widget ?? const ErrorDisplay();
                 },
                 theme: ThemeData(
                     // This is the theme of your application.
@@ -79,7 +81,7 @@ class AppWidget extends StatelessWidget {
                     // the app on. For desktop platforms, the controls will be smaller and
                     // closer together (more dense) than on mobile platforms.
                     visualDensity: VisualDensity.adaptivePlatformDensity),
-                home: MyHomePage(),
+                home: const MyHomePage(),
               ).modular();
             }));
   }
@@ -116,33 +118,33 @@ class _MyHomePageState extends State<MyHomePage> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(PhosphorIcons.houseFill),
-                icon: Icon(PhosphorIcons.houseLight),
+                activeIcon: const Icon(PhosphorIcons.houseFill),
+                icon: const Icon(PhosphorIcons.houseLight),
                 label: 'home'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(PhosphorIcons.storefrontFill),
-                icon: Icon(PhosphorIcons.storefrontLight),
+                activeIcon: const Icon(PhosphorIcons.storefrontFill),
+                icon: const Icon(PhosphorIcons.storefrontLight),
                 label: 'backends.title'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(PhosphorIcons.articleFill),
-                icon: Icon(PhosphorIcons.articleLight),
+                activeIcon: const Icon(PhosphorIcons.articleFill),
+                icon: const Icon(PhosphorIcons.articleLight),
                 label: 'articles.title'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(PhosphorIcons.graduationCapFill),
-                icon: Icon(PhosphorIcons.graduationCapLight),
+                activeIcon: const Icon(PhosphorIcons.graduationCapFill),
+                icon: const Icon(PhosphorIcons.graduationCapLight),
                 label: 'courses.title'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(PhosphorIcons.pencilFill),
-                icon: Icon(PhosphorIcons.pencilLight),
+                activeIcon: const Icon(PhosphorIcons.pencilFill),
+                icon: const Icon(PhosphorIcons.pencilLight),
                 label: 'editor.title'.tr()),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                activeIcon: Icon(PhosphorIcons.gearFill),
-                icon: Icon(PhosphorIcons.gearLight),
+                activeIcon: const Icon(PhosphorIcons.gearFill),
+                icon: const Icon(PhosphorIcons.gearLight),
                 label: 'settings.title'.tr())
           ],
           unselectedItemColor: Theme.of(context).unselectedWidgetColor,

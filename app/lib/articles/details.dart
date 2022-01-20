@@ -31,8 +31,8 @@ class ArticlePage extends StatefulWidget {
 class _ArticlePageState extends State<ArticlePage> {
   ServerEditorBloc? _editorBloc;
   late ArticleBloc bloc;
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _slugController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _slugController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
@@ -57,10 +57,11 @@ class _ArticlePageState extends State<ArticlePage> {
     return StreamBuilder<Article>(
         stream: bloc.articleSubject,
         builder: (context, snapshot) {
-          if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
+          if (snapshot.hasError || bloc.hasError) return const ErrorDisplay();
           if (snapshot.connectionState == ConnectionState.waiting ||
-              !snapshot.hasData)
-            return Center(child: CircularProgressIndicator());
+              !snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
           var article = snapshot.data!;
           return _buildView(article);
         });
@@ -72,7 +73,7 @@ class _ArticlePageState extends State<ArticlePage> {
         appBar: AppBar(title: Text(article.title), actions: [
           if (_editorBloc == null) ...[
             IconButton(
-                icon: Icon(PhosphorIcons.shareNetworkLight),
+                icon: const Icon(PhosphorIcons.shareNetworkLight),
                 tooltip: "share".tr(),
                 onPressed: () {
                   Clipboard.setData(ClipboardData(
@@ -92,12 +93,12 @@ class _ArticlePageState extends State<ArticlePage> {
                 })
           ] else
             IconButton(
-                icon: Icon(PhosphorIcons.codeLight),
+                icon: const Icon(PhosphorIcons.codeLight),
                 tooltip: "code".tr(),
                 onPressed: () async {
                   //var packageInfo = await PackageInfo.fromPlatform();
                   //var buildNumber = int.tryParse(packageInfo.buildNumber);
-                  var encoder = JsonEncoder.withIndent("  ");
+                  var encoder = const JsonEncoder.withIndent("  ");
                   var data = await Modular.to.push(MaterialPageRoute(
                       builder: (context) => EditorCodeDialogPage(
                           initialValue: encoder.convert(article.toJson()))));
@@ -109,22 +110,26 @@ class _ArticlePageState extends State<ArticlePage> {
                     initEditor();
                   }
                 }),
-          if (!kIsWeb && isWindow()) ...[VerticalDivider(), WindowButtons()]
+          if (!kIsWeb && isWindow()) ...[
+            const VerticalDivider(),
+            const WindowButtons()
+          ]
         ]),
         body: ListView(children: <Widget>[
           Padding(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               child: Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                   child: Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Column(children: [
                         if (_editorBloc != null)
                           Form(
                               key: _formKey,
                               child: Container(
-                                  constraints: BoxConstraints(maxWidth: 1000),
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 1000),
                                   child: Column(children: [
                                     TextFormField(
                                         decoration: InputDecoration(
@@ -133,8 +138,9 @@ class _ArticlePageState extends State<ArticlePage> {
                                             hintText:
                                                 "article.title.hint".tr()),
                                         validator: (value) {
-                                          if (value!.isEmpty)
+                                          if (value!.isEmpty) {
                                             return "article.title.empty".tr();
+                                          }
                                           return null;
                                         },
                                         controller: _titleController),
@@ -144,11 +150,13 @@ class _ArticlePageState extends State<ArticlePage> {
                                                 "article.slug.label".tr(),
                                             hintText: "article.slug.hint".tr()),
                                         validator: (value) {
-                                          if (value!.isEmpty)
+                                          if (value!.isEmpty) {
                                             return "article.slug.empty".tr();
+                                          }
                                           if (_slugs!.contains(value) &&
-                                              value != article.slug)
+                                              value != article.slug) {
                                             return "article.slug.exist".tr();
+                                          }
                                           return null;
                                         },
                                         controller: _slugController),
@@ -167,12 +175,12 @@ class _ArticlePageState extends State<ArticlePage> {
                                             bloc.articleSubject.add(article);
                                             setState(() {});
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                               PhosphorIcons.floppyDiskLight),
                                           label:
                                               Text("save".tr().toUpperCase())),
                                     ),
-                                    Divider()
+                                    const Divider()
                                   ]))),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -184,7 +192,7 @@ class _ArticlePageState extends State<ArticlePage> {
                               if (_editorBloc != null) ...[
                                 IconButton(
                                     tooltip: "edit".tr(),
-                                    icon: Icon(PhosphorIcons.pencilLight),
+                                    icon: const Icon(PhosphorIcons.pencilLight),
                                     onPressed: () => Modular.to.pushNamed(Uri(
                                             pathSegments: [
                                               '',
@@ -200,12 +208,13 @@ class _ArticlePageState extends State<ArticlePage> {
                                 if (article.author.name.isNotEmpty)
                                   IconButton(
                                       tooltip: "delete".tr(),
-                                      icon: Icon(PhosphorIcons.trashLight),
+                                      icon:
+                                          const Icon(PhosphorIcons.trashLight),
                                       onPressed: () async {
                                         var articleBloc = _editorBloc!
                                             .getArticle(bloc.article!);
                                         article = articleBloc.copyWith(
-                                            author: Author());
+                                            author: const Author());
                                         _editorBloc?.updateArticle(article);
                                         bloc.articleSubject.add(article);
                                         await _editorBloc?.save();
@@ -215,7 +224,7 @@ class _ArticlePageState extends State<ArticlePage> {
                             ]),
                         Row(children: [
                           Expanded(
-                              child: (!article.body.isEmpty)
+                              child: (article.body.isNotEmpty)
                                   ? MarkdownBody(
                                       onTapLink: (_, url, __) => launch(url!),
                                       extensionSet: md.ExtensionSet(
@@ -234,7 +243,7 @@ class _ArticlePageState extends State<ArticlePage> {
                           if (_editorBloc != null)
                             IconButton(
                                 tooltip: "edit".tr(),
-                                icon: Icon(PhosphorIcons.pencilLight),
+                                icon: const Icon(PhosphorIcons.pencilLight),
                                 onPressed: () => Modular.to.pushNamed(
                                         Uri(pathSegments: [
                                       "",

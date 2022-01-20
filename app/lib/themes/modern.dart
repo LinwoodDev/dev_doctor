@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final mdcThemePrimary = Color(0xFF009aff);
+const mdcThemePrimary = Color(0xFF009aff);
 const mdcThemeOnPrimary = Color(0xFF000000);
 const mdcThemeSecondary = Color(0xFFffba00);
 const mdcThemeOnSecondary = Color(0xFF000000);
@@ -9,7 +9,7 @@ const mdcThemeOnError = Color(0xFFffffff);
 const mdcThemeSurface = Color(0xFFffffff);
 const mdcThemeOnSurface = Color(0xFF000000);
 const mdcThemeBackground = Color(0xFFffffff);
-final mdcTypographyFontFamily = "Roboto";
+const mdcTypographyFontFamily = "Roboto";
 final mdcPrimarySwatch = MaterialColor(mdcThemePrimary.value, {
   50: mdcThemePrimary.withOpacity(.1),
   100: mdcThemePrimary.withOpacity(.2),

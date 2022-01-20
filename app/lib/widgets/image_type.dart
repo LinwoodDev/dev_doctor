@@ -24,11 +24,12 @@ class _ImageTypeDropdownState extends State<ImageTypeDropdown> {
     return DropdownButton<String>(
       value: dropdownValue,
       onChanged: (String? newValue) {
-        if (newValue != null)
+        if (newValue != null) {
           setState(() {
             widget.onChanged(newValue);
             dropdownValue = newValue;
           });
+        }
       },
       items: <String>['svg', 'png', 'jpg', 'jpeg']
           .map<DropdownMenuItem<String>>((String value) {

@@ -22,11 +22,11 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
   TextEditingController? _nameController;
   TextEditingController? _urlController;
   TextEditingController? _avatarController;
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
   late Author _author;
   @override
   void initState() {
-    _author = widget.author ?? Author();
+    _author = widget.author ?? const Author();
     _nameController = TextEditingController(text: _author.name);
     _urlController = TextEditingController(text: _author.url);
     _avatarController = TextEditingController(text: _author.avatar);
@@ -42,12 +42,13 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
             child: Scrollbar(
                 child: Center(
                     child: Container(
-                        constraints: BoxConstraints(maxWidth: 1000),
+                        constraints: const BoxConstraints(maxWidth: 1000),
                         child: ListView(children: [
                           TextFormField(
                               validator: (value) {
-                                if (value!.isEmpty)
+                                if (value!.isEmpty) {
                                   return "course.author.name.empty".tr();
+                                }
                                 return null;
                               },
                               decoration: InputDecoration(
@@ -78,12 +79,12 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
                                       avatar: _avatarController!.text)),
                               keyboardType: TextInputType.url,
                               controller: _avatarController),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           AuthorDisplay(author: _author),
-                          SizedBox(height: 10)
+                          const SizedBox(height: 10)
                         ]))))),
         floatingActionButton: FloatingActionButton(
-            child: Icon(PhosphorIcons.checkLight),
+            child: const Icon(PhosphorIcons.checkLight),
             tooltip: "editor.create.submit".tr(),
             onPressed: () => widget.onSubmit(_author)));
   }

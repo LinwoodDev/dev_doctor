@@ -24,18 +24,18 @@ class AppModule extends Module {
   // Provide all the routes for your module
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => MyHomePage(), children: [
+    ChildRoute('/', child: (_, args) => const MyHomePage(), children: [
       ...HomeRoutes.values.map((e) => ChildRoute(e.route,
           child: (_, __) => e.widget, transition: TransitionType.fadeIn)),
-      WildcardRoute(child: (_, __) => ErrorDisplay())
+      WildcardRoute(child: (_, __) => const ErrorDisplay())
     ]),
-    WildcardRoute(child: (_, __) => ErrorDisplay()),
+    WildcardRoute(child: (_, __) => const ErrorDisplay()),
     ModuleRoute('/editor', module: EditorModule()),
     ModuleRoute('/backends', module: BackendsModule()),
     ModuleRoute('/articles', module: ArticlesModule()),
     ModuleRoute('/settings', module: SettingsModule()),
     ModuleRoute('/courses', module: CourseModule()),
-    ChildRoute('/error', child: (_, args) => ErrorDisplay()),
+    ChildRoute('/error', child: (_, args) => const ErrorDisplay()),
     ChildRoute('/add',
         child: (_, args) => AddServerPage(url: args.queryParams['url']!)),
   ];
@@ -64,17 +64,17 @@ extension HomeRoutesExtension on HomeRoutes {
   Widget get widget {
     switch (this) {
       case HomeRoutes.home:
-        return HomePage();
+        return const HomePage();
       case HomeRoutes.backends:
-        return BackendsPage();
+        return const BackendsPage();
       case HomeRoutes.articles:
-        return ArticlesPage();
+        return const ArticlesPage();
       case HomeRoutes.courses:
-        return CoursesPage();
+        return const CoursesPage();
       case HomeRoutes.editor:
-        return EditorPage();
+        return const EditorPage();
       case HomeRoutes.settings:
-        return SettingsPage();
+        return const SettingsPage();
     }
   }
 

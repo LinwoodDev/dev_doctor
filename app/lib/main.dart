@@ -32,18 +32,21 @@ void main() async {
   await Hive.openBox<int>('points');
   var _serversBox = await Hive.openBox<String>('servers');
   var _collectionsBox = await Hive.openBox<String>('collections');
-  if (_collectionsBox.isEmpty)
+  if (_collectionsBox.isEmpty) {
     await _collectionsBox.add('https://collection.dev-doctor.linwood.dev');
-  if (_serversBox.isEmpty)
+  }
+  if (_serversBox.isEmpty) {
     await _serversBox.add('https://backend.dev-doctor.linwood.dev');
-  runApp(ModularApp(module: AppModule(), child: AppWidget()));
+  }
+  runApp(ModularApp(module: AppModule(), child: const AppWidget()));
 
-  if (isWindow())
+  if (isWindow()) {
     doWhenWindowReady(() {
-      appWindow.minSize = Size(400, 300);
-      appWindow.size = Size(400, 600);
+      appWindow.minSize = const Size(400, 300);
+      appWindow.size = const Size(400, 600);
       appWindow.alignment = Alignment.center;
       appWindow.title = "Dev-Doctor";
       appWindow.show();
     });
+  }
 }

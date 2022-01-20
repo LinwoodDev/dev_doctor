@@ -9,7 +9,7 @@ class QuizPartItem extends PartItem {
   final List<QuizQuestion> questions;
   final int? time;
 
-  QuizPartItem(
+  const QuizPartItem(
       {this.text,
       this.time,
       this.questions = const [],
@@ -37,6 +37,7 @@ class QuizPartItem extends PartItem {
         "description": description
       };
 
+  @override
   QuizPartItem copyWith(
           {String? text,
           int? time,
@@ -55,7 +56,9 @@ class QuizPartItem extends PartItem {
   @override
   int get points {
     int points = 0;
-    questions.forEach((question) => points += question.points);
+    for (var question in questions) {
+      points += question.points;
+    }
     return points;
   }
 
@@ -71,7 +74,7 @@ class QuizQuestion {
   final List<QuizAnswer> answers;
   final bool multi;
 
-  QuizQuestion(
+  const QuizQuestion(
       {this.title = '',
       this.description = '',
       this.answers = const [],
@@ -108,7 +111,9 @@ class QuizQuestion {
 
   int get points {
     int points = 0;
-    answers.forEach((element) => points = max(points, element.points));
+    for (var element in answers) {
+      points = max(points, element.points);
+    }
     return points;
   }
 }
@@ -121,7 +126,7 @@ class QuizAnswer {
   final int points;
   final int minusPoints;
 
-  QuizAnswer(
+  const QuizAnswer(
       {this.correct = false,
       this.name = "",
       this.description = "",

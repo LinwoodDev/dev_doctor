@@ -26,7 +26,7 @@ class _BackendUserPageState extends State<BackendUserPage> {
     if (widget.model != null) return widget.model!['user'];
     var collection = await BackendCollection.fetch(index: widget.collectionId);
     var current = await collection!.fetchUser(widget.user);
-    return await current;
+    return current;
   }
 
   @override
@@ -38,10 +38,12 @@ class _BackendUserPageState extends State<BackendUserPage> {
                 future: _buildFuture(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting ||
-                      !snapshot.hasData)
-                    return Center(child: CircularProgressIndicator());
-                  if (snapshot.hasError)
+                      !snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
+                  }
                   var backendUser = snapshot.data!;
                   return _buildView(backendUser);
                 }));
@@ -77,10 +79,12 @@ class _BackendUserPageState extends State<BackendUserPage> {
                   future: entries[index].fetchServer(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData ||
-                        snapshot.connectionState == ConnectionState.waiting)
-                      return Center(child: CircularProgressIndicator());
-                    if (snapshot.hasError)
+                        snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
+                    }
                     var server = snapshot.data!;
                     return _buildTile(server, entries, index);
                   }));
@@ -99,7 +103,7 @@ class _BackendUserPageState extends State<BackendUserPage> {
             child: InkWell(
                 onTap: tileTap,
                 child: Container(
-                    constraints: BoxConstraints(maxWidth: 250),
+                    constraints: const BoxConstraints(maxWidth: 250),
                     padding: const EdgeInsets.all(8.0),
                     child: Column(children: [
                       hero,

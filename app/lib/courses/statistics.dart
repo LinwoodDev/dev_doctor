@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/part.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -21,145 +22,140 @@ class CourseStatisticsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: FutureBuilder<List<CoursePart>>(
-            future: course.fetchParts(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData ||
-                  snapshot.connectionState == ConnectionState.waiting)
-                return Center(child: CircularProgressIndicator());
-              if (snapshot.hasError) return Text("Error: ${snapshot.error}");
-              var parts = snapshot.data!;
-              double allProgress = 0;
-              var allScore = 0;
-              var allMaxScore = 0;
-              return SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      ...List.generate(parts.length, (index) {
-                        var part = parts[index];
-                        double progress = 0;
-                        for (var i = 0; i < part.items.length; i++)
-                          if (part.itemVisited(i)) progress += 1;
-                        progress /= part.items.length;
-                        allProgress += progress;
-                        int points = 0;
-                        int maxPoints = 0;
-                        for (var i = 0; i < part.items.length; i++) {
-                          maxPoints += part.items[i].points;
-                          if (part.itemVisited(i))
-                            points += part.getItemPoints(i) ?? 0;
-                        }
-                        allScore += points.toInt();
-                        allMaxScore += maxPoints.toInt();
+    return FutureBuilder<List<CoursePart>>(
+        future: course.fetchParts(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData ||
+              snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) return Text("Error: ${snapshot.error}");
+          var parts = snapshot.data!;
+          double allProgress = 0;
+          var allScore = 0;
+          var allMaxScore = 0;
+          return SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ...List.generate(parts.length, (index) {
+                    var part = parts[index];
+                    double progress = 0;
+                    for (var i = 0; i < part.items.length; i++) {
+                      if (part.itemVisited(i)) progress += 1;
+                    }
+                    progress /= part.items.length;
+                    allProgress += progress;
+                    int points = 0;
+                    int maxPoints = 0;
+                    for (var i = 0; i < part.items.length; i++) {
+                      maxPoints += part.items[i].points;
+                      if (part.itemVisited(i)) {
+                        points += part.getItemPoints(i) ?? 0;
+                      }
+                    }
+                    allScore += points.toInt();
+                    allMaxScore += maxPoints.toInt();
 
-                        return Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16)),
-                                child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 32),
-                                    child: Column(children: [
-                                      Text(part.name,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6),
-                                      SizedBox(height: 50),
-                                      Text("course.progress".tr() +
-                                          " " +
-                                          (progress * 100).round().toString() +
-                                          "%"),
-                                      LinearProgressIndicator(value: progress),
-                                      SizedBox(height: 50),
-                                      Wrap(
-                                          children: List.generate(
-                                              part.items.length, (index) {
-                                        var item = part.items[index];
-                                        return IconButton(
-                                            tooltip: "${item.name}" +
-                                                (part.itemVisited(index)
-                                                    ? " ${part.getItemPoints(index)}/${item.points}"
-                                                    : " 0/${item.points}"),
-                                            icon: Icon(item.icon,
-                                                color: part.itemVisited(index)
-                                                    ? Theme.of(context)
-                                                        .primaryColor
-                                                    : null),
-                                            onPressed: () => Modular.to
-                                                    .pushNamed(
-                                                        Uri(pathSegments: [
-                                                  "",
-                                                  "courses",
-                                                  "start",
-                                                  "item"
-                                                ], queryParameters: {
-                                                  "serverId": course
-                                                      .server?.index
-                                                      ?.toString(),
-                                                  "course": course.slug,
-                                                  "part": part.slug,
-                                                  "itemId": index.toString()
-                                                }).toString()));
-                                      })),
-                                      SizedBox(height: 50),
-                                      Text("course.points".tr() +
-                                          " " +
-                                          points.toString() +
-                                          "/" +
-                                          maxPoints.toString()),
-                                      LinearProgressIndicator(
-                                          value: points / maxPoints),
-                                    ]))));
-                      }),
-                      Builder(builder: (context) {
-                        allProgress /= parts.length;
-                        return Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 4, vertical: 64),
-                            child: Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16)),
-                                child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 32),
-                                    child: Column(children: [
-                                      Text("course.progress".tr() +
-                                          " " +
-                                          (allProgress * 100)
-                                              .round()
-                                              .toString() +
-                                          "%"),
-                                      LinearProgressIndicator(
-                                          value: allProgress),
-                                      SizedBox(height: 50),
-                                      Text("course.points".tr() +
-                                          " " +
-                                          allScore.toString() +
-                                          "/" +
-                                          allMaxScore.toString()),
-                                      LinearProgressIndicator(
-                                          value: allScore / allMaxScore),
-                                      SizedBox(height: 50),
-                                      ElevatedButton.icon(
-                                          onPressed: () => _downloadCertificate(
-                                              context,
-                                              allProgress,
-                                              allScore,
-                                              allMaxScore),
-                                          icon:
-                                              Icon(PhosphorIcons.downloadLight),
-                                          label: Text(
-                                              "course.certificate.button"
-                                                  .tr()
-                                                  .toUpperCase()))
-                                    ]))));
-                      })
-                    ]),
-              );
-            }));
+                    return Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 32),
+                                child: Column(children: [
+                                  Text(part.name,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6),
+                                  const SizedBox(height: 50),
+                                  Text("course.progress".tr() +
+                                      " " +
+                                      (progress * 100).round().toString() +
+                                      "%"),
+                                  LinearProgressIndicator(value: progress),
+                                  const SizedBox(height: 50),
+                                  Wrap(
+                                      children: List.generate(part.items.length,
+                                          (index) {
+                                    var item = part.items[index];
+                                    return IconButton(
+                                        tooltip: item.name +
+                                            (part.itemVisited(index)
+                                                ? " ${part.getItemPoints(index)}/${item.points}"
+                                                : " 0/${item.points}"),
+                                        icon: Icon(item.icon,
+                                            color: part.itemVisited(index)
+                                                ? Theme.of(context).primaryColor
+                                                : null),
+                                        onPressed: () => Modular.to
+                                                .pushNamed(Uri(pathSegments: [
+                                              "",
+                                              "courses",
+                                              "start",
+                                              "item"
+                                            ], queryParameters: {
+                                              "serverId": course.server?.index
+                                                  ?.toString(),
+                                              "course": course.slug,
+                                              "part": part.slug,
+                                              "itemId": index.toString()
+                                            }).toString()));
+                                  })),
+                                  const SizedBox(height: 50),
+                                  Text("course.points".tr() +
+                                      " " +
+                                      points.toString() +
+                                      "/" +
+                                      maxPoints.toString()),
+                                  LinearProgressIndicator(
+                                      value: points / maxPoints),
+                                ]))));
+                  }),
+                  Builder(builder: (context) {
+                    allProgress /= parts.length;
+                    return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 4, vertical: 64),
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 32),
+                                child: Column(children: [
+                                  Text("course.progress".tr() +
+                                      " " +
+                                      (allProgress * 100).round().toString() +
+                                      "%"),
+                                  LinearProgressIndicator(value: allProgress),
+                                  const SizedBox(height: 50),
+                                  Text("course.points".tr() +
+                                      " " +
+                                      allScore.toString() +
+                                      "/" +
+                                      allMaxScore.toString()),
+                                  LinearProgressIndicator(
+                                      value: allScore / allMaxScore),
+                                  const SizedBox(height: 50),
+                                  ElevatedButton.icon(
+                                      onPressed: () => _downloadCertificate(
+                                          context,
+                                          allProgress,
+                                          allScore,
+                                          allMaxScore),
+                                      icon: const Icon(
+                                          PhosphorIcons.downloadLight),
+                                      label: Text("course.certificate.button"
+                                          .tr()
+                                          .toUpperCase()))
+                                ]))));
+                  })
+                ]),
+          );
+        });
   }
 
   Future<void> _downloadCertificate(BuildContext buildContext, double progress,
@@ -168,11 +164,11 @@ class CourseStatisticsView extends StatelessWidget {
     buildContext.showBlockDialog(
       dismissCompleter: completer,
     );
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     try {
       var logoImage = await imageFromAssetBundle("images/logo.png");
       final pdf = pw.Document();
-      pw.Widget? image = null;
+      pw.Widget? image;
       if (course.icon.isNotEmpty) {
         var url = course.url + "/icon." + course.icon;
         switch (course.icon) {
@@ -243,7 +239,9 @@ class CourseStatisticsView extends StatelessWidget {
       await Printing.sharePdf(
           bytes: await pdf.save(), filename: 'certificate.pdf');
     } catch (e) {
-      print("Error $e");
+      if (kDebugMode) {
+        print("Error $e");
+      }
     }
     completer.complete();
   }

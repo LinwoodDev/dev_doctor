@@ -32,7 +32,7 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
     return LayoutBuilder(builder: (context, constraints) {
       var isMobile = MediaQuery.of(context).size.width <= 1000;
       var textEditor = _buildTextEditor(isMobile);
-      if (!isMobile)
+      if (!isMobile) {
         return _buildAppBar(
             isMobile,
             Row(children: [
@@ -41,6 +41,7 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
                   child: _MarkdownEditorPreview(
                       markdown: _markdownController!.text, isMobile: false))
             ]));
+      }
       return _buildAppBar(isMobile, textEditor);
     });
   }
@@ -50,27 +51,26 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
         if (isMobile)
           IconButton(
               tooltip: "editor.markdown.preview.button".tr(),
-              icon: Icon(PhosphorIcons.playLight),
+              icon: const Icon(PhosphorIcons.playLight),
               onPressed: () => Modular.to.push(MaterialPageRoute(
                   builder: (context) => _MarkdownEditorPreview(
                       markdown: _markdownController!.text)))),
         IconButton(
             tooltip: "save".tr(),
-            icon: Icon(PhosphorIcons.floppyDiskLight),
+            icon: const Icon(PhosphorIcons.floppyDiskLight),
             onPressed: () => widget.onSubmit(_markdownController!.text))
       ]),
       body: child);
 
   Widget _buildTextEditor(bool isMobile) => Scrollbar(
           child: SingleChildScrollView(
-              child: Container(
-                  child: TextField(
+              child: TextField(
         controller: _markdownController,
         onChanged: (value) {
           setState(() {});
         },
         maxLines: null,
-      ))));
+      )));
 }
 
 class _MarkdownEditorPreview extends StatelessWidget {

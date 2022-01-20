@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:yaml/yaml.dart';
 import 'yaml.dart';
@@ -26,7 +27,9 @@ Future<Map<String, dynamic>?> loadYamlFile(String path) async {
     var response = await http.get(Uri.parse(path + ".yml"));
     return yamlMapToJson(loadYaml(utf8.decode(response.bodyBytes)));
   } catch (e) {
-    print(e);
+    if (kDebugMode) {
+      print(e);
+    }
   }
 
   return null;

@@ -12,7 +12,7 @@ class ArticleBloc extends Disposable {
   bool error = false;
 
   bool get hasError => error;
-  CoursePartBloc() {}
+  ArticleBloc();
   Future<void> fetch(
       {ServerEditorBloc? editorBloc,
       String? server,
@@ -27,11 +27,12 @@ class ArticleBloc extends Disposable {
           : await CoursesServer.fetch(index: serverId, url: server);
       if (editorBloc == null &&
           !(currentServer?.added ?? false) &&
-          server != null)
+          server != null) {
         Modular.to.pushNamed(Uri(
                 pathSegments: ["", "add"],
                 queryParameters: {"url": server, "redirect": Modular.to.path})
             .toString());
+      }
       if (articleId != null) article = currentServer?.articles[articleId];
       this.article = article;
       var current = article == null
@@ -42,7 +43,9 @@ class ArticleBloc extends Disposable {
       articleSubject.add(current ?? Article(slug: ''));
       if (current == null) error = true;
     } catch (e) {
-      print("Error $e");
+      if (kDebugMode) {
+        print("Error $e");
+      }
       error = true;
     }
   }

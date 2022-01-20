@@ -7,6 +7,8 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
+  const SettingsPage({Key? key}) : super(key: key);
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -16,7 +18,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(title: "settings.title".tr()),
-        body: Container(child: SettingsList()));
+        body: const SettingsList());
   }
 }
 
@@ -51,15 +53,15 @@ class SettingsList extends StatelessWidget {
                     child: Column(mainAxisSize: MainAxisSize.max, children: [
           ListTile(
               selected: activePage == SettingsPages.general,
-              leading: Icon(PhosphorIcons.wrenchLight),
-              title: Text("settings.general.title").tr(),
+              leading: const Icon(PhosphorIcons.wrenchLight),
+              title: const Text("settings.general.title").tr(),
               onTap: () => activePage != null
                   ? Modular.to.pushReplacementNamed('/settings/general')
                   : Modular.to.pushNamed("/settings/general")),
           ListTile(
               selected: activePage == SettingsPages.appearance,
-              leading: Icon(PhosphorIcons.fadersLight),
-              title: Text("settings.appearance.title").tr(),
+              leading: const Icon(PhosphorIcons.fadersLight),
+              title: const Text("settings.appearance.title").tr(),
               onTap: () => activePage != null
                   ? Modular.to.pushReplacementNamed('/settings/appearance')
                   : Modular.to.pushNamed("/settings/appearance")),
@@ -70,55 +72,55 @@ class SettingsList extends StatelessWidget {
           //     onTap: () => _showComingSoon(context)),
           ListTile(
               selected: activePage == SettingsPages.servers,
-              leading: Icon(PhosphorIcons.cardsLight),
-              title: Text("settings.servers.title").tr(),
+              leading: const Icon(PhosphorIcons.cardsLight),
+              title: const Text("settings.servers.title").tr(),
               onTap: () => activePage != null
                   ? Modular.to.pushReplacementNamed('/settings/servers')
                   : Modular.to.pushNamed("/settings/servers")),
           ListTile(
               selected: activePage == SettingsPages.collections,
-              leading: Icon(PhosphorIcons.treeStructureLight),
-              title: Text("settings.collections.title").tr(),
+              leading: const Icon(PhosphorIcons.treeStructureLight),
+              title: const Text("settings.collections.title").tr(),
               onTap: () => activePage != null
                   ? Modular.to.pushReplacementNamed('/settings/collections')
                   : Modular.to.pushNamed("/settings/collections")),
           TextDivider(text: 'settings.information'.tr().toUpperCase()),
           ListTile(
-              leading: Icon(PhosphorIcons.stackLight),
-              title: Text("settings.license").tr(),
+              leading: const Icon(PhosphorIcons.stackLight),
+              title: const Text("settings.license").tr(),
               onTap: () => launch(
                   "https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE")),
           ListTile(
-              leading: Icon(PhosphorIcons.codeLight),
-              title: Text("settings.code").tr(),
+              leading: const Icon(PhosphorIcons.codeLight),
+              title: const Text("settings.code").tr(),
               onTap: () =>
                   launch("https://github.com/LinwoodCloud/dev_doctor")),
           ListTile(
-              leading: Icon(PhosphorIcons.usersLight),
-              title: Text("discord").tr(),
+              leading: const Icon(PhosphorIcons.usersLight),
+              title: const Text("discord").tr(),
               onTap: () => launch("https://discord.linwood.dev")),
           ListTile(
-              leading: Icon(PhosphorIcons.articleLight),
-              title: Text("docs").tr(),
+              leading: const Icon(PhosphorIcons.articleLight),
+              title: const Text("docs").tr(),
               onTap: () => launch(
                   "https://docs.dev-doctor.linwood.dev/backend/overview")),
           ListTile(
-              leading: Icon(PhosphorIcons.arrowCounterClockwiseLight),
-              title: Text("settings.changelog").tr(),
+              leading: const Icon(PhosphorIcons.arrowCounterClockwiseLight),
+              title: const Text("settings.changelog").tr(),
               onTap: () =>
                   launch("https://docs.dev-doctor.linwood.dev/changelog")),
           ListTile(
-              leading: Icon(PhosphorIcons.identificationCardLight),
-              title: Text("settings.imprint").tr(),
+              leading: const Icon(PhosphorIcons.identificationCardLight),
+              title: const Text("settings.imprint").tr(),
               onTap: () => launch("https://codedoctor.tk/impress")),
           ListTile(
-              leading: Icon(PhosphorIcons.shieldLight),
-              title: Text("settings.privacypolicy").tr(),
+              leading: const Icon(PhosphorIcons.shieldLight),
+              title: const Text("settings.privacypolicy").tr(),
               onTap: () => launch(
                   "https://docs.dev-doctor.linwood.dev/docs/privacypolicy")),
           ListTile(
-              leading: Icon(PhosphorIcons.infoLight),
-              title: Text("settings.about").tr(),
+              leading: const Icon(PhosphorIcons.infoLight),
+              title: const Text("settings.about").tr(),
               onTap: () => showAboutDialog(
                   context: context,
                   applicationIcon: Image.asset("images/logo.png", height: 50))),

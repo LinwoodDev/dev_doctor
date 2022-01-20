@@ -44,8 +44,8 @@ class _BackendPageState extends State<BackendPage>
   late TabController _tabController;
   late TextEditingController _nameController;
   late TextEditingController _noteController;
-  GlobalKey<FormState> _formKey = GlobalKey();
-  Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
   ServerEditorBloc? _editorBloc;
 
   void _handleTabChange() {
@@ -93,12 +93,13 @@ class _BackendPageState extends State<BackendPage>
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     default:
-                      if (snapshot.hasError)
+                      if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
+                      }
                       var server = snapshot.data;
-                      if (server == null) return ErrorDisplay();
+                      if (server == null) return const ErrorDisplay();
                       return _buildView(server);
                   }
                 });
@@ -119,10 +120,11 @@ class _BackendPageState extends State<BackendPage>
                             AddBackendButton(server: server)
                           else
                             IconButton(
-                                icon: Icon(PhosphorIcons.codeLight),
+                                icon: const Icon(PhosphorIcons.codeLight),
                                 tooltip: "code".tr(),
                                 onPressed: () async {
-                                  var encoder = JsonEncoder.withIndent("  ");
+                                  var encoder =
+                                      const JsonEncoder.withIndent("  ");
                                   var data = await Modular.to.push(
                                       MaterialPageRoute(
                                           builder: (context) =>
@@ -139,8 +141,8 @@ class _BackendPageState extends State<BackendPage>
                                   }
                                 }),
                           if (!kIsWeb && isWindow()) ...[
-                            VerticalDivider(),
-                            WindowButtons()
+                            const VerticalDivider(),
+                            const WindowButtons()
                           ]
                         ],
                         bottom: _editorBloc != null
@@ -160,7 +162,8 @@ class _BackendPageState extends State<BackendPage>
                             ? null
                             : FlexibleSpaceBar(
                                 background: Container(
-                                    margin: EdgeInsets.fromLTRB(10, 20, 10, 84),
+                                    margin: const EdgeInsets.fromLTRB(
+                                        10, 20, 10, 84),
                                     child: Hero(
                                         tag: _editorBloc != null
                                             ? "editor-backend-${_editorBloc!.server.name}"
@@ -246,7 +249,7 @@ class _BackendPageState extends State<BackendPage>
             onPressed: _tabController.index == 1
                 ? _showCreateCourseDialog
                 : _showCreateArticleDialog,
-            child: Icon(PhosphorIcons.plusLight),
+            child: const Icon(PhosphorIcons.plusLight),
           );
   }
 
@@ -256,7 +259,7 @@ class _BackendPageState extends State<BackendPage>
         child: ListView(
       children: <Widget>[
         Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
@@ -276,13 +279,14 @@ class _BackendPageState extends State<BackendPage>
                                               "user": server.entry!.user,
                                               "server": server
                                             }),
-                                    icon: Icon(PhosphorIcons.userLight),
+                                    icon: const Icon(PhosphorIcons.userLight),
                                     label: Text(widget.user!))),
                           ] else
                             Form(
                                 key: _formKey,
                                 child: Container(
-                                    constraints: BoxConstraints(maxWidth: 1000),
+                                    constraints:
+                                        const BoxConstraints(maxWidth: 1000),
                                     child: Column(children: [
                                       TextFormField(
                                           decoration: InputDecoration(
@@ -293,14 +297,16 @@ class _BackendPageState extends State<BackendPage>
                                                   "editor.create.name.hint"
                                                       .tr()),
                                           validator: (value) {
-                                            if (value!.isEmpty)
+                                            if (value!.isEmpty) {
                                               return "editor.create.name.empty"
                                                   .tr();
+                                            }
                                             if (_names.contains(value) &&
                                                 value !=
-                                                    _editorBloc!.server.name)
+                                                    _editorBloc!.server.name) {
                                               return "editor.create.name.exist"
                                                   .tr();
+                                            }
                                             return null;
                                           },
                                           controller: _nameController),
@@ -328,12 +334,12 @@ class _BackendPageState extends State<BackendPage>
                                               await _editorBloc?.save();
                                               setState(() {});
                                             },
-                                            icon: Icon(
+                                            icon: const Icon(
                                                 PhosphorIcons.floppyDiskLight),
                                             label: Text(
                                                 "save".tr().toUpperCase())),
                                       ),
-                                      Divider()
+                                      const Divider()
                                     ]))),
                           Row(children: [
                             Expanded(
@@ -358,7 +364,7 @@ class _BackendPageState extends State<BackendPage>
                                     : Container()),
                             IconButton(
                                 tooltip: "edit".tr(),
-                                icon: Icon(PhosphorIcons.pencilLight),
+                                icon: const Icon(PhosphorIcons.pencilLight),
                                 onPressed: () => Modular.to.pushNamed(
                                     '/editor/edit?serverId=${_editorBloc!.key.toString()}'))
                           ])
@@ -438,19 +444,19 @@ class _BackendPageState extends State<BackendPage>
   }
 
   Future<void> _createCourse(String name) async {
-    if (_editorBloc!.courses.map((e) => e.course.slug).contains(name))
+    if (_editorBloc!.courses.map((e) => e.course.slug).contains(name)) {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                  title: Text("course.add.exist.title").tr(),
-                  content: Text("course.add.exist.content").tr(),
+                  title: const Text("course.add.exist.title").tr(),
+                  content: const Text("course.add.exist.content").tr(),
                   actions: [
                     TextButton.icon(
-                        icon: Icon(PhosphorIcons.xLight),
+                        icon: const Icon(PhosphorIcons.xLight),
                         onPressed: () => Navigator.of(context).pop(),
                         label: Text("close".tr().toUpperCase()))
                   ]));
-    else {
+    } else {
       _editorBloc!.createCourse(name);
       _editorBloc?.save();
       setState(() {});
@@ -458,19 +464,19 @@ class _BackendPageState extends State<BackendPage>
   }
 
   Future<void> _createArticle(String name) async {
-    if (_editorBloc!.getCourseSlugs().contains(name))
+    if (_editorBloc!.getCourseSlugs().contains(name)) {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                  title: Text("article.add.exist.title").tr(),
-                  content: Text("article.add.exist.content").tr(),
+                  title: const Text("article.add.exist.title").tr(),
+                  content: const Text("article.add.exist.content").tr(),
                   actions: [
                     TextButton.icon(
-                        icon: Icon(PhosphorIcons.xLight),
+                        icon: const Icon(PhosphorIcons.xLight),
                         onPressed: () => Navigator.of(context).pop(),
                         label: Text("close".tr().toUpperCase()))
                   ]));
-    else {
+    } else {
       _editorBloc!.createArticle(name);
       _editorBloc?.save();
       setState(() {});

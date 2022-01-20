@@ -17,12 +17,13 @@ class _ItemFetcher {
 
   // This async function simulates fetching results from Internet, etc.
   Future<List<CoursesServer>> fetch(String query) async {
-    if (entries.isEmpty)
+    if (entries.isEmpty) {
       await Future.wait(Hive.box<String>('collections').values.map((e) async {
         var collection = await BackendCollection.fetch(url: e);
         var users = await collection?.fetchUsers();
         entries.addAll(users?.expand((e) => e.buildEntries()) ?? []);
       }));
+    }
     final list = <CoursesServer>[];
     var n = min(_itemsPerPage, entries.length - _currentPage * _itemsPerPage);
     for (int i = 0; i < n; i++) {
@@ -31,8 +32,9 @@ class _ItemFetcher {
       var server = await entry.fetchServer();
       if ((server!.body.isNotEmpty &&
               server.body.toUpperCase().contains(query.toUpperCase())) ||
-          server.name.toUpperCase().contains(query.toUpperCase()))
+          server.name.toUpperCase().contains(query.toUpperCase())) {
         list.add(server);
+      }
     }
     _currentPage++;
     return list;
@@ -40,7 +42,7 @@ class _ItemFetcher {
 }
 
 class CustomSearchDelegate extends SearchDelegate {
-  var _itemFetcher;
+  _ItemFetcher _itemFetcher;
   final bool gridView;
 
   CustomSearchDelegate(this._itemFetcher, this.gridView);
@@ -49,7 +51,7 @@ class CustomSearchDelegate extends SearchDelegate {
     return [
       IconButton(
         tooltip: "clear".tr(),
-        icon: Icon(PhosphorIcons.xLight),
+        icon: const Icon(PhosphorIcons.xLight),
         onPressed: () {
           query = '';
         },
@@ -61,7 +63,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildLeading(BuildContext context) {
     return IconButton(
       tooltip: "back".tr(),
-      icon: Icon(PhosphorIcons.arrowArcLeftLight),
+      icon: const Icon(PhosphorIcons.arrowArcLeftLight),
       onPressed: () {
         close(context, null);
       },
@@ -162,7 +164,7 @@ class _BackendsListState extends State<BackendsList> {
             if (!_isLoading) {
               _loadMore();
             }
-            return Center(
+            return const Center(
               child: SizedBox(
                 child: CircularProgressIndicator(),
                 height: 24,
@@ -192,12 +194,12 @@ class _BackendsListState extends State<BackendsList> {
             child:
                 UniversalImage(type: server.icon, url: server.url + "/icon"));
 
-    if (widget.gridView)
+    if (widget.gridView) {
       return Card(
           child: InkWell(
               onTap: onTap,
               child: Container(
-                constraints: BoxConstraints(maxWidth: 250),
+                constraints: const BoxConstraints(maxWidth: 250),
                 padding: const EdgeInsets.all(8.0),
                 child: Column(children: [
                   Container(padding: const EdgeInsets.all(8.0), child: hero),
@@ -212,6 +214,7 @@ class _BackendsListState extends State<BackendsList> {
                   ])
                 ]),
               )));
+    }
 
     return ListTile(
         title: Text(server.name),
@@ -223,6 +226,8 @@ class _BackendsListState extends State<BackendsList> {
 }
 
 class BackendsPage extends StatefulWidget {
+  const BackendsPage({Key? key}) : super(key: key);
+
   @override
   _BackendsPageState createState() => _BackendsPageState();
 }
@@ -237,7 +242,7 @@ class _BackendsPageState extends State<BackendsPage>
         appBar: MyAppBar(title: "backends.title".tr(), actions: [
           IconButton(
               tooltip: "search".tr(),
-              icon: Icon(PhosphorIcons.magnifyingGlassLight),
+              icon: const Icon(PhosphorIcons.magnifyingGlassLight),
               onPressed: () {
                 showSearch(
                     context: context,
@@ -281,7 +286,7 @@ class _AddBackendButtonState extends State<AddBackendButton>
     _server = widget.server;
     _controller = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: 100),
+        duration: const Duration(milliseconds: 100),
         value: _server.added ? 1 : 0);
     _animation = Tween<double>(begin: -0.25, end: 0).animate(_controller);
   }

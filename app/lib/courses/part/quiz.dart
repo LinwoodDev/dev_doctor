@@ -30,7 +30,7 @@ class QuizPartItemPage extends StatefulWidget {
 
 class _QuizPartItemPageState extends State<QuizPartItemPage> {
   final _formKey = GlobalKey<FormState>();
-  int? _points = null;
+  int? _points;
   late CoursePartBloc bloc;
 
   @override
@@ -58,29 +58,30 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: Text("course.quiz.validation.title").tr(),
+                title: const Text("course.quiz.validation.title").tr(),
                 content: Text("course.quiz.validation." +
                         (validate ? "correct" : "wrong"))
                     .tr(),
                 actions: [
                   TextButton.icon(
                       onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(PhosphorIcons.xLight),
+                      icon: const Icon(PhosphorIcons.xLight),
                       label: Text("close".tr().toUpperCase()))
                 ],
               ));
-    } else
+    } else {
       _points = null;
+    }
   }
 
-  Timer? _timer = null;
-  int? _start = null;
+  Timer? _timer;
+  int? _start;
 
   void startTimer() {
-    const oneSec = const Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     _start = widget.item.time;
-    if (widget.editorBloc == null)
-      _timer = new Timer.periodic(
+    if (widget.editorBloc == null) {
+      _timer = Timer.periodic(
         oneSec,
         (Timer timer) {
           if (_start == 0) {
@@ -92,13 +93,16 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
           }
         },
       );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     if (widget.editorBloc == null &&
         widget.part.itemVisited(widget.itemId) &&
-        _points == null) return _buildEvaluation();
+        _points == null) {
+      return _buildEvaluation();
+    }
     return Container(
         child: _timer != null ||
                 widget.item.time == null ||
@@ -110,7 +114,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                       builder: (context) => Column(children: [
                             if (_points != null)
                               Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 32),
                                 child: _buildEvaluation(),
                               )
@@ -118,7 +122,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                               Container(),
                             if (_start != null || widget.editorBloc != null)
                               Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 32),
                                   child: Row(children: [
                                     Expanded(
@@ -144,13 +148,14 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                     if (widget.editorBloc != null) ...[
                                       IconButton(
                                           tooltip: "edit".tr(),
-                                          icon: Icon(PhosphorIcons.pencilLight),
+                                          icon: const Icon(
+                                              PhosphorIcons.pencilLight),
                                           onPressed: () => _showTimerDialog()),
                                       if (_start != null)
                                         IconButton(
                                             tooltip: "delete".tr(),
-                                            icon:
-                                                Icon(PhosphorIcons.trashLight),
+                                            icon: const Icon(
+                                                PhosphorIcons.trashLight),
                                             onPressed: () async {
                                               updateItem(widget.item.copyWith(
                                                   time: null, timer: false));
@@ -210,8 +215,9 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                           FormField<List<bool>>(
                               validator: (value) {
                                 if (_points == null) return null;
-                                if (value == null)
+                                if (value == null) {
                                   return "course.quiz.choose".tr();
+                                }
                                 var correct = true;
                                 for (var i = 0; i < value.length; i++) {
                                   if (value[i] == question.answers[i].correct) {
@@ -229,7 +235,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                 }
                                 return null;
                               },
-                              initialValue: new List<bool>.filled(
+                              initialValue: List<bool>.filled(
                                   question.answers.length, false),
                               builder: (field) => Column(children: [
                                     ...List.generate(question.answers.length,
@@ -301,7 +307,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                     field.hasError
                                         ? Text(
                                             field.errorText!,
-                                            style: TextStyle(color: Colors.red),
+                                            style: const TextStyle(
+                                                color: Colors.red),
                                           )
                                         : Container()
                                   ])),
@@ -309,8 +316,9 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                           FormField<int>(
                               validator: (value) {
                                 if (_points == null) return null;
-                                if (value == null)
+                                if (value == null) {
                                   return "course.quiz.choose".tr();
+                                }
                                 if (!question.answers[value].correct) {
                                   _points = _points! -
                                       question.answers[value].minusPoints;
@@ -319,6 +327,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                 }
                                 _points =
                                     _points! + question.answers[value].points;
+                                return null;
                               },
                               builder: (field) => Column(children: [
                                     ...List.generate(question.answers.length,
@@ -384,7 +393,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                     field.hasError
                                         ? Text(
                                             field.errorText!,
-                                            style: TextStyle(color: Colors.red),
+                                            style: const TextStyle(
+                                                color: Colors.red),
                                           )
                                         : Container()
                                   ]))
@@ -426,19 +436,19 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                               .tr()))));
                           },
                           label: Text("course.quiz.add".tr()),
-                          icon: Icon(PhosphorIcons.plusLight)),
-                      SizedBox(height: 20)
+                          icon: const Icon(PhosphorIcons.plusLight)),
+                      const SizedBox(height: 20)
                     ]
                   ]),
                   if (_points == null)
                     ElevatedButton.icon(
                         onPressed: () => validate(),
-                        icon: Icon(PhosphorIcons.checkLight),
+                        icon: const Icon(PhosphorIcons.checkLight),
                         label: Text("course.quiz.check".tr().toUpperCase()))
                 ]))
             : Center(
                 child: ElevatedButton.icon(
-                    icon: Icon(PhosphorIcons.playLight),
+                    icon: const Icon(PhosphorIcons.playLight),
                     onPressed: () => setState(() => startTimer()),
                     label: Text("course.quiz.start".tr().toUpperCase()))));
   }
@@ -455,9 +465,9 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
             .tr(),
         if (widget.item.allowReset)
           Padding(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               child: ElevatedButton.icon(
-                  icon: Icon(PhosphorIcons.arrowCounterClockwiseLight),
+                  icon: const Icon(PhosphorIcons.arrowCounterClockwiseLight),
                   onPressed: () => setState(() {
                         _points = null;
                         _formKey.currentState?.reset();
@@ -576,7 +586,7 @@ extension QuestionOptionExtension on QuestionOption {
                 questions: List<QuizQuestion>.from(item.questions)
                   ..[questionId] = question.copyWith(
                       answers: List<QuizAnswer>.from(question.answers)
-                        ..add(QuizAnswer()))));
+                        ..add(const QuizAnswer()))));
         break;
       case QuestionOption.title:
         TextEditingController titleController =
@@ -682,7 +692,7 @@ extension QuestionOptionExtension on QuestionOption {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          icon: Icon(PhosphorIcons.xLight),
+                          icon: const Icon(PhosphorIcons.xLight),
                           label: Text("no".tr().toUpperCase())),
                       TextButton.icon(
                           onPressed: () {
@@ -696,13 +706,15 @@ extension QuestionOptionExtension on QuestionOption {
                                         List<QuizQuestion>.from(item.questions)
                                           ..removeAt(questionId)));
                           },
-                          icon: Icon(PhosphorIcons.checkLight),
+                          icon: const Icon(PhosphorIcons.checkLight),
                           label: Text("yes".tr().toUpperCase()))
                     ],
                     title:
-                        Text("course.quiz.option.question.delete.title").tr(),
-                    content: Text("course.quiz.option.question.delete.content")
-                        .tr(namedArgs: {
+                        const Text("course.quiz.option.question.delete.title")
+                            .tr(),
+                    content:
+                        const Text("course.quiz.option.question.delete.content")
+                            .tr(namedArgs: {
                       "index": questionId.toString(),
                       "name": question.title
                     })));
@@ -911,7 +923,7 @@ extension AnswerOptionExtension on AnswerOption {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          icon: Icon(PhosphorIcons.xLight),
+                          icon: const Icon(PhosphorIcons.xLight),
                           label: Text("no".tr().toUpperCase())),
                       TextButton.icon(
                           onPressed: () {
@@ -926,12 +938,14 @@ extension AnswerOptionExtension on AnswerOption {
                                         List<QuizAnswer>.from(question.answers)
                                           ..removeAt(answerId)));
                           },
-                          icon: Icon(PhosphorIcons.checkLight),
+                          icon: const Icon(PhosphorIcons.checkLight),
                           label: Text("yes".tr().toUpperCase()))
                     ],
-                    title: Text("course.quiz.option.answer.delete.title").tr(),
-                    content: Text("course.quiz.option.answer.delete.content")
-                        .tr(namedArgs: {
+                    title: const Text("course.quiz.option.answer.delete.title")
+                        .tr(),
+                    content:
+                        const Text("course.quiz.option.answer.delete.content")
+                            .tr(namedArgs: {
                       "index": answerId.toString(),
                       "name": answer.name
                     })));

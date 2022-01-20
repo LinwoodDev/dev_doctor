@@ -12,7 +12,7 @@ class CourseBloc extends Disposable {
   bool error = false;
 
   bool get hasError => error;
-  CoursePartBloc() {}
+  CourseBloc();
   Future<void> fetch(
       {ServerEditorBloc? editorBloc,
       String? server,
@@ -27,11 +27,12 @@ class CourseBloc extends Disposable {
           : await CoursesServer.fetch(index: serverId, url: server);
       if (editorBloc == null &&
           !(currentServer?.added ?? false) &&
-          server != null)
+          server != null) {
         Modular.to.pushNamed(Uri(
                 pathSegments: ["", "add"],
                 queryParameters: {"url": server, "redirect": Modular.to.path})
             .toString());
+      }
       if (courseId != null) course = currentServer?.courses[courseId];
       this.course = course;
       var current = course == null
@@ -39,10 +40,12 @@ class CourseBloc extends Disposable {
           : editorBloc != null
               ? editorBloc.getCourse(course).course
               : await currentServer?.fetchCourse(course);
-      courseSubject.add(current ?? Course(parts: [], slug: ''));
+      courseSubject.add(current ?? const Course(parts: [], slug: ''));
       if (current == null) error = true;
     } catch (e) {
-      print("Error $e");
+      if (kDebugMode) {
+        print("Error $e");
+      }
       error = true;
     }
   }

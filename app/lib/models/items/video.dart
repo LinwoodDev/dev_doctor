@@ -1,7 +1,6 @@
 import 'package:dev_doctor/models/item.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/icon_data.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../part.dart';
@@ -11,9 +10,10 @@ enum VideoSource { youtube, url, asset }
 class VideoPartItem extends PartItem {
   final VideoSource source;
   final String url;
+  @override
   final int points;
 
-  VideoPartItem(
+  const VideoPartItem(
       {this.source = VideoSource.url,
       this.points = 1,
       required this.url,
@@ -36,7 +36,7 @@ class VideoPartItem extends PartItem {
       case VideoSource.youtube:
         return Uri.https(
           'www.youtube-nocookie.com',
-          'embed/${url}',
+          'embed/$url',
         );
       case VideoSource.asset:
         return Uri(
@@ -49,6 +49,7 @@ class VideoPartItem extends PartItem {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       "type": "video",
@@ -60,6 +61,7 @@ class VideoPartItem extends PartItem {
     };
   }
 
+  @override
   VideoPartItem copyWith(
           {String? name,
           String? description,

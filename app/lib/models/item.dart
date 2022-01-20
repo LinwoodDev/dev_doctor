@@ -10,13 +10,13 @@ abstract class PartItem {
   final String name;
   final String description;
   final int? index;
-  final allowReset;
+  final bool allowReset;
 
   int get points;
 
   IconData get icon => PhosphorIcons.squareLight;
 
-  PartItem(
+  const PartItem(
       {this.allowReset = true,
       required this.name,
       required this.description,

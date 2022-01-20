@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'bloc.dart';
-import 'video.dart' as defaultVideo;
+import 'video.dart' as default_video;
 
 class VideoPartItemPage extends StatefulWidget {
   final VideoPartItem item;
@@ -73,17 +73,18 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.editorBloc != null)
-      return defaultVideo.VideoPartItemPage(
+    if (widget.editorBloc != null) {
+      return default_video.VideoPartItemPage(
           part: widget.part,
           editorBloc: widget.editorBloc,
           item: widget.item,
           itemId: widget.itemId);
+    }
     return Row(children: [
       Expanded(
           child: Container(
               child: widget.item.url.isEmpty
-                  ? Center(child: Text('course.video.empty').tr())
+                  ? Center(child: const Text('course.video.empty').tr())
                   : AspectRatio(
                       child: _iframeWidget!,
                       aspectRatio: 16 / 9,
@@ -92,11 +93,11 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
         IconButton(
             tooltip: "edit".tr(),
             onPressed: () => Modular.to.push(MaterialPageRoute(
-                builder: (context) => defaultVideo.VideoPartItemEditorPage(
+                builder: (context) => default_video.VideoPartItemEditorPage(
                     editorBloc: widget.editorBloc,
                     item: widget.item,
                     itemId: widget.itemId))),
-            icon: Icon(PhosphorIcons.pencilLight))
+            icon: const Icon(PhosphorIcons.pencilLight))
     ]);
   }
 }

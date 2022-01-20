@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final mdcThemePrimary = Color(0xFFe56909);
+const mdcThemePrimary = Color(0xFFe56909);
 const mdcThemeOnPrimary = Color(0xFFffffff);
 const mdcThemeSecondary = Color(0xFF0986e5);
 const mdcThemeOnSecondary = Color(0xFFffffff);
@@ -9,7 +9,7 @@ const mdcThemeOnError = Color(0xFFffffff);
 const mdcThemeSurface = Color(0xFFffffff);
 const mdcThemeOnSurface = Color(0xFF000000);
 const mdcThemeBackground = Color(0xFFffffff);
-final mdcTypographyFontFamily = "Josefin Sans";
+const mdcTypographyFontFamily = "Josefin Sans";
 final mdcPrimarySwatch = MaterialColor(mdcThemePrimary.value, {
   50: mdcThemePrimary.withOpacity(.1),
   100: mdcThemePrimary.withOpacity(.2),

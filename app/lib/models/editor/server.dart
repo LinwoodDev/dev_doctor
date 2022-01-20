@@ -24,7 +24,7 @@ class ServerEditorBloc extends HiveObject {
       this.note,
       required String name,
       List<Article> articles = const []})
-      : _server = CoursesServer(name: name, courses: []),
+      : _server = CoursesServer(name: name, courses: const []),
         _courses = List<CourseEditorBloc>.from(courses),
         _articles = List<Article>.from(articles);
   ServerEditorBloc.fromJson(Map<String, dynamic> json)
@@ -52,7 +52,7 @@ class ServerEditorBloc extends HiveObject {
   CourseEditorBloc? createCourse(String slug) {
     if (getCourseSlugs().contains(slug)) return null;
     var courseBloc =
-        CourseEditorBloc(Course(name: slug, slug: slug, parts: []));
+        CourseEditorBloc(Course(name: slug, slug: slug, parts: const []));
     _courses.add(courseBloc);
     return courseBloc;
   }

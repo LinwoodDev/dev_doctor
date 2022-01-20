@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:hive/hive.dart';
@@ -33,12 +34,16 @@ class BackendCollection {
       if (index == null) {
         var current = _box.values.toList().indexOf(url!);
         if (current != -1) index = _box.keyAt(current);
-      } else if (url == null) url = _box.get(index);
+      } else {
+        url ??= _box.get(index);
+      }
       var loadedData = await loadFile("$url/config");
       if (loadedData == null) return null;
       data = loadedData;
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return null;
     }
     data['url'] = url;

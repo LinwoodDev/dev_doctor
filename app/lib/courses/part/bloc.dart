@@ -1,5 +1,6 @@
 import 'package:dev_doctor/models/editor/server.dart';
 import 'package:dev_doctor/models/part.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -7,8 +8,10 @@ import '../bloc.dart';
 
 class CoursePartBloc extends CourseBloc {
   BehaviorSubject<CoursePart> partSubject = BehaviorSubject<CoursePart>();
-  String? course, part;
-  CoursePartBloc() {}
+  String? part;
+
+  CoursePartBloc();
+  @override
   Future<void> fetch(
       {ServerEditorBloc? editorBloc,
       String? server,
@@ -43,7 +46,9 @@ class CoursePartBloc extends CourseBloc {
         if (current == null) error = true;
       }).asFuture();
     } catch (e) {
-      print("Error $e");
+      if (kDebugMode) {
+        print("Error $e");
+      }
       error = true;
     }
   }

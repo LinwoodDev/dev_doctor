@@ -84,9 +84,12 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                 stream: bloc.courseSubject,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting ||
-                      !snapshot.hasData)
-                    return Center(child: CircularProgressIndicator());
-                  if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
+                      !snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError || bloc.hasError) {
+                    return const ErrorDisplay();
+                  }
                   var course = snapshot.data;
                   return _buildView(course!);
                 });
@@ -98,7 +101,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
         : FloatingActionButton(
             tooltip: "create".tr(),
             onPressed: _showCreatePartDialog,
-            child: Icon(PhosphorIcons.plusLight),
+            child: const Icon(PhosphorIcons.plusLight),
           );
   }
 
@@ -199,7 +202,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                           actions: [
                             if (_editorBloc == null) ...{
                               IconButton(
-                                  icon: Icon(PhosphorIcons.shareNetworkLight),
+                                  icon: const Icon(
+                                      PhosphorIcons.shareNetworkLight),
                                   tooltip: "share".tr(),
                                   onPressed: () {
                                     Clipboard.setData(ClipboardData(
@@ -219,11 +223,12 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   }),
                               if (supportUrl != null)
                                 IconButton(
-                                    icon: Icon(PhosphorIcons.questionLight),
+                                    icon:
+                                        const Icon(PhosphorIcons.questionLight),
                                     tooltip: "course.support".tr(),
                                     onPressed: () => launch(supportUrl)),
                               IconButton(
-                                  icon: Icon(PhosphorIcons.playLight),
+                                  icon: const Icon(PhosphorIcons.playLight),
                                   tooltip: "course.start".tr(),
                                   onPressed: () => Modular.to.pushNamed(Uri(
                                           pathSegments: [
@@ -238,14 +243,15 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                           }).toString()))
                             } else
                               IconButton(
-                                  icon: Icon(PhosphorIcons.codeLight),
+                                  icon: const Icon(PhosphorIcons.codeLight),
                                   tooltip: "code".tr(),
                                   onPressed: () async {
                                     var packageInfo =
                                         await PackageInfo.fromPlatform();
                                     var buildNumber =
                                         int.tryParse(packageInfo.buildNumber);
-                                    var encoder = JsonEncoder.withIndent("  ");
+                                    var encoder =
+                                        const JsonEncoder.withIndent("  ");
                                     var data = await Modular.to.push(
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -262,8 +268,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                     }
                                   }),
                             if (!kIsWeb && isWindow()) ...[
-                              VerticalDivider(),
-                              WindowButtons()
+                              const VerticalDivider(),
+                              const WindowButtons()
                             ]
                           ],
                           title: Text(course.name),
@@ -271,8 +277,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                               ? null
                               : FlexibleSpaceBar(
                                   background: Container(
-                                      margin:
-                                          EdgeInsets.fromLTRB(10, 20, 10, 84),
+                                      margin: const EdgeInsets.fromLTRB(
+                                          10, 20, 10, 84),
                                       child: _editorBloc != null
                                           ? Container()
                                           : Hero(
@@ -285,7 +291,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                               ))),
                                 )),
                       SliverList(
-                          delegate: new SliverChildListDelegate([
+                          delegate: SliverChildListDelegate([
                         Material(
                             color:
                                 Theme.of(context).appBarTheme.backgroundColor ??
@@ -318,26 +324,27 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
     var _slugs = _editorBloc?.courses.map((e) => e.course.slug);
     return ListView(children: <Widget>[
       Padding(
-          padding: EdgeInsets.all(4),
+          padding: const EdgeInsets.all(4),
           child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
               child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Column(children: [
                     if (_editorBloc != null)
                       Form(
                           key: _formKey,
                           child: Container(
-                              constraints: BoxConstraints(maxWidth: 1000),
+                              constraints: const BoxConstraints(maxWidth: 1000),
                               child: Column(children: [
                                 TextFormField(
                                     decoration: InputDecoration(
                                         labelText: "course.name.label".tr(),
                                         hintText: "course.name.hint".tr()),
                                     validator: (value) {
-                                      if (value!.isEmpty)
+                                      if (value!.isEmpty) {
                                         return "course.name.empty".tr();
+                                      }
                                       return null;
                                     },
                                     controller: _nameController),
@@ -346,11 +353,13 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                         labelText: "course.slug.label".tr(),
                                         hintText: "course.slug.hint".tr()),
                                     validator: (value) {
-                                      if (value!.isEmpty)
+                                      if (value!.isEmpty) {
                                         return "course.slug.empty".tr();
+                                      }
                                       if (_slugs!.contains(value) &&
-                                          value != course.slug)
+                                          value != course.slug) {
                                         return "course.slug.exist".tr();
+                                      }
                                       return null;
                                     },
                                     controller: _slugController),
@@ -388,10 +397,11 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                         _editorBloc?.save();
                                         setState(() {});
                                       },
-                                      icon: Icon(PhosphorIcons.floppyDiskLight),
+                                      icon: const Icon(
+                                          PhosphorIcons.floppyDiskLight),
                                       label: Text("save".tr().toUpperCase())),
                                 ),
-                                Divider()
+                                const Divider()
                               ]))),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       if (course.author.name.isNotEmpty)
@@ -401,7 +411,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       if (_editorBloc != null) ...[
                         IconButton(
                             tooltip: "edit".tr(),
-                            icon: Icon(PhosphorIcons.pencilLight),
+                            icon: const Icon(PhosphorIcons.pencilLight),
                             onPressed: () => Modular.to.pushNamed(Uri(
                                     pathSegments: [
                                       '',
@@ -416,12 +426,12 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                         if (course.author.name.isNotEmpty)
                           IconButton(
                               tooltip: "delete".tr(),
-                              icon: Icon(PhosphorIcons.trashLight),
+                              icon: const Icon(PhosphorIcons.trashLight),
                               onPressed: () async {
                                 var courseBloc =
                                     _editorBloc!.getCourse(bloc.course!);
                                 course = courseBloc.course
-                                    .copyWith(author: Author());
+                                    .copyWith(author: const Author());
                                 courseBloc.course = course;
                                 await _editorBloc?.save();
                                 setState(() {});
@@ -430,11 +440,11 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                     ]),
                     if (course.lang.isNotEmpty || _editorBloc != null)
                       Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
+                                const Padding(
                                     padding: EdgeInsets.all(4),
                                     child: Icon(PhosphorIcons.globeLight)),
                                 Text(course.lang.isNotEmpty
@@ -445,12 +455,13 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                 if (_editorBloc != null)
                                   IconButton(
                                       tooltip: "edit".tr(),
-                                      icon: Icon(PhosphorIcons.pencilLight),
+                                      icon:
+                                          const Icon(PhosphorIcons.pencilLight),
                                       onPressed: () => _showLanguageDialog())
                               ])),
                     Row(children: [
                       Expanded(
-                          child: (!course.body.isEmpty)
+                          child: (course.body.isNotEmpty)
                               ? MarkdownBody(
                                   onTapLink: (_, url, __) => launch(url!),
                                   extensionSet: md.ExtensionSet(
@@ -469,7 +480,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       if (_editorBloc != null)
                         IconButton(
                             tooltip: "edit".tr(),
-                            icon: Icon(PhosphorIcons.pencilLight),
+                            icon: const Icon(PhosphorIcons.pencilLight),
                             onPressed: () => Modular.to.pushNamed(Uri(
                                     pathSegments: [
                                       "",
@@ -551,7 +562,7 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
               ]),
               value: e);
         }).toList()
-          ..insert(3, PopupMenuDivider());
+          ..insert(3, const PopupMenuDivider());
       },
     );
   }
@@ -729,7 +740,7 @@ extension PartOptionsExtension on PartOptions {
                     ]));
         break;
       case PartOptions.code:
-        var encoder = JsonEncoder.withIndent("  ");
+        var encoder = const JsonEncoder.withIndent("  ");
         var packageInfo = await PackageInfo.fromPlatform();
         var buildNumber = int.tryParse(packageInfo.buildNumber);
         var data = await Modular.to.push(MaterialPageRoute(

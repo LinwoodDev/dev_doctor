@@ -35,9 +35,9 @@ class PartItemPage extends StatefulWidget {
 
 class _PartItemPageState extends State<PartItemPage> {
   late CoursePartBloc bloc;
-  GlobalKey _itemKey = GlobalKey();
-  ScrollController _detailsScrollController = ScrollController();
-  ScrollController _itemScrollController = ScrollController();
+  final GlobalKey _itemKey = GlobalKey();
+  final ScrollController _detailsScrollController = ScrollController();
+  final ScrollController _itemScrollController = ScrollController();
 
   @override
   void initState() {
@@ -61,10 +61,11 @@ class _PartItemPageState extends State<PartItemPage> {
     return StreamBuilder<CoursePart>(
         stream: bloc.partSubject,
         builder: (context, snapshot) {
-          if (snapshot.hasError || bloc.hasError) return ErrorDisplay();
+          if (snapshot.hasError || bloc.hasError) return const ErrorDisplay();
           if (!snapshot.hasData ||
-              snapshot.connectionState == ConnectionState.waiting)
-            return Center(child: CircularProgressIndicator());
+              snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
           var part = snapshot.data!;
           if (part.items.isEmpty) {
             return PartItemLayout(
@@ -77,35 +78,37 @@ class _PartItemPageState extends State<PartItemPage> {
           if (itemId < 0) itemId = 0;
           if (itemId >= part.items.length) itemId = part.items.length - 1;
           var item = part.items[itemId];
-          Widget itemWidget = Text("Not supported!");
-          if (item is VideoPartItem)
+          Widget itemWidget = const Text("Not supported!");
+          if (item is VideoPartItem) {
             itemWidget = VideoPartItemPage(
                 part: part,
                 item: item,
                 key: _itemKey,
                 editorBloc: widget.editorBloc,
                 itemId: itemId);
-          if (item is TextPartItem)
+          }
+          if (item is TextPartItem) {
             itemWidget = TextPartItemPage(
                 part: part,
                 item: item,
                 key: _itemKey,
                 editorBloc: widget.editorBloc,
                 itemId: itemId);
-          if (item is QuizPartItem)
+          }
+          if (item is QuizPartItem) {
             itemWidget = QuizPartItemPage(
                 part: part,
                 item: item,
                 key: _itemKey,
                 editorBloc: widget.editorBloc,
                 itemId: itemId);
+          }
           final itemBuilder = Builder(builder: (context) => itemWidget);
           return PartItemLayout(
               part: part,
               editorBloc: widget.editorBloc,
               itemId: widget.itemId,
-              child: Container(
-                  child: LayoutBuilder(builder: (context, constraints) {
+              child: LayoutBuilder(builder: (context, constraints) {
                 var itemCard = Scrollbar(
                     controller: _detailsScrollController,
                     child: SingleChildScrollView(
@@ -113,10 +116,9 @@ class _PartItemPageState extends State<PartItemPage> {
                         child: Card(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),
-                            child: Container(
-                                child: Padding(
-                                    padding: const EdgeInsets.all(64.0),
-                                    child: itemBuilder)))));
+                            child: Padding(
+                                padding: const EdgeInsets.all(64.0),
+                                child: itemBuilder))));
                 var detailsCard = Scrollbar(
                     controller: _itemScrollController,
                     child: SingleChildScrollView(
@@ -138,7 +140,8 @@ class _PartItemPageState extends State<PartItemPage> {
                                   if (widget.editorBloc != null)
                                     IconButton(
                                       tooltip: "edit".tr(),
-                                      icon: Icon(PhosphorIcons.pencilLight),
+                                      icon:
+                                          const Icon(PhosphorIcons.pencilLight),
                                       onPressed: () => Modular.to.pushNamed(Uri(
                                           pathSegments: [
                                             '',
@@ -154,27 +157,28 @@ class _PartItemPageState extends State<PartItemPage> {
                                   else if (item.allowReset)
                                     IconButton(
                                         tooltip: "reset".tr(),
-                                        icon: Icon(PhosphorIcons
+                                        icon: const Icon(PhosphorIcons
                                             .clockCounterClockwiseLight),
                                         onPressed: () {
                                           part.removeItemPoints(itemId);
                                           bloc.partSubject.add(part);
                                         })
                                 ])))));
-                if (MediaQuery.of(context).size.width > 1000)
+                if (MediaQuery.of(context).size.width > 1000) {
                   return Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Expanded(child: detailsCard),
                         Expanded(flex: 3, child: itemCard)
                       ]);
-                else
+                } else {
                   return Scrollbar(
                       child: SingleChildScrollView(
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [detailsCard, itemCard])));
-              })));
+                }
+              }));
         });
   }
 }

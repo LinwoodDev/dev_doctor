@@ -31,7 +31,7 @@ class _EditorCodeDialogPageState extends State<EditorCodeDialogPage> {
         appBar: MyAppBar(title: 'editor.code.title'.tr()),
         body: Center(
             child: Container(
-                constraints: BoxConstraints(maxWidth: 1000),
+                constraints: const BoxConstraints(maxWidth: 1000),
                 child: ListView(children: [
                   TextField(
                       controller: codeController,
@@ -49,7 +49,7 @@ class _EditorCodeDialogPageState extends State<EditorCodeDialogPage> {
                 Modular.to.pop(data);
               }
             },
-            icon: Icon(PhosphorIcons.checkLight),
+            icon: const Icon(PhosphorIcons.checkLight),
             label: Text('editor.code.submit'.tr())));
   }
 }

@@ -64,19 +64,19 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                   if (widget.part.items.isNotEmpty)
                     IconButton(
                         tooltip: "course.delete.item.tooltip".tr(),
-                        icon: Icon(PhosphorIcons.minusCircleLight),
+                        icon: const Icon(PhosphorIcons.minusCircleLight),
                         onPressed: () =>
                             _showDeleteDialog(widget.part, widget.itemId ?? 0)),
                   IconButton(
                       tooltip: "course.add.item.tooltip".tr(),
-                      icon: Icon(PhosphorIcons.plusCircleLight),
+                      icon: const Icon(PhosphorIcons.plusCircleLight),
                       onPressed: () => _showCreateDialog(widget.part)),
                   EditorCoursePartPopupMenu(
                       bloc: widget.editorBloc!,
                       partBloc: Modular.get<CoursePartBloc>())
                 ] else
                   IconButton(
-                    icon: Icon(PhosphorIcons.shareNetworkLight),
+                    icon: const Icon(PhosphorIcons.shareNetworkLight),
                     tooltip: "share".tr(),
                     onPressed: () {
                       Clipboard.setData(ClipboardData(
@@ -114,7 +114,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                         overflow: TextOverflow.fade,
                         style: widget.editorBloc == null &&
                                 !widget.part.itemVisited(index)
-                            ? TextStyle(fontWeight: FontWeight.bold)
+                            ? const TextStyle(fontWeight: FontWeight.bold)
                             : null);
                     return Tab(icon: Icon(item.icon), child: text);
                   })),
@@ -147,11 +147,10 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                   child: Text("create".tr().toUpperCase()))
             ],
             title: Text("course.add.item.title".tr()),
-            content: Container(
-                child: Form(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
+            content: Form(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
                   TextFormField(
                       controller: nameController,
                       decoration: InputDecoration(
@@ -175,7 +174,7 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                               child: Text("course.type.${e.name}".tr()),
                               value: e))
                           .toList())
-                ])))));
+                ]))));
   }
 
   Future<void> _createItem(CoursePart part,

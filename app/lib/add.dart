@@ -32,15 +32,15 @@ class _AddServerPageState extends State<AddServerPage> {
             builder: (context) => AlertDialog(
                     actions: [
                       TextButton(
-                          child: Text("disagree").tr(),
+                          child: const Text("disagree").tr(),
                           onPressed: () => Navigator.of(context).pop(false)),
                       TextButton(
-                          child: Text("agree").tr(),
+                          child: const Text("agree").tr(),
                           onPressed: () => Navigator.of(context).pop(true))
                     ],
-                    title: Text("settings.servers.add.title").tr(
+                    title: const Text("settings.servers.add.title").tr(
                         namedArgs: {"name": server.name, "url": server.url}),
-                    content: Text("settings.servers.add.body").tr(
+                    content: const Text("settings.servers.add.body").tr(
                         namedArgs: {"name": server.name, "url": server.url}))));
         if (shouldAdd!) {
           await _serversBox.add(url);
@@ -57,6 +57,6 @@ class _AddServerPageState extends State<AddServerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ServersSettingsPage();
+    return const ServersSettingsPage();
   }
 }

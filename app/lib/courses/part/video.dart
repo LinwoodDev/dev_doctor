@@ -44,16 +44,15 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
   Widget build(BuildContext context) {
     return Row(children: [
       Expanded(
-          child: Container(
-              child: Center(
-                  child: widget.item.url.isEmpty
-                      ? Text('course.video.empty').tr()
-                      : ElevatedButton.icon(
-                          icon: Icon(PhosphorIcons.playLight),
-                          label: Text("course.video.open".tr().toUpperCase()),
-                          onPressed: () => launch(
-                              widget.item.getSource(widget.part).toString()),
-                        )))),
+          child: Center(
+              child: widget.item.url.isEmpty
+                  ? const Text('course.video.empty').tr()
+                  : ElevatedButton.icon(
+                      icon: const Icon(PhosphorIcons.playLight),
+                      label: Text("course.video.open".tr().toUpperCase()),
+                      onPressed: () =>
+                          launch(widget.item.getSource(widget.part).toString()),
+                    ))),
       if (widget.editorBloc != null)
         IconButton(
             tooltip: "edit".tr(),
@@ -62,7 +61,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                     editorBloc: widget.editorBloc,
                     item: widget.item,
                     itemId: widget.itemId))),
-            icon: Icon(PhosphorIcons.pencilLight))
+            icon: const Icon(PhosphorIcons.pencilLight))
     ]);
   }
 }
@@ -100,7 +99,7 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
         body: Scrollbar(
             child: Center(
                 child: Container(
-                    constraints: BoxConstraints(maxWidth: 1000),
+                    constraints: const BoxConstraints(maxWidth: 1000),
                     child: ListView(children: [
                       TextField(
                           controller: _urlController,
@@ -125,7 +124,7 @@ class _VideoPartItemEditorPageState extends State<VideoPartItemEditorPage> {
                     ])))),
         floatingActionButton: FloatingActionButton(
             tooltip: "save".tr(),
-            child: Icon(PhosphorIcons.floppyDiskLight),
+            child: const Icon(PhosphorIcons.floppyDiskLight),
             onPressed: () async {
               var bloc = Modular.get<CoursePartBloc>();
               var courseBloc = widget.editorBloc!.getCourse(bloc.course!);

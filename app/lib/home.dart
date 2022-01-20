@@ -12,6 +12,8 @@ import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var _sections = [
@@ -22,11 +24,11 @@ class HomePage extends StatelessWidget {
         ),
         Text("subtitle", style: Theme.of(context).textTheme.subtitle1).tr(),
         Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   child: Wrap(alignment: WrapAlignment.center, children: [
                     ElevatedButton.icon(
                         onPressed: () => launch(
@@ -37,12 +39,12 @@ class HomePage extends StatelessWidget {
                             style: Theme.of(context).primaryTextTheme.button)),
                     OutlinedButton.icon(
                         onPressed: () => launch("https://discord.linwood.dev"),
-                        icon: Icon(PhosphorIcons.usersLight),
+                        icon: const Icon(PhosphorIcons.usersLight),
                         label: Text("discord".tr().toUpperCase()))
                   ])),
               if (kIsWeb)
                 Padding(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     child: RawMaterialButton(
                         onPressed: () => launch(
                             "https://vercel.com?utm_source=Linwood&utm_campaign=oss"),
@@ -64,23 +66,25 @@ class HomePage extends StatelessWidget {
           style: Theme.of(context).textTheme.headline4,
         ),
         Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: ElevatedButton.icon(
               onPressed: () => launch("https://linwood.dev/blog"),
-              icon: Icon(PhosphorIcons.arrowSquareOutLight),
+              icon: const Icon(PhosphorIcons.arrowSquareOutLight),
               label: Text("browser".tr().toUpperCase()),
             )),
         Padding(
-            padding: EdgeInsets.all(20),
-            child:
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [])),
+            padding: const EdgeInsets.all(20),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [])),
         FutureBuilder<http.Response>(
             future: http.get(Uri.https('www.linwood.dev', '/blog/atom.xml')),
             builder: (context, snapshot) {
               if (snapshot.hasError) return Text("Error: ${snapshot.error}");
               if (!snapshot.hasData ||
-                  snapshot.connectionState == ConnectionState.waiting)
-                return Center(child: CircularProgressIndicator());
+                  snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
               var data = utf8.decode(snapshot.data!.bodyBytes);
               var document = XmlDocument.parse(data);
               var feed = document.getElement("feed")!;
@@ -105,15 +109,16 @@ class HomePage extends StatelessWidget {
         appBar: MyAppBar(title: 'home'.tr()),
         body: Scrollbar(
           child: ListView.separated(
-            separatorBuilder: (context, index) => Padding(
+            separatorBuilder: (context, index) => const Padding(
               padding: EdgeInsets.only(top: 100),
             ),
             itemCount: _sections.length,
-            padding: EdgeInsets.only(top: 100),
+            padding: const EdgeInsets.only(top: 100),
             itemBuilder: (context, index) => Material(
                 elevation: 2,
                 child: Container(
-                    padding: EdgeInsets.all(10), child: _sections[index])),
+                    padding: const EdgeInsets.all(10),
+                    child: _sections[index])),
           ),
         ));
   }

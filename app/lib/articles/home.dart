@@ -11,6 +11,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class ArticlesPage extends StatefulWidget {
+  const ArticlesPage({Key? key}) : super(key: key);
+
   @override
   _ArticlesPageState createState() => _ArticlesPageState();
 }
@@ -46,8 +48,9 @@ class _ItemFetcher {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
       if (entry.body.toUpperCase().contains(query.toUpperCase()) ||
-          entry.title.toUpperCase().contains(query.toUpperCase()))
+          entry.title.toUpperCase().contains(query.toUpperCase())) {
         list.add(entry);
+      }
     }
     _currentPage++;
     return list;
@@ -55,7 +58,7 @@ class _ItemFetcher {
 }
 
 class CustomSearchDelegate extends SearchDelegate {
-  var _itemFetcher;
+  final _ItemFetcher _itemFetcher;
   final List<String>? servers;
   final bool gridView;
 
@@ -65,7 +68,7 @@ class CustomSearchDelegate extends SearchDelegate {
     return [
       IconButton(
         tooltip: "clear".tr(),
-        icon: Icon(PhosphorIcons.xLight),
+        icon: const Icon(PhosphorIcons.xLight),
         onPressed: () {
           query = '';
         },
@@ -77,7 +80,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildLeading(BuildContext context) {
     return IconButton(
       tooltip: "back".tr(),
-      icon: Icon(PhosphorIcons.arrowArcLeftLight),
+      icon: const Icon(PhosphorIcons.arrowArcLeftLight),
       onPressed: () {
         close(context, null);
       },
@@ -114,8 +117,8 @@ class CustomSearchDelegate extends SearchDelegate {
 }
 
 class _ArticlesPageState extends State<ArticlesPage> {
-  var _itemFetcher;
-  var _box = Hive.box<String>('servers');
+  late _ItemFetcher _itemFetcher;
+  final _box = Hive.box<String>('servers');
   bool gridView = false;
   final List<String> _filteredServers = <String>[];
 
@@ -131,7 +134,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
     return Scaffold(
         appBar: MyAppBar(title: "articles.title".tr(), actions: [
           IconButton(
-              icon: Icon(PhosphorIcons.magnifyingGlassLight),
+              icon: const Icon(PhosphorIcons.magnifyingGlassLight),
               tooltip: "search".tr(),
               onPressed: () {
                 showSearch(
@@ -140,16 +143,16 @@ class _ArticlesPageState extends State<ArticlesPage> {
                 );
               }),
           IconButton(
-              icon: Icon(PhosphorIcons.funnelLight),
+              icon: const Icon(PhosphorIcons.funnelLight),
               tooltip: "articles.filter".tr(),
               onPressed: () async {
                 await showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                        title: Text("articles.filter").tr(),
+                        title: const Text("articles.filter").tr(),
                         actions: [
                           TextButton.icon(
-                              icon: Icon(PhosphorIcons.xLight),
+                              icon: const Icon(PhosphorIcons.xLight),
                               label: Text("close".tr().toUpperCase()),
                               onPressed: () => Navigator.of(context).pop())
                         ],
@@ -215,7 +218,7 @@ class _ArticlesListState extends State<ArticlesList> {
 
   bool _isLoading = true;
   bool _hasMore = true;
-  Box<bool> _favoriteBox = Hive.box<bool>('favorite');
+  final Box<bool> _favoriteBox = Hive.box<bool>('favorite');
   @override
   void initState() {
     super.initState();
@@ -288,12 +291,12 @@ class _ArticlesListState extends State<ArticlesList> {
             tag: "Article-icon-${article.server?.index}-${article.slug}",
             child:
                 UniversalImage(type: article.icon, url: article.url + "/icon"));
-    if (widget.gridView)
+    if (widget.gridView) {
       return Card(
           child: InkWell(
               onTap: onTap,
               child: Container(
-                  constraints: BoxConstraints(maxWidth: 250),
+                  constraints: const BoxConstraints(maxWidth: 250),
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     height: 250,
@@ -312,6 +315,7 @@ class _ArticlesListState extends State<ArticlesList> {
                       ])
                     ]),
                   ))));
+    }
     return ListTile(
         title: Text(article.title),
         subtitle: Text(article.body),
@@ -330,7 +334,7 @@ class _ArticlesListState extends State<ArticlesList> {
           if (!_isLoading) {
             _loadMore();
           }
-          return Center(
+          return const Center(
             child: SizedBox(
               child: CircularProgressIndicator(),
               height: 24,
@@ -345,16 +349,15 @@ class _ArticlesListState extends State<ArticlesList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Scrollbar(
-            child: SingleChildScrollView(
-                child: widget.gridView
-                    ? Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        child: Wrap(children: _buildList(context)))
-                    : Column(
-                        // Need to display a loading tile if more items are coming
-                        children: _buildList(context)))));
+    return Scrollbar(
+        child: SingleChildScrollView(
+            child: widget.gridView
+                ? Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Wrap(children: _buildList(context)))
+                : Column(
+                    // Need to display a loading tile if more items are coming
+                    children: _buildList(context))));
   }
 }

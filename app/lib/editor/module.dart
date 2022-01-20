@@ -15,16 +15,20 @@ import 'markdown.dart';
 class EditorModule extends Module {
   @override
   List<ModularRoute> get routes => [
-        ChildRoute('/', child: (_, args) => EditorPage()),
-        WildcardRoute(child: (_, __) => ErrorDisplay()),
+        ChildRoute('/', child: (_, args) => const EditorPage()),
+        WildcardRoute(child: (_, __) => const ErrorDisplay()),
         ChildRoute('/details', child: (_, args) {
-          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          if (!args.queryParams.containsKey('serverId')) {
+            return const ErrorDisplay();
+          }
           var bloc = ServerEditorBloc.fromKey(
               int.parse(args.queryParams['serverId']!));
           return BackendPage(editorBloc: bloc);
         }),
         ChildRoute('/edit', child: (_, args) {
-          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          if (!args.queryParams.containsKey('serverId')) {
+            return const ErrorDisplay();
+          }
           var bloc = ServerEditorBloc.fromKey(
               int.parse(args.queryParams['serverId']!));
           return MarkdownEditor(
@@ -35,13 +39,17 @@ class EditorModule extends Module {
               });
         }),
         ChildRoute('/article', child: (_, args) {
-          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          if (!args.queryParams.containsKey('serverId')) {
+            return const ErrorDisplay();
+          }
           var bloc = ServerEditorBloc.fromKey(
               int.parse(args.queryParams['serverId']!));
           return ArticlePage(editorBloc: bloc);
         }),
         ChildRoute('/article/edit', child: (_, args) {
-          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          if (!args.queryParams.containsKey('serverId')) {
+            return const ErrorDisplay();
+          }
           var bloc = ServerEditorBloc.fromKey(
               int.parse(args.queryParams['serverId']!));
           var articleName = args.queryParams['article'];
@@ -56,7 +64,9 @@ class EditorModule extends Module {
               });
         }),
         ChildRoute('/article/author', child: (_, args) {
-          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          if (!args.queryParams.containsKey('serverId')) {
+            return const ErrorDisplay();
+          }
           var bloc = ServerEditorBloc.fromKey(
               int.parse(args.queryParams['serverId']!));
           var article = bloc.getArticle(args.queryParams['article']!);
@@ -70,13 +80,17 @@ class EditorModule extends Module {
               });
         }),
         ChildRoute('/course', child: (_, args) {
-          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          if (!args.queryParams.containsKey('serverId')) {
+            return const ErrorDisplay();
+          }
           var bloc = ServerEditorBloc.fromKey(
               int.parse(args.queryParams['serverId']!));
           return CoursePage(editorBloc: bloc);
         }),
         ChildRoute('/course/edit', child: (_, args) {
-          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          if (!args.queryParams.containsKey('serverId')) {
+            return const ErrorDisplay();
+          }
           var bloc = ServerEditorBloc.fromKey(
               int.parse(args.queryParams['serverId']!));
           var course = args.queryParams['course'];
@@ -89,7 +103,9 @@ class EditorModule extends Module {
               });
         }),
         ChildRoute('/course/author', child: (_, args) {
-          if (!args.queryParams.containsKey('serverId')) return ErrorDisplay();
+          if (!args.queryParams.containsKey('serverId')) {
+            return const ErrorDisplay();
+          }
           var bloc = ServerEditorBloc.fromKey(
               int.parse(args.queryParams['serverId']!));
           var course = args.queryParams['course'];

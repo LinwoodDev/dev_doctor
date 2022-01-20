@@ -17,7 +17,7 @@ class CoursePart {
       required this.slug,
       List<PartItem> items = const [],
       this.course})
-      : this.items = List<PartItem>.unmodifiable(items);
+      : items = List<PartItem>.unmodifiable(items);
   CoursePart.fromJson(Map<String, dynamic> json)
       : course = json['course'],
         description = json['description'] ?? "",

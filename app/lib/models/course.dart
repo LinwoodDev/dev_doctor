@@ -20,7 +20,7 @@ class Course {
   final List<String> parts;
   final bool private;
 
-  Course(
+  const Course(
       {required this.slug,
       this.name = '',
       this.description = '',
@@ -36,12 +36,13 @@ class Course {
   factory Course.fromJson(Map<String, dynamic> json) {
     var apiVersion = json['api-version'];
     if (apiVersion != null) {
-      if (apiVersion < 8)
+      if (apiVersion < 8) {
         json['author'] = <String, dynamic>{
           "name": json['author'],
           "url": json['author_url'],
           "avatar": json['author_avatar']
         };
+      }
     }
     return Course(
         server: json['server'],
@@ -79,9 +80,9 @@ class Course {
   Future<List<CoursePart>> fetchParts() =>
       Future.wait(parts.map((course) => fetchPart(course))).then((value) async {
         var list = <CoursePart>[];
-        value.forEach((element) {
+        for (var element in value) {
           if (element != null) list.add(element);
-        });
+        }
         return list;
       });
 
@@ -95,7 +96,9 @@ class Course {
       data['slug'] = part;
       return CoursePart.fromJson(data);
     } catch (e) {
-      print("Error $e");
+      if (kDebugMode) {
+        print("Error $e");
+      }
       return null;
     }
   }
@@ -122,7 +125,7 @@ class Course {
           name: name ?? this.name,
           parts: parts ?? this.parts,
           private: private ?? this.private,
-          server: server ?? this.server,
+          server: server ?? server,
           slug: slug ?? this.slug,
           supportUrl: supportUrl ?? this.supportUrl);
 }

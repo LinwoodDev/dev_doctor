@@ -1,13 +1,13 @@
 import 'package:dev_doctor/models/item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/icon_data.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class TextPartItem extends PartItem {
   final String text;
+  @override
   final int points;
 
-  TextPartItem(
+  const TextPartItem(
       {this.points = 1,
       this.text = "",
       String name = '',
@@ -20,6 +20,7 @@ class TextPartItem extends PartItem {
         points = json['points'] ?? 1,
         super.fromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => {
         "type": "text",
         "text": text,
@@ -28,6 +29,7 @@ class TextPartItem extends PartItem {
         "points": points
       };
 
+  @override
   TextPartItem copyWith(
           {String? text, String? name, String? description, int? points}) =>
       TextPartItem(

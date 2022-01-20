@@ -37,7 +37,7 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
   late CoursePart part;
   TextEditingController? _nameController;
   TextEditingController? _descriptionController;
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   void initState() {
@@ -60,14 +60,15 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
             child: Scrollbar(
                 child: Center(
                     child: Container(
-                        constraints: BoxConstraints(maxWidth: 1000),
+                        constraints: const BoxConstraints(maxWidth: 1000),
                         child: ListView(
                           children: [
                             TextFormField(
                               controller: _nameController,
                               validator: (value) {
-                                if (value!.isEmpty)
+                                if (value!.isEmpty) {
                                   return 'editor.item.name.empty'.tr();
+                                }
                                 return null;
                               },
                               decoration: InputDecoration(
@@ -84,7 +85,7 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
                           ],
                         ))))),
         floatingActionButton: FloatingActionButton(
-            child: Icon(PhosphorIcons.floppyDiskLight),
+            child: const Icon(PhosphorIcons.floppyDiskLight),
             tooltip: "save".tr(),
             onPressed: () async {
               var coursePart = part.copyWith(

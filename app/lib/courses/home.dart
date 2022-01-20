@@ -11,6 +11,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class CoursesPage extends StatefulWidget {
+  const CoursesPage({Key? key}) : super(key: key);
+
   @override
   _CoursesPageState createState() => _CoursesPageState();
 }
@@ -18,7 +20,7 @@ class CoursesPage extends StatefulWidget {
 class _ItemFetcher {
   final _itemsPerPage = 5;
   int _currentPage = 0;
-  Box<bool> _favoriteBox = Hive.box<bool>('favorite');
+  final Box<bool> _favoriteBox = Hive.box<bool>('favorite');
   List<Course> entries = <Course>[];
   final List<String> servers;
 
@@ -49,8 +51,9 @@ class _ItemFetcher {
       var index = _currentPage * _itemsPerPage + i;
       var entry = entries[index];
       if (entry.body.toUpperCase().contains(query.toUpperCase()) ||
-          entry.name.toUpperCase().contains(query.toUpperCase()))
+          entry.name.toUpperCase().contains(query.toUpperCase())) {
         list.add(entry);
+      }
     }
     _currentPage++;
     return list;
@@ -58,7 +61,7 @@ class _ItemFetcher {
 }
 
 class CustomSearchDelegate extends SearchDelegate {
-  var _itemFetcher;
+  final _ItemFetcher _itemFetcher;
   final List<String>? servers;
   final bool gridView;
 
@@ -68,7 +71,7 @@ class CustomSearchDelegate extends SearchDelegate {
     return [
       IconButton(
         tooltip: "clear".tr(),
-        icon: Icon(PhosphorIcons.xLight),
+        icon: const Icon(PhosphorIcons.xLight),
         onPressed: () {
           query = '';
         },
@@ -80,7 +83,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildLeading(BuildContext context) {
     return IconButton(
       tooltip: "back".tr(),
-      icon: Icon(PhosphorIcons.arrowArcLeftLight),
+      icon: const Icon(PhosphorIcons.arrowArcLeftLight),
       onPressed: () {
         close(context, null);
       },
@@ -117,8 +120,8 @@ class CustomSearchDelegate extends SearchDelegate {
 }
 
 class _CoursesPageState extends State<CoursesPage> {
-  var _itemFetcher;
-  var _box = Hive.box<String>('servers');
+  late _ItemFetcher _itemFetcher;
+  final _box = Hive.box<String>('servers');
   bool gridView = false;
   final List<String> _filteredServers = <String>[];
 
@@ -134,7 +137,7 @@ class _CoursesPageState extends State<CoursesPage> {
     return Scaffold(
         appBar: MyAppBar(title: "courses.title".tr(), actions: [
           IconButton(
-              icon: Icon(PhosphorIcons.magnifyingGlassLight),
+              icon: const Icon(PhosphorIcons.magnifyingGlassLight),
               tooltip: "search".tr(),
               onPressed: () {
                 showSearch(
@@ -143,16 +146,16 @@ class _CoursesPageState extends State<CoursesPage> {
                 );
               }),
           IconButton(
-              icon: Icon(PhosphorIcons.funnelLight),
+              icon: const Icon(PhosphorIcons.funnelLight),
               tooltip: "courses.filter".tr(),
               onPressed: () async {
                 await showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                        title: Text("courses.filter").tr(),
+                        title: const Text("courses.filter").tr(),
                         actions: [
                           TextButton.icon(
-                              icon: Icon(PhosphorIcons.xLight),
+                              icon: const Icon(PhosphorIcons.xLight),
                               label: Text("close".tr().toUpperCase()),
                               onPressed: () => Navigator.of(context).pop())
                         ],
@@ -218,7 +221,7 @@ class _CoursesListState extends State<CoursesList> {
 
   bool _isLoading = true;
   bool _hasMore = true;
-  Box<bool> _favoriteBox = Hive.box<bool>('favorite');
+  final Box<bool> _favoriteBox = Hive.box<bool>('favorite');
   @override
   void initState() {
     super.initState();
@@ -289,12 +292,12 @@ class _CoursesListState extends State<CoursesList> {
             tag: "course-icon-${course.server?.index}-${course.slug}",
             child:
                 UniversalImage(type: course.icon, url: course.url + "/icon"));
-    if (widget.gridView)
+    if (widget.gridView) {
       return Card(
           child: InkWell(
               onTap: onTap,
               child: Container(
-                  constraints: BoxConstraints(maxWidth: 250),
+                  constraints: const BoxConstraints(maxWidth: 250),
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     height: 250,
@@ -313,6 +316,7 @@ class _CoursesListState extends State<CoursesList> {
                       ])
                     ]),
                   ))));
+    }
     return ListTile(
         title: Text(course.name),
         subtitle: Text(course.description),
@@ -331,7 +335,7 @@ class _CoursesListState extends State<CoursesList> {
           if (!_isLoading) {
             _loadMore();
           }
-          return Center(
+          return const Center(
             child: SizedBox(
               child: CircularProgressIndicator(),
               height: 24,
@@ -346,16 +350,15 @@ class _CoursesListState extends State<CoursesList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Scrollbar(
-            child: SingleChildScrollView(
-                child: widget.gridView
-                    ? Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        child: Wrap(children: _buildList(context)))
-                    : Column(
-                        // Need to display a loading tile if more items are coming
-                        children: _buildList(context)))));
+    return Scrollbar(
+        child: SingleChildScrollView(
+            child: widget.gridView
+                ? Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Wrap(children: _buildList(context)))
+                : Column(
+                    // Need to display a loading tile if more items are coming
+                    children: _buildList(context))));
   }
 }

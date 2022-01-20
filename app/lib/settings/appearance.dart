@@ -8,6 +8,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class AppearanceSettingsPage extends StatelessWidget {
+  const AppearanceSettingsPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final _appearanceBox = Hive.box('appearance');
@@ -26,7 +28,8 @@ class AppearanceSettingsPage extends StatelessWidget {
                   return Scrollbar(
                       child: ListView(children: [
                     ListTile(
-                        title: Text('settings.appearance.locale.title').tr(),
+                        title:
+                            const Text('settings.appearance.locale.title').tr(),
                         subtitle:
                             Text('settings.appearance.locale.$locale').tr(),
                         onTap: () => showDialog(
@@ -48,12 +51,13 @@ class AppearanceSettingsPage extends StatelessWidget {
                                             context.resetLocale();
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(SnackBar(
-                                                    content: Text(
+                                                    content: const Text(
                                                             'settings.appearance.locale.restart')
                                                         .tr()));
-                                          } else
+                                          } else {
                                             context.setLocale(
                                                 Locale(selectedLocale!));
+                                          }
                                           Navigator.pop(context);
                                         })
                                   ],
@@ -67,7 +71,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                                             RadioListTile<String>(
                                               value: "default",
                                               groupValue: selectedLocale,
-                                              title: Text(
+                                              title: const Text(
                                                       'settings.appearance.locale.default')
                                                   .tr(),
                                               onChanged: (value) {
@@ -99,7 +103,8 @@ class AppearanceSettingsPage extends StatelessWidget {
                                   ));
                             })),
                     ListTile(
-                        title: Text('settings.appearance.theme.title').tr(),
+                        title:
+                            const Text('settings.appearance.theme.title').tr(),
                         subtitle: Text('settings.appearance.theme.' +
                                 EnumToString.convertToString(theme))
                             .tr(),
@@ -150,7 +155,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                               );
                             })),
                     ListTile(
-                      title: Text("settings.appearance.color.title").tr(),
+                      title: const Text("settings.appearance.color.title").tr(),
                       subtitle: Text("settings.appearance.color." +
                               EnumToString.convertToString(color))
                           .tr(),

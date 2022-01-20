@@ -21,7 +21,7 @@ class CoursesServer {
 
   static Box<String> get _box => Hive.box<String>('servers');
 
-  CoursesServer(
+  const CoursesServer(
       {this.body = "",
       this.icon = "",
       this.index,
@@ -112,12 +112,16 @@ class CoursesServer {
       if (index == null && url != null) {
         var current = _box.values.toList().indexOf(url);
         if (current != -1) index = _box.keyAt(current);
-      } else if (url == null) url = Hive.box<String>('servers').get(index);
+      } else {
+        url ??= Hive.box<String>('servers').get(index);
+      }
       var loadedData = await loadFile("$url/config");
       if (loadedData == null) return null;
       data = loadedData;
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return null;
     }
     data['courses'] = data['courses'] ?? [];
@@ -131,9 +135,9 @@ class CoursesServer {
       Future.wait(courses.map((course) => fetchCourse(course)))
           .then((value) async {
         var list = <Course>[];
-        value.forEach((element) {
+        for (var element in value) {
           if (element != null) list.add(element);
-        });
+        }
         return list;
       });
 
@@ -147,7 +151,9 @@ class CoursesServer {
       data['api-version'] = data['api-version'] ?? 0;
       return Course.fromJson(data);
     } catch (e) {
-      print("Error $e");
+      if (kDebugMode) {
+        print("Error $e");
+      }
       return null;
     }
   }
@@ -156,9 +162,9 @@ class CoursesServer {
       Future.wait(articles.map((article) => fetchArticle(article)))
           .then((value) async {
         var list = <Article>[];
-        value.forEach((element) {
+        for (var element in value) {
           if (element != null) list.add(element);
-        });
+        }
         return list;
       });
 
@@ -172,7 +178,9 @@ class CoursesServer {
       data['api-version'] = data['api-version'] ?? 0;
       return Article.fromJson(data);
     } catch (e) {
-      print("Error $e");
+      if (kDebugMode) {
+        print("Error $e");
+      }
       return null;
     }
   }

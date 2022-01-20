@@ -9,12 +9,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class EditorPage extends StatefulWidget {
+  const EditorPage({Key? key}) : super(key: key);
+
   @override
   _EditorPageState createState() => _EditorPageState();
 }
 
 class _EditorPageState extends State<EditorPage> {
-  Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
+  final Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +43,12 @@ class _EditorPageState extends State<EditorPage> {
                     }))),
         floatingActionButton: OpenContainer(
             transitionType: ContainerTransitionType.fadeThrough,
-            transitionDuration: Duration(milliseconds: 750),
-            openBuilder: (context, _) => CreateServerPage(),
-            closedShape: CircleBorder(),
+            transitionDuration: const Duration(milliseconds: 750),
+            openBuilder: (context, _) => const CreateServerPage(),
+            closedShape: const CircleBorder(),
             closedBuilder: (context, openContainer) => FloatingActionButton(
                 onPressed: openContainer,
-                child: Icon(PhosphorIcons.plusLight),
+                child: const Icon(PhosphorIcons.plusLight),
                 tooltip: "editor.create.fab".tr())));
   }
 }

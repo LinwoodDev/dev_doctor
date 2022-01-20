@@ -44,8 +44,7 @@ class _TextPartItemPageState extends State<TextPartItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Row(children: [
+    return Row(children: [
       Expanded(
           child: MarkdownBody(
         styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
@@ -60,7 +59,7 @@ class _TextPartItemPageState extends State<TextPartItemPage> {
       if (widget.editorBloc != null)
         IconButton(
             tooltip: "edit".tr(),
-            icon: Icon(PhosphorIcons.pencilLight),
+            icon: const Icon(PhosphorIcons.pencilLight),
             onPressed: () {
               Modular.to.push(MaterialPageRoute(
                   builder: (context) => MarkdownEditor(
@@ -79,6 +78,6 @@ class _TextPartItemPageState extends State<TextPartItemPage> {
                         widget.editorBloc!.save();
                       })));
             })
-    ]));
+    ]);
   }
 }

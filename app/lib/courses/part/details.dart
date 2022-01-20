@@ -30,8 +30,9 @@ class PartDetailsPage extends StatefulWidget {
 class _PartDetailsPageState extends State<PartDetailsPage> {
   Future<CoursePart?> _buildFuture() async {
     if (widget.model != null) return widget.model!;
-    if (widget.editorBloc != null)
+    if (widget.editorBloc != null) {
       return widget.editorBloc!.getCourse(widget.course!).parts[widget.partId!];
+    }
     var server = await CoursesServer.fetch(index: widget.serverId);
     var course = await server?.fetchCourse(widget.course!);
     return course?.fetchPart(
@@ -44,18 +45,19 @@ class _PartDetailsPageState extends State<PartDetailsPage> {
         future: _buildFuture(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting ||
-              !snapshot.hasData)
-            return Center(child: CircularProgressIndicator());
+              !snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
           if (snapshot.hasError) return Text("Error: ${snapshot.error}");
           var part = snapshot.data;
-          if (part != null)
+          if (part != null) {
             return Scaffold(
                 appBar: MyAppBar(title: part.name),
                 body: Scrollbar(
                     child: ListView(children: [
                   Card(
                       child: Container(
-                    constraints: BoxConstraints(maxWidth: 1000),
+                    constraints: const BoxConstraints(maxWidth: 1000),
                     child: Column(children: [
                       Text("course.details.statistics.title",
                               style: Theme.of(context).textTheme.headline5)
@@ -63,7 +65,8 @@ class _PartDetailsPageState extends State<PartDetailsPage> {
                     ]),
                   ))
                 ])));
-          return ErrorDisplay();
+          }
+          return const ErrorDisplay();
         });
   }
 }

@@ -8,26 +8,28 @@ import 'home.dart';
 class BackendsModule extends Module {
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => BackendsPage()),
+    ChildRoute('/', child: (_, args) => const BackendsPage()),
     ChildRoute("/user", child: (_, args) {
       if (args.queryParams.containsKey('collectionId') &&
-          args.queryParams.containsKey('user'))
+          args.queryParams.containsKey('user')) {
         return BackendUserPage(
             model: args.data,
             collectionId: int.parse(args.queryParams['collectionId']!),
             user: args.queryParams['user']);
-      return ErrorDisplay();
+      }
+      return const ErrorDisplay();
     }),
     ChildRoute('/entry', child: (_, args) {
       if (args.queryParams.containsKey('collectionId') &&
           args.queryParams.containsKey('user') &&
-          args.queryParams.containsKey('entry'))
+          args.queryParams.containsKey('entry')) {
         return BackendPage(
             model: args.data,
             collectionId: int.parse(args.queryParams['collectionId']!),
             user: args.queryParams['user']!,
             entry: args.queryParams['entry']!);
-      return ErrorDisplay();
+      }
+      return const ErrorDisplay();
     })
   ];
 }

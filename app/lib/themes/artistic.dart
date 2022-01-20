@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final mdcThemePrimary = Color(0xFF30dc4f);
+const mdcThemePrimary = Color(0xFF30dc4f);
 const mdcThemeOnPrimary = Color(0xFFffffff);
 const mdcThemeSecondary = Color(0xFFdc30bc);
 const mdcThemeOnSecondary = Color(0xFF000000);
@@ -9,7 +9,7 @@ const mdcThemeOnError = Color(0xFFffffff);
 const mdcThemeSurface = Color(0xFFffffff);
 const mdcThemeOnSurface = Color(0xFF000000);
 const mdcThemeBackground = Color(0xFFffffff);
-final mdcTypographyFontFamily = "Raleway";
+const mdcTypographyFontFamily = "Raleway";
 final mdcPrimarySwatch = MaterialColor(mdcThemePrimary.value, {
   50: mdcThemePrimary.withOpacity(.1),
   100: mdcThemePrimary.withOpacity(.2),

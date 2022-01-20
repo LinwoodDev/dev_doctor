@@ -32,17 +32,18 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (isWindow())
+    if (isWindow()) {
       return MoveWindow(
           child: WindowBorder(
               color: Theme.of(context).primaryColor,
               width: 1,
               child: _buildAppBar()));
+    }
     return _buildAppBar();
   }
 
   Widget _buildAppBar() => AppBar(
-        leading: this.leading,
+        leading: leading,
         elevation: 5.0,
         automaticallyImplyLeading: automaticallyImplyLeading,
         title: isWindow()
@@ -52,49 +53,52 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         actions: [
           ...actions,
           if (actions.isNotEmpty)
-            if (isWindow()) VerticalDivider(),
-          WindowButtons()
+            if (isWindow()) const VerticalDivider(),
+          const WindowButtons()
         ],
         //actions: [IconButton(icon: Icon(Icons.settings_outlined), onPressed: () {})],
       );
 }
 
 final buttonColors = WindowButtonColors(
-    iconNormal: Color(0xFF805306),
-    mouseOver: Color(0xFFF6A00C),
-    mouseDown: Color(0xFF805306),
-    iconMouseOver: Color(0xFF805306),
-    iconMouseDown: Color(0xFFFFD500));
+    iconNormal: const Color(0xFF805306),
+    mouseOver: const Color(0xFFF6A00C),
+    mouseDown: const Color(0xFF805306),
+    iconMouseOver: const Color(0xFF805306),
+    iconMouseDown: const Color(0xFFFFD500));
 
 final closeButtonColors = WindowButtonColors(
-    mouseOver: Color(0xFFD32F2F),
-    mouseDown: Color(0xFFB71C1C),
-    iconNormal: Color(0xFF805306),
+    mouseOver: const Color(0xFFD32F2F),
+    mouseDown: const Color(0xFFB71C1C),
+    iconNormal: const Color(0xFF805306),
     iconMouseOver: Colors.white);
 
 class WindowButtons extends StatelessWidget {
+  const WindowButtons({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    if (!kIsWeb) if (isWindow())
+    if (!kIsWeb && isWindow()) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
             IconButton(
-              icon: Icon(PhosphorIcons.minusLight, size: 16),
+              icon: const Icon(PhosphorIcons.minusLight, size: 16),
               onPressed: () => appWindow.minimize(),
             ),
             IconButton(
-              icon: Icon(PhosphorIcons.squareLight, size: 16),
+              icon: const Icon(PhosphorIcons.squareLight, size: 16),
               onPressed: () => appWindow.maximizeOrRestore(),
             ),
             IconButton(
-              icon: Icon(PhosphorIcons.xLight, size: 16),
+              icon: const Icon(PhosphorIcons.xLight, size: 16),
               onPressed: () => appWindow.close(),
             )
           ],
         ),
       );
+    }
     return Container();
   }
 }

@@ -10,6 +10,8 @@ import 'home.dart';
 import 'layout.dart';
 
 class ServersSettingsPage extends StatefulWidget {
+  const ServersSettingsPage({Key? key}) : super(key: key);
+
   @override
   _ServersSettingsPageState createState() => _ServersSettingsPageState();
 }
@@ -45,10 +47,11 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       default:
-                        if (snapshot.hasError)
+                        if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
+                        }
                         var data = snapshot.data;
                         return Scrollbar(
                             child: ListView.builder(
@@ -75,8 +78,8 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                     }
                   }))),
       floatingActionButton: FloatingActionButton.extended(
-        label: Text("settings.servers.add.fab").tr(),
-        icon: Icon(PhosphorIcons.plusLight),
+        label: const Text("settings.servers.add.fab").tr(),
+        icon: const Icon(PhosphorIcons.plusLight),
         onPressed: () => _showDialog(),
       ),
     );
@@ -88,20 +91,21 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
 
   _createServer(String url) async {
     var server = await CoursesServer.fetch(url: url);
-    if (server == null)
+    if (server == null) {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: Text("settings.servers.error").tr(),
+                title: const Text("settings.servers.error").tr(),
                 actions: [
                   TextButton.icon(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(PhosphorIcons.xLight),
+                      icon: const Icon(PhosphorIcons.xLight),
                       label: Text("close".tr().toUpperCase()))
                 ],
               ));
-    else
+    } else {
       await _serversBox.add(url);
+    }
   }
 
   _showDialog() {

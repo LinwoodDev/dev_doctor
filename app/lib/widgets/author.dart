@@ -23,7 +23,7 @@ class AuthorDisplay extends StatelessWidget {
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               if (author.avatar.isNotEmpty)
                 Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: CircleAvatar(
                         child: ClipOval(
                             child: UniversalImage(
