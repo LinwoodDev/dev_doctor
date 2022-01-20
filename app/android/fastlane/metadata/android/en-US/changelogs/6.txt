@@ -1,2 +1,0 @@
-Fix responsive rebuild issues
-Fix question page bug after opening another question

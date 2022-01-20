@@ -1,3 +1,0 @@
-* Add asset to video source
-* Fix translation
-* Update classic theme
