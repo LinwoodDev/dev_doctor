@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dev_doctor/courses/bloc.dart';
 import 'package:dev_doctor/courses/part/bloc.dart';
 import 'package:dev_doctor/editor/code.dart';
+import 'package:dev_doctor/main.dart';
 import 'package:dev_doctor/models/author.dart';
 import 'package:dev_doctor/models/course.dart';
 import 'package:dev_doctor/models/editor/server.dart';
@@ -20,7 +21,6 @@ import 'package:markdown/markdown.dart' as md;
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -246,10 +246,6 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                   icon: const Icon(PhosphorIcons.codeLight),
                                   tooltip: "code".tr(),
                                   onPressed: () async {
-                                    var packageInfo =
-                                        await PackageInfo.fromPlatform();
-                                    var buildNumber =
-                                        int.tryParse(packageInfo.buildNumber);
                                     var encoder =
                                         const JsonEncoder.withIndent("  ");
                                     var data = await Modular.to.push(
@@ -258,7 +254,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                                 EditorCodeDialogPage(
                                                     initialValue: encoder
                                                         .convert(course.toJson(
-                                                            buildNumber)))));
+                                                            apiVersion)))));
                                     if (data != null) {
                                       var courseBloc =
                                           _editorBloc!.getCourse(bloc.course!);
@@ -741,12 +737,9 @@ extension PartOptionsExtension on PartOptions {
         break;
       case PartOptions.code:
         var encoder = const JsonEncoder.withIndent("  ");
-        var packageInfo = await PackageInfo.fromPlatform();
-        var buildNumber = int.tryParse(packageInfo.buildNumber);
         var data = await Modular.to.push(MaterialPageRoute(
             builder: (context) => EditorCodeDialogPage(
-                initialValue:
-                    encoder.convert(coursePart.toJson(buildNumber)))));
+                initialValue: encoder.convert(coursePart.toJson(apiVersion)))));
         if (data != null) {
           var part = CoursePart.fromJson(data..['course'] = courseBloc.course);
           partBloc.partSubject.add(part);

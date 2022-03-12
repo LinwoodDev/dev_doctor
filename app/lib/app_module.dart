@@ -47,7 +47,7 @@ extension HomeRoutesExtension on HomeRoutes {
   String get route {
     switch (this) {
       case HomeRoutes.home:
-        return '/';
+        return '/home';
       case HomeRoutes.backends:
         return '/backends';
       case HomeRoutes.articles:
@@ -79,6 +79,7 @@ extension HomeRoutesExtension on HomeRoutes {
   }
 
   static HomeRoutes fromRoute(String route) {
-    return HomeRoutes.values.firstWhere((element) => element.route == route);
+    return HomeRoutes.values.firstWhere((element) => element.route == route,
+        orElse: () => HomeRoutes.home);
   }
 }

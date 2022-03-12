@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.github.linwoodcloud" "\0"
-            VALUE "FileDescription", "Dev-Doctor" "\0"
+            VALUE "FileDescription", "dev_doctor" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "dev_doctor" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2021 com.github.linwoodcloud. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 com.github.linwoodcloud. All rights reserved." "\0"
             VALUE "OriginalFilename", "dev_doctor.exe" "\0"
-            VALUE "ProductName", "Dev-Doctor" "\0"
+            VALUE "ProductName", "dev_doctor" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

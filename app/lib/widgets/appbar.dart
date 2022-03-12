@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:window_manager/window_manager.dart';
 
 isWindow() =>
     !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
@@ -33,11 +33,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     if (isWindow()) {
-      return MoveWindow(
-          child: WindowBorder(
-              color: Theme.of(context).primaryColor,
-              width: 1,
-              child: _buildAppBar()));
+      return DragToMoveArea(child: _buildAppBar());
     }
     return _buildAppBar();
   }
@@ -47,7 +43,8 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         elevation: 5.0,
         automaticallyImplyLeading: automaticallyImplyLeading,
         title: isWindow()
-            ? WindowTitleBarBox(child: Text(title ?? ''))
+            ? SizedBox(
+                height: 65, child: WindowCaption(title: Text(title ?? '')))
             : Text(title ?? ''),
         bottom: bottom,
         actions: [
@@ -59,19 +56,6 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         //actions: [IconButton(icon: Icon(Icons.settings_outlined), onPressed: () {})],
       );
 }
-
-final buttonColors = WindowButtonColors(
-    iconNormal: const Color(0xFF805306),
-    mouseOver: const Color(0xFFF6A00C),
-    mouseDown: const Color(0xFF805306),
-    iconMouseOver: const Color(0xFF805306),
-    iconMouseDown: const Color(0xFFFFD500));
-
-final closeButtonColors = WindowButtonColors(
-    mouseOver: const Color(0xFFD32F2F),
-    mouseDown: const Color(0xFFB71C1C),
-    iconNormal: const Color(0xFF805306),
-    iconMouseOver: Colors.white);
 
 class WindowButtons extends StatelessWidget {
   const WindowButtons({Key? key}) : super(key: key);
@@ -85,15 +69,17 @@ class WindowButtons extends StatelessWidget {
           children: [
             IconButton(
               icon: const Icon(PhosphorIcons.minusLight, size: 16),
-              onPressed: () => appWindow.minimize(),
+              onPressed: () => windowManager.minimize(),
             ),
             IconButton(
               icon: const Icon(PhosphorIcons.squareLight, size: 16),
-              onPressed: () => appWindow.maximizeOrRestore(),
+              onPressed: () async => await windowManager.isMaximized()
+                  ? windowManager.unmaximize()
+                  : windowManager.maximize(),
             ),
             IconButton(
               icon: const Icon(PhosphorIcons.xLight, size: 16),
-              onPressed: () => appWindow.close(),
+              onPressed: () => windowManager.close(),
             )
           ],
         ),
@@ -104,13 +90,14 @@ class WindowButtons extends StatelessWidget {
 }
 
 class ConditionalMoveWindow extends StatelessWidget {
-  final Widget? child;
+  final Widget child;
 
-  const ConditionalMoveWindow({Key? key, this.child}) : super(key: key);
+  const ConditionalMoveWindow({Key? key, required this.child})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (!kIsWeb) if (isWindow()) return MoveWindow(child: child);
-    return child!;
+    if (!kIsWeb) if (isWindow()) return DragToMoveArea(child: child);
+    return child;
   }
 }
