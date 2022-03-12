@@ -26,7 +26,9 @@ class AppWidget extends StatelessWidget {
             builder: (context, dynamic box, widget) {
               var color = Hive.box('appearance').get('color', defaultValue: 0);
               var colorTheme = ColorTheme.values[color];
-              return MaterialApp(
+              return MaterialApp.router(
+                routeInformationParser: Modular.routeInformationParser,
+                routerDelegate: Modular.routerDelegate,
                 title: 'Dev-Doctor',
                 localizationsDelegates: [
                   ...context.localizationDelegates,
@@ -81,8 +83,7 @@ class AppWidget extends StatelessWidget {
                     // the app on. For desktop platforms, the controls will be smaller and
                     // closer together (more dense) than on mobile platforms.
                     visualDensity: VisualDensity.adaptivePlatformDensity),
-                home: const MyHomePage(),
-              ).modular();
+              );
             }));
   }
 }
@@ -110,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: const Center(
         child: RouterOutlet(),
       ),
       bottomNavigationBar: BottomNavigationBar(
