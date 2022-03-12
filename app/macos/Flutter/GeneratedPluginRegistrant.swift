@@ -5,7 +5,6 @@
 import FlutterMacOS
 import Foundation
 
-import bitsdojo_window_macos
 import package_info_plus_macos
 import path_provider_macos
 import printing
