@@ -16,7 +16,10 @@ const apiVersion = 16;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await windowManager.ensureInitialized();
+
+  if (isWindow()) {
+    await windowManager.ensureInitialized();
+  }
 
   await Hive.initFlutter('Dev-Doctor');
   await Hive.openBox('settings');
