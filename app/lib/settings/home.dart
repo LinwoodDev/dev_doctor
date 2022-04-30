@@ -88,36 +88,36 @@ class SettingsList extends StatelessWidget {
           ListTile(
               leading: const Icon(PhosphorIcons.stackLight),
               title: const Text("settings.license").tr(),
-              onTap: () => launch(
-                  "https://github.com/LinwoodCloud/dev_doctor/blob/main/LICENSE")),
+              onTap: () => launchUrl(Uri.https(
+                  "github.com", "/LinwoodCloud/dev_doctor/blob/main/LICENSE"))),
           ListTile(
               leading: const Icon(PhosphorIcons.codeLight),
               title: const Text("settings.code").tr(),
-              onTap: () =>
-                  launch("https://github.com/LinwoodCloud/dev_doctor")),
+              onTap: () => launchUrl(
+                  Uri.https("github.com", "LinwoodCloud/dev_doctor"))),
           ListTile(
               leading: const Icon(PhosphorIcons.usersLight),
               title: const Text("discord").tr(),
-              onTap: () => launch("https://discord.linwood.dev")),
+              onTap: () => launchUrl(Uri.https("discord.linwood.dev", ""))),
           ListTile(
               leading: const Icon(PhosphorIcons.articleLight),
               title: const Text("docs").tr(),
-              onTap: () => launch(
-                  "https://docs.dev-doctor.linwood.dev/backend/overview")),
+              onTap: () => launchUrl(Uri.https(
+                  "docs.dev-doctor.linwood.dev", "/backend/overview"))),
           ListTile(
               leading: const Icon(PhosphorIcons.arrowCounterClockwiseLight),
               title: const Text("settings.changelog").tr(),
-              onTap: () =>
-                  launch("https://docs.dev-doctor.linwood.dev/changelog")),
+              onTap: () => launchUrl(
+                  Uri.https("docs.dev-doctor.linwood.dev", "/changelog"))),
           ListTile(
               leading: const Icon(PhosphorIcons.identificationCardLight),
               title: const Text("settings.imprint").tr(),
-              onTap: () => launch("https://codedoctor.tk/impress")),
+              onTap: () => launchUrl(Uri.https("go.linwood.dev", "/impress"))),
           ListTile(
               leading: const Icon(PhosphorIcons.shieldLight),
               title: const Text("settings.privacypolicy").tr(),
-              onTap: () => launch(
-                  "https://docs.dev-doctor.linwood.dev/docs/privacypolicy")),
+              onTap: () => launchUrl(Uri.https(
+                  "docs.dev-doctor.linwood.dev", "/docs/privacypolicy"))),
           ListTile(
               leading: const Icon(PhosphorIcons.infoLight),
               title: const Text("settings.about").tr(),

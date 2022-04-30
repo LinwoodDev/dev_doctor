@@ -75,7 +75,7 @@ class Course {
         "support_url": supportUrl
       };
 
-  get url => server!.url + "/" + slug;
+  get url => "${server!.url}/$slug";
 
   Future<List<CoursePart>> fetchParts() =>
       Future.wait(parts.map((course) => fetchPart(course))).then((value) async {

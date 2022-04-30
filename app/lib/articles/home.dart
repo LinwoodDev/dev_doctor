@@ -336,9 +336,9 @@ class _ArticlesListState extends State<ArticlesList> {
           }
           return const Center(
             child: SizedBox(
-              child: CircularProgressIndicator(),
               height: 24,
               width: 24,
+              child: CircularProgressIndicator(),
             ),
           );
         }

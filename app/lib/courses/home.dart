@@ -337,9 +337,9 @@ class _CoursesListState extends State<CoursesList> {
           }
           return const Center(
             child: SizedBox(
-              child: CircularProgressIndicator(),
               height: 24,
               width: 24,
+              child: CircularProgressIndicator(),
             ),
           );
         }

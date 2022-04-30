@@ -226,7 +226,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                     icon:
                                         const Icon(PhosphorIcons.questionLight),
                                     tooltip: "course.support".tr(),
-                                    onPressed: () => launch(supportUrl)),
+                                    onPressed: () =>
+                                        launchUrl(Uri.parse(supportUrl))),
                               IconButton(
                                   icon: const Icon(PhosphorIcons.playLight),
                                   tooltip: "course.start".tr(),
@@ -317,7 +318,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
       });
 
   Widget _buildGeneral(BuildContext context, Course course) {
-    var _slugs = _editorBloc?.courses.map((e) => e.course.slug);
+    var slugs = _editorBloc?.courses.map((e) => e.course.slug);
     return ListView(children: <Widget>[
       Padding(
           padding: const EdgeInsets.all(4),
@@ -352,7 +353,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                       if (value!.isEmpty) {
                                         return "course.slug.empty".tr();
                                       }
-                                      if (_slugs!.contains(value) &&
+                                      if (slugs!.contains(value) &&
                                           value != course.slug) {
                                         return "course.slug.exist".tr();
                                       }
@@ -459,7 +460,8 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                       Expanded(
                           child: (course.body.isNotEmpty)
                               ? MarkdownBody(
-                                  onTapLink: (_, url, __) => launch(url!),
+                                  onTapLink: (_, url, __) =>
+                                      launchUrl(Uri.parse(url!)),
                                   extensionSet: md.ExtensionSet(
                                     md.ExtensionSet.gitHubFlavored
                                         .blockSyntaxes,
@@ -544,6 +546,7 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
           var description = e.getDescription(
               bloc.getCourse(partBloc.course!).getCoursePart(partBloc.part!));
           return PopupMenuItem<PartOptions>(
+              value: e,
               child: Row(children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -555,8 +558,7 @@ class EditorCoursePartPopupMenu extends StatelessWidget {
                     Text(description,
                         style: Theme.of(context).textTheme.caption)
                 ])
-              ]),
-              value: e);
+              ]));
         }).toList()
           ..insert(3, const PopupMenuDivider());
       },

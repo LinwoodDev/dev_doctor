@@ -12,19 +12,19 @@ class AppearanceSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _appearanceBox = Hive.box('appearance');
+    final appearanceBox = Hive.box('appearance');
     return Scaffold(
         appBar: MyAppBar(title: 'settings.appearance.title'.tr()),
         body: SettingsLayout(
             activePage: SettingsPages.appearance,
             child: ValueListenableBuilder(
-                valueListenable: _appearanceBox.listenable(),
+                valueListenable: appearanceBox.listenable(),
                 builder: (context, Box<dynamic> box, _) {
                   var theme = ThemeMode
-                      .values[_appearanceBox.get('theme', defaultValue: 0)];
+                      .values[appearanceBox.get('theme', defaultValue: 0)];
                   var locale = context.locale.toLanguageTag();
                   var color = ColorTheme
-                      .values[_appearanceBox.get('color', defaultValue: 0)];
+                      .values[appearanceBox.get('color', defaultValue: 0)];
                   return Scrollbar(
                       child: ListView(children: [
                     ListTile(
@@ -86,9 +86,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                                                     .toLanguageTag(),
                                                 groupValue: selectedLocale,
                                                 title: Text(
-                                                        'settings.appearance.locale.' +
-                                                            locales[index]
-                                                                .toLanguageTag())
+                                                        'settings.appearance.locale.${locales[index].toLanguageTag()}')
                                                     .tr(),
                                                 onChanged: (value) {
                                                   setState(() =>
@@ -105,8 +103,8 @@ class AppearanceSettingsPage extends StatelessWidget {
                     ListTile(
                         title:
                             const Text('settings.appearance.theme.title').tr(),
-                        subtitle: Text('settings.appearance.theme.' +
-                                EnumToString.convertToString(theme))
+                        subtitle: Text(
+                                'settings.appearance.theme.${EnumToString.convertToString(theme)}')
                             .tr(),
                         onTap: () => showDialog(
                             context: context,
@@ -121,7 +119,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                                   TextButton(
                                       child: Text('save'.tr().toUpperCase()),
                                       onPressed: () async {
-                                        _appearanceBox.put(
+                                        appearanceBox.put(
                                             'theme', selectedRadio!.index);
                                         Navigator.pop(context);
                                       })
@@ -137,11 +135,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                                           value: ThemeMode.values[index],
                                           groupValue: selectedRadio,
                                           title: Text(
-                                                  'settings.appearance.theme.' +
-                                                      EnumToString
-                                                          .convertToString(
-                                                              ThemeMode.values[
-                                                                  index]))
+                                                  'settings.appearance.theme.${EnumToString.convertToString(ThemeMode.values[index])}')
                                               .tr(),
                                           onChanged: (value) {
                                             setState(
@@ -156,8 +150,8 @@ class AppearanceSettingsPage extends StatelessWidget {
                             })),
                     ListTile(
                       title: const Text("settings.appearance.color.title").tr(),
-                      subtitle: Text("settings.appearance.color." +
-                              EnumToString.convertToString(color))
+                      subtitle: Text(
+                              "settings.appearance.color.${EnumToString.convertToString(color)}")
                           .tr(),
                       onTap: () => showDialog(
                           context: context,
@@ -172,7 +166,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                                 TextButton(
                                     child: Text('save'.tr().toUpperCase()),
                                     onPressed: () async {
-                                      _appearanceBox.put(
+                                      appearanceBox.put(
                                           'color', selectedRadio!.index);
                                       Navigator.pop(context);
                                     })
@@ -190,11 +184,7 @@ class AppearanceSettingsPage extends StatelessWidget {
                                           value: ColorTheme.values[index],
                                           groupValue: selectedRadio,
                                           title: Text(
-                                                  'settings.appearance.color.' +
-                                                      EnumToString
-                                                          .convertToString(
-                                                              ColorTheme.values[
-                                                                  index]))
+                                                  'settings.appearance.color.${EnumToString.convertToString(ColorTheme.values[index])}')
                                               .tr(),
                                           onChanged: (value) {
                                             setState(

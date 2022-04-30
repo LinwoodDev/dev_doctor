@@ -59,8 +59,8 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
           context: context,
           builder: (context) => AlertDialog(
                 title: const Text("course.quiz.validation.title").tr(),
-                content: Text("course.quiz.validation." +
-                        (validate ? "correct" : "wrong"))
+                content: Text(
+                        "course.quiz.validation.${validate ? "correct" : "wrong"}")
                     .tr(),
                 actions: [
                   TextButton.icon(
@@ -130,9 +130,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
                                       Text(
                                         widget.editorBloc == null ||
                                                 _start != null
-                                            ? _start.toString() +
-                                                "/" +
-                                                widget.item.time.toString()
+                                            ? "$_start/${widget.item.time}"
                                             : "course.quiz.time.notset".tr(),
                                         style: Theme.of(context)
                                             .textTheme
@@ -455,10 +453,7 @@ class _QuizPartItemPageState extends State<QuizPartItemPage> {
 
   Widget _buildEvaluation() => Column(children: [
         Text(
-          (_points?.toString() ??
-                  widget.part.getItemPoints(widget.itemId).toString()) +
-              "/" +
-              widget.item.points.toString(),
+          "${_points?.toString() ?? widget.part.getItemPoints(widget.itemId).toString()}/${widget.item.points}",
           style: Theme.of(context).textTheme.headline2,
         ),
         Text("course.quiz.points", style: Theme.of(context).textTheme.subtitle2)

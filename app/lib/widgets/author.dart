@@ -18,7 +18,7 @@ class AuthorDisplay extends StatelessWidget {
         ? Container()
         : GestureDetector(
             onTap: () {
-              if (author.url.isNotEmpty) launch(author.url);
+              if (author.url.isNotEmpty) launchUrl(Uri.parse(author.url));
             },
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               if (author.avatar.isNotEmpty)

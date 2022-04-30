@@ -35,18 +35,18 @@ void main() async {
   Hive.registerAdapter(CourseAdapter(apiVersion: apiVersion));
   Hive.registerAdapter(ServerEditorBlocAdapter(apiVersion: apiVersion));
   Hive.registerAdapter(CourseEditorBlocAdapter(apiVersion: apiVersion));
-  var _serversBox = await Hive.openBox<String>('servers');
-  var _collectionsBox = await Hive.openBox<String>('collections');
-  if (_collectionsBox.isEmpty) {
-    await _collectionsBox.add('https://collection.dev-doctor.linwood.dev');
+  var serversBox = await Hive.openBox<String>('servers');
+  var collectionsBox = await Hive.openBox<String>('collections');
+  if (collectionsBox.isEmpty) {
+    await collectionsBox.add('https://collection.dev-doctor.linwood.dev');
   }
-  if (_serversBox.isEmpty) {
-    await _serversBox.add('https://backend.dev-doctor.linwood.dev');
+  if (serversBox.isEmpty) {
+    await serversBox.add('https://backend.dev-doctor.linwood.dev');
   }
 
   if (isWindow()) {
     windowManager.waitUntilReadyToShow().then((_) async {
-      await windowManager.setTitleBarStyle('hidden');
+      await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
       await windowManager.setMinimumSize(const Size(400, 300));
       await windowManager.setSize(const Size(400, 600));
       await windowManager.setAlignment(Alignment.center);

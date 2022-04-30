@@ -86,8 +86,8 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
               child: widget.item.url.isEmpty
                   ? Center(child: const Text('course.video.empty').tr())
                   : AspectRatio(
-                      child: _iframeWidget!,
                       aspectRatio: 16 / 9,
+                      child: _iframeWidget!,
                     ))),
       if (widget.editorBloc != null)
         IconButton(

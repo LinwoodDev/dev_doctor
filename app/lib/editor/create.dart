@@ -19,7 +19,7 @@ class _CreateServerPageState extends State<CreateServerPage> {
   final Box<ServerEditorBloc> _box = Hive.box<ServerEditorBloc>('editor');
   @override
   Widget build(BuildContext context) {
-    var _names = _box.values.map((e) => e.server.name);
+    var names = _box.values.map((e) => e.server.name);
     return Scaffold(
         appBar: MyAppBar(title: "editor.create.title".tr()),
         body: Form(
@@ -34,7 +34,7 @@ class _CreateServerPageState extends State<CreateServerPage> {
                                 if (value!.isEmpty) {
                                   return "editor.create.name.empty".tr();
                                 }
-                                if (_names.contains(value)) {
+                                if (names.contains(value)) {
                                   return "editor.create.name.exist".tr();
                                 }
                                 return null;
@@ -50,7 +50,6 @@ class _CreateServerPageState extends State<CreateServerPage> {
                               controller: _noteController)
                         ]))))),
         floatingActionButton: FloatingActionButton(
-            child: const Icon(PhosphorIcons.checkLight),
             tooltip: "editor.create.submit".tr(),
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
@@ -58,6 +57,7 @@ class _CreateServerPageState extends State<CreateServerPage> {
                     name: _nameController.text, note: _noteController.text));
                 Navigator.of(context).pop();
               }
-            }));
+            },
+            child: const Icon(PhosphorIcons.checkLight)));
   }
 }

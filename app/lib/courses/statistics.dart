@@ -71,10 +71,8 @@ class CourseStatisticsView extends StatelessWidget {
                                           .textTheme
                                           .headline6),
                                   const SizedBox(height: 50),
-                                  Text("course.progress".tr() +
-                                      " " +
-                                      (progress * 100).round().toString() +
-                                      "%"),
+                                  Text(
+                                      "${"course.progress".tr()} ${(progress * 100).round()}%"),
                                   LinearProgressIndicator(value: progress),
                                   const SizedBox(height: 50),
                                   Wrap(
@@ -105,11 +103,8 @@ class CourseStatisticsView extends StatelessWidget {
                                             }).toString()));
                                   })),
                                   const SizedBox(height: 50),
-                                  Text("course.points".tr() +
-                                      " " +
-                                      points.toString() +
-                                      "/" +
-                                      maxPoints.toString()),
+                                  Text(
+                                      "${"course.points".tr()} $points/$maxPoints"),
                                   LinearProgressIndicator(
                                       value: points / maxPoints),
                                 ]))));
@@ -126,17 +121,12 @@ class CourseStatisticsView extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 32),
                                 child: Column(children: [
-                                  Text("course.progress".tr() +
-                                      " " +
-                                      (allProgress * 100).round().toString() +
-                                      "%"),
+                                  Text(
+                                      "${"course.progress".tr()} ${(allProgress * 100).round()}%"),
                                   LinearProgressIndicator(value: allProgress),
                                   const SizedBox(height: 50),
-                                  Text("course.points".tr() +
-                                      " " +
-                                      allScore.toString() +
-                                      "/" +
-                                      allMaxScore.toString()),
+                                  Text(
+                                      "${"course.points".tr()} $allScore/$allMaxScore"),
                                   LinearProgressIndicator(
                                       value: allScore / allMaxScore),
                                   const SizedBox(height: 50),

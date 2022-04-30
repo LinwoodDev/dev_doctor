@@ -48,7 +48,7 @@ class _EditorPageState extends State<EditorPage> {
             closedShape: const CircleBorder(),
             closedBuilder: (context, openContainer) => FloatingActionButton(
                 onPressed: openContainer,
-                child: const Icon(PhosphorIcons.plusLight),
-                tooltip: "editor.create.fab".tr())));
+                tooltip: "editor.create.fab".tr(),
+                child: const Icon(PhosphorIcons.plusLight))));
   }
 }

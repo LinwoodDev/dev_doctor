@@ -94,7 +94,7 @@ class _BackendUserPageState extends State<BackendUserPage> {
     var hero = Hero(
         tag:
             "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
-        child: UniversalImage(url: server.url + "/icon", type: server.icon));
+        child: UniversalImage(url: "${server.url}/icon", type: server.icon));
     void tileTap() => Modular.to.pushNamed(
         "/backends/entry?collectionId=${widget.collectionId}&user=${widget.user}&entry=${entries[index].name}",
         arguments: server);

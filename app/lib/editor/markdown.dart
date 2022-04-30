@@ -36,7 +36,7 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
         return _buildAppBar(
             isMobile,
             Row(children: [
-              Expanded(child: textEditor, flex: 2),
+              Expanded(flex: 2, child: textEditor),
               Expanded(
                   child: _MarkdownEditorPreview(
                       markdown: _markdownController!.text, isMobile: false))
@@ -98,7 +98,7 @@ class _MarkdownEditorPreview extends StatelessWidget {
           controller: _scrollController,
           child: MarkdownBody(
               styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-              onTapLink: (_, url, __) => launch(url!),
+              onTapLink: (_, url, __) => launchUrl(Uri.parse(url!)),
               extensionSet: md.ExtensionSet(
                 md.ExtensionSet.gitHubFlavored.blockSyntaxes,
                 [

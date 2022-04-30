@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _sections = [
+    var sections = [
       Column(children: [
         Text(
           "title".tr(),
@@ -31,14 +31,15 @@ class HomePage extends StatelessWidget {
                   padding: const EdgeInsets.all(5),
                   child: Wrap(alignment: WrapAlignment.center, children: [
                     ElevatedButton.icon(
-                        onPressed: () => launch(
-                            "https://docs.dev-doctor.linwood.dev/backend/own"),
+                        onPressed: () => launchUrl(Uri.https(
+                            "docs.dev-doctor.linwood.dev", "/backend/own")),
                         icon: Icon(PhosphorIcons.articleLight,
                             color: Theme.of(context).primaryIconTheme.color),
                         label: Text("docs".tr().toUpperCase(),
                             style: Theme.of(context).primaryTextTheme.button)),
                     OutlinedButton.icon(
-                        onPressed: () => launch("https://discord.linwood.dev"),
+                        onPressed: () =>
+                            launchUrl(Uri.https("discord.linwood.dev", "/")),
                         icon: const Icon(PhosphorIcons.usersLight),
                         label: Text("discord".tr().toUpperCase()))
                   ])),
@@ -46,8 +47,8 @@ class HomePage extends StatelessWidget {
                 Padding(
                     padding: const EdgeInsets.all(5),
                     child: RawMaterialButton(
-                        onPressed: () => launch(
-                            "https://vercel.com?utm_source=Linwood&utm_campaign=oss"),
+                        onPressed: () => launchUrl(Uri.https("vercel.com", "",
+                            {"utm_source": "Linwood", "utm_campaign": "oss"})),
                         child: SizedBox(
                             height: 50,
                             child: SvgPicture.asset(
@@ -68,7 +69,7 @@ class HomePage extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.all(20),
             child: ElevatedButton.icon(
-              onPressed: () => launch("https://linwood.dev/blog"),
+              onPressed: () => launchUrl(Uri.https("linwood.dev", "/blog")),
               icon: const Icon(PhosphorIcons.arrowSquareOutLight),
               label: Text("browser".tr().toUpperCase()),
             )),
@@ -96,8 +97,8 @@ class HomePage extends StatelessWidget {
                     title: Text(entry.getElement("title")?.innerText ?? ''),
                     subtitle:
                         Text(entry.getElement("summary")?.innerText ?? ''),
-                    onTap: () => launch(
-                        entry.getElement("link")?.getAttribute("href") ?? ''),
+                    onTap: () => launchUrl(Uri.parse(
+                        entry.getElement("link")?.getAttribute("href") ?? '')),
                     isThreeLine: true,
                   );
                 }),
@@ -112,13 +113,12 @@ class HomePage extends StatelessWidget {
             separatorBuilder: (context, index) => const Padding(
               padding: EdgeInsets.only(top: 100),
             ),
-            itemCount: _sections.length,
+            itemCount: sections.length,
             padding: const EdgeInsets.only(top: 100),
             itemBuilder: (context, index) => Material(
                 elevation: 2,
                 child: Container(
-                    padding: const EdgeInsets.all(10),
-                    child: _sections[index])),
+                    padding: const EdgeInsets.all(10), child: sections[index])),
           ),
         ));
   }

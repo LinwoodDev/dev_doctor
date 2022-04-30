@@ -171,7 +171,7 @@ class _BackendPageState extends State<BackendPage>
                                         child: _editorBloc != null
                                             ? Container()
                                             : UniversalImage(
-                                                url: server.url + "/icon",
+                                                url: "${server.url}/icon",
                                                 height: 500,
                                                 type: server.icon,
                                               )))))
@@ -254,7 +254,7 @@ class _BackendPageState extends State<BackendPage>
   }
 
   Widget _buildGeneral(BuildContext context, CoursesServer server) {
-    var _names = _box.values.map((e) => e.server.name);
+    var names = _box.values.map((e) => e.server.name);
     return Scrollbar(
         child: ListView(
       children: <Widget>[
@@ -301,7 +301,7 @@ class _BackendPageState extends State<BackendPage>
                                               return "editor.create.name.empty"
                                                   .tr();
                                             }
-                                            if (_names.contains(value) &&
+                                            if (names.contains(value) &&
                                                 value !=
                                                     _editorBloc!.server.name) {
                                               return "editor.create.name.exist"
@@ -348,7 +348,8 @@ class _BackendPageState extends State<BackendPage>
                                         styleSheet:
                                             MarkdownStyleSheet.fromTheme(
                                                 Theme.of(context)),
-                                        onTapLink: (_, url, __) => launch(url!),
+                                        onTapLink: (_, url, __) =>
+                                            launchUrl(Uri.parse(url!)),
                                         extensionSet: md.ExtensionSet(
                                           md.ExtensionSet.gitHubFlavored
                                               .blockSyntaxes,

@@ -51,7 +51,7 @@ class _VideoPartItemPageState extends State<VideoPartItemPage> {
                       icon: const Icon(PhosphorIcons.playLight),
                       label: Text("course.video.open".tr().toUpperCase()),
                       onPressed: () =>
-                          launch(widget.item.getSource(widget.part).toString()),
+                          launchUrl(widget.item.getSource(widget.part)),
                     ))),
       if (widget.editorBloc != null)
         IconButton(

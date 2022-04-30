@@ -84,8 +84,8 @@ class _AuthorEditingPageState extends State<AuthorEditingPage> {
                           const SizedBox(height: 10)
                         ]))))),
         floatingActionButton: FloatingActionButton(
-            child: const Icon(PhosphorIcons.checkLight),
             tooltip: "editor.create.submit".tr(),
-            onPressed: () => widget.onSubmit(_author)));
+            onPressed: () => widget.onSubmit(_author),
+            child: const Icon(PhosphorIcons.checkLight)));
   }
 }

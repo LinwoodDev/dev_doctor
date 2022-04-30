@@ -70,7 +70,7 @@ class _ServersSettingsPageState extends State<ServersSettingsPage> {
                                               ? null
                                               : UniversalImage(
                                                   type: current!.icon,
-                                                  url: current.url + "/icon"),
+                                                  url: "${current.url}/icon"),
                                           title: Text(current?.name ??
                                               "settings.servers.error".tr()),
                                           subtitle: Text(current?.url ?? "")));

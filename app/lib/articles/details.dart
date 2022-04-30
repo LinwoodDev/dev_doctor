@@ -68,7 +68,7 @@ class _ArticlePageState extends State<ArticlePage> {
   }
 
   Widget _buildView(Article article) {
-    var _slugs = _editorBloc?.getArticlesSlug();
+    var slugs = _editorBloc?.getArticlesSlug();
     return Scaffold(
         appBar: AppBar(title: Text(article.title), actions: [
           if (_editorBloc == null) ...[
@@ -153,7 +153,7 @@ class _ArticlePageState extends State<ArticlePage> {
                                           if (value!.isEmpty) {
                                             return "article.slug.empty".tr();
                                           }
-                                          if (_slugs!.contains(value) &&
+                                          if (slugs!.contains(value) &&
                                               value != article.slug) {
                                             return "article.slug.exist".tr();
                                           }
@@ -226,7 +226,7 @@ class _ArticlePageState extends State<ArticlePage> {
                           Expanded(
                               child: (article.body.isNotEmpty)
                                   ? MarkdownBody(
-                                      onTapLink: (_, url, __) => launch(url!),
+                                      onTapLink: (_, url, __) => launchUrl(Uri.parse(url!)),
                                       extensionSet: md.ExtensionSet(
                                         md.ExtensionSet.gitHubFlavored
                                             .blockSyntaxes,

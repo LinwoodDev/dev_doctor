@@ -171,8 +171,8 @@ class _PartItemLayoutState extends State<PartItemLayout> {
                           setState(() => type = value ?? PartItemTypes.text),
                       items: PartItemTypes.values
                           .map((e) => DropdownMenuItem<PartItemTypes>(
-                              child: Text("course.type.${e.name}".tr()),
-                              value: e))
+                              value: e,
+                              child: Text("course.type.${e.name}".tr())))
                           .toList())
                 ]))));
   }

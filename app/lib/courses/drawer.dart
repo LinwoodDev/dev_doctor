@@ -53,7 +53,7 @@ class _CoursePartDrawerState extends State<CoursePartDrawer> {
       if (supportUrl != null)
         ListTile(
           title: const Text('course.support').tr(),
-          onTap: () => launch(supportUrl),
+          onTap: () => launchUrl(Uri.parse(supportUrl)),
           leading: const Icon(PhosphorIcons.questionLight),
         ),
       const Divider(),

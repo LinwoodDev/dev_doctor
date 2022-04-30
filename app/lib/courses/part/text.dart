@@ -48,7 +48,7 @@ class _TextPartItemPageState extends State<TextPartItemPage> {
       Expanded(
           child: MarkdownBody(
         styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-        onTapLink: (_, url, __) => launch(url!),
+        onTapLink: (_, url, __) => launchUrl(Uri.parse(url!)),
         extensionSet: md.ExtensionSet(
           md.ExtensionSet.gitHubFlavored.blockSyntaxes,
           [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],

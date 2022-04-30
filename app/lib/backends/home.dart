@@ -166,9 +166,9 @@ class _BackendsListState extends State<BackendsList> {
             }
             return const Center(
               child: SizedBox(
-                child: CircularProgressIndicator(),
                 height: 24,
                 width: 24,
+                child: CircularProgressIndicator(),
               ),
             );
           }
@@ -192,7 +192,7 @@ class _BackendsListState extends State<BackendsList> {
             tag:
                 "backend-icon-${server.entry!.collection.index}-${server.entry!.user.name}-${server.entry!.name}",
             child:
-                UniversalImage(type: server.icon, url: server.url + "/icon"));
+                UniversalImage(type: server.icon, url: "${server.url}/icon"));
 
     if (widget.gridView) {
       return Card(

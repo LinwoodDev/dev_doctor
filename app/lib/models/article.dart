@@ -65,5 +65,5 @@ class Article {
           time: clearTime ? null : time ?? this.time,
           title: title ?? this.title);
 
-  get url => server!.url + "/" + slug + (server?.type ?? "");
+  get url => "${server!.url}/$slug${server?.type ?? ""}";
 }

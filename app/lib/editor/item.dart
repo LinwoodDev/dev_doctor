@@ -85,7 +85,6 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
                           ],
                         ))))),
         floatingActionButton: FloatingActionButton(
-            child: const Icon(PhosphorIcons.floppyDiskLight),
             tooltip: "save".tr(),
             onPressed: () async {
               var coursePart = part.copyWith(
@@ -97,6 +96,7 @@ class _PartItemEditorPageState extends State<PartItemEditorPage> {
               await widget.editorBloc!.save();
               partBloc.partSubject.add(coursePart);
               setState(() {});
-            }));
+            },
+            child: const Icon(PhosphorIcons.floppyDiskLight)));
   }
 }

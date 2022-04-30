@@ -66,7 +66,7 @@ class _CollectionsSettingsPageState extends State<CollectionsSettingsPage> {
                                               ? null
                                               : UniversalImage(
                                                   type: current!.icon,
-                                                  url: current.url + "/icon"),
+                                                  url: "${current.url}/icon"),
                                           title: Text(current?.name ??
                                               "settings.collections.error"
                                                   .tr()),
