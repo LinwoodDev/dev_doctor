@@ -5,7 +5,7 @@
 #define MyAppVersion "1.6"
 #define MyAppPublisher "LinwoodCloud"
 #define MyAppURL "https://www.linwood.dev"
-#define MyAppExeName "dev_doctor.exe" 
+#define MyAppExeName "DevDoctor-Setup.exe" 
 #define BaseDirRelease "build\windows\runner\Release"
 #define RunnerSourceDir "windows\runner"
 
