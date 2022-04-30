@@ -2,7 +2,7 @@
 Name=Dev-Doctor
 Comment=Free, opensource, serverless learning platform
 Exec=dev_doctor
-Icon=${SNAP}/meta/gui/dev_doctor.png
+Icon=${SNAP}/meta/gui/dev-doctor.png
 Terminal=false
 Type=Application
 Categories=Productivity; #adjust accordingly your snap category
