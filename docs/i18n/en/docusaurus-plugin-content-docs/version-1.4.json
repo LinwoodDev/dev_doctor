@@ -1,0 +1,14 @@
+{
+  "version.label": {
+    "message": "1.4",
+    "description": "The label for version 1.4"
+  },
+  "sidebar.docs.category.Backend": {
+    "message": "Backend",
+    "description": "The label for category Backend in sidebar docs"
+  },
+  "sidebar.api.category.Item": {
+    "message": "Item",
+    "description": "The label for category Item in sidebar api"
+  }
+}
