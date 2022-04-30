@@ -226,7 +226,8 @@ class _ArticlePageState extends State<ArticlePage> {
                           Expanded(
                               child: (article.body.isNotEmpty)
                                   ? MarkdownBody(
-                                      onTapLink: (_, url, __) => launchUrl(Uri.parse(url!)),
+                                      onTapLink: (_, url, __) =>
+                                          launchUrl(Uri.parse(url!)),
                                       extensionSet: md.ExtensionSet(
                                         md.ExtensionSet.gitHubFlavored
                                             .blockSyntaxes,

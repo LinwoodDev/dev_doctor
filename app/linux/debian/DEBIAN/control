@@ -1,0 +1,9 @@
+Package: dev_doctor
+Version: 1.6.0
+Section: base
+Priority: optional
+Homepage: https://github.com/LinwoodCloud/dev_doctor
+Architecture: amd64
+Maintainer: LinwoodCloud <contact@linwood.dev>
+Description: Dev-Doctor
+  Free, opensource, serverless learning platform
