@@ -5,7 +5,7 @@
 #define MyAppVersion "1.6"
 #define MyAppPublisher "LinwoodCloud"
 #define MyAppURL "https://www.linwood.dev"
-#define MyAppExeName "DevDoctor-Setup.exe" 
+#define MyAppExeName "dev_doctor.exe" 
 #define BaseDirRelease "build\windows\runner\Release"
 #define RunnerSourceDir "windows\runner"
 
@@ -29,7 +29,7 @@ LicenseFile=..\LICENSE
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=
 OutputDir=build\windows
-OutputBaseFilename={#MyAppName}-{#MyAppVersion}-Setup
+OutputBaseFilename=DevDoctor-Setup
 SetupIconFile={#RunnerSourceDir}\resources\app_icon.ico
 Compression=lzma
 SolidCompression=yes
