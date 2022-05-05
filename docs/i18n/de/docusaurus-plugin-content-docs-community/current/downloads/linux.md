@@ -29,5 +29,3 @@ sidebar_position: 3
   </ul>
 </div>
 </div>
-
-Read more about the nightly version of Dev-Doctor [here](/nightly).
