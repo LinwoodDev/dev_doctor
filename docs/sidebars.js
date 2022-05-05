@@ -18,8 +18,7 @@ module.exports = {
         'backend/own',
         'backend/collection',
       ]
-    },
-    'privacypolicy'
+    }
   ],
   'api': [
     'api/migrating',
@@ -28,7 +27,6 @@ module.exports = {
     'api/article',
     'api/part',
     'api/author',
-
     {
       type: 'category',
       label: 'Item',

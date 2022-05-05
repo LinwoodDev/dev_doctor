@@ -23,8 +23,6 @@ Android 5.0 (API level 21) is the minimum supported version to run Dev-Doctor.
 </a>
 </div>
 
-Read more about the nightly version of Dev-Doctor [here](/nightly).
-
 ## Stores
 
 <div className="row margin-bottom--lg padding--sm">
