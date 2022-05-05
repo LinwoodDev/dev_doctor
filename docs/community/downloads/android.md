@@ -33,7 +33,3 @@ Android 5.0 (API level 21) is the minimum supported version to run Dev-Doctor.
   F-Droid
 </a>
 </div>
-
-## The beta program on play store
-
-Click on [this link](https://play.google.com/apps/testing/dev.linwood.Dev-Doctor) to register for the [nightly](/nightly) version of the app. Please note that this version can have bugs. The play store version will automatically be updated when a new nightly version is released.
