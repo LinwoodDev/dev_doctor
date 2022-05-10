@@ -46,6 +46,7 @@ class AppWidget extends StatelessWidget {
                   return widget ?? const ErrorDisplay();
                 },
                 theme: ThemeData(
+                    useMaterial3: true,
                     // This is the theme of your application.
                     //
                     // Try running your application with "flutter run". You'll see the
@@ -71,6 +72,7 @@ class AppWidget extends StatelessWidget {
                     // closer together (more dense) than on mobile platforms.
                     visualDensity: VisualDensity.adaptivePlatformDensity),
                 darkTheme: ThemeData(
+                    useMaterial3: true,
                     brightness: Brightness.dark,
                     primarySwatch: colorTheme.mdcPrimarySwatch,
                     colorScheme: ColorScheme.dark(

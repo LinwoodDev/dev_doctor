@@ -43,8 +43,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         elevation: 5.0,
         automaticallyImplyLeading: automaticallyImplyLeading,
         title: isWindow()
-            ? SizedBox(
-                height: 65, child: WindowCaption(title: Text(title ?? '')))
+            ? DragToMoveArea(child: Text(title ?? ''))
             : Text(title ?? ''),
         bottom: bottom,
         actions: [

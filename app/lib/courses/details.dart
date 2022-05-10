@@ -255,7 +255,7 @@ class _CoursePageState extends State<CoursePage> with TickerProviderStateMixin {
                                                 EditorCodeDialogPage(
                                                     initialValue: encoder
                                                         .convert(course.toJson(
-                                                            apiVersion)))));
+                                                            kApiVersion)))));
                                     if (data != null) {
                                       var courseBloc =
                                           _editorBloc!.getCourse(bloc.course!);
@@ -741,7 +741,7 @@ extension PartOptionsExtension on PartOptions {
         var encoder = const JsonEncoder.withIndent("  ");
         var data = await Modular.to.push(MaterialPageRoute(
             builder: (context) => EditorCodeDialogPage(
-                initialValue: encoder.convert(coursePart.toJson(apiVersion)))));
+                initialValue: encoder.convert(coursePart.toJson(kApiVersion)))));
         if (data != null) {
           var part = CoursePart.fromJson(data..['course'] = courseBloc.course);
           partBloc.partSubject.add(part);

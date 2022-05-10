@@ -12,7 +12,7 @@ import 'app_widget.dart';
 import 'models/editor/course.dart';
 import 'widgets/appbar.dart';
 
-const apiVersion = 16;
+const kApiVersion = 16;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -32,9 +32,9 @@ void main() async {
 
   runApp(ModularApp(module: AppModule(), child: const AppWidget()));
   Hive.registerAdapter(CoursesServerAdapter());
-  Hive.registerAdapter(CourseAdapter(apiVersion: apiVersion));
-  Hive.registerAdapter(ServerEditorBlocAdapter(apiVersion: apiVersion));
-  Hive.registerAdapter(CourseEditorBlocAdapter(apiVersion: apiVersion));
+  Hive.registerAdapter(CourseAdapter(apiVersion: kApiVersion));
+  Hive.registerAdapter(ServerEditorBlocAdapter(apiVersion: kApiVersion));
+  Hive.registerAdapter(CourseEditorBlocAdapter(apiVersion: kApiVersion));
   var serversBox = await Hive.openBox<String>('servers');
   var collectionsBox = await Hive.openBox<String>('collections');
   if (collectionsBox.isEmpty) {
