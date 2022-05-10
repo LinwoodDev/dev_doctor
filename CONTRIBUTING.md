@@ -1,7 +1,7 @@
 # Contributing
 
 I do this project in my spare time. It helps me a lot if you can contribute to this project.
-Please read the [Code of Conduct](CODE_OF_CONDUCT.md) first!
+Please read the [Code of Conduct](https://docs.dev-doctor.linwood.dev/code-of-conduct) first!
 
 ## Issues
 

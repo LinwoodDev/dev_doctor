@@ -43,6 +43,11 @@ module.exports = {
           label: 'Downloads',
           position: 'left'
         },
+        {
+            to: 'community',
+            position: 'left',
+            label: 'Community',
+        },
         {href: 'https://linwood.dev/blog', label: 'Blog', position: 'left'},
         {
           type: 'docsVersionDropdown',
@@ -142,8 +147,22 @@ module.exports = {
             to: '/docs/backend/own', // string
             from: ['/backend/own'], // string | string[]
           },
+          {
+            to: '/privacypolicy', // string
+            from: ['/docs/privacypolicy'], // string | string[]
+          }
         ],
       },
+    ],
+    [
+        '@docusaurus/plugin-content-docs',
+        {
+            id: 'community',
+            path: 'community',
+            routeBasePath: '/',
+            sidebarPath: require.resolve('./sidebarsCommunity.js')
+
+        },
     ],
     [
       '@docusaurus/plugin-pwa',
