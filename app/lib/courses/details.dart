@@ -741,7 +741,8 @@ extension PartOptionsExtension on PartOptions {
         var encoder = const JsonEncoder.withIndent("  ");
         var data = await Modular.to.push(MaterialPageRoute(
             builder: (context) => EditorCodeDialogPage(
-                initialValue: encoder.convert(coursePart.toJson(kApiVersion)))));
+                initialValue:
+                    encoder.convert(coursePart.toJson(kApiVersion)))));
         if (data != null) {
           var part = CoursePart.fromJson(data..['course'] = courseBloc.course);
           partBloc.partSubject.add(part);
