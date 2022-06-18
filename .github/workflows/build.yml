@@ -23,18 +23,12 @@ jobs:
         run: |
           flutter pub get
       #- run: flutter test
-      - name: 🏭 Build nightly
+      - name: 🏭 Build
         if: ${{ github.ref != 'refs/tags/stable' }}
         run: |
           flutter doctor -v
-          flutter build apk -v --release --flavor development
-          cp build/app/outputs/flutter-apk/app-development-release.apk linwood-dev-doctor-android.apk
-      - name: 🏭 Build production
-        if: ${{ github.ref == 'refs/tags/stable' }}
-        run: |
-          flutter doctor -v
-          flutter build apk -v --release --flavor production
-          cp build/app/outputs/flutter-apk/app-production-release.apk linwood-dev-doctor-android.apk
+          flutter build apk -v --release
+          cp build/app/outputs/flutter-apk/app-release.apk linwood-dev-doctor-android.apk
       - name: Archive
         uses: actions/upload-artifact@v3
         with:
