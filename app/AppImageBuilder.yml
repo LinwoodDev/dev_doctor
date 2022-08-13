@@ -10,7 +10,7 @@ AppDir:
   app_info:
     id: com.github.linwoodcloud.dev_doctor
     name: Dev-Doctor
-    icon: dev-doctor
+    icon: com.github.linwoodcloud.dev_doctor
     version: 1.7.0-alpha.0
     exec: dev_doctor
     exec_args: $@
