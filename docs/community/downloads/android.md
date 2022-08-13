@@ -25,7 +25,7 @@ import DownloadButton from '@site/src/components/DownloadButton.js';
 </DownloadButton>
 </div>
 
-Read more about the nightly version of Butterfly [here](/nightly).
+Read more about the nightly version of Dev-Doctor [here](/nightly).
 
 ## Stores
 

@@ -81,7 +81,7 @@ function HomepageHeader() {
                     <li>
                       <Link
                         className="dropdown__link"
-                        to="https://butterfly.linwood.dev">
+                        to="https://dev-doctor.linwood.dev">
                         <Translate description="homepage web button">
                           Open the web app
                         </Translate>
