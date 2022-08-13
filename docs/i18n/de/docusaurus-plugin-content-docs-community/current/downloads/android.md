@@ -25,10 +25,10 @@ Android 5.0 (API level 21) is the minimum supported version to run Dev-Doctor.
 ## Stores
 
 <div className="row margin-bottom--lg padding--sm">
-<a class="button button--outline button--primary button--lg margin--sm" href="https://play.google.com/store/apps/details?id=dev.linwood.Dev-Doctor">
+<a class="button button--outline button--primary button--lg margin--sm" href="https://play.google.com/store/apps/details?id=com.github.linwoodcloud.dev_doctor">
   Play Store
 </a>
-<a class="button button--outline button--primary button--lg margin--sm" href="https://f-droid.org/de/packages/dev.linwood.Dev-Doctor">
+<a class="button button--outline button--primary button--lg margin--sm" href="https://f-droid.org/de/packages/com.github.linwoodcloud.dev_doctor">
   F-Droid
 </a>
 </div>

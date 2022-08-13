@@ -158,7 +158,7 @@ jobs:
           appimage-builder --recipe AppImageBuilder.yml --skip-test
       - name: Copy nessessary files
         run: |
-          cp images/logo.svg build/linux/x64/release/bundle/dev.linwood.dev-doctor.svg
+          cp images/logo.svg build/linux/x64/release/bundle/com.github.linwoodcloud.dev_doctor.svg
           mkdir -p build/linux/x64/release/bundle/usr/share
           cp -r linux/debian/usr/share build/linux/x64/release/bundle/usr
       - name: Rename AppImage
@@ -240,7 +240,7 @@ jobs:
           flutter build linux -v --release
       - name: Copy nessessary files
         run: |
-          cp images/logo.svg build/linux/x64/release/bundle/dev.linwood.dev-doctor.svg
+          cp images/logo.svg build/linux/x64/release/bundle/com.github.linwoodcloud.dev_doctor.svg
           mkdir -p build/linux/x64/release/bundle/usr/share
           cp -r linux/debian/usr/share build/linux/x64/release/bundle/usr
       - name: Compress Flutter build
@@ -258,7 +258,7 @@ jobs:
       #      run: |
       #        flatpak run org.flatpak.Builder -v --force-clean --sandbox --delete-build-dirs --user --install-deps-from=flathub --arch=x86_64 flatpak_app flatpak.json --bundle-sources
       #        flatpak build-export export flatpak_app -v
-      #        flatpak build-bundle export linwood-dev-doctor-linux.flatpak dev.linwood.dev-doctor -v
+      #        flatpak build-bundle export linwood-dev-doctor-linux.flatpak com.github.linwoodcloud.dev_doctor -v
       #    - name: Upload .flatpak artifact to workflow
       #      uses: actions/upload-artifact@v3
       #      with:

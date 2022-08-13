@@ -51,6 +51,7 @@ dependencies:
   window_manager: ^0.2.5
   markdown: ^5.0.0
   rxdart: ^0.27.5
+  flash: ^2.0.3+3
 flutter_icons:
   android: true
   ios: true

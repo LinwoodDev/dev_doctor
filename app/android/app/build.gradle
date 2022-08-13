@@ -65,17 +65,17 @@ android {
         production {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [appName: "Butterfly"]
+            manifestPlaceholders = [appName: "Dev-Doctor"]
         }
         development {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [appName: "Butterfly Nightly"]
+            manifestPlaceholders = [appName: "Dev-Doctor Nightly"]
         }
         nightly {
             dimension "default"
             applicationIdSuffix ".nightly"
-            manifestPlaceholders = [appName: "Butterfly Nightly"]
+            manifestPlaceholders = [appName: "Dev-Doctor Nightly"]
         }
     }
     signingConfigs {

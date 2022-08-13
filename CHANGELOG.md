@@ -1,5 +1,7 @@
 # Changelog
 
+<!--ENTER CHANGELOG HERE-->
+
 ## 1.6.0 (August 22, 2021)
 
 * Add articles

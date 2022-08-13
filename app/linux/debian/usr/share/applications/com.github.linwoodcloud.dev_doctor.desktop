@@ -2,7 +2,7 @@
 Name=Dev-Doctor
 Comment=Free, opensource, serverless learning platform
 Exec=dev_doctor
-Icon=${SNAP}/meta/gui/dev-doctor.png
+Icon=com.github.linwoodcloud.dev_doctor
 Terminal=false
 Type=Application
 Categories=Productivity; #adjust accordingly your snap category
