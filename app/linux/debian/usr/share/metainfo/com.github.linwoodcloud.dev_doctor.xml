@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-	<id>dev-doctor</id>
+	<id>com.github.linwoodcloud.dev_doctor</id>
 	<name>Dev-Doctor</name>
 	<summary>Free, opensource, serverless learning platform</summary>
 	<metadata_license>CC0-1.0</metadata_license>
@@ -25,7 +25,7 @@
 			<image type="source">https://raw.githubusercontent.com/LinwoodCloud/dev_doctor/develop/app/images/logo.png</image>
 		</screenshot>
 	</screenshots>
-	<launchable type="desktop-id">dev-doctor.desktop</launchable>
+	<launchable type="desktop-id">com.github.linwoodcloud.dev_doctor.desktop</launchable>
 	<releases>
 	</releases>
 	<content_rating type="oars-1.0" />

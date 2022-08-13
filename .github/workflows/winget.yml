@@ -1,12 +1,21 @@
 name: Publish to WinGet
 on:
-  release:
-    types: [released]
+  push:
+    tags:
+      - "stable"
+      - "nightly"
 jobs:
   publish:
     runs-on: windows-latest
     steps:
-      - uses: vedantmgoyal2009/winget-releaser@latest
+      - if: github.ref == 'refs/tags/stable'
+        uses: vedantmgoyal2009/winget-releaser@latest
         with:
           identifier: LinwoodCloud.DevDoctor
+          token: ${{ secrets.CI_PAT }}
+      - if: github.ref == 'refs/tags/nightly'
+        uses: vedantmgoyal2009/winget-releaser@latest
+        with:
+          identifier: LinwoodCloud.DevDoctor.Nightly
+          version-regex: '(?<=v).*'
           token: ${{ secrets.CI_PAT }}

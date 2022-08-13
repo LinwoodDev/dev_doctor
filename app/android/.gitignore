@@ -11,3 +11,7 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+play-store-credentials.json
+
+# Fastlane
+.bundle
